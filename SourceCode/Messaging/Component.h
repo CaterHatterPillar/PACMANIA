@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "Common.h"
+#include "../Common.h"
 #include "Msg.h"
 
 class Component

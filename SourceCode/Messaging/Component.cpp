@@ -22,7 +22,7 @@ Msg* Component::peek()
 Component::Component() {}
 Component::~Component() 
 { 
-	for(UINT i = 0; i < msgs.size(); i++)
+	for(unsigned int i = 0; i < msgs.size(); i++)
 		msgs.pop(); //calls message's destructor
 }
 
