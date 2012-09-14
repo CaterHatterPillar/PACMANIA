@@ -1,7 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "Component.h"
+#include "../Component.h"
 
 class Renderer : Component
 {
@@ -10,9 +10,9 @@ protected:
 public:
 	virtual void init()	= 0;
 	virtual void update(double delta) = 0;
-
-	Renderer();
-	virtual ~Renderer();
+	virtual void renderFrame() = 0;
+	
+	virtual void cleanUp() = 0;
 };
 
 #endif //RENDERER_H

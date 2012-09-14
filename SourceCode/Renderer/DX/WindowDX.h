@@ -4,16 +4,14 @@
 #include <Windows.h>
 #include <WindowsX.h>
 
-#include "../Common.h"
-
+#include "../../Common.h"
+#include "../Window.h"
 
 using namespace std;
 
-static const int SCREEN_WIDTH = 800;
-static const int SCREEN_HEIGHT = 600;
 static const int NUM_KEYS = 256;
 
-class WindowDX
+class WindowDX : public Window
 {
 private:
 	static vector<bool> keys;
@@ -31,11 +29,11 @@ private:
 
 public:
 	WindowDX(HINSTANCE hInstance, int cmdShow);
-	~WindowDX();
+	virtual ~WindowDX();
 
-	void initialize();
+	virtual void init();
 
-	bool checkMessages();
+	void update(double delta);
 	HWND getWindowHandle();
 };
 

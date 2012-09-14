@@ -76,7 +76,7 @@ void WindowDX::createWindow()
 
 	hWnd = CreateWindowEx(NULL,
 		"WindowClass",
-		"Wonderland",
+		"PACMANIA",
 		WS_OVERLAPPEDWINDOW,
 		100,
 		100,
@@ -89,19 +89,16 @@ void WindowDX::createWindow()
 
 	ShowWindow(hWnd, cmdShow);
 }
-
-
-
-void WindowDX::initialize()
+void WindowDX::init()
 {
 	createWindow();
 }
 
-bool WindowDX::checkMessages()
+void WindowDX::update(double delta)
 {
 	//Returns true if the applications is to be destroyed
 
-	bool quit = false;
+	//bool quit = false;
 
 	MSG msg = {0};
 
@@ -110,13 +107,14 @@ bool WindowDX::checkMessages()
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
+		/*
 		if(msg.message == WM_QUIT)
 			quit = true;
+			*/
 	}
 
-	return quit;
+	//return quit;
 }
-
 
 HWND WindowDX::getWindowHandle()
 {
