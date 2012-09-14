@@ -12,14 +12,13 @@ WindowGL::~WindowGL()
 
 void WindowGL::init()
 {
-
 	/*Initialize window through GLUT*/
-	glutInit(&argc, argv);							//Initialize GLUT
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);	//Set double buffer-swap and back-buffer
+	glutInit(&argc, argv);								//Initialize GLUT
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);		//Set double buffer-swap and back-buffer
 
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);	//Initialize window
-	glutInitWindowPosition(100, 100);				//...
-	glutCreateWindow("PACMANIA");					//...
+	glutInitWindowPosition(100, 100);					//...
+	glutCreateWindow("PACMANIA");						//...
 	
 	//glutGameModeString("1920x1200@32");
 	//glutEnterGameMode();
@@ -31,7 +30,7 @@ void WindowGL::init()
 	*/
 	GLenum result = glewInit();
 	if (result != GLEW_OK)
-		throw 0;
+		throw 0; //fix
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //set a colour for brevity
 }
