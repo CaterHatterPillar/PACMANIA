@@ -15,6 +15,9 @@ void ObserverDirector::update(double delta)
 		case SUBSCRIBE:
 			subscribeMsg(msg);
 			break;
+		case DX_WINDOW_HANDLE:
+			msgDXWindowHandle(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
@@ -28,6 +31,19 @@ void ObserverDirector::subscribeMsg(Msg* msg)
 	subscribe(subMsg->Subscriber(), subMsg->Subscription());
 	delete subMsg;
 }
+
+void ObserverDirector::msgDXWindowHandle(Msg* msg)
+{
+	MsgDXWindowHandle* msgDX = (MsgDXWindowHandle*)msg;
+
+	for(int i=0; i<observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(msg->Type()))
+			observer->getComponent()->push(msgDX);
+	}
+}
+
 void ObserverDirector::subscribe(Component* subscriber, MsgType subscription)
 {	//todoist, check if observer already exists - modify original subscriber
 	observers->push_back(new Observer(subscriber, subscription));

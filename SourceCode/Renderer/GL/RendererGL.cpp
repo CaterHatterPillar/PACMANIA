@@ -1,3 +1,5 @@
+#ifndef WINDOWS
+
 #include "RendererGL.h"
 
 RendererGL::RendererGL()
@@ -17,3 +19,5 @@ void RendererGL::update(double delta)
 {
 
 }
+
+#endif //WINDOWS

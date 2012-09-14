@@ -4,6 +4,11 @@
 #include "../../Common.h"
 #include "../Renderer.h"
 #include "../GraphicsContainer.h"
+#include "../../Messaging/MsgDXWindowHandle.h"
+#include "../../Messaging/SubscriptionMsg.h"
+#include "../../Messaging/ObserverDirector.h"
+#include "../../Singleton.h"
+
 
 #include <D3D11.h>
 #include <D3DX11.h>
@@ -17,6 +22,8 @@ class RendererDX : public Renderer
 private:
 	std::vector<GraphicsContainer*> renderQueue;
 
+	HWND hWnd;
+
 	IDXGISwapChain* swapChain;
 	ID3D11Device* device;
 	ID3D11DeviceContext* devcon;
@@ -25,16 +32,21 @@ private:
 	ID3D11RasterizerState* rasterizerState;
 
 	D3D_FEATURE_LEVEL featureLevel;
+	char* featureLevelToString(D3D_FEATURE_LEVEL fl);
 
-	void createSwapChainAndDevice(HWND hWnd);
+	void createDeviceAndSwapChain();
+
+	void handleMsgDXWindowHandle(Msg* msg);
 
 protected:
 public:
 	RendererDX();
 	~RendererDX();
 
-	void init()	;
-	void update(double delta);
+	virtual void init()	;
+	virtual void update(double delta);
+	void renderFrame();
+	void cleanUp();
 };
 
 #endif //RENDERERDX_H

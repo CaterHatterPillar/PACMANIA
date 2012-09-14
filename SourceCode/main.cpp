@@ -1,12 +1,14 @@
-//#define WINDOWS
+#define WINDOWS
 
 /*Common include*/
 #include "Singleton.h"
 #include "Messaging/ObserverDirector.h"
+#include "Common.h"
 
 #ifdef WINDOWS
 /*Windows include*/
 #include "renderer/DX/WindowDX.h"
+#include "renderer/DX/RendererDX.h"
 
 int WINAPI WinMain(
 	HINSTANCE hInstance, 
@@ -14,8 +16,14 @@ int WINAPI WinMain(
 	LPSTR lpCmdLine, 
 	int nCmdShow)
 {
+	Singleton<ObserverDirector>::get().init();
+
 	WindowDX* dxWindow = new WindowDX(hInstance, nCmdShow);
 	dxWindow->init();
+
+	RendererDX* dxRenderer = new RendererDX();
+	dxRenderer->update(1.0f);
+	dxRenderer->init();
 
 	while(true)
 	{

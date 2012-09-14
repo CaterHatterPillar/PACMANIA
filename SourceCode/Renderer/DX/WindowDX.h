@@ -6,6 +6,9 @@
 
 #include "../../Common.h"
 #include "../Window.h"
+#include "../../Messaging/ObserverDirector.h"
+#include "../../Singleton.h"
+#include "../../Messaging/MsgDXWindowHandle.h"
 
 using namespace std;
 

@@ -92,6 +92,9 @@ void WindowDX::createWindow()
 void WindowDX::init()
 {
 	createWindow();
+
+	MsgDXWindowHandle* msg = new MsgDXWindowHandle(&hWnd);
+	Singleton<ObserverDirector>::get().push(msg);
 }
 
 void WindowDX::update(double delta)

@@ -3,7 +3,7 @@
 
 #include "../Component.h"
 
-class Renderer : Component
+class Renderer : public Component
 {
 private:
 protected:

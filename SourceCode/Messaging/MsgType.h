@@ -4,7 +4,8 @@
 /*Add new msgs here*/
 enum MsgType
 {
-	SUBSCRIBE
+	SUBSCRIBE,
+	DX_WINDOW_HANDLE
 };
 
 #endif //MSGTYPE_H

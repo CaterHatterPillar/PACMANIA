@@ -1,6 +1,8 @@
 #ifndef OPENGL_H
 #define OPENGL_H
 
+#ifndef WINDOWS
+
 #include "../../Common.h"
 #include "../Renderer.h"
 #include "../GraphicsContainer.h"
@@ -23,5 +25,7 @@ public:
 	extern void APIENTRY glutDisplayFunc(void (*)(void));
 	*/
 };
+
+#endif //WINDOWS
 
 #endif //OPENGL_H

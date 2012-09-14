@@ -1,7 +1,10 @@
 #ifndef WINDOWGL_H
 #define WINDOWGL_H
 
+#ifndef WINDOWS
+
 #include "../../Common.h"
+
 #include "../Window.h"
 
 #include <Windows.h>
@@ -26,5 +29,7 @@ public:
 	virtual void init();
 	virtual void update(double delta);
 };
+
+#endif //WINDOWS
 
 #endif //WINDOWGL_H
