@@ -1,6 +1,11 @@
 //#define WINDOWS
 
+/*Common include*/
+#include "Singleton.h"
+#include "Messaging/ObserverDirector.h"
+
 #ifdef WINDOWS
+/*Windows include*/
 #include "renderer/DX/WindowDX.h"
 
 int WINAPI WinMain(
@@ -20,19 +25,19 @@ int WINAPI WinMain(
 #endif
 
 #ifndef WINDOWS
+/*Linux include*/
 #include "Renderer/GL/WindowGL.h"
+#include "Renderer/GL/RendererGL.h"
 
 int main(int argc, char**	argv)
 {
-	//OpenGL* openGL = new OpenGL(1920.0f, 1200.0f, 60.0f, 1.0f, 1000.0f);
-	//openGL->initialize(argc, argv);
-
-	/*Clear*/
-	//delete openGL;
-
+	Singleton<ObserverDirector>::get().init();
 
 	WindowGL* glWindow = new WindowGL(argc, argv);
 	glWindow->init();
+
+	RendererGL* glRenderer = new RendererGL();
+	glRenderer->init();
 
 	return 0;
 }
