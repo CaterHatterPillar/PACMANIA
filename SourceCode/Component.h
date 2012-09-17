@@ -1,8 +1,8 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "../Common.h"
-#include "Msg.h"
+#include "Common.h"
+#include "Messaging/Msg.h"
 
 class Component
 {

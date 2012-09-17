@@ -1,9 +1,15 @@
 #ifndef OPENGL_H
 #define OPENGL_H
 
+#include "CommonGL.h"
+
 #include "../../Common.h"
 #include "../Renderer.h"
 #include "../GraphicsContainer.h"
+
+#include "../../Singleton.h"
+#include "../../Messaging/ObserverDirector.h"
+#include "../../Messaging/MsgGlutCallback.h"
 
 class RendererGL : public Renderer
 {
@@ -16,12 +22,11 @@ public:
 	void init()	;
 	void update(double delta);
 
+	void cleanUp();
+	void renderFrame();
+
 	/*Callback*/
 	static void renderSpec();
-
-	/*
-	extern void APIENTRY glutDisplayFunc(void (*)(void));
-	*/
 };
 
 #endif //OPENGL_H

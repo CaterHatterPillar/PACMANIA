@@ -15,6 +15,9 @@ void ObserverDirector::update(double delta)
 		case SUBSCRIBE:
 			subscribeMsg(msg);
 			break;
+		case MSG_GLUT_CALLBACK:
+			msgGlutCallback(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
@@ -31,6 +34,20 @@ void ObserverDirector::subscribeMsg(Msg* msg)
 void ObserverDirector::subscribe(Component* subscriber, MsgType subscription)
 {	//todoist, check if observer already exists - modify original subscriber
 	observers->push_back(new Observer(subscriber, subscription));
+}
+void ObserverDirector::msgGlutCallback(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgGlutCallback* glutCallback = (MsgGlutCallback*)msg;
+	for(unsigned int i = 0; i < observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgGlutCallback* newInstance = new MsgGlutCallback(glutCallback);
+			observer->getComponent()->push(newInstance);
+		}
+	}
 }
 
 ObserverDirector::ObserverDirector() : Component()

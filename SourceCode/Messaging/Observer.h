@@ -2,7 +2,7 @@
 #define OBSERVER_H
 
 #include "../Common.h"
-#include "Component.h"
+#include "../Component.h"
 
 class Observer
 {
