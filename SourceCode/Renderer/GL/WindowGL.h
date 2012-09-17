@@ -1,12 +1,7 @@
 #ifndef WINDOWGL_H
 #define WINDOWGL_H
 
-/*OpenGL*/
-#include <Windows.h> //obs, tmep
-#include <glew.h>
-#include <glut.h>
-#include <gl/GL.h>
-#include <gl/GLU.h>
+#include "CommonGL.h"
 
 #include "../../Common.h"
 #include "../Window.h"

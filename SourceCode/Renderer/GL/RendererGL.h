@@ -1,10 +1,7 @@
 #ifndef OPENGL_H
 #define OPENGL_H
 
-/*OpenGL*/
-#include <Windows.h> //obs, tmep
-#include <gl/GL.h>
-#include <gl/GLU.h>
+#include "CommonGL.h"
 
 #include "../../Common.h"
 #include "../Renderer.h"
@@ -30,10 +27,6 @@ public:
 
 	/*Callback*/
 	static void renderSpec();
-
-	/*
-	extern void APIENTRY glutDisplayFunc(void (*)(void));
-	*/
 };
 
 #endif //OPENGL_H

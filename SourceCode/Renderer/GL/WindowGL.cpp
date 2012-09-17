@@ -17,8 +17,12 @@ void WindowGL::init()
 	Singleton<ObserverDirector>::get().push(subscriptionMsg);
 
 	/*Initialize window through GLUT*/
-	glutInit(&argc, argv);								//Initialize GLUT
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);		//Set double buffer-swap and back-buffer
+	glutInit(&argc, argv);
+	glutInitDisplayMode(
+		GLUT_DOUBLE	|	//Double-buffer
+		GLUT_RGBA	|	//Back-buffer
+		GLUT_DEPTH	|	//Depth-buffer
+		GLUT_STENCIL);	//Stencil-buffer
 
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);	//Initialize window
 	glutInitWindowPosition(100, 100);					//...
@@ -33,8 +37,6 @@ void WindowGL::init()
 	GLenum result = glewInit();
 	if (result != GLEW_OK)
 		throw 0; //fix
-
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //set a colour for brevity
 }
 void WindowGL::update(double delta)
 {
@@ -56,11 +58,9 @@ void WindowGL::update(double delta)
 void WindowGL::glutCallback(Msg* msg)
 {
 	MsgGlutCallback* callbackMsg = (MsgGlutCallback*)msg;
-	
 	glutDisplayFunc(
 		(void (__cdecl *)(void))
 		(callbackMsg->Callback()));
-	
 	delete callbackMsg;
 
 	startGlutMain();
