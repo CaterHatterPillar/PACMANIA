@@ -169,6 +169,7 @@ void RendererDX::init()
 	createDepthBuffer();
 	createBackBuffer();
 	createViewport();
+	createRasterizerState();
 }
 
 void RendererDX::update(double delta)
