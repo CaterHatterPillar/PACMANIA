@@ -129,6 +129,21 @@ void RendererDX::createBackBuffer()
 	devcon->OMSetRenderTargets(1, &backBuffer, zBuffer);
 }
 
+void RendererDX::createViewport()
+{
+	D3D11_VIEWPORT viewport;
+	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+
+	viewport.TopLeftX	= 0;
+	viewport.TopLeftY	= 0;
+	viewport.Width		= SCREEN_WIDTH;
+	viewport.Height		= SCREEN_HEIGHT;
+	viewport.MinDepth	= 0;
+	viewport.MaxDepth	= 1;
+
+	devcon->RSSetViewports(1, &viewport);
+}
+
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
