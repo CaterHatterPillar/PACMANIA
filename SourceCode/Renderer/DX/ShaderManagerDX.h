@@ -27,6 +27,13 @@ private:
 	ID3D10Blob* ps;
 	ID3D10Blob* error;
 
+	void createShaders();
+	void createVertexShader();
+	void createPixelShader();
+
+	LPCSTR vertexShaderModel();
+	LPCSTR pixelShaderModel();
+
 public:
 	ShaderManagerDX(ID3D11Device* device, ID3D11DeviceContext* devcon, D3D_FEATURE_LEVEL);
 	~ShaderManagerDX();
