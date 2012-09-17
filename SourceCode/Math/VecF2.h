@@ -42,7 +42,7 @@ struct VecF2
 	/*Helper Functions*/
 	virtual VecF2& normalize()
 	{
-		float length = sqrtf(x * x + y * y);
+		const float length = sqrtf(x * x + y * y);
 		x /= length;
 		y /= length;
 
