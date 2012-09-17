@@ -12,6 +12,10 @@ WindowGL::~WindowGL()
 
 void WindowGL::init()
 {
+	/*Subcribe to msgs*/
+	SubscriptionMsg* subscriptionMsg = new SubscriptionMsg(this, MSG_GLUT_CALLBACK);
+	Singleton<ObserverDirector>::get().push(subscriptionMsg);
+
 	/*Initialize window through GLUT*/
 	glutInit(&argc, argv);								//Initialize GLUT
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);		//Set double buffer-swap and back-buffer
@@ -22,8 +26,6 @@ void WindowGL::init()
 	
 	//glutGameModeString("1920x1200@32");
 	//glutEnterGameMode();
-
-	/*Initialize GLUT-callback*/
 
 	/*Initialize GLEW,
 	* must be initialized after glut
@@ -36,5 +38,35 @@ void WindowGL::init()
 }
 void WindowGL::update(double delta)
 {
+	Msg* msg = peek();
+	while(msg != nullptr)
+	{
+		msg = pop();
+		switch(msg->Type())
+		{
+		case MSG_GLUT_CALLBACK:
+			glutCallback(msg);
+			break;
+		default:
+			throw 0; //tmep
+			break;
+		}
+	}
+}
+void WindowGL::glutCallback(Msg* msg)
+{
+	MsgGlutCallback* callbackMsg = (MsgGlutCallback*)msg;
+	
+	glutDisplayFunc(
+		(void (__cdecl *)(void))
+		(callbackMsg->Callback()));
+	
+	delete callbackMsg;
 
+	startGlutMain();
+}
+
+void WindowGL::startGlutMain()
+{
+	glutMainLoop();
 }

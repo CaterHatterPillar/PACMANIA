@@ -39,6 +39,13 @@ int main(int argc, char**	argv)
 	RendererGL* glRenderer = new RendererGL();
 	glRenderer->init();
 
+	while(true)
+	{
+		Singleton<ObserverDirector>::get().update(1.0);
+		glWindow->update(1.0);
+		glRenderer->update(1.0);
+	}
+
 	return 0;
 }
 

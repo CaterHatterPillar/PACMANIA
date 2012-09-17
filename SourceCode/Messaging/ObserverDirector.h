@@ -1,11 +1,12 @@
 #ifndef OBSERVERDIRECTOR_H
 #define OBSERVERDIRECTOR_H
 
-#include "Common.h"
+#include "../Common.h"
 #include "Observer.h"
 
 /*Msgs*/
 #include "SubscriptionMsg.h"
+#include "MsgGlutCallback.h"
 
 class ObserverDirector : public Component
 {
@@ -16,6 +17,7 @@ private:
 	void subscribe(
 		Component*	subscriber, 
 		MsgType		subscription);
+	void msgGlutCallback(Msg* msg);
 protected:
 public:
 	ObserverDirector();

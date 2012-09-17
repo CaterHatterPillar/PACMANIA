@@ -4,7 +4,8 @@
 /*Add new msgs here*/
 enum MsgType
 {
-	SUBSCRIBE
+	SUBSCRIBE,
+	MSG_GLUT_CALLBACK
 };
 
 #endif //MSGTYPE_H

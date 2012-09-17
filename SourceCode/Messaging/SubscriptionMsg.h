@@ -2,6 +2,7 @@
 #define SUBSCRIPTIONMSG_H
 
 #include "Msg.h"
+#include "../Component.h"
 
 class SubscriptionMsg : public Msg
 {
