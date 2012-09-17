@@ -144,11 +144,31 @@ void RendererDX::createViewport()
 	devcon->RSSetViewports(1, &viewport);
 }
 
+void RendererDX::createRasterizerState()
+{
+	D3D11_RASTERIZER_DESC rsd;
+
+	rsd.CullMode				= D3D11_CULL_BACK;
+	rsd.FillMode				= D3D11_FILL_SOLID;
+	rsd.FrontCounterClockwise	= false;
+	rsd.DepthBias				= false;
+	rsd.DepthBiasClamp			= 0;
+	rsd.SlopeScaledDepthBias	= 0;
+	rsd.DepthClipEnable			= true;
+	rsd.ScissorEnable			= false;
+	rsd.MultisampleEnable		= false;
+	rsd.AntialiasedLineEnable	= true;
+
+	device->CreateRasterizerState(&rsd, &rasterizerState);
+	devcon->RSSetState(rasterizerState);
+}
+
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
 	createDepthBuffer();
 	createBackBuffer();
+	createViewport();
 }
 
 void RendererDX::update(double delta)

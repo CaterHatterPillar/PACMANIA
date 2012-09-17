@@ -37,6 +37,8 @@ private:
 	void createDeviceAndSwapChain();
 	void createDepthBuffer();
 	void createBackBuffer();
+	void createViewport();
+	void createRasterizerState();
 
 	void handleMsgDXWindowHandle(Msg* msg);
 
