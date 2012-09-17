@@ -19,11 +19,15 @@ int WINAPI WinMain(
 	Singleton<ObserverDirector>::get().init();
 
 	WindowDX* dxWindow = new WindowDX(hInstance, nCmdShow);
+	RendererDX* dxRenderer = new RendererDX();
+
 	dxWindow->init();
 
-	RendererDX* dxRenderer = new RendererDX();
+	Singleton<ObserverDirector>::get().update(1.0);
+
 	dxRenderer->update(1.0f);
 	dxRenderer->init();
+
 
 	while(true)
 	{

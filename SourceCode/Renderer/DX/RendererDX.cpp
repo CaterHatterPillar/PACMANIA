@@ -2,12 +2,13 @@
 
 RendererDX::RendererDX()
 {
-
+	SubscriptionMsg* msg = new SubscriptionMsg(this, DX_WINDOW_HANDLE);
+	Singleton<ObserverDirector>::get().push(msg);
 }
 
 RendererDX::~RendererDX()
 {
-
+	cleanUp();
 }
 
 char* RendererDX::featureLevelToString(D3D_FEATURE_LEVEL fl)
@@ -75,6 +76,7 @@ void RendererDX::createDeviceAndSwapChain()
 											&device,
 											&featureLevel,
 											&devcon);
+
 		if(SUCCEEDED(hr))
 		{
 			char title[256];
@@ -82,27 +84,56 @@ void RendererDX::createDeviceAndSwapChain()
 						sizeof(title),
 						"Wonderland | Direct3D 11.0 device initiated with Direct3D %s feature level",
 						featureLevelToString(featureLevel));
-			
-			//convert title to a unicode string
-			
-			LPCTSTR str = title;
-
-			SetWindowText(hWnd, str);
+			SetWindowText(hWnd, title);
 			
 			deviceCreated = true;
 		}
 
 		index++;
 	}
+}
 
+void RendererDX::createDepthBuffer()
+{
+	D3D11_TEXTURE2D_DESC texd;
+	ZeroMemory(&texd, sizeof(texd));
+
+	texd.Width = SCREEN_WIDTH;
+	texd.Height = SCREEN_HEIGHT;
+	texd.ArraySize = 1;
+	texd.MipLevels = 1;
+	texd.SampleDesc.Count = 4;
+	texd.Format = DXGI_FORMAT_D32_FLOAT;
+	texd.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+	ID3D11Texture2D* depthBuffer;
+	device->CreateTexture2D(&texd, NULL, &depthBuffer);
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvd;
+	ZeroMemory(&dsvd, sizeof(dsvd));
+	dsvd.Format = DXGI_FORMAT_D32_FLOAT;
+	dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
+
+	device->CreateDepthStencilView(depthBuffer, &dsvd, &zBuffer);
+	depthBuffer->Release();
+}
+
+void RendererDX::createBackBuffer()
+{
+	ID3D11Texture2D* texBackBuffer;
+	swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&texBackBuffer);
+
+	device->CreateRenderTargetView(texBackBuffer, NULL, &backBuffer);
+	texBackBuffer->Release();
+
+	devcon->OMSetRenderTargets(1, &backBuffer, zBuffer);
 }
 
 void RendererDX::init()
 {
-	SubscriptionMsg* msg = new SubscriptionMsg(this, DX_WINDOW_HANDLE);
-	Singleton<ObserverDirector>::get().push(msg);
-
 	createDeviceAndSwapChain();
+	createDepthBuffer();
+	createBackBuffer();
 }
 
 void RendererDX::update(double delta)
@@ -110,12 +141,14 @@ void RendererDX::update(double delta)
 	Msg* msg = peek();
 	while(msg != nullptr)
 	{
-		msg = pop();
 		switch(msg->Type())
 		{
 			case DX_WINDOW_HANDLE:
+				handleMsgDXWindowHandle(msg);
 				break;
 		}
+
+		msg = pop();
 	}
 }
 
@@ -126,7 +159,10 @@ void RendererDX::renderFrame()
 
 void RendererDX::cleanUp()
 {
-
+	device->Release();
+	devcon->Release();
+	zBuffer->Release();
+	backBuffer->Release();
 }
 
 void RendererDX::handleMsgDXWindowHandle(Msg* msg)

@@ -35,6 +35,8 @@ private:
 	char* featureLevelToString(D3D_FEATURE_LEVEL fl);
 
 	void createDeviceAndSwapChain();
+	void createDepthBuffer();
+	void createBackBuffer();
 
 	void handleMsgDXWindowHandle(Msg* msg);
 
