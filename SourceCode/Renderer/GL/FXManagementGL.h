@@ -37,12 +37,18 @@ class FXManagementGL
 {
 private:
 	std::vector<FXGL*>* fxs;
+
+	void initFXs();
+
+	//param - file name, enum
+	void createFX(ID_FX idFX);
+	GLuint createProgramFX();
+	GLuint createObjFX(const char*	shaderText, GLenum shaderType);
 protected:
 public:
 	void init();
-	void createFX(ID_FX idFX);
 
-	FXGL* getFX();
+	FXGL* getFX(ID_FX idFX);
 
 	FXManagementGL();
 	~FXManagementGL();

@@ -3,6 +3,8 @@
 GLuint RendererGL::tempVB;
 GLuint RendererGL::tempIB;
 
+FXManagementGL* RendererGL::fxManagement;
+
 RendererGL::RendererGL() : Renderer()
 {
 	fxManagement = new FXManagementGL();
@@ -68,6 +70,10 @@ void RendererGL::renderSpec()
 	/*Clear backbuffer*/
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	/*Set rendering*/
+	setShader();
+
+	/*Set object*/
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, tempVB);
 	glVertexAttribPointer(
@@ -78,6 +84,8 @@ void RendererGL::renderSpec()
 		0,			//Stride
 		0);			//Offset
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempIB);
+	/*Set object*/
+
 	glDrawElements(
 		GL_TRIANGLES,		//Type to render
 		12,					//Number of indices
@@ -86,4 +94,15 @@ void RendererGL::renderSpec()
 	glDisableVertexAttribArray(0);
 
 	glutSwapBuffers();
+}
+void RendererGL::setShader()
+{
+	/*Get correct shader program*/
+	FXGL* fx			= fxManagement->getFX(BASIC);
+	GLuint programFX	= fx->ProgramFX();
+
+	/*Checks whether or not the program object can execute the pipeline in it's current state*/
+	glValidateProgram(programFX);
+	/*Connect shader program to pipeline*/
+	glUseProgram(programFX);
 }

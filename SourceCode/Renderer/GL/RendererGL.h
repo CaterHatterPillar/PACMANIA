@@ -20,7 +20,7 @@ private:
 	static GLuint tempVB;
 	static GLuint tempIB;
 
-	FXManagementGL* fxManagement;
+	static FXManagementGL* fxManagement;
 protected:
 public:
 	RendererGL();
@@ -34,6 +34,7 @@ public:
 
 	/*Callback*/
 	static void renderSpec();
+	static void setShader();
 };
 
 #endif //OPENGL_H
