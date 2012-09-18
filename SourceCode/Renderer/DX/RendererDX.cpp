@@ -169,6 +169,11 @@ void RendererDX::createShaderManager()
 	shaderManager->initialize();
 }
 
+void RendererDX::createCamera()
+{
+	camera = new Camera();
+}
+
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
@@ -178,6 +183,7 @@ void RendererDX::init()
 	createRasterizerState();
 
 	createShaderManager();
+	createCamera();
 }
 
 void RendererDX::update(double delta)

@@ -5,6 +5,7 @@
 #include "../Renderer.h"
 
 #include "ShaderManagerDX.h"
+#include "Camera.h"
 
 #include "../GraphicsContainer.h"
 #include "../../Messaging/MsgDXWindowHandle.h"
@@ -43,6 +44,8 @@ private:
 	ID3D11RasterizerState* rasterizerState;
 
 	ShaderManagerDX* shaderManager;
+	Camera* camera;
+
 
 	D3D_FEATURE_LEVEL featureLevel;
 	char* featureLevelToString(D3D_FEATURE_LEVEL fl);
@@ -53,6 +56,7 @@ private:
 	void createViewport();
 	void createRasterizerState();
 	void createShaderManager();
+	void createCamera();
 
 	void handleMsgDXWindowHandle(Msg* msg);
 
