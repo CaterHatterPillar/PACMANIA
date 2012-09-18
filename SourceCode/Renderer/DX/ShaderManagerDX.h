@@ -48,6 +48,9 @@ public:
 	void initialize();
 
 	void updateCBufferPerFrame(D3DXMATRIX final, D3DXMATRIX world);
+
+	ID3D11VertexShader* getVertexShader();
+	ID3D11PixelShader* getPixelShader();
 };
 
 #endif

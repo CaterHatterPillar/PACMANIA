@@ -149,3 +149,13 @@ void ShaderManagerDX::updateCBufferPerFrame(D3DXMATRIX final, D3DXMATRIX world)
 	cBuffer.world = world;
 	devcon->UpdateSubresource(cBufferPerFrame, 0, 0, &cBuffer, 0, 0);
 }
+
+ID3D11VertexShader* ShaderManagerDX::getVertexShader()
+{
+	return vertexShader;
+}
+
+ID3D11PixelShader* ShaderManagerDX::getPixelShader()
+{
+	return pixelShader;
+}
