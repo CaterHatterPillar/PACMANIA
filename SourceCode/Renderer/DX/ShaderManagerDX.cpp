@@ -123,7 +123,7 @@ void ShaderManagerDX::createCBufferPerFrame()
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = calcConstantBufferSize(sizeof(CBufferPerFrame));
+	bd.ByteWidth = 128; //calcConstantBufferSize(sizeof(CBufferPerFrame));
 	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
 	device->CreateBuffer(&bd, NULL, &cBufferPerFrame);

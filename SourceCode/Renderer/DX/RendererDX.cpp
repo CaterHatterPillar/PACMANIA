@@ -225,34 +225,36 @@ void RendererDX::renderFrame()
 	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
 	devcon->IASetInputLayout(shaderManager->getInputLayout());
 
-	UINT stride = sizeof(Vertex);
+	UINT stride = sizeof(Vertex); 
 	UINT offset = 0;
 
 	devcon->OMSetDepthStencilState(0, 0);
 
-	vector<Vertex> vertices;
-	vertices.push_back(Vertex(D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
-	vertices.push_back(Vertex(D3DXVECTOR3(0.45f, -0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
-	vertices.push_back(Vertex(D3DXVECTOR3(-0.45f, -0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
+	//vector<Vertex> vertices;
+	//vertices.push_back(Vertex(D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
+	//vertices.push_back(Vertex(D3DXVECTOR3(0.45f, -0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
+	//vertices.push_back(Vertex(D3DXVECTOR3(-0.45f, -0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
+	
+	ID3D11Buffer* vertexBuffer = cube->getVertexBuffer();
+	
+	//D3D11_BUFFER_DESC vbd;
+	//vbd.Usage = D3D11_USAGE_DYNAMIC;
+	//vbd.ByteWidth = sizeof(Vertex) * vertices.size();
+	//vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	//vbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	//vbd.MiscFlags = 0;
+	//D3D11_SUBRESOURCE_DATA vinitData;
+	//vinitData.pSysMem = &vertices[0];
+	//device->CreateBuffer(&vbd, &vinitData, &vertexBuffer);
 
-	ID3D11Buffer* vertexBuffer;
-	D3D11_BUFFER_DESC vbd;
-	vbd.Usage = D3D11_USAGE_DYNAMIC;
-	vbd.ByteWidth = sizeof(Vertex) * vertices.size();
-	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	vbd.MiscFlags = 0;
 
-	D3D11_SUBRESOURCE_DATA vinitData;
-	vinitData.pSysMem = &vertices[0];
-	device->CreateBuffer(&vbd, &vinitData, &vertexBuffer);
 
 	devcon->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-	//devcon->IASetIndexBuffer(cube->getIndexBuffer(), DXGI_FORMAT_R32_UINT, 0);
+	devcon->IASetIndexBuffer(cube->getIndexBuffer(), DXGI_FORMAT_R32_UINT, 0);
 	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//devcon->DrawIndexed(cube->getNumIndices(), 0, 0);
-	devcon->Draw(3, 0);
+	devcon->DrawIndexed(cube->getNumIndices(), 0, 0);
+	//devcon->Draw(24, 0);
 
 	swapChain->Present(0, 0);
 }

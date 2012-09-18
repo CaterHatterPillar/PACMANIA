@@ -25,17 +25,18 @@ struct VOut
 VOut VShader(float3 position : POSITION, float3 normal : NORMAL, float4 color : COLOR)
 {
     VOut output;
-    //output.position = mul(matFinal, float4(position, 1.0f));
-	//output.posW		= mul(matWorld, float4(position, 1.0f)).xyz;
-	//output.normalW	= mul(matWorld, float4(normal, 0.0f)).xyz;
-    //output.color	= color;
-	
+    output.position = mul(matFinal, float4(position, 1.0f));
+	output.posW		= mul(matWorld, float4(position, 1.0f)).xyz;
+	output.normalW	= mul(matWorld, float4(normal, 0.0f)).xyz;
+    output.color	= color;
 
-	output.position = float4(position, 1.0);
-	output.posW = position;
-	output.normalW = normal;
-	output.color = color;
-    return output;
+	//output.position = float4(position, 1.0);
+	//output.posW = position;
+	//output.normalW = normal;
+	//output.color = color;
+    
+	
+	return output;
 
 }
 
