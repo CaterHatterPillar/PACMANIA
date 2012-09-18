@@ -10,8 +10,7 @@
 #include "MsgGlutCallback.h"
 #include "MsgRender.h"
 
-#include "MsgDXWindowHandle.h"
-
+//#include "MsgDXWindowHandle.h"
 
 class ObserverDirector : public Component
 {
