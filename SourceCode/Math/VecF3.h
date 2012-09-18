@@ -2,6 +2,7 @@
 #define VECF3_H
 
 #include "VecF2.h"
+#include "Quaternion.h"
 
 struct VecF3 : VecF2
 {
@@ -59,6 +60,25 @@ struct VecF3 : VecF2
 		z /= length;
 
 		return *this;
+	}
+	virtual void rotate(float angle, const VecF3& axis)
+	{
+		const float sinHalfAngle = sinf(RADIAN(angle / 2));
+		const float cosHalfAngle = cosf(RADIAN(angle / 2));
+
+		const float rX = axis.x * sinHalfAngle;
+		const float rY = axis.y * sinHalfAngle;
+		const float rZ = axis.z * sinHalfAngle;
+		const float rW = cosHalfAngle;
+		Quaternion rotationQ(rX, rY, rZ, rW);
+
+		Quaternion conjugateQ = rotationQ.conjugate();
+		//ConjugateQ.Normalize();
+		Quaternion w = rotationQ * (*this) * conjugateQ;
+
+		x = w.x;
+		y = w.y;
+		z = w.z;
 	}
 };
 
