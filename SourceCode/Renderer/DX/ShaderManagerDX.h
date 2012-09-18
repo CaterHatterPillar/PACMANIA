@@ -9,6 +9,8 @@
 #include <Windows.h>
 #include <WindowsX.h>
 
+#include "ConstantBuffers.h"
+
 class ShaderManagerDX
 {
 private:
@@ -34,6 +36,10 @@ private:
 	LPCSTR pixelShaderModel();
 
 	void createInputLayout();
+
+	void createConstantBuffers();
+	void createCBufferPerFrame();
+	int calcConstantBufferSize(int structSize);
 
 public:
 	ShaderManagerDX(ID3D11Device* device, ID3D11DeviceContext* devcon, D3D_FEATURE_LEVEL);
