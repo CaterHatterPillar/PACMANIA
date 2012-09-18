@@ -5,7 +5,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <gl\glew.h>
-#include <glut.h>
+#include <freeglut.h>
 #include <gl\gl.h>
 #endif
 

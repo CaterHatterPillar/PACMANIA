@@ -27,6 +27,10 @@ void WindowGL::init()
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);	//Initialize window
 	glutInitWindowPosition(100, 100);					//...
 	glutCreateWindow("PACMANIA");						//...
+
+	glutSetOption(
+		GLUT_ACTION_ON_WINDOW_CLOSE,
+		GLUT_ACTION_CONTINUE_EXECUTION);
 	
 	//glutGameModeString("1920x1200@32");
 	//glutEnterGameMode();
@@ -44,16 +48,21 @@ void WindowGL::update(double delta)
 	while(msg != nullptr)
 	{
 		msg = pop();
-		switch(msg->Type())
+		if(msg)
 		{
-		case MSG_GLUT_CALLBACK:
-			glutCallback(msg);
-			break;
-		default:
-			throw 0; //tmep
-			break;
+			switch(msg->Type())
+			{
+			case MSG_GLUT_CALLBACK:
+				glutCallback(msg);
+				break;
+			default:
+				throw 0; //tmep
+				break;
+			}
 		}
 	}
+
+	glutMainLoopEvent();
 }
 void WindowGL::glutCallback(Msg* msg)
 {
@@ -66,9 +75,6 @@ void WindowGL::glutCallback(Msg* msg)
 		break;
 	case IDLE_FUNC:
 		glutCallbackIdleFunc(callbackMsg);
-		break;
-	case START_MAIN:
-		startGlutMain();
 		break;
 	default:
 		throw 0;

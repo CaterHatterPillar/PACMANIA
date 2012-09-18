@@ -25,14 +25,15 @@ void RendererGL::init()
 	/*Initialize shaders*/
 	fxManagement->init();
 
+	/*Subscribe*/
+	SubscriptionMsg* subscription = new SubscriptionMsg(this, RENDER);
+	Singleton<ObserverDirector>::get().push(subscription);
+
 	/*Send initial callback-specs to GLUT*/
 	MsgGlutCallback* callbackMsg = new MsgGlutCallback(renderSpec, DISPLAY_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
 	callbackMsg = new MsgGlutCallback(renderSpec, IDLE_FUNC);
-	Singleton<ObserverDirector>::get().push(callbackMsg);
-
-	callbackMsg = new MsgGlutCallback(nullptr, START_MAIN);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 }
 void RendererGL::update(double delta)
@@ -72,6 +73,8 @@ void RendererGL::renderFrame()
 /*GLUT callbacks*/
 void RendererGL::renderSpec()
 {
+	glutPostRedisplay();
+
 	/*Clear backbuffer*/
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -106,6 +109,8 @@ void RendererGL::renderSpec()
 	}
 	
 	glutSwapBuffers();
+
+	//glutLeaveMainLoop();
 }
 void RendererGL::setShader()
 {

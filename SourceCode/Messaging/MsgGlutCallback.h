@@ -6,8 +6,7 @@
 enum CALLBACK_TYPE
 { 
 	DISPLAY_FUNC, 
-	IDLE_FUNC,
-	START_MAIN
+	IDLE_FUNC
 };
 
 //Modify so that several  callback-types may use the same msg
