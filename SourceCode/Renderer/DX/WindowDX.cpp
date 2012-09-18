@@ -12,7 +12,7 @@ WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow)
 
 	keys.resize(NUM_KEYS, false);
 
-	SetCursorPos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+	//SetCursorPos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 WindowDX::~WindowDX()
@@ -92,6 +92,9 @@ void WindowDX::createWindow()
 void WindowDX::init()
 {
 	createWindow();
+
+	MsgDXWindowHandle* msg = new MsgDXWindowHandle(&hWnd);
+	Singleton<ObserverDirector>::get().push(msg);
 }
 
 void WindowDX::update(double delta)

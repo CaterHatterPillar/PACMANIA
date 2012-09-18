@@ -1,7 +1,9 @@
 #ifndef OPENGL_H
 #define OPENGL_H
 
+
 #include "CommonGL.h"
+
 
 #include "../../Common.h"
 #include "../Renderer.h"
@@ -34,5 +36,6 @@ public:
 	static void renderSpec();
 	static void setShader();
 };
+
 
 #endif //OPENGL_H

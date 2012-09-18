@@ -6,9 +6,10 @@ enum MsgType
 {
 	SUBSCRIBE,
 	RENDER,
-
-	/*OpenGL*/
-	MSG_GLUT_CALLBACK
+	
+	MSG_GLUT_CALLBACK,
+	
+	DX_WINDOW_HANDLE
 };
 
 //todoist: dela upp i win/linux

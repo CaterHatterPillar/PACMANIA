@@ -1,3 +1,5 @@
+
+
 #include "RendererGL.h"
 
 FXManagementGL*			RendererGL::fxManagement;

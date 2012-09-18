@@ -1,3 +1,5 @@
+#ifndef WINDOWS
+
 #include "WindowGL.h"
 
 WindowGL::WindowGL(int argc, char** argv)
@@ -100,3 +102,4 @@ void WindowGL::startGlutMain()
 {
 	glutMainLoop();
 }
+

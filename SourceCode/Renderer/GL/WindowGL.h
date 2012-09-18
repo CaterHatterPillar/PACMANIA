@@ -3,7 +3,9 @@
 
 #include "CommonGL.h"
 
+
 #include "../../Common.h"
+
 #include "../Window.h"
 #include "../../Singleton.h"
 #include "../../Messaging/ObserverDirector.h"
@@ -29,5 +31,6 @@ public:
 
 	void startGlutMain();
 };
+
 
 #endif //WINDOWGL_H
