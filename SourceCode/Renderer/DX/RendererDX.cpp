@@ -210,6 +210,8 @@ void RendererDX::cleanUp()
 	devcon->Release();
 	zBuffer->Release();
 	backBuffer->Release();
+
+	delete ShaderManager;
 }
 
 void RendererDX::handleMsgDXWindowHandle(Msg* msg)
