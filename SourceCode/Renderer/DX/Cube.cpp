@@ -4,6 +4,8 @@
 Cube::Cube(ID3D11Device* device)
 {
 	this->device = device;
+	position = D3DXVECTOR3(0.0f, 0.0f, 0.0f );
+	D3DXMatrixTranslation(&world, position.x, position.y, position.z);
 }
 
 Cube::~Cube()
@@ -150,4 +152,9 @@ ID3D11Buffer* Cube::getIndexBuffer()
 ID3D11Buffer* Cube::getVertexBuffer()
 {
 	return vertexBuffer;
+}
+
+D3DXMATRIX Cube::getWorldMatrix()
+{
+	return world;
 }

@@ -49,6 +49,10 @@ private:
 	ID3D11Buffer* vertexBuffer;
 	ID3D11Buffer* indexBuffer;
 
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 scale;
+	D3DXVECTOR3 rotation;
+
 	vector<DWORD> indices;
 	vector<Vertex> vertices;
 
