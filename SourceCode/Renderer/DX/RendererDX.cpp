@@ -174,6 +174,12 @@ void RendererDX::createCamera()
 	camera = new Camera();
 }
 
+void RendererDX::createCube()
+{
+	cube = new Cube(device);
+	cube->initialize();
+}
+
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
@@ -184,6 +190,7 @@ void RendererDX::init()
 
 	createShaderManager();
 	createCamera();
+	createCube();
 }
 
 void RendererDX::update(double delta)

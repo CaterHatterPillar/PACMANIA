@@ -6,6 +6,7 @@
 
 #include "ShaderManagerDX.h"
 #include "Camera.h"
+#include "Cube.h"
 
 #include "../GraphicsContainer.h"
 #include "../../Messaging/MsgDXWindowHandle.h"
@@ -19,15 +20,6 @@
 
 #include <Windows.h>
 #include <WindowsX.h>
-
-const D3DXCOLOR WHITE(1.0f, 1.0f, 1.0f, 1.0f);
-const D3DXCOLOR BLACK(0.0f, 0.0f, 0.0f, 1.0f);
-const D3DXCOLOR RED(1.0f, 0.0f, 0.0f, 1.0f);
-const D3DXCOLOR GREEN(0.0f, 1.0f, 0.0f, 1.0f);
-const D3DXCOLOR BLUE(0.0f, 0.0f, 1.0f, 1.0f);
-const D3DXCOLOR YELLOW(1.0f, 1.0f, 0.0f, 1.0f);
-const D3DXCOLOR CYAN(0.0f, 1.0f, 1.0f, 1.0f);
-const D3DXCOLOR MAGENTA(1.0f, 0.0f, 1.0f, 1.0f);
 
 class RendererDX : public Renderer
 {
@@ -45,6 +37,7 @@ private:
 
 	ShaderManagerDX* shaderManager;
 	Camera* camera;
+	Cube* cube;
 
 
 	D3D_FEATURE_LEVEL featureLevel;
@@ -57,6 +50,8 @@ private:
 	void createRasterizerState();
 	void createShaderManager();
 	void createCamera();
+
+	void createCube();
 
 	void handleMsgDXWindowHandle(Msg* msg);
 
