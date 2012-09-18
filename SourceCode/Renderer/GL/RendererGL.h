@@ -5,7 +5,7 @@
 
 #include "../../Common.h"
 #include "../Renderer.h"
-#include "../GraphicsContainer.h"
+#include "GraphicsContainerGL.h"
 #include "FXManagementGL.h"
 
 #include "../../Singleton.h"
@@ -17,10 +17,7 @@
 class RendererGL : public Renderer
 {
 private:
-	static GLuint tempVB;
-	static GLuint tempIB;
-
-	static FXManagementGL* fxManagement;
+	static FXManagementGL*		fxManagement;
 protected:
 public:
 	RendererGL();
@@ -28,6 +25,7 @@ public:
 
 	void init()	;
 	void update(double delta);
+	void msgRender(Msg* msg);
 
 	void cleanUp();
 	void renderFrame();

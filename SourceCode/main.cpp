@@ -35,6 +35,7 @@ int WINAPI WinMain(
 
 #include "Renderer/GL/WindowGL.h"
 #include "Renderer/GL/RendererGL.h"
+#include "Renderer/GL/SimpleGeometry.h"
 
 int main(int argc, char**	argv)
 {
@@ -50,15 +51,20 @@ int main(int argc, char**	argv)
 	RendererGL* glRenderer = new RendererGL();
 	glRenderer->init();
 
+	SimpleGeometry* simpleGeometry = new SimpleGeometry();
+	simpleGeometry->init();
+
 	while(true)
 	{
 		Singleton<ObserverDirector>::get().update(1.0);
 		glWindow->update(1.0);
 		glRenderer->update(1.0);
+		simpleGeometry->update(1.0);
 	}
 
 	delete glWindow;
 	delete glRenderer;
+	delete simpleGeometry;
 
 	return 0;
 }

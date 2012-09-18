@@ -2,15 +2,17 @@
 #define GRAPHICSCONTAINERGL_H
 
 #include "CommonGL.h"
+#include "../GraphicsContainer.h"
 
-class GraphicsContainerGL
+class GraphicsContainerGL : public GraphicsContainer
 {
 private:
-	GLuint vertexBuffer;
-	GLuint indexBuffer;
 protected:
 public:
-	GraphicsContainerGL();
+	GLuint vertexBuffer;
+	GLuint indexBuffer;
+
+	GraphicsContainerGL(unsigned int noVertices, unsigned int noIndices);
 	~GraphicsContainerGL();
 };
 

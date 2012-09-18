@@ -1,18 +1,22 @@
 #ifndef GRAPHICSCONTAINER_H
 #define GRAPHICSCONTAINER_H
 
-//make abstract
+//Make abstract
 class GraphicsContainer
 {
 private:
+protected:
 	unsigned int noVertices;
 	unsigned int noIndices;
-protected:
 public:
 	GraphicsContainer(
 		unsigned int noVertices,
-		unsigned int noIndices);
-	~GraphicsContainer();
+		unsigned int noIndices)
+	{
+		this->noVertices = noVertices;
+		this->noIndices = noIndices;
+	}
+	virtual ~GraphicsContainer() {}
 };
 
 #endif //GRAPHICSCONTAINER_H

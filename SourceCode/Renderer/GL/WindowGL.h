@@ -17,6 +17,8 @@ private:
 	char**	argv;
 
 	void glutCallback(Msg* msg);
+	void glutCallbackDisplayFunc(MsgGlutCallback* callbackMsg);
+	void glutCallbackIdleFunc(MsgGlutCallback* callbackMsg);
 protected:
 public:
 	WindowGL(int argc, char** argv);

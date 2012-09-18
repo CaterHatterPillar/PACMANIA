@@ -57,13 +57,37 @@ void WindowGL::update(double delta)
 }
 void WindowGL::glutCallback(Msg* msg)
 {
-	MsgGlutCallback* callbackMsg = (MsgGlutCallback*)msg;
+	MsgGlutCallback*	callbackMsg		= (MsgGlutCallback*)msg;
+	CALLBACK_TYPE		callbackType	= callbackMsg->CallBackType();
+	switch(callbackType)
+	{
+	case DISPLAY_FUNC:
+		glutCallbackDisplayFunc(callbackMsg);
+		break;
+	case IDLE_FUNC:
+		glutCallbackIdleFunc(callbackMsg);
+		break;
+	case START_MAIN:
+		startGlutMain();
+		break;
+	default:
+		throw 0;
+		break;
+	}
+	delete callbackMsg;
+}
+void WindowGL::glutCallbackDisplayFunc(MsgGlutCallback* callbackMsg)
+{
 	glutDisplayFunc(
 		(void (__cdecl *)(void))
 		(callbackMsg->Callback()));
-	delete callbackMsg;
-
-	startGlutMain();
+}
+void WindowGL::glutCallbackIdleFunc(MsgGlutCallback* callbackMsg)
+{
+	glutIdleFunc(
+		(void (__cdecl *)(void))
+		(callbackMsg->Callback())
+		);
 }
 
 void WindowGL::startGlutMain()
