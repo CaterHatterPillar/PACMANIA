@@ -30,9 +30,10 @@ private:
 	void createShaders();
 	void createVertexShader();
 	void createPixelShader();
-
 	LPCSTR vertexShaderModel();
 	LPCSTR pixelShaderModel();
+
+	void createInputLayout();
 
 public:
 	ShaderManagerDX(ID3D11Device* device, ID3D11DeviceContext* devcon, D3D_FEATURE_LEVEL);

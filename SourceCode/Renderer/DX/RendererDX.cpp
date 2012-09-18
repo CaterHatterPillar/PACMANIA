@@ -190,7 +190,10 @@ void RendererDX::update(double delta)
 
 void RendererDX::renderFrame()
 {
+	devcon->ClearRenderTargetView(backBuffer, BLACK);
+	devcon->ClearDepthStencilView(zBuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
+	swapChain->Present(0, 0);
 }
 
 void RendererDX::cleanUp()

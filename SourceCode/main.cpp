@@ -32,6 +32,7 @@ int WINAPI WinMain(
 	while(true)
 	{
 		dxWindow->update(1.0);
+		dxRenderer->renderFrame();
 	}
 }
 #endif
