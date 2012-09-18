@@ -8,6 +8,8 @@
 
 #include <math.h>
 
+static const float PI = 3.14159265358979323f;
+
 class Camera
 {
 private:

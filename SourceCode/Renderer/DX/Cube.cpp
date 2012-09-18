@@ -158,3 +158,8 @@ D3DXMATRIX Cube::getWorldMatrix()
 {
 	return world;
 }
+
+int Cube::getNumIndices()
+{
+	return indices.size();
+}

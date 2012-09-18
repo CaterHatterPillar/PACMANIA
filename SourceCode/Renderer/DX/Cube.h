@@ -70,6 +70,8 @@ public:
 	ID3D11Buffer* getIndexBuffer();
 	ID3D11Buffer* getVertexBuffer();
 	D3DXMATRIX getWorldMatrix();
+
+	int getNumIndices();
 };
 
 #endif 

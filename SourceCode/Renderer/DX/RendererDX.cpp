@@ -148,7 +148,7 @@ void RendererDX::createRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rsd;
 
-	rsd.CullMode				= D3D11_CULL_BACK;
+	rsd.CullMode				= D3D11_CULL_NONE;
 	rsd.FillMode				= D3D11_FILL_SOLID;
 	rsd.FrontCounterClockwise	= false;
 	rsd.DepthBias				= false;
@@ -172,6 +172,7 @@ void RendererDX::createShaderManager()
 void RendererDX::createCamera()
 {
 	camera = new Camera();
+	camera->setLens(PI/4, (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 1.0f, 100.0f);
 }
 
 void RendererDX::createCube()
@@ -211,8 +212,47 @@ void RendererDX::update(double delta)
 
 void RendererDX::renderFrame()
 {
+	camera->rebuildView();
+
+	D3DXMATRIX viewProj = camera->getView() * camera->getProjection();
+	D3DXMATRIX final = cube->getWorldMatrix() * viewProj;
+	shaderManager->updateCBufferPerFrame(final, cube->getWorldMatrix());
+
 	devcon->ClearRenderTargetView(backBuffer, BLACK);
 	devcon->ClearDepthStencilView(zBuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+	devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
+	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
+	devcon->IASetInputLayout(shaderManager->getInputLayout());
+
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0;
+
+	devcon->OMSetDepthStencilState(0, 0);
+
+	vector<Vertex> vertices;
+	vertices.push_back(Vertex(D3DXVECTOR3(0.0f, 0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
+	vertices.push_back(Vertex(D3DXVECTOR3(0.45f, -0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
+	vertices.push_back(Vertex(D3DXVECTOR3(-0.45f, -0.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), GREEN));
+
+	ID3D11Buffer* vertexBuffer;
+	D3D11_BUFFER_DESC vbd;
+	vbd.Usage = D3D11_USAGE_DYNAMIC;
+	vbd.ByteWidth = sizeof(Vertex) * vertices.size();
+	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	vbd.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA vinitData;
+	vinitData.pSysMem = &vertices[0];
+	device->CreateBuffer(&vbd, &vinitData, &vertexBuffer);
+
+	devcon->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+	//devcon->IASetIndexBuffer(cube->getIndexBuffer(), DXGI_FORMAT_R32_UINT, 0);
+	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//devcon->DrawIndexed(cube->getNumIndices(), 0, 0);
+	devcon->Draw(3, 0);
 
 	swapChain->Present(0, 0);
 }
