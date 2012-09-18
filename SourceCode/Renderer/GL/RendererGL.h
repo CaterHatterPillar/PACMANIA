@@ -6,14 +6,21 @@
 #include "../../Common.h"
 #include "../Renderer.h"
 #include "../GraphicsContainer.h"
+#include "FXManagementGL.h"
 
 #include "../../Singleton.h"
 #include "../../Messaging/ObserverDirector.h"
 #include "../../Messaging/MsgGlutCallback.h"
 
+#include "../../Math/PacMath.h"
+
 class RendererGL : public Renderer
 {
 private:
+	static GLuint tempVB;
+	static GLuint tempIB;
+
+	static FXManagementGL* fxManagement;
 protected:
 public:
 	RendererGL();
@@ -27,6 +34,7 @@ public:
 
 	/*Callback*/
 	static void renderSpec();
+	static void setShader();
 };
 
 #endif //OPENGL_H

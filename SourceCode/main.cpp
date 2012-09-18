@@ -26,11 +26,22 @@ int WINAPI WinMain(
 
 #ifndef WINDOWS
 /*Linux include*/
+
+/*memleaks*/
+#include <vld.h>
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #include "Renderer/GL/WindowGL.h"
 #include "Renderer/GL/RendererGL.h"
 
 int main(int argc, char**	argv)
 {
+	/*Memleaks*/
+	_CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	_CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_DEBUG );
+
 	Singleton<ObserverDirector>::get().init();
 
 	WindowGL* glWindow = new WindowGL(argc, argv);
@@ -45,6 +56,9 @@ int main(int argc, char**	argv)
 		glWindow->update(1.0);
 		glRenderer->update(1.0);
 	}
+
+	delete glWindow;
+	delete glRenderer;
 
 	return 0;
 }
