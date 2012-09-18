@@ -21,6 +21,8 @@ private:
 	static int mouseDeltaX;
 	static int mouseDeltaY;
 
+	bool active;
+
 	static HWND hWnd;
 	HINSTANCE hInstance;
 	int cmdShow;
@@ -38,6 +40,7 @@ public:
 
 	void update(double delta);
 	HWND getWindowHandle();
+	bool isActive();
 };
 
 #endif //WINDOWDX_H

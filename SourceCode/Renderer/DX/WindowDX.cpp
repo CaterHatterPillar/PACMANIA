@@ -10,6 +10,8 @@ WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow)
 	this->hInstance = hInstance;
 	this->cmdShow = cmdShow;
 
+	this->active = true;
+
 	keys.resize(NUM_KEYS, false);
 
 	//SetCursorPos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
@@ -110,10 +112,8 @@ void WindowDX::update(double delta)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
-		/*
 		if(msg.message == WM_QUIT)
-			quit = true;
-			*/
+			active = false;
 	}
 
 	//return quit;
@@ -122,4 +122,9 @@ void WindowDX::update(double delta)
 HWND WindowDX::getWindowHandle()
 {
 	return hWnd;
+}
+
+bool WindowDX::isActive()
+{
+	return active;
 }
