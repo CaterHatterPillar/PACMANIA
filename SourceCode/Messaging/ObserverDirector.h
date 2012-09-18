@@ -7,6 +7,7 @@
 /*Msgs*/
 #include "SubscriptionMsg.h"
 #include "MsgGlutCallback.h"
+#include "MsgRender.h"
 
 class ObserverDirector : public Component
 {
@@ -18,6 +19,7 @@ private:
 		Component*	subscriber, 
 		MsgType		subscription);
 	void msgGlutCallback(Msg* msg);
+	void msgRender(Msg* msg);
 protected:
 public:
 	ObserverDirector();
