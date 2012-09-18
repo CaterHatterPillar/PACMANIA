@@ -21,6 +21,8 @@ private:
 	static int mouseDeltaX;
 	static int mouseDeltaY;
 
+	bool running;
+
 	static HWND hWnd;
 	HINSTANCE hInstance;
 	int cmdShow;
