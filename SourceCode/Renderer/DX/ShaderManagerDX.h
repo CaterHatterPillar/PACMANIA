@@ -46,6 +46,8 @@ public:
 	~ShaderManagerDX();
 
 	void initialize();
+
+	void updateCBufferPerFrame(D3DXMATRIX final, D3DXMATRIX world);
 };
 
 #endif

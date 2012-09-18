@@ -141,3 +141,11 @@ void ShaderManagerDX::initialize()
 	createInputLayout();
 	createConstantBuffers();
 }
+
+void ShaderManagerDX::updateCBufferPerFrame(D3DXMATRIX final, D3DXMATRIX world)
+{
+	CBufferPerFrame cBuffer;
+	cBuffer.final = final;
+	cBuferr.world = world;
+	devcon->UpdateSubresource(cBufferPerFrame, 0, 0, &cBuffer, 0, 0);
+}
