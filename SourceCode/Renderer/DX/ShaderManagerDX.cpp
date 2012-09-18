@@ -18,8 +18,6 @@ void ShaderManagerDX::createShaders()
 {
 	createVertexShader();
 	createPixelShader();
-	createInputLayout();
-	createConstantBuffers();
 }
 
 void ShaderManagerDX::createVertexShader()
@@ -111,7 +109,7 @@ void ShaderManagerDX::createCBufferPerFrame()
 	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
 	device->CreateBuffer(&bd, NULL, &cBufferPerFrame);
-	devcon->VSSetConstantBuffers(0, 1, cBufferPerFrame);
+	devcon->VSSetConstantBuffers(0, 1, &cBufferPerFrame);
 }
 
 int ShaderManagerDX::calcConstantBufferSize(int structSize)
@@ -122,4 +120,6 @@ int ShaderManagerDX::calcConstantBufferSize(int structSize)
 void ShaderManagerDX::initialize()
 {
 	createShaders();
+	createInputLayout();
+	createConstantBuffers();
 }

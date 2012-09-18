@@ -163,6 +163,12 @@ void RendererDX::createRasterizerState()
 	devcon->RSSetState(rasterizerState);
 }
 
+void RendererDX::createShaderManager()
+{
+	shaderManager = new ShaderManagerDX(device, devcon, featureLevel);
+	shaderManager->initialize();
+}
+
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
@@ -170,6 +176,8 @@ void RendererDX::init()
 	createBackBuffer();
 	createViewport();
 	createRasterizerState();
+
+	createShaderManager();
 }
 
 void RendererDX::update(double delta)

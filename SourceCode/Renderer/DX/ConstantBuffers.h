@@ -9,6 +9,6 @@ struct CBufferPerFrame
 {
 	D3DXMATRIX final;
 	D3DXMATRIX world;
-}
+};
 
 #endif

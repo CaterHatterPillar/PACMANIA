@@ -3,12 +3,14 @@
 
 #include "../../Common.h"
 #include "../Renderer.h"
+
+#include "ShaderManagerDX.h"
+
 #include "../GraphicsContainer.h"
 #include "../../Messaging/MsgDXWindowHandle.h"
 #include "../../Messaging/SubscriptionMsg.h"
 #include "../../Messaging/ObserverDirector.h"
 #include "../../Singleton.h"
-
 
 #include <D3D11.h>
 #include <D3DX11.h>
@@ -40,6 +42,8 @@ private:
 	ID3D11DepthStencilView* zBuffer;
 	ID3D11RasterizerState* rasterizerState;
 
+	ShaderManagerDX* shaderManager;
+
 	D3D_FEATURE_LEVEL featureLevel;
 	char* featureLevelToString(D3D_FEATURE_LEVEL fl);
 
@@ -48,6 +52,7 @@ private:
 	void createBackBuffer();
 	void createViewport();
 	void createRasterizerState();
+	void createShaderManager();
 
 	void handleMsgDXWindowHandle(Msg* msg);
 
