@@ -51,6 +51,7 @@ public:
 
 	ID3D11VertexShader* getVertexShader();
 	ID3D11PixelShader* getPixelShader();
+	ID3D11InputLayout* getInputLayout();
 };
 
 #endif

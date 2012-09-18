@@ -159,3 +159,8 @@ ID3D11PixelShader* ShaderManagerDX::getPixelShader()
 {
 	return pixelShader;
 }
+
+ID3D11InputLayout* ShaderManagerDX::getInputLayout()
+{
+	return inputLayout;
+}
