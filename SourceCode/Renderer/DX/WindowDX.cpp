@@ -126,5 +126,5 @@ HWND WindowDX::getWindowHandle()
 
 bool WindowDX::isActive()
 {
-	return running;
+	return active;
 }
