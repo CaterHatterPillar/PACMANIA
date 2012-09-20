@@ -33,7 +33,6 @@ void ObserverDirector::update(double delta)
 				msgMouseClick(msg);
 				break;
 			case INPUT_KEYBOARD_MSG:
-				break;
 				msgKeyboard(msg);
 				break;
 			case CAMERA:

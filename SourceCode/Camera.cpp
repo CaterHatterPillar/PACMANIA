@@ -161,16 +161,16 @@ void Camera::inputKeyboard(MsgKeyboard* msg)
 	KEY key = msg->Key();
 	switch(key)
 	{
-	case W:
+	case UP:
 		keyW();
 		break;
-	case S:
+	case DOWN:
 		keyS();
 		break;
-	case A:
+	case LEFT:
 		keyA();
 		break;
-	case D:
+	case RIGHT:
 		keyD();
 		break;
 	}
@@ -253,7 +253,7 @@ MatF4 Camera::getView()
 	camRot.m[2][0] = n.x;	camRot.m[2][1] = n.y;	camRot.m[2][2] = n.z;	camRot.m[2][3] = 0.0f;
 	camRot.m[3][0] = 0.0f;	camRot.m[3][1] = 0.0f;	camRot.m[3][2] = 0.0f;	camRot.m[3][3] = 1.0f;
 
-	MatF4 view = camRot * camTrans;
+	MatF4 view = camTrans; //camRot * camTrans;
 	return view;
 }
 MatF4 Camera::getProj()

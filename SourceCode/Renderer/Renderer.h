@@ -4,12 +4,16 @@
 #include "../Common.h"
 #include "../Component.h"
 #include "GraphicsContainer.h"
+#include "../Math/MatF4.h"
 
 class Renderer : public Component
 {
 private:
 protected:
 	static std::vector<GraphicsContainer*>* renderList;
+	
+	static MatF4 view;
+	static MatF4 proj;
 public:
 	virtual void init()					= 0;
 	virtual void update(double delta)	= 0;

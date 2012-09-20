@@ -16,6 +16,8 @@
 class InputGL : public Component
 {
 private:
+	static int lastMouseX;
+	static int lastMouseY;
 protected:
 public:
 	void init();
