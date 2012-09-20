@@ -6,7 +6,11 @@
 enum CALLBACK_TYPE
 { 
 	DISPLAY_FUNC, 
-	IDLE_FUNC
+	IDLE_FUNC,
+
+	SPECIAL_FUNC,
+	PASSIVE_MOTION_FUNC,
+	KEYBOARD_FUNC,
 };
 
 //Modify so that several  callback-types may use the same msg

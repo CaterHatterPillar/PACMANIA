@@ -2,7 +2,7 @@
 #define MSGCAMERA_H
 
 #include "Msg.h"
-#include "Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 class MsgCamera : public Msg
 {
@@ -11,12 +11,12 @@ private:
 	MatF4 proj;
 protected:
 public:
-	MsgCamera(MatF4 view, MatF4 proj)
+	MsgCamera(MatF4 view, MatF4 proj) : Msg(CAMERA)
 	{
 		this->view = view;
 		this->proj = proj;
 	}
-	MsgCamera(MsgCamera* msgCamera)
+	MsgCamera(MsgCamera* msgCamera) : Msg(CAMERA)
 	{
 		view = msgCamera->View();
 		proj = msgCamera->Proj();

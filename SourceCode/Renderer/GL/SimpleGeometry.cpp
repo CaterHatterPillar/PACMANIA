@@ -4,10 +4,10 @@ void SimpleGeometry::init()
 {
 	/*Init temp buffers*/
 	VecF3 vertices[4];
-	vertices[0] = VecF3(-1.0f, -1.0f, 0.0f);
-	vertices[1] = VecF3(0.0f, -1.0f, 1.0f);
-	vertices[2] = VecF3(1.0f, -1.0f, 0.0f);
-	vertices[3] = VecF3(0.0f, 1.0f, 0.0f);
+	vertices[0] = VecF3(-10.0f, -10.0f, 0.0f);
+	vertices[1] = VecF3(0.0f, -10.0f, 10.0f);
+	vertices[2] = VecF3(10.0f, -10.0f, 0.0f);
+	vertices[3] = VecF3(0.0f, 10.0f, 0.0f);
 
 	GLuint VB;
 	GLuint IB;

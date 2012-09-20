@@ -53,9 +53,9 @@ struct MatF4
 	{
 		MatF4 rx, ry, rz;
 
-		const float radianX = RADIAN(x);
-		const float radianY = RADIAN(y);
-		const float radianZ = RADIAN(z);
+		const float radianX = (float)RADIAN(x);
+		const float radianY = (float)RADIAN(y);
+		const float radianZ = (float)RADIAN(z);
 
 		rx.m[0][0] = 1.0f; rx.m[0][1] = 0.0f;			rx.m[0][2] = 0.0f;				rx.m[0][3] = 0.0f;
 		rx.m[1][0] = 0.0f; rx.m[1][1] = cosf(radianX);	rx.m[1][2] = -sinf(radianX);	rx.m[1][3] = 0.0f;
