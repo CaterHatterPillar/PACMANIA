@@ -5,8 +5,8 @@ RendererDX::RendererDX()
 	SubscriptionMsg* msg = new SubscriptionMsg(this, DX_WINDOW_HANDLE);
 	Singleton<ObserverDirector>::get().push(msg);
 
-	SubscriptionMsg* msg = new SubscriptionMsg(this, CAMERA);
-	Singleton<ObserverDirector>::get().push(msg);
+	SubscriptionMsg* msg2 = new SubscriptionMsg(this, CAMERA);
+	Singleton<ObserverDirector>::get().push(msg2);
 }
 
 RendererDX::~RendererDX()
@@ -218,8 +218,8 @@ void RendererDX::renderFrame()
 {
 	camera->rebuildView();
 
-	D3DXMATRIX viewProj = camera->getView() * camera->getProjection();
-	D3DXMATRIX final = cube->getWorldMatrix() * viewProj;
+	MatF4 viewProj = camera->getView() * camera->getProjection();
+	MatF4 final = cube->getWorldMatrix() * viewProj;
 	shaderManager->updateCBufferPerFrame(final, cube->getWorldMatrix());
 
 	devcon->ClearRenderTargetView(backBuffer, BLACK);

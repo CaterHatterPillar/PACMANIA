@@ -10,6 +10,7 @@
 #include <WindowsX.h>
 
 #include "ConstantBuffers.h"
+#include "../../Math/PacMath.h"
 
 class ShaderManagerDX
 {
@@ -47,7 +48,7 @@ public:
 
 	void initialize();
 
-	void updateCBufferPerFrame(D3DXMATRIX final, D3DXMATRIX world);
+	void updateCBufferPerFrame(MatF4 final, MatF4 world);
 
 	ID3D11VertexShader* getVertexShader();
 	ID3D11PixelShader* getPixelShader();

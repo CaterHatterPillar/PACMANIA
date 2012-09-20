@@ -2,68 +2,68 @@
 
 Camera::Camera()
 {
-	position = D3DXVECTOR3(0.0f, 2.0f, -10.0f);
-	right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
-	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	look = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+	position = VecF3(0.0f, 2.0f, -10.0f);
+	right = VecF3(1.0f, 0.0f, 0.0f);
+	up = VecF3(0.0f, 1.0f, 0.0f);
+	look = VecF3(0.0f, 0.0f, 1.0f);
 }
 
 Camera::~Camera()
 {
 }
 
-D3DXVECTOR3 Camera::getPosition() const
+VecF3 Camera::getPosition() const
 {
 	return position;
 }
 
-D3DXVECTOR3 Camera::getRight() const
+VecF3 Camera::getRight() const
 {
 	return right;
 }
 
-D3DXVECTOR3 Camera::getLook() const
+VecF3 Camera::getLook() const
 {
 	return look;
 }
 
-D3DXVECTOR3 Camera::getUp() const
+VecF3 Camera::getUp() const
 {
 	return up;
 }
 
-D3DXMATRIX Camera::getView() const
+MatF4 Camera::getView() const
 {
 	return view;
 }
 
-D3DXMATRIX Camera::getProjection() const
+MatF4 Camera::getProjection() const
 {
 	return projection;
 }
 
 void Camera::setLens(float fov, float aspect, float zn, float zf)
 {
-	D3DXMATRIX perspective;
-	ZeroMemory(&perspective, sizeof(D3DXMATRIX));
+	MatF4 perspective;
+	ZeroMemory(&perspective, sizeof(MatF4));
 
-	perspective._11 = 1/(aspect * (tan(fov/2)));
-	perspective._22 = 1/(tan(fov/2));
-	perspective._33 = zf/(zf-zn);
-	perspective._34 = 1.0f;
-	perspective._43 = (-zn*zf)/(zf-zn);
+	perspective.m[0][0] = 1/(aspect * (tan(fov/2)));
+	perspective.m[1][1] = 1/(tan(fov/2));
+	perspective.m[2][2] = zf/(zf-zn);
+	perspective.m[2][3] = 1.0f;
+	perspective.m[3][2] = (-zn*zf)/(zf-zn);
 
 	projection = perspective;
 }
 
 void Camera::strafe(float velocity)
 {
-	position += velocity*right;
+	position += right*velocity;
 }
 
 void Camera::walk(float velocity)
 {
-	position += velocity*look;
+	position += look*velocity;
 }
 
 void Camera::verticalWalk(float velocity)
@@ -78,54 +78,68 @@ void Camera::setHeight(float height)
 
 void Camera::pitch(float angle)
 {
-	D3DXMATRIX rotation;
+	/*D3DXMATRIX rotation;
 	D3DXMatrixRotationAxis(&rotation, &right, angle);
+*/
+	up.rotate(angle, right);
+	look.rotate(angle, right);
 
-	D3DXVec3TransformNormal(&up, &up, &rotation);
-	D3DXVec3TransformNormal(&look, &look, &rotation);
+	/*D3DXVec3TransformNormal(&up, &up, &rotation);
+	D3DXVec3TransformNormal(&look, &look, &rotation);*/
 }
 
 void Camera::rotateY(float angle)
 {
-	D3DXMATRIX rotation;
-	D3DXMatrixRotationY(&rotation, angle);
+	//D3DXMATRIX rotation;
+	//D3DXMatrixRotationY(&rotation, angle);
 
-	D3DXVec3TransformNormal(&right, &right, &rotation);
-	D3DXVec3TransformNormal(&up, &up, &rotation);
-	D3DXVec3TransformNormal(&look, &look, &rotation);
+	right.rotate(angle, VecF3(0.0f, 1.0f, 0.0f));
+	up.rotate(angle, VecF3(0.0f, 1.0f, 0.0f));
+	look.rotate(angle, VecF3(0.0f, 1.0f, 0.0f));
+
+	//D3DXVec3TransformNormal(&right, &right, &rotation);
+	//D3DXVec3TransformNormal(&up, &up, &rotation);
+	//D3DXVec3TransformNormal(&look, &look, &rotation);
 }
 
 void Camera::rebuildView()
 {
-	D3DXVec3Normalize(&look, &look);
+	//D3DXVec3Normalize(&look, &look);
+	look.normalize();
 
-	D3DXVec3Cross(&up, &look, &right);
-	D3DXVec3Normalize(&up, &up);
+	//D3DXVec3Cross(&up, &look, &right);
+	//D3DXVec3Normalize(&up, &up);
 
-	D3DXVec3Cross(&right, &up, &look);
-	D3DXVec3Normalize(&right, &right);
+	up = look.cross(right);
+	up.normalize();
 
-	float x = -D3DXVec3Dot(&position, &right);
-	float y = -D3DXVec3Dot(&position, &up);
-	float z = -D3DXVec3Dot(&position, &look);
+	//D3DXVec3Cross(&right, &up, &look);
+	//D3DXVec3Normalize(&right, &right);
 
-	view(0,0) = right.x; 
-	view(1,0) = right.y; 
-	view(2,0) = right.z; 
-	view(3,0) = x;   
+	right = up.cross(look);
+	right.normalize();
 
-	view(0,1) = up.x;
-	view(1,1) = up.y;
-	view(2,1) = up.z;
-	view(3,1) = y;  
+	float x = -position.dot(right); // -D3DXVec3Dot(&position, &right);
+	float y = -position.dot(up); // -D3DXVec3Dot(&position, &up);
+	float z = -position.dot(look); // -D3DXVec3Dot(&position, &look);
 
-	view(0,2) = look.x; 
-	view(1,2) = look.y; 
-	view(2,2) = look.z; 
-	view(3,2) = z;   
+	view.m[0][0] = right.x; 
+	view.m[1][0] = right.y; 
+	view.m[2][0] = right.z; 
+	view.m[3][0] = x;   
 
-	view(0,3) = 0.0f;
-	view(1,3) = 0.0f;
-	view(2,3) = 0.0f;
-	view(3,3) = 1.0f;
+	view.m[0][1] = up.x;
+	view.m[1][1] = up.y;
+	view.m[2][1] = up.z;
+	view.m[3][1] = y;  
+
+	view.m[0][2] = look.x; 
+	view.m[1][2] = look.y; 
+	view.m[2][2] = look.z; 
+	view.m[3][2] = z;   
+
+	view.m[0][3] = 0.0f;
+	view.m[1][3] = 0.0f;
+	view.m[2][3] = 0.0f;
+	view.m[3][3] = 1.0f;
 }

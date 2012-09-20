@@ -7,6 +7,8 @@
 
 #include <math.h>
 
+#include "../../Math/PacMath.h"
+
 
 #define VK_0 0x30
 #define VK_1 0x31
@@ -47,28 +49,26 @@
 #define VK_Z 0x5A
 
 
-static const float PI = 3.14159265358979323f;
-
 class Camera
 {
 private:
-	D3DXVECTOR3 position;
-	D3DXVECTOR3 right;
-	D3DXVECTOR3 up;
-	D3DXVECTOR3 look;
+	VecF3 position;
+	VecF3 right;
+	VecF3 up;
+	VecF3 look;
 
-	D3DXMATRIX view;
-	D3DXMATRIX projection;
+	MatF4 view;
+	MatF4 projection;
 public:
 	Camera();
 	~Camera();
 
-	D3DXVECTOR3 getPosition() const;
-	D3DXVECTOR3	getRight() const;
-	D3DXVECTOR3 getLook() const;
-	D3DXVECTOR3 getUp() const;
-	D3DXMATRIX getView() const;
-	D3DXMATRIX getProjection() const;
+	VecF3 getPosition() const;
+	VecF3 getRight() const;
+	VecF3 getLook() const;
+	VecF3 getUp() const;
+	MatF4 getView() const;
+	MatF4 getProjection() const;
 
 	void setLens(float fov, float aspect, float zn, float zf);
 

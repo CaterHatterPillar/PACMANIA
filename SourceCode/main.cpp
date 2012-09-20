@@ -32,8 +32,8 @@ int WINAPI WinMain(
 	while(dxWindow->isActive())
 	{
 		dxWindow->update(1.0);
+
 		dxRenderer->renderFrame();
-		dxRenderer->input(dxWindow->getInput());
 	}
 }
 #endif

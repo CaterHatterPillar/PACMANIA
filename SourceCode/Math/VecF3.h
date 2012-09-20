@@ -3,6 +3,7 @@
 
 #include "CommonMath.h"
 #include "Quaternion.h"
+#include "MatF4.h"
 
 struct VecF3
 {
@@ -18,11 +19,12 @@ struct VecF3
 	VecF3& operator+=(const VecF3& vec);
 	VecF3& operator-=(const VecF3& vec);
 	VecF3& operator*=(float scalar);
-
+	 
 	/*Helper functions*/
 	VecF3 cross(const VecF3& vec) const;
 	VecF3& normalize();
 	void rotate(float angle, const VecF3& axis);
+	float dot(VecF3 right);
 };
 
 /*Inline*/

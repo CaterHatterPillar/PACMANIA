@@ -38,6 +38,9 @@ void ObserverDirector::update(double delta)
 			case CAMERA:
 				msgCamera(msg);
 				break;
+			case DX_WINDOW_HANDLE:
+				msgDXWindowHandle(msg);
+				break;
 			default:
 				throw 0; //temp, make fix
 				break;

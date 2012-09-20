@@ -5,10 +5,12 @@
 #include <D3DX11.h>
 #include <D3DX10.h>
 
+#include "../../Math/PacMath.h"
+
 struct CBufferPerFrame
 {
-	D3DXMATRIX final;
-	D3DXMATRIX world;
+	MatF4 final;
+	MatF4 world;
 };
 
 #endif

@@ -142,7 +142,7 @@ void ShaderManagerDX::initialize()
 	createConstantBuffers();
 }
 
-void ShaderManagerDX::updateCBufferPerFrame(D3DXMATRIX final, D3DXMATRIX world)
+void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world)
 {
 	CBufferPerFrame cBuffer;
 	cBuffer.final = final;

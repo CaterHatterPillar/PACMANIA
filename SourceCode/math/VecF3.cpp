@@ -72,3 +72,9 @@ void VecF3::rotate(float angle, const VecF3& axis)
 	y = w.y;
 	z = w.z;
 }
+
+float VecF3::dot(VecF3 right)
+{
+	float result = x*right.x + y*right.y + z*right.z;
+	return result;
+}

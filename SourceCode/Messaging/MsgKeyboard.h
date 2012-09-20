@@ -10,7 +10,7 @@ enum KEY
 	KEY_A,
 	KEY_S,
 	KEY_D,
-	KEY_ESC
+	KEY_ESC,
 	
 	KEY_UP,
 	KEY_DOWN,

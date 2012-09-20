@@ -10,6 +10,8 @@
 
 #include <vector>
 
+#include "../../Math/PacMath.h"
+
 using namespace std;
 
 const D3DXCOLOR WHITE(1.0f, 1.0f, 1.0f, 1.0f);
@@ -50,7 +52,7 @@ private:
 	ID3D11Buffer* indexBuffer;
 
 	D3DXVECTOR3 position;
-	D3DXMATRIX world;
+	MatF4 world;
 
 	vector<DWORD> indices;
 	vector<Vertex> vertices;
@@ -69,7 +71,7 @@ public:
 
 	ID3D11Buffer* getIndexBuffer();
 	ID3D11Buffer* getVertexBuffer();
-	D3DXMATRIX getWorldMatrix();
+	MatF4 getWorldMatrix();
 
 	int getNumIndices();
 };

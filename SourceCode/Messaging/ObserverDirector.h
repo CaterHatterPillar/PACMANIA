@@ -6,11 +6,8 @@
 
 /*Msgs*/
 #include "SubscriptionMsg.h"
-<<<<<<< HEAD
 
-=======
 #include "MsgGlut.h"
->>>>>>> GL
 #include "MsgGlutCallback.h"
 #include "MsgRender.h"
 #include "MsgCamera.h"
