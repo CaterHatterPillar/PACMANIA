@@ -14,11 +14,33 @@ WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow)
 
 	keys.resize(NUM_KEYS, false);
 
-	//SetCursorPos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+	SetCursorPos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 WindowDX::~WindowDX()
 {
+	ReleaseCapture();
+	ShowCursor(true);
+}
+
+void WindowDX::mouseDeltaMove(LPARAM lParam)
+{
+	//Find the upper left corner of the window's client area in screen coordinates
+	POINT point;
+	point.x = 0;
+	point.y = 0;
+	MapWindowPoints(hWnd, NULL, &point, 1);
+	
+	//Get current mouse position
+	int mouseX = GET_X_LPARAM(lParam)+point.x;
+	int mouseY = GET_Y_LPARAM(lParam)+point.y;
+
+	//Calculate relative mouse movement
+	mouseDeltaX = mouseX - SCREEN_WIDTH/2;
+	mouseDeltaY = mouseY - SCREEN_HEIGHT/2;
+
+	//Return cursor to screen center
+	SetCursorPos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -52,7 +74,7 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 	case WM_MOUSEMOVE:
 		{
-			//mouseDeltaMove(lParam);
+			mouseDeltaMove(lParam);
 			return 0;
 		}break;
 
@@ -91,9 +113,18 @@ void WindowDX::createWindow()
 
 	ShowWindow(hWnd, cmdShow);
 }
+
+void WindowDX::initCursor()
+{
+	SetCursorPos(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+	SetCapture(hWnd);
+	ShowCursor(false);
+}
+
 void WindowDX::init()
 {
 	createWindow();
+	initCursor();
 
 	MsgDXWindowHandle* msg = new MsgDXWindowHandle(&hWnd);
 	Singleton<ObserverDirector>::get().push(msg);
@@ -127,4 +158,9 @@ HWND WindowDX::getWindowHandle()
 bool WindowDX::isActive()
 {
 	return active;
+}
+
+InputContainer WindowDX::getInput()
+{
+	return InputContainer(keys, mouseDeltaX, mouseDeltaY);
 }

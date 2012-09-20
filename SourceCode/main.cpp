@@ -1,4 +1,4 @@
-//#define WINDOWS
+#define WINDOWS
 
 /*Common include*/
 #include "Singleton.h"
@@ -33,6 +33,7 @@ int WINAPI WinMain(
 	{
 		dxWindow->update(1.0);
 		dxRenderer->renderFrame();
+		dxRenderer->input(dxWindow->getInput());
 	}
 }
 #endif

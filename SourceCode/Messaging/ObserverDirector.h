@@ -18,7 +18,7 @@
 #include "MsgMouseMove.h"
 #include "MsgKeyboard.h"
 
-//#include "MsgDXWindowHandle.h"
+#include "MsgDXWindowHandle.h"
 
 class ObserverDirector : public Component
 {

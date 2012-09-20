@@ -45,19 +45,17 @@ void RendererDX::createDeviceAndSwapChain()
 	scd.Windowed			= true;
 	scd.Flags				= DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	UINT numFeatureLevels = 6;
+	UINT numFeatureLevels = 4;
 
 	D3D_FEATURE_LEVEL featureLevels[] = {	D3D_FEATURE_LEVEL_11_0,
 											D3D_FEATURE_LEVEL_10_1,
 											D3D_FEATURE_LEVEL_10_0,
-											D3D_FEATURE_LEVEL_9_3,
-											D3D_FEATURE_LEVEL_9_2,
-											D3D_FEATURE_LEVEL_9_1};
+											D3D_FEATURE_LEVEL_9_3 };
 
 	UINT numDriverTypes = 2;
 	D3D_DRIVER_TYPE driverTypes[] = {D3D_DRIVER_TYPE_HARDWARE, D3D_DRIVER_TYPE_REFERENCE};
 
-	int index = 0;
+	unsigned int index = 0;
 	bool deviceCreated = false;
 
 	while(index < numDriverTypes && !deviceCreated)
@@ -115,7 +113,8 @@ void RendererDX::createDepthBuffer()
 	dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
 
 	device->CreateDepthStencilView(depthBuffer, &dsvd, &zBuffer);
-	depthBuffer->Release();
+	if(featureLevel != D3D_FEATURE_LEVEL_9_3)
+		depthBuffer->Release();
 }
 
 void RendererDX::createBackBuffer()
@@ -148,7 +147,7 @@ void RendererDX::createRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rsd;
 
-	rsd.CullMode				= D3D11_CULL_NONE;
+	rsd.CullMode				= D3D11_CULL_BACK;
 	rsd.FillMode				= D3D11_FILL_SOLID;
 	rsd.FrontCounterClockwise	= false;
 	rsd.DepthBias				= false;
@@ -258,4 +257,38 @@ void RendererDX::handleMsgDXWindowHandle(Msg* msg)
 	hWnd = (*msgDX->getHandle());
 
 	delete msgDX;
+}
+
+void RendererDX::input(InputContainer inputContainer)
+{
+	float velocityModifier = 0.1f; 
+	float velocity = 40.0f * velocityModifier;
+
+	if(inputContainer.keys[VK_W])
+		camera->walk(velocity);
+	if(inputContainer.keys[VK_S])
+		camera->walk(-velocity);
+	if(inputContainer.keys[VK_D])
+		camera->strafe(velocity);
+	if(inputContainer.keys[VK_A])
+		camera->strafe(-velocity);
+	if(inputContainer.keys[VK_Z])
+		camera->verticalWalk(velocity);
+	if(inputContainer.keys[VK_X])
+		camera->verticalWalk(-velocity);
+
+	if(inputContainer.keys[VK_1])
+		velocityModifier = 1;
+	if(inputContainer.keys[VK_2])
+		velocityModifier = 2;
+	if(inputContainer.keys[VK_3])
+		velocityModifier = 3;
+	if(inputContainer.keys[VK_4])
+		velocityModifier = 4;
+
+	float angleX = (inputContainer.mouseDeltaX) * 0.001f;
+	float angleY = (inputContainer.mouseDeltaY) * 0.001f;
+
+	camera->rotateY(angleX);
+	camera->pitch(angleY);
 }

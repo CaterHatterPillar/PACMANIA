@@ -6,6 +6,7 @@
 
 #include "ShaderManagerDX.h"
 #include "Camera.h"
+#include "InputContainer.h"
 #include "Cube.h"
 
 #include "../GraphicsContainer.h"
@@ -64,6 +65,8 @@ public:
 	virtual void update(double delta);
 	void renderFrame();
 	void cleanUp();
+
+	void input(InputContainer inputContainer);
 };
 
 #endif //RENDERERDX_H
