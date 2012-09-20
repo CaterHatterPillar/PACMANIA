@@ -19,6 +19,8 @@ WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow)
 
 WindowDX::~WindowDX()
 {
+	ReleaseCapture();
+	ShowCursor(true);
 }
 
 LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
