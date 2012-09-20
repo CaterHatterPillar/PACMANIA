@@ -104,6 +104,7 @@ void WindowDX::initCursor()
 void WindowDX::init()
 {
 	createWindow();
+	initCursor();
 
 	MsgDXWindowHandle* msg = new MsgDXWindowHandle(&hWnd);
 	Singleton<ObserverDirector>::get().push(msg);
