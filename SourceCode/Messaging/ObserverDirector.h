@@ -6,8 +6,13 @@
 
 /*Msgs*/
 #include "SubscriptionMsg.h"
+#include "MsgGlut.h"
 #include "MsgGlutCallback.h"
 #include "MsgRender.h"
+#include "MsgCamera.h"
+#include "MsgMouseClick.h"
+#include "MsgMouseMove.h"
+#include "MsgKeyboard.h"
 
 class ObserverDirector : public Component
 {
@@ -18,8 +23,13 @@ private:
 	void subscribe(
 		Component*	subscriber, 
 		MsgType		subscription);
+	void msgGlut(Msg* msg);
 	void msgGlutCallback(Msg* msg);
 	void msgRender(Msg* msg);
+	void msgMouseClick(Msg* msg);
+	void msgMouseMove(Msg* msg);
+	void msgKeyboard(Msg* msg);
+	void msgCamera(Msg* msg);
 protected:
 public:
 	ObserverDirector();

@@ -8,46 +8,17 @@ struct VecF2
 	float x;
 	float y;
 
-	VecF2() {}
-	VecF2(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
-	virtual ~VecF2() {}
+	VecF2();
+	VecF2(float x, float y);
+	virtual ~VecF2();
 
 	/*Operators*/
-	virtual VecF2& operator+=(const VecF2& vec)
-	{
-		x += vec.x;
-		y += vec.y;
-
-		return *this;
-	}
-	virtual VecF2& operator-=(const VecF2& vec)
-	{
-		x -= vec.x;
-		y -= vec.y;
-
-		return *this;
-	}
-	virtual VecF2& operator*=(float scalar)
-	{
-		x *= scalar;
-		y *= scalar;
-
-		return *this;
-	}
+	VecF2& operator+=(const VecF2& vec);
+	VecF2& operator-=(const VecF2& vec);
+	VecF2& operator*=(float scalar);
 
 	/*Helper Functions*/
-	virtual VecF2& normalize()
-	{
-		const float length = sqrtf(x * x + y * y);
-		x /= length;
-		y /= length;
-
-		return *this;
-	}
+	VecF2& normalize();
 };
 
 #endif //VECF2_H

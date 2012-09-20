@@ -17,7 +17,7 @@
 class RendererGL : public Renderer
 {
 private:
-	static FXManagementGL*		fxManagement;
+	static FXManagementGL* fxManagement;
 protected:
 public:
 	RendererGL();
