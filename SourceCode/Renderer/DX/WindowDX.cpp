@@ -83,6 +83,22 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
+void WindowDX::sendInput()
+{	
+	if(keys[VK_A])
+	{
+		MsgKeyboard* msgKeyboard;
+		msgKeyboard = new MsgKeyboard(KEY::A);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+	if(keys[VK_W])
+	{
+		MsgKeyboard* msgKeyboard;
+		msgKeyboard = new MsgKeyboard(KEY::W);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+}
+
 void WindowDX::createWindow()
 {
 	WNDCLASSEX wc;
