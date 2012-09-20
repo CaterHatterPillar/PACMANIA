@@ -258,3 +258,36 @@ void RendererDX::handleMsgDXWindowHandle(Msg* msg)
 
 	delete msgDX;
 }
+
+void RendererDX::input(InputContainer inputContainer)
+{
+	float velocity = 40.0f * velocityModifier * deltaTime;
+
+	if(input.keys[VK_W])
+		camera->walk(velocity);
+	if(input.keys[VK_S])
+		camera->walk(-velocity);
+	if(input.keys[VK_D])
+		camera->strafe(velocity);
+	if(input.keys[VK_A])
+		camera->strafe(-velocity);
+	if(input.keys[VK_Z])
+		camera->verticalWalk(velocity);
+	if(input.keys[VK_X])
+		camera->verticalWalk(-velocity);
+
+	if(input.keys[VK_1])
+		velocityModifier = 1;
+	if(input.keys[VK_2])
+		velocityModifier = 2;
+	if(input.keys[VK_3])
+		velocityModifier = 3;
+	if(input.keys[VK_4])
+		velocityModifier = 4;
+
+	float angleX = (input.mouseDeltaX) * 0.001f;
+	float angleY = (input.mouseDeltaY) * 0.001f;
+
+	camera->rotateY(angleX);
+	camera->pitch(angleY);
+}
