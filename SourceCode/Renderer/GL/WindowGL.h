@@ -10,6 +10,7 @@
 #include "../../Singleton.h"
 #include "../../Messaging/ObserverDirector.h"
 #include "../../Messaging/SubscriptionMsg.h"
+#include "../../Messaging/MsgGlut.h"
 #include "../../Messaging/MsgGlutCallback.h"
 
 class WindowGL : public Window
@@ -19,8 +20,14 @@ private:
 	char**	argv;
 
 	void glutCallback(Msg* msg);
-	void glutCallbackDisplayFunc(MsgGlutCallback* callbackMsg);
-	void glutCallbackIdleFunc(MsgGlutCallback* callbackMsg);
+	void glutCallbackDisplayFunc(MsgGlutCallback*		callbackMsg);
+	void glutCallbackIdleFunc(MsgGlutCallback*			callbackMsg);
+	void glutCallbackSpecialFunc(MsgGlutCallback*		callbackMsg);
+	void glutCallBackPassiveMotionFunc(MsgGlutCallback*	callbackMsg);
+	void glutCallbackKeyboardFunc(MsgGlutCallback*		callbackMsg);
+
+	void glut(Msg* msg);
+	void glutWarpPointerMsg(MsgGlut* glutMsg);
 protected:
 public:
 	WindowGL(int argc, char** argv);
@@ -28,8 +35,6 @@ public:
 
 	virtual void init();
 	virtual void update(double delta);
-
-	void startGlutMain();
 };
 
 

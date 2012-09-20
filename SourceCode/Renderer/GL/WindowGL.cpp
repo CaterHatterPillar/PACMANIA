@@ -52,6 +52,9 @@ void WindowGL::update(double delta)
 		{
 			switch(msg->Type())
 			{
+			case MSG_GLUT:
+				glut(msg);
+				break;
 			case MSG_GLUT_CALLBACK:
 				glutCallback(msg);
 				break;
@@ -76,6 +79,15 @@ void WindowGL::glutCallback(Msg* msg)
 	case IDLE_FUNC:
 		glutCallbackIdleFunc(callbackMsg);
 		break;
+	case SPECIAL_FUNC:
+		glutCallbackSpecialFunc(callbackMsg);
+		break;
+	case PASSIVE_MOTION_FUNC:
+		glutCallBackPassiveMotionFunc(callbackMsg);
+		break;
+	case KEYBOARD_FUNC:
+		glutCallbackKeyboardFunc(callbackMsg);
+		break;
 	default:
 		throw 0;
 		break;
@@ -95,8 +107,44 @@ void WindowGL::glutCallbackIdleFunc(MsgGlutCallback* callbackMsg)
 		(callbackMsg->Callback())
 		);
 }
-
-void WindowGL::startGlutMain()
+void WindowGL::glutCallbackSpecialFunc(MsgGlutCallback* callbackMsg)
 {
-	glutMainLoop();
+	glutSpecialFunc(
+		(void (__cdecl *)(int, int, int))
+		(callbackMsg->Callback()));
+}
+void WindowGL::glutCallBackPassiveMotionFunc(MsgGlutCallback* callbackMsg)
+{
+	glutPassiveMotionFunc(
+		(void (__cdecl *)(int, int))
+		(callbackMsg->Callback()));
+}
+void WindowGL::glutCallbackKeyboardFunc(MsgGlutCallback* callbackMsg)
+{
+	glutKeyboardFunc(
+		(void (__cdecl *)(unsigned char, int, int))
+		(callbackMsg->Callback()));
+}
+
+void WindowGL::glut(Msg* msg)
+{
+	MsgGlut* glutMsg = (MsgGlut*)msg;
+	GLUT_BEHAVIOUR behaviour = glutMsg->Behaviour();
+	switch(behaviour)
+	{
+	case WARP_POINTER:
+		glutWarpPointerMsg(glutMsg);
+		break;
+	default:
+		throw 0; //temp
+		break;
+	}
+
+	delete glutMsg;
+}
+void WindowGL::glutWarpPointerMsg(MsgGlut* glutMsg)
+{
+	glutWarpPointer(
+		glutMsg->IntFirst(),
+		glutMsg->IntSecond());
 }
