@@ -65,6 +65,8 @@ private:
 	static vector<bool> keys;
 	static int mouseDeltaX;
 	static int mouseDeltaY;
+	static bool leftMouseButton;
+	static bool rightMouseButton;
 
 	bool active;
 

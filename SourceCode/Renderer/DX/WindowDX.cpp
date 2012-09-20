@@ -3,6 +3,8 @@
 vector<bool> WindowDX::keys;
 int	WindowDX::mouseDeltaX;
 int	WindowDX::mouseDeltaY;
+bool WindowDX::leftMouseButton;
+bool WindowDX::rightMouseButton;
 HWND WindowDX::hWnd;
 
 WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow)
@@ -48,36 +50,35 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 	switch(message)
 	{
 	case WM_DESTROY:
-		{
 			PostQuitMessage(0);
 			return 0;
-		}break;
-
+		break;
 	case WM_KEYDOWN:
-		{
 			if(wParam == VK_ESCAPE)
-			{
 				DestroyWindow(hWnd);
-			}
-
 			keys[wParam] = true;
-
 			return 0;
-		}break;
-
+		break;
 	case WM_KEYUP:
-		{
 			keys[wParam] = false;
-
 			return 0;
-		}break;
-
+		break;
 	case WM_MOUSEMOVE:
-		{
 			mouseDeltaMove(lParam);
 			return 0;
-		}break;
-
+		break;
+	case WM_LBUTTONDOWN:
+		leftMouseButton = true;
+		break;
+	case WM_LBUTTONUP:
+		leftMouseButton = false;
+		break;
+	case WM_RBUTTONDOWN:
+		rightMouseButton = true;
+		break;
+	case WM_RBUTTONUP:
+		rightMouseButton = false;
+		break;
 	}
 
 	return DefWindowProc(hWnd, message, wParam, lParam);
@@ -85,17 +86,35 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 void WindowDX::sendInput()
 {	
-	if(keys[VK_A])
-	{
-		MsgKeyboard* msgKeyboard;
-		msgKeyboard = new MsgKeyboard(KEY::A);
-		Singleton<ObserverDirector>::get().push(msgKeyboard);
-	}
 	if(keys[VK_W])
 	{
-		MsgKeyboard* msgKeyboard;
-		msgKeyboard = new MsgKeyboard(KEY::W);
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_W);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+	if(keys[VK_A])
+	{
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_A);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+	if(keys[VK_S])
+	{
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_S);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+	if(keys[VK_D])
+	{
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_D);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+
+	if(mouseDeltaX != 0 || mouseDeltaY != 0)
+	{
+		MsgMouseMove* msgMouseMove = new MsgMouseMove(mouseDeltaX, mouseDeltaY);
+		Singleton<ObserverDirector>::get().push(msgMouseMove);
+	}
+
+	if(leftMouseButton || rightMouseButton)
+	{
 	}
 }
 
