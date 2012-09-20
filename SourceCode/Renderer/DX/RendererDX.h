@@ -66,7 +66,7 @@ public:
 	void renderFrame();
 	void cleanUp();
 
-	void input(InputContainer input)
+	void input(InputContainer inputContainer);
 };
 
 #endif //RENDERERDX_H

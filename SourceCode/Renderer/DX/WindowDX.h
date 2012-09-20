@@ -4,6 +4,8 @@
 #include <Windows.h>
 #include <WindowsX.h>
 
+#include "InputContainer.h"
+
 #include "../../Common.h"
 #include "../Window.h"
 #include "../../Messaging/ObserverDirector.h"
@@ -30,6 +32,7 @@ private:
 	void createWindow();
 	void initCursor();
 
+	static void mouseDeltaMove(LPARAM lParam);
 	static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
@@ -41,6 +44,8 @@ public:
 	void update(double delta);
 	HWND getWindowHandle();
 	bool isActive();
+
+	InputContainer getInput();
 };
 
 #endif //WINDOWDX_H

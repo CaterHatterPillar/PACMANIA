@@ -261,32 +261,33 @@ void RendererDX::handleMsgDXWindowHandle(Msg* msg)
 
 void RendererDX::input(InputContainer inputContainer)
 {
-	float velocity = 40.0f * velocityModifier * deltaTime;
+	float velocityModifier = 0.1f; 
+	float velocity = 40.0f * velocityModifier;
 
-	if(input.keys[VK_W])
+	if(inputContainer.keys[VK_W])
 		camera->walk(velocity);
-	if(input.keys[VK_S])
+	if(inputContainer.keys[VK_S])
 		camera->walk(-velocity);
-	if(input.keys[VK_D])
+	if(inputContainer.keys[VK_D])
 		camera->strafe(velocity);
-	if(input.keys[VK_A])
+	if(inputContainer.keys[VK_A])
 		camera->strafe(-velocity);
-	if(input.keys[VK_Z])
+	if(inputContainer.keys[VK_Z])
 		camera->verticalWalk(velocity);
-	if(input.keys[VK_X])
+	if(inputContainer.keys[VK_X])
 		camera->verticalWalk(-velocity);
 
-	if(input.keys[VK_1])
+	if(inputContainer.keys[VK_1])
 		velocityModifier = 1;
-	if(input.keys[VK_2])
+	if(inputContainer.keys[VK_2])
 		velocityModifier = 2;
-	if(input.keys[VK_3])
+	if(inputContainer.keys[VK_3])
 		velocityModifier = 3;
-	if(input.keys[VK_4])
+	if(inputContainer.keys[VK_4])
 		velocityModifier = 4;
 
-	float angleX = (input.mouseDeltaX) * 0.001f;
-	float angleY = (input.mouseDeltaY) * 0.001f;
+	float angleX = (inputContainer.mouseDeltaX) * 0.001f;
+	float angleY = (inputContainer.mouseDeltaY) * 0.001f;
 
 	camera->rotateY(angleX);
 	camera->pitch(angleY);

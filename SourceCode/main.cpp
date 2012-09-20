@@ -33,6 +33,7 @@ int WINAPI WinMain(
 	{
 		dxWindow->update(1.0);
 		dxRenderer->renderFrame();
+		dxRenderer->input(dxWindow->getInput());
 	}
 }
 #endif
