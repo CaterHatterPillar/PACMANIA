@@ -4,6 +4,9 @@ RendererDX::RendererDX()
 {
 	SubscriptionMsg* msg = new SubscriptionMsg(this, DX_WINDOW_HANDLE);
 	Singleton<ObserverDirector>::get().push(msg);
+
+	SubscriptionMsg* msg = new SubscriptionMsg(this, CAMERA);
+	Singleton<ObserverDirector>::get().push(msg);
 }
 
 RendererDX::~RendererDX()
@@ -203,6 +206,8 @@ void RendererDX::update(double delta)
 			case DX_WINDOW_HANDLE:
 				handleMsgDXWindowHandle(msg);
 				break;
+			case CAMERA:
+				break;
 		}
 
 		msg = pop();
@@ -257,6 +262,13 @@ void RendererDX::handleMsgDXWindowHandle(Msg* msg)
 	hWnd = (*msgDX->getHandle());
 
 	delete msgDX;
+}
+
+void RendererDX::handleMsgCamera(Msg* msg)
+{
+	MsgCamera msgCamera = (MsgCamera*)msg;
+	viewMatrix = msgCamera.View();
+	projectionMatrix = msgCamera.Proj();
 }
 
 void RendererDX::input(InputContainer inputContainer)

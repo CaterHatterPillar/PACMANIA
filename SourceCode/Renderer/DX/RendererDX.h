@@ -11,9 +11,12 @@
 
 #include "../GraphicsContainer.h"
 #include "../../Messaging/MsgDXWindowHandle.h"
+#include "../../Messaging/MsgCamera.h"
 #include "../../Messaging/SubscriptionMsg.h"
 #include "../../Messaging/ObserverDirector.h"
 #include "../../Singleton.h"
+
+#include "../../Math/MatF4.h"
 
 #include <D3D11.h>
 #include <D3DX11.h>
@@ -40,6 +43,8 @@ private:
 	Camera* camera;
 	Cube* cube;
 
+	MatF4 viewMatrix;
+	MatF4 projectionMatrix;
 
 	D3D_FEATURE_LEVEL featureLevel;
 	char* featureLevelToString(D3D_FEATURE_LEVEL fl);
@@ -55,6 +60,7 @@ private:
 	void createCube();
 
 	void handleMsgDXWindowHandle(Msg* msg);
+	void handleMsgCamera(Msg* msg);
 
 protected:
 public:
