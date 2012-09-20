@@ -55,7 +55,7 @@ void RendererDX::createDeviceAndSwapChain()
 	UINT numDriverTypes = 2;
 	D3D_DRIVER_TYPE driverTypes[] = {D3D_DRIVER_TYPE_HARDWARE, D3D_DRIVER_TYPE_REFERENCE};
 
-	int index = 0;
+	unsigned int index = 0;
 	bool deviceCreated = false;
 
 	while(index < numDriverTypes && !deviceCreated)
