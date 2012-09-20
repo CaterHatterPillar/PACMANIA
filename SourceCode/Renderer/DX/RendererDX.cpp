@@ -45,14 +45,12 @@ void RendererDX::createDeviceAndSwapChain()
 	scd.Windowed			= true;
 	scd.Flags				= DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-	UINT numFeatureLevels = 6;
+	UINT numFeatureLevels = 4;
 
 	D3D_FEATURE_LEVEL featureLevels[] = {	D3D_FEATURE_LEVEL_11_0,
 											D3D_FEATURE_LEVEL_10_1,
 											D3D_FEATURE_LEVEL_10_0,
-											D3D_FEATURE_LEVEL_9_3,
-											D3D_FEATURE_LEVEL_9_2,
-											D3D_FEATURE_LEVEL_9_1};
+											D3D_FEATURE_LEVEL_9_3 };
 
 	UINT numDriverTypes = 2;
 	D3D_DRIVER_TYPE driverTypes[] = {D3D_DRIVER_TYPE_HARDWARE, D3D_DRIVER_TYPE_REFERENCE};
@@ -115,7 +113,8 @@ void RendererDX::createDepthBuffer()
 	dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
 
 	device->CreateDepthStencilView(depthBuffer, &dsvd, &zBuffer);
-	depthBuffer->Release();
+	if(featureLevel != D3D_FEATURE_LEVEL_9_3)
+		depthBuffer->Release();
 }
 
 void RendererDX::createBackBuffer()
@@ -148,7 +147,7 @@ void RendererDX::createRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rsd;
 
-	rsd.CullMode				= D3D11_CULL_NONE;
+	rsd.CullMode				= D3D11_CULL_BACK;
 	rsd.FillMode				= D3D11_FILL_SOLID;
 	rsd.FrontCounterClockwise	= false;
 	rsd.DepthBias				= false;
