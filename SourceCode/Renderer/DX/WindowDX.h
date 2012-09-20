@@ -81,6 +81,9 @@ private:
 	static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void sendInput();
+	static void sendKeyboardInput(WPARAM key, bool pressed);
+	static void sendMouseMove();
+	static void sendMouseClick();
 
 public:
 	WindowDX(HINSTANCE hInstance, int cmdShow);

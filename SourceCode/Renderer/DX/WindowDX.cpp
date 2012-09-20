@@ -57,24 +57,29 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 			if(wParam == VK_ESCAPE)
 				DestroyWindow(hWnd);
 			keys[wParam] = true;
+			sendKeyboardInput(wParam, true);
 			return 0;
 		break;
 	case WM_KEYUP:
 			keys[wParam] = false;
+			sendKeyboardInput(wParam, false);
 			return 0;
 		break;
 	case WM_MOUSEMOVE:
 			mouseDeltaMove(lParam);
+			sendMouseMove();
 			return 0;
 		break;
 	case WM_LBUTTONDOWN:
 		leftMouseButton = true;
+		sendMouseClick();
 		break;
 	case WM_LBUTTONUP:
 		leftMouseButton = false;
 		break;
 	case WM_RBUTTONDOWN:
 		rightMouseButton = true;
+		sendMouseClick();
 		break;
 	case WM_RBUTTONUP:
 		rightMouseButton = false;
@@ -84,38 +89,41 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-void WindowDX::sendInput()
-{	
-	if(keys[VK_W])
+
+void WindowDX::sendKeyboardInput(WPARAM key, bool isPressed)
+{
+	if(key = VK_W)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_W);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
-	if(keys[VK_A])
+	if(key = VK_A)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_A);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
-	if(keys[VK_S])
+	if(key = VK_S)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_S);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
-	if(keys[VK_D])
+	if(key = VK_D)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_D);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
+}
 
-	if(mouseDeltaX != 0 || mouseDeltaY != 0)
-	{
-		MsgMouseMove* msgMouseMove = new MsgMouseMove(mouseDeltaX, mouseDeltaY);
-		Singleton<ObserverDirector>::get().push(msgMouseMove);
-	}
+void WindowDX::sendMouseMove()
+{
+	MsgMouseMove* msgMouseMove = new MsgMouseMove(mouseDeltaX, mouseDeltaY);
+	Singleton<ObserverDirector>::get().push(msgMouseMove);
+}
 
-	if(leftMouseButton || rightMouseButton)
-	{
-	}
+void WindowDX::sendMouseClick()
+{
+	MsgMouseClick* msgMouseClick = new MsgMouseClick(leftMouseButton, rightMouseButton);
+	Singleton<ObserverDirector>::get().push(msgMouseClick);
 }
 
 void WindowDX::createWindow()
