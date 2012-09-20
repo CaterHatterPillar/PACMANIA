@@ -92,22 +92,22 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 void WindowDX::sendKeyboardInput(WPARAM key, bool isPressed)
 {
-	if(key = VK_W)
+	if(key == VK_W)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_W);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
-	if(key = VK_A)
+	if(key == VK_A)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_A);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
-	if(key = VK_S)
+	if(key == VK_S)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_S);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
-	if(key = VK_D)
+	if(key == VK_D)
 	{
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_D);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);

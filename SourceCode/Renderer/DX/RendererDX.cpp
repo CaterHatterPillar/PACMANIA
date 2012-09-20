@@ -171,12 +171,6 @@ void RendererDX::createShaderManager()
 	shaderManager->initialize();
 }
 
-void RendererDX::createCamera()
-{
-	camera = new Camera();
-	camera->setLens(PI/4, (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 1.0f, 100.0f);
-}
-
 void RendererDX::createCube()
 {
 	cube = new Cube(device);
@@ -192,7 +186,6 @@ void RendererDX::init()
 	createRasterizerState();
 
 	createShaderManager();
-	createCamera();
 	createCube();
 }
 
@@ -207,6 +200,7 @@ void RendererDX::update(double delta)
 				handleMsgDXWindowHandle(msg);
 				break;
 			case CAMERA:
+				handleMsgCamera(msg);
 				break;
 		}
 
@@ -216,9 +210,8 @@ void RendererDX::update(double delta)
 
 void RendererDX::renderFrame()
 {
-	camera->rebuildView();
 
-	MatF4 viewProj = camera->getView() * camera->getProjection();
+	MatF4 viewProj = viewMatrix * projectionMatrix;
 	MatF4 final = cube->getWorldMatrix() * viewProj;
 	shaderManager->updateCBufferPerFrame(final, cube->getWorldMatrix());
 
@@ -266,41 +259,14 @@ void RendererDX::handleMsgDXWindowHandle(Msg* msg)
 
 void RendererDX::handleMsgCamera(Msg* msg)
 {
-	MsgCamera msgCamera = (MsgCamera*)msg;
-	viewMatrix = msgCamera.View();
-	projectionMatrix = msgCamera.Proj();
+	MsgCamera* msgCamera = (MsgCamera*)msg;
+	viewMatrix = msgCamera->View();
+	projectionMatrix = msgCamera->Proj();
+
+	delete msgCamera;
 }
 
 void RendererDX::input(InputContainer inputContainer)
 {
-	float velocityModifier = 0.1f; 
-	float velocity = 40.0f * velocityModifier;
-
-	if(inputContainer.keys[VK_W])
-		camera->walk(velocity);
-	if(inputContainer.keys[VK_S])
-		camera->walk(-velocity);
-	if(inputContainer.keys[VK_D])
-		camera->strafe(velocity);
-	if(inputContainer.keys[VK_A])
-		camera->strafe(-velocity);
-	if(inputContainer.keys[VK_Z])
-		camera->verticalWalk(velocity);
-	if(inputContainer.keys[VK_X])
-		camera->verticalWalk(-velocity);
-
-	if(inputContainer.keys[VK_1])
-		velocityModifier = 1;
-	if(inputContainer.keys[VK_2])
-		velocityModifier = 2;
-	if(inputContainer.keys[VK_3])
-		velocityModifier = 3;
-	if(inputContainer.keys[VK_4])
-		velocityModifier = 4;
-
-	float angleX = (inputContainer.mouseDeltaX) * 0.001f;
-	float angleY = (inputContainer.mouseDeltaY) * 0.001f;
-
-	camera->rotateY(angleX);
-	camera->pitch(angleY);
+	
 }

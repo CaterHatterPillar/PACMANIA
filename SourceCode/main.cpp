@@ -9,6 +9,7 @@
 /*Windows include*/
 #include "renderer/DX/WindowDX.h"
 #include "renderer/DX/RendererDX.h"
+#include "Renderer/Camera.h"
 
 int WINAPI WinMain(
 	HINSTANCE hInstance, 
@@ -28,11 +29,17 @@ int WINAPI WinMain(
 	dxRenderer->update(1.0f);
 	dxRenderer->init();
 
+	Camera* camera = new Camera();
+	camera->init();
+
 
 	while(dxWindow->isActive())
 	{
-		dxWindow->update(1.0);
+		Singleton<ObserverDirector>::get().update(1.0);
 
+		dxWindow->update(1.0);
+		camera->update(1.0f);
+		dxRenderer->update(1.0f);
 		dxRenderer->renderFrame();
 	}
 }

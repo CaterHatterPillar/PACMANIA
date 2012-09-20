@@ -5,7 +5,6 @@
 #include "../Renderer.h"
 
 #include "ShaderManagerDX.h"
-#include "Camera.h"
 #include "InputContainer.h"
 #include "Cube.h"
 
@@ -40,7 +39,6 @@ private:
 	ID3D11RasterizerState* rasterizerState;
 
 	ShaderManagerDX* shaderManager;
-	Camera* camera;
 	Cube* cube;
 
 	MatF4 viewMatrix;
@@ -55,7 +53,6 @@ private:
 	void createViewport();
 	void createRasterizerState();
 	void createShaderManager();
-	void createCamera();
 
 	void createCube();
 
