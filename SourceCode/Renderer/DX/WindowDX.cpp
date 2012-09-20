@@ -159,3 +159,8 @@ bool WindowDX::isActive()
 {
 	return active;
 }
+
+InputContainer WindowDX::getInput()
+{
+	return InputContainer(keys, mouseDeltaX, mouseDeltaY);
+}
