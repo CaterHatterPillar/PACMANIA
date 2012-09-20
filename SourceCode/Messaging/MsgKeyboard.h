@@ -5,11 +5,11 @@
 
 enum KEY
 {
-	W,
-	A,
-	S,
-	D,
-	ESC
+	KEY_W,
+	KEY_A,
+	KEY_S,
+	KEY_D,
+	KEY_ESC
 };
 
 class MsgKeyboard : public Msg
@@ -18,11 +18,11 @@ private:
 	KEY	key;
 protected:
 public:
-	MsgKeyboard(KEY key) : Msg(INPUT_KEYBOARD)
+	MsgKeyboard(KEY key) : Msg(INPUT_KEYBOARD_MSG)
 	{
 		this->key = key;
 	}
-	MsgKeyboard(MsgKeyboard* keyboardMsg) : Msg(INPUT_KEYBOARD)
+	MsgKeyboard(MsgKeyboard* keyboardMsg) : Msg(INPUT_KEYBOARD_MSG)
 	{
 		key = keyboardMsg->Key();
 	}
