@@ -2,18 +2,14 @@
 #define MSGTYPE_H
 
 /*Add new msgs here*/
-enum MsgType
-{
+enum MsgType {
 	SUBSCRIBE,
 	RENDER,
-
 	INPUT_MOUSE_CLICK,
 	INPUT_MOUSE_MOVE,
-	INPUT_KEYBOARD,
+	INPUT_KEYBOARD_MSG,
 	CAMERA,
-
 	MSG_GLUT_CALLBACK,
-	
 	DX_WINDOW_HANDLE
 };
 
