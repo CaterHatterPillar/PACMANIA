@@ -19,15 +19,15 @@
 class RendererGL : public Renderer
 {
 private:
-	FXManagementGL* fxManagement;
+	static FXManagementGL* fxManagement;
 
-	MatF4 view;
-	MatF4 proj;
-	MatF4 worldViewProj;
+	static MatF4 view;
+	static MatF4 proj;
+	static MatF4 worldViewProj;
 
 	GLuint viewFX;
 	GLuint projFX;
-	GLuint worldViewProjFX;
+	static GLuint worldViewProjFX;
 protected:
 public:
 	RendererGL();

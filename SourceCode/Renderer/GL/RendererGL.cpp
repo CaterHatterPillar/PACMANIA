@@ -1,16 +1,12 @@
 #include "RendererGL.h"
 
-//FXManagementGL* RendererGL::fxManagement;
-/*
+FXManagementGL* RendererGL::fxManagement;
+
 MatF4	RendererGL::view;
-GLuint	RendererGL::viewFX;
-
 MatF4	RendererGL::proj;
-GLuint	RendererGL::projFX;
-
 MatF4	RendererGL::worldViewProj;
+
 GLuint	RendererGL::worldViewProjFX;
-*/
 
 RendererGL::RendererGL() : Renderer()
 {
@@ -102,7 +98,7 @@ void RendererGL::renderSpec()
 	GraphicsContainerGL* graphicsGL;
 	for(unsigned int i = 0; i < renderList->size(); i++)
 	{
-		graphicsGL = renderList->at(i);
+		graphicsGL = (GraphicsContainerGL*)(renderList->at(i));
 		renderGraphicsGL(graphicsGL);
 	}
 	
@@ -110,32 +106,74 @@ void RendererGL::renderSpec()
 }
 void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 {
+	if(containerGL->OutdatedVB())
+	{
+		containerGL->createVB();
+		containerGL->OutdatedVB(false);
+	}
+	if(containerGL->OutdatedIB())
+	{
+		containerGL->createIB();
+		containerGL->OutdatedIB(false);
+	}
+
+	GLuint vb = containerGL->VB();
+	GLuint ib = containerGL->IB();
+
+	unsigned int numVertices	= containerGL->getNumVertices();
+	unsigned int numIndices		= containerGL->getNumIndices();
+	unsigned int numFaces		= containerGL->getNumFaces();
+	unsigned int stride			= containerGL->getStride();
+	unsigned int offset			= containerGL->getOffset();
+
 	setShader();
 
-	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(0); //pos
+	//glEnableVertexAttribArray(1); //norm
+	//glEnableVertexAttribArray(2); //tex
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	/*Specifies how buffer is to be interpreted*/
+	glBindBuffer(GL_ARRAY_BUFFER, vb);
+
 	glVertexAttribPointer(
 		0,			//Index of attribute
 		3,			//Number of components in attribute (x, y, z)
 		GL_FLOAT,	//Data type of each component
 		GL_FALSE,	//Specifies if we want attribute to be normalized
-		0,			//Stride
+		stride,		//Stride
 		0);			//Offset
 
+	/*
+	glVertexAttribPointer(
+		1,			//Index of attribute
+		3,			//Number of components in attribute (x, y, z)
+		GL_FLOAT,	//Data type of each component
+		GL_FALSE,	//Specifies if we want attribute to be normalized
+		stride,		//Stride
+		(void*)(sizeof(VecF3)));			//Offset
+
+	glVertexAttribPointer(
+		2,			//Index of attribute
+		2,			//Number of components in attribute (x, y, z)
+		GL_FLOAT,	//Data type of each component
+		GL_FALSE,	//Specifies if we want attribute to be normalized
+		stride,		//Stride
+		(void*)(sizeof(VecF3) * 2));			//Offset
+	*/
+
 	/*Set index buffer*/
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 
 	/*Draw-call using indices*/
 	glDrawElements(
 		GL_TRIANGLES,		//Type to render
-		12,					//Number of indices
+		numIndices,			//Number of indices
 		GL_UNSIGNED_INT,	//Index-type (for size)
 		0);					//Offset
 
 	/*Disable*/
-	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(0); //pos
+	//glDisableVertexAttribArray(1); //norm
+	//glDisableVertexAttribArray(2); //tex
 }
 void RendererGL::setShader()
 {
@@ -149,37 +187,11 @@ void RendererGL::setShader()
 	glUseProgram(programFX);
 
 	/*Connect uniforms*/
-	std::vector<UniformGL*>* uniforms = fx->Uniforms();
-	for(unsigned int i = 0; i < uniforms->size(); i++)
-	{
-		UniformGL*		uniformGL	= uniforms->at(i);
-		GLuint			handle		= uniformGL->Uniform();
-		UNIFORM_TYPE	type		= uniformGL->Type();
+	//worldViewProjFX = glGetUniformLocation(programFX, "wvp");
+	//assert(worldViewProjFX != 0xFFFFFFFF);
 
-		if(type == MATRIX4F)
-		{
-			MatF4 world;
-			world.translation(1.0f, 1.0f, 1.0f);
-
-			MatF4 trans = world * view * proj;
-			glUniformMatrix4fv(handle, 1, GL_TRUE, &trans.m[0][0]);
-		}
-		else
-			throw 0; //temp
-
-		GLuint uniform = glGetUniformLocation(programFX, "transform");//handle);
-		assert(uniform != 0xFFFFFFFF);
-
-		MatF4 world;
-		world.translation(0.0f, 0.0f, 5.0f);
-
-		MatF4 trans = proj * view * world;
-		glUniformMatrix4fv(uniform, 1, GL_TRUE, &trans.m[0][0]);
-	}
+	//MatF4 world;
+	//world.translation(0.0f, 0.0f, 5.0f);
+	//worldViewProj = proj * view * world;
+	//glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
 }
-
-/*Update transform*/
-		//MatF4 world;
-		//world.translation(0.0f, 0.0f, 5.0f);
-		//trans = proj * view * world;
-		//glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &trans.m[0][0]);

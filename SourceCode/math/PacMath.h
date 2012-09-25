@@ -9,6 +9,21 @@ struct VecI2
     int y;
 };
 
+struct VecF2
+{
+	float x;
+	float y;
+
+	VecF2()
+	{
+	}
+	VecF2(float _x, float _y)
+	{
+		x = _x;
+		y = _y;
+	}
+};
+
 struct VecF3
 {
     float x;

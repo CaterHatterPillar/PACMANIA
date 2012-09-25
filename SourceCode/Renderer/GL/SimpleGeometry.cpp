@@ -2,48 +2,68 @@
 
 void SimpleGeometry::init()
 {
-	VecF3 vertices[4];
-	vertices[0] = VecF3(-10.0f, -10.0f, 0.0f);
-	vertices[1] = VecF3(0.0f, -10.0f, 10.0f);
-	vertices[2] = VecF3(10.0f, -10.0f, 0.0f);
-	vertices[3] = VecF3(0.0f, 10.0f, 0.0f);
+	std::vector<PosNormTex>* vertices = new std::vector<PosNormTex>();
+	
+	PosNormTex vertex;
+	vertex.pos = VecF3(-1.0f, -1.0f, 0.0f);
+	vertices->push_back(vertex);
 
-	GLuint VB;
-	GLuint IB;
+	vertex.pos = VecF3(0.0f, -10.0f, 10.0f);
+	vertices->push_back(vertex);
 
-	/*Create buffer using glGen-function*/
-	glGenBuffers(1, &VB);
-	/*Specify usage of buffer*/
-	glBindBuffer(GL_ARRAY_BUFFER, VB); //GL_ARRAY_BUFFER specifies that the buffer will contain an array of vertices
-	/*Fill buffer with data*/
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //contents won't be changed, so flag STATIC is specified
+	vertex.pos = VecF3(10.0f, -10.0f, 0.0f);
+	vertices->push_back(vertex);
 
-	unsigned int indices[] = { 
-		0, 3, 1,
-		1, 3, 2,
-		2, 3, 0,
-		0, 2, 1};
+	vertex.pos = VecF3(0.0f, 10.0f, 0.0f);
+	vertices->push_back(vertex);
 
-		/*Create buffer using glGen-function*/
-		glGenBuffers(1, &IB);
-		/*Specify usage of buffer*/
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-		/*Fill buffer with data*/
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	std::vector<unsigned int>* indices = new std::vector<unsigned int>();
+	indices->push_back(0);
+	indices->push_back(3);
+	indices->push_back(1);
+	
+	indices->push_back(1);
+	indices->push_back(3);
+	indices->push_back(2);
 
-	graphicsContainer->vertexBuffer = VB;
-	graphicsContainer->indexBuffer = IB;
+	indices->push_back(2);
+	indices->push_back(3);
+	indices->push_back(0);
+
+	indices->push_back(0);
+	indices->push_back(2);
+	indices->push_back(1);
+
+	unsigned int numVertices = 4;
+	unsigned int numIndices = 12;
+	unsigned int numFaces = 4;
+
+	unsigned int stride = sizeof(PosNormTex);
+	unsigned int offset = 0;
+
+	graphicsContainer = new GraphicsContainerGL(
+		VERTEX_SHADER_DEFAULT,
+		PIXEL_SHADER_DEFAULT,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
 }
 void SimpleGeometry::update(double delta)
 {
-	/*Simple geometry wishes to be rendered each frame*/
-	MsgRender* msgRender = new MsgRender(graphicsContainer);
-	Singleton<ObserverDirector>::get().push(msgRender);
+	if(graphicsContainer)
+	{
+		MsgRender* msgRender = new MsgRender(graphicsContainer);
+		Singleton<ObserverDirector>::get().push(msgRender);
+	}
 }
 
 SimpleGeometry::SimpleGeometry()
 {
-	graphicsContainer = new GraphicsContainerGL(0, 0);
+	graphicsContainer = nullptr;
 }
 SimpleGeometry::~SimpleGeometry()
 {

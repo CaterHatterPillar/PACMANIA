@@ -13,7 +13,7 @@ void FXManagementGL::createFX(ID_FX idFX)
 {
 	GLuint programFX = createProgramFX();
 	FXGL* fx = new FXGL(idFX, programFX);
-	fx->loadUniform("wvp", MATRIX4F); //temp
+	//fx->loadUniform("wvp", MATRIX4F); //temp
 	fxs->push_back(fx);
 }
 GLuint FXManagementGL::createProgramFX()
