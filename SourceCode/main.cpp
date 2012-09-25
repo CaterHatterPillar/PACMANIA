@@ -1,4 +1,4 @@
-#define WINDOWS
+//#define WINDOWS
 
 /*Common include*/
 #include "Singleton.h"
