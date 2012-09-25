@@ -17,6 +17,11 @@ protected:
 	ShaderId vertexShaderId;
 	ShaderId pixelShaderId;
 public:
+	GraphicsContainer()
+	{
+		numVertices = 0;
+		numIndices	= 0;
+	}
 	GraphicsContainer(unsigned int numVertices, unsigned int numIndices)
 	{
 		this->numVertices = numVertices;
