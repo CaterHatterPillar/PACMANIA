@@ -3,7 +3,6 @@
 
 #include "CommonGL.h"
 
-
 #include "../../Common.h"
 
 #include "../Window.h"
@@ -16,6 +15,8 @@
 class WindowGL : public Window
 {
 private:
+	bool running;
+
 	int		argc;
 	char**	argv;
 
@@ -35,6 +36,8 @@ public:
 
 	virtual void init();
 	virtual void update(double delta);
+
+	bool Running() { return running; }
 };
 
 

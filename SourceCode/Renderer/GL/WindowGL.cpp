@@ -2,6 +2,8 @@
 
 WindowGL::WindowGL(int argc, char** argv)
 {
+	running = true;
+
 	this->argc = argc;
 	this->argv = argv;
 }
@@ -16,13 +18,16 @@ void WindowGL::init()
 	SubscriptionMsg* subscriptionMsg = new SubscriptionMsg(this, MSG_GLUT_CALLBACK);
 	Singleton<ObserverDirector>::get().push(subscriptionMsg);
 
+	subscriptionMsg = new SubscriptionMsg(this, MSG_GLUT);
+	Singleton<ObserverDirector>::get().push(subscriptionMsg);
+
 	/*Initialize window through GLUT*/
 	glutInit(&argc, argv);
 	glutInitDisplayMode(
 		GLUT_DOUBLE		|	//Double-buffer
-		GLUT_RGBA			//Back-buffer
-		//GLUT_DEPTH	|	//Depth-buffer
-		//GLUT_STENCIL		//Stencil-buffer
+		GLUT_RGBA		|	//Back-buffer
+		GLUT_DEPTH		|	//Depth-buffer
+		GLUT_STENCIL		//Stencil-buffer
 	);
 
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);	//Initialize window
@@ -136,6 +141,10 @@ void WindowGL::glut(Msg* msg)
 	{
 	case WARP_POINTER:
 		glutWarpPointerMsg(glutMsg);
+		break;
+	case QUIT:
+		running = false;
+		glutLeaveMainLoop();
 		break;
 	default:
 		throw 0; //temp

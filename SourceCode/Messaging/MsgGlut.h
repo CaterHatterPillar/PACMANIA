@@ -5,7 +5,8 @@
 
 enum GLUT_BEHAVIOUR
 {
-	WARP_POINTER
+	WARP_POINTER,
+	QUIT
 };
 
 class MsgGlut : public Msg
@@ -17,6 +18,13 @@ private:
 	int intSecond;
 protected:
 public:
+	MsgGlut(GLUT_BEHAVIOUR behaviour) : Msg(MSG_GLUT)
+	{
+		this->behaviour	= behaviour;
+
+		this->intFirst	= 0;
+		this->intSecond	= 0;
+	}
 	MsgGlut(
 		GLUT_BEHAVIOUR behaviour, 
 		int intFirst, 

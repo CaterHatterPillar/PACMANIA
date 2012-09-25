@@ -40,35 +40,9 @@ void RendererGL::init()
 	MsgGlutCallback* callbackMsg = new MsgGlutCallback(renderSpec, DISPLAY_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
-	callbackMsg = new MsgGlutCallback(renderSpec, IDLE_FUNC);
-	Singleton<ObserverDirector>::get().push(callbackMsg);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //set a colour for brevity
 
-	/*VB*/
-	/*Create array of desired vertices*/
-	VecF3 vertices[4];
-	vertices[0] = VecF3(-1.0f, -1.0f, 0.0f);
-	vertices[1] = VecF3(0.0f, -1.0f, 1.0f);
-	vertices[2] = VecF3(1.0f, -1.0f, 0.0f);
-	vertices[3] = VecF3(0.0f, 1.0f, 0.0f);
-
-	/*Create buffer using glGen-function*/
-	glGenBuffers(1, &vertexBuffer);
-	/*Specify usage of buffer*/
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer); //GL_ARRAY_BUFFER specifies that the buffer will contain an array of vertices
-	/*Fill buffer with data*/
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //contents won't be changed, so flag STATIC is specified
-
-	/*IB*/
-	unsigned int indices[] = { 
-		0, 3, 1,
-		1, 3, 2,
-		2, 3, 0,
-		0, 2, 1};
-
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
+	initBuffers();
 	initShaders();
 
 	/*Uniform*/
@@ -124,9 +98,37 @@ void RendererGL::initShaders()
 	/*Connect shader program to pipeline*/
 	glUseProgram(shaderProgram);
 }
+void RendererGL::initBuffers()
+{
+	/*VB*/
+	/*Create array of desired vertices*/
+	VecF3 vertices[4];
+	vertices[0] = VecF3(-1.0f, -1.0f, 0.0f);
+	vertices[1] = VecF3(0.0f, -1.0f, 1.0f);
+	vertices[2] = VecF3(1.0f, -1.0f, 0.0f);
+	vertices[3] = VecF3(0.0f, 1.0f, 0.0f);
+
+	/*Create buffer using glGen-function*/
+	glGenBuffers(1, &vertexBuffer);
+	/*Specify usage of buffer*/
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer); //GL_ARRAY_BUFFER specifies that the buffer will contain an array of vertices
+	/*Fill buffer with data*/
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //contents won't be changed, so flag STATIC is specified
+
+	/*IB*/
+	unsigned int indices[] = { 
+		0, 3, 1,
+		1, 3, 2,
+		2, 3, 0,
+		0, 2, 1};
+
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+}
+
 void RendererGL::update(double delta)
 {
-	/*Clear renderList*/
 	renderList->resize(0);
 
 	Msg* msg = peek();
@@ -165,7 +167,6 @@ void RendererGL::msgCamera(Msg* msg)
 
 	delete cameraMsg;
 }
-
 void RendererGL::renderFrame()
 {
 }
@@ -214,8 +215,8 @@ void RendererGL::renderSpec()
 
 //temp
 void RendererGL::addShader(
-	GLuint		shaderProgram, 
-	const char*	shaderText, 
+	GLuint		shaderProgram,
+	const char*	shaderText,
 	GLenum		shaderType)
 {
 	GLuint shaderObj = glCreateShader(shaderType);

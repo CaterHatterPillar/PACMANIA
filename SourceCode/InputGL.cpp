@@ -48,8 +48,15 @@ void InputGL::keyboardSpecialSpec(int key, int x, int y)
 		k = KEY_RIGHT;
 		validKey = true;
 		break;
+	case GLUT_KEY_F4:
+		{
+			MsgGlut* glutMsg = new MsgGlut(QUIT);
+			Singleton<ObserverDirector>::get().push(glutMsg);
+			break;
+		}
 	default:
-		throw 0; //tmep
+	//	throw 0; //tmep
+		break;
 	}
 
 	if(validKey)
@@ -66,8 +73,8 @@ void InputGL::keyboardSpec(unsigned char key, int x, int y)
 	case 'q':
 		throw 0;
 		break;
-	//default:
-	//	break;
+	default:
+		break;
 	}
 }
 void InputGL::mouseSpec(int x, int y)
