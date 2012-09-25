@@ -12,13 +12,13 @@ static const char* VS = "													\n\
 																			\n\
 						layout (location = 0) in vec3 Position;				\n\
 																			\n\
-						uniform mat4 transform;								\n\
+						uniform mat4 wvp;									\n\
 																			\n\
 						out vec4 Color;										\n\
 																			\n\
 						void main()											\n\
 						{													\n\
-						gl_Position = transform * vec4(Position, 1.0f);		\n\
+						gl_Position = wvp * vec4(Position, 1.0f);			\n\
 						Color = vec4(clamp(Position, 0.0, 1.0), 1.0);		\n\
 						}";
 static const char* PS = "												\n\

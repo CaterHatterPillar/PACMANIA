@@ -1,6 +1,8 @@
 #ifndef GRAPHICSCONTAINER_H
 #define GRAPHICSCONTAINER_H
 
+#include "Vertices/PosNormTex.h"
+
 enum ShaderId
 {
 	VERTEX_SHADER_DEFAULT,
@@ -12,15 +14,32 @@ class GraphicsContainer
 {
 private:
 protected:
-	unsigned int numVertices;
-	unsigned int numIndices;
 	ShaderId vertexShaderId;
 	ShaderId pixelShaderId;
+
+	std::vector<PosNormTex>*	vertices;
+	std::vector<unsigned int>*	indices;
+
+	unsigned int numVertices;
+	unsigned int numIndices;
+	unsigned int numFaces;
+	unsigned int stride;
+	unsigned int offset;
 public:
-	GraphicsContainer(unsigned int numVertices, unsigned int numIndices)
+	GraphicsContainer(
+		ShaderId vertexShaderId,
+		ShaderId pixelShaderId,
+
+		std::vector<PosNormTex>* vertices,
+		std::vector<unsigned int>* indices,
+		unsigned int numVertices, 
+		unsigned int numIndices
+		)
 	{
-		this->numVertices = numVertices;
-		this->numIndices = numIndices;
+		this->numVertices		= numVertices;
+		this->numIndices		= numIndices;
+		this->vertexShaderId	= vertexShaderId;
+		this->pixelShaderId		= pixelShaderId;
 	}
 	virtual ~GraphicsContainer() {}
 	

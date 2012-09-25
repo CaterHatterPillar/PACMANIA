@@ -13,15 +13,11 @@ void FXManagementGL::createFX(ID_FX idFX)
 {
 	GLuint programFX = createProgramFX();
 	FXGL* fx = new FXGL(idFX, programFX);
-	fx->loadUniform("transform", MATRIX4F); //tmep
-
+	fx->loadUniform("wvp", MATRIX4F); //temp
 	fxs->push_back(fx);
 }
 GLuint FXManagementGL::createProgramFX()
 {
-	/*Creates and OpenGL shaderprogram
-	 * Purpose of which is to link shader objects to
-	 */
 	GLuint programFX = glCreateProgram();
 	if(programFX == 0)
 		throw 0;
@@ -33,17 +29,11 @@ GLuint FXManagementGL::createProgramFX()
 	glAttachShader(programFX, vertexShader);
 	glAttachShader(programFX, fragmentShader);
 
-	/*Links our newly created shader program, with the attached shader objects
-	 *If we so wish, we may now delete our shader objects by calling glDeleteShader for both of them
-	 */
 	glLinkProgram(programFX);
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
-	/*Check for program errors, such as linking errors
-	 *Note that these are different from shader compilation errors
-	 */
 	GLint success = 0;
 	GLchar errorLog[1024] = { 0 };
 	glGetProgramiv(programFX, GL_LINK_STATUS, &success);
@@ -54,7 +44,6 @@ GLuint FXManagementGL::createProgramFX()
 		throw 0;
 	}
 
-	/*Checks for other errors, unrelated to linking*/
 	glGetProgramiv(programFX, GL_VALIDATE_STATUS, &success);
 	if(!success)
 	{
@@ -74,7 +63,6 @@ GLuint FXManagementGL::createObjFX(const char*	shaderText, GLenum shaderType)
 	GLint lengths[1];
 	lengths[0] = strlen(shaderText);
 
-	/*Replaces source code in shader object*/
 	glShaderSource(
 		shaderObj,	//Handle of shader object
 		1,			//Number of elements in string and length arrays
@@ -82,7 +70,6 @@ GLuint FXManagementGL::createObjFX(const char*	shaderText, GLenum shaderType)
 		lengths);	//Array of string lengths
 	glCompileShader(shaderObj);
 
-	/*Gets compilation status*/
 	GLint success;
 	glGetShaderiv(shaderObj, GL_COMPILE_STATUS, &success);
 	if(!success) 
