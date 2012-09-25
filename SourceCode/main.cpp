@@ -1,4 +1,4 @@
-#define WINDOWS
+//#define WINDOWS
 
 /*Common include*/
 #include "Singleton.h"
@@ -84,7 +84,7 @@ int main(int argc, char**	argv)
 	InputGL* input = new InputGL();
 	input->init();
 
-	while(true)
+	while(glWindow->Running())
 	{
 		Singleton<ObserverDirector>::get().update(1.0);
 
@@ -99,6 +99,8 @@ int main(int argc, char**	argv)
 
 	delete glWindow;
 	delete glRenderer;
+	delete camGL;
+	delete input;
 	delete simpleGeometry;
 
 	return 0;

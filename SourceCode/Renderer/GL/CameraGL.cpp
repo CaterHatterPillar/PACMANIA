@@ -1,13 +1,13 @@
 #include "CameraGL.h"
 
 CameraGL::CameraGL(
-	float fov, 
-	float aspect, 
-	float zNear, 
-	float zFar,
+	const float fov, 
+	const float aspect, 
+	const float zNear, 
+	const float zFar,
 
-	unsigned int screenWidth,
-	unsigned int screenHeight)
+	const unsigned int screenWidth,
+	const unsigned int screenHeight)
 {
 	FOV(fov);
 	Aspect(aspect);
