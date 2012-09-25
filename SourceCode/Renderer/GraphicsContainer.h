@@ -3,6 +3,8 @@
 
 #include "Vertices/PosNormTex.h"
 
+#include <vector>
+
 enum ShaderId
 {
 	VERTEX_SHADER_DEFAULT,

@@ -13,9 +13,13 @@ private:
 	ID3D11Buffer* vertexBuffer;
 	ID3D11Buffer* indexBuffer;
 public:
-	GraphicsContainerDX();
-	GraphicsContainerDX(ID3D11Buffer* vertexBuffer, ID3D11Buffer* indexBuffer);
-	~GraphicsContainer();
+	GraphicsContainerDX(ShaderId vertexShaderId,
+						ShaderId pixelShaderId,
+						std::vector<PosNormTex>* vertices,
+						std::vector<unsigned int>* indices,
+						unsigned int numVertices, 
+						unsigned int numIndices);
+	virtual ~GraphicsContainerDX();
 
 	void createVertexBuffer(ID3D11Device* device);
 	void createIndexBuffer(ID3D11Device* device);
