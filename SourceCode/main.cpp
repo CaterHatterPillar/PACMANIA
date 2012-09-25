@@ -1,4 +1,4 @@
-#define WINDOWS
+//#define WINDOWS
 
 /*Common include*/
 #include "Singleton.h"
@@ -56,7 +56,8 @@ int WINAPI WinMain(
 
 #include "Renderer/GL/WindowGL.h"
 #include "Renderer/GL/RendererGL.h"
-#include "Camera.h"
+#include "Renderer/GL/CameraGL.h"
+#include "Renderer/Camera.h"
 #include "InputGL.h"
 #include "Renderer/GL/SimpleGeometry.h"
 
@@ -77,11 +78,8 @@ int main(int argc, char**	argv)
 	SimpleGeometry* simpleGeometry = new SimpleGeometry();
 	simpleGeometry->init();
 
-	Camera* cam = new Camera(
-		VecF3(0.0f, 0.0f, 0.0f),
-		VecF3(0.0f, 0.0f, 1.0f),
-		VecF3(0.0f, 1.0f, 0.0f));
-	cam->init();
+	CameraGL* camGL = new CameraGL(F_O_V, (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 1.0f, 1000.0f, SCREEN_WIDTH, SCREEN_HEIGHT);
+	camGL->init();
 
 	InputGL* input = new InputGL();
 	input->init();
@@ -91,10 +89,11 @@ int main(int argc, char**	argv)
 		Singleton<ObserverDirector>::get().update(1.0);
 
 		input->update(1.0);
-		cam->update(1.0);
+		camGL->update(1.0);
 
-		glWindow->update(1.0);
 		glRenderer->update(1.0);
+		glWindow->update(1.0);
+		
 		simpleGeometry->update(1.0);
 	}
 

@@ -1,11 +1,6 @@
 #ifndef SHADERMANAGERDX_H
 #define SHADERMANAGERDX_H
 
-#include <D3D11.h>
-#include <D3DX11.h>
-#include <D3DX10.h>
-#include <D3Dcompiler.h>
-
 #include <Windows.h>
 #include <WindowsX.h>
 

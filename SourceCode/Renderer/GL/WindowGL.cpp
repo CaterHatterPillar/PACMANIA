@@ -19,10 +19,11 @@ void WindowGL::init()
 	/*Initialize window through GLUT*/
 	glutInit(&argc, argv);
 	glutInitDisplayMode(
-		GLUT_DOUBLE	|	//Double-buffer
-		GLUT_RGBA	|	//Back-buffer
-		GLUT_DEPTH	|	//Depth-buffer
-		GLUT_STENCIL);	//Stencil-buffer
+		GLUT_DOUBLE		|	//Double-buffer
+		GLUT_RGBA			//Back-buffer
+		//GLUT_DEPTH	|	//Depth-buffer
+		//GLUT_STENCIL		//Stencil-buffer
+	);
 
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);	//Initialize window
 	glutInitWindowPosition(100, 100);					//...
@@ -65,6 +66,7 @@ void WindowGL::update(double delta)
 		}
 	}
 
+	glutPostRedisplay();
 	glutMainLoopEvent();
 }
 void WindowGL::glutCallback(Msg* msg)

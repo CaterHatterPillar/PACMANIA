@@ -16,8 +16,8 @@ void InputGL::init()
 	callbackMsg = new MsgGlutCallback(mouseSpec, PASSIVE_MOTION_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
-	lastMouseX = 0.0f;
-	lastMouseY = 0.0f;
+	lastMouseX = 0;
+	lastMouseY = 0;
 }
 void InputGL::update(double delta)
 {
@@ -33,19 +33,19 @@ void InputGL::keyboardSpecialSpec(int key, int x, int y)
 	switch(key)
 	{
 	case GLUT_KEY_UP:
-		k = UP;
+		k = KEY_UP;
 		validKey = true;
 		break;
 	case GLUT_KEY_DOWN:
-		k = DOWN;
+		k = KEY_DOWN;
 		validKey = true;
 		break;
 	case GLUT_KEY_LEFT:
-		k = LEFT;
+		k = KEY_LEFT;
 		validKey = true;
 		break;
 	case GLUT_KEY_RIGHT:
-		k = RIGHT;
+		k = KEY_RIGHT;
 		validKey = true;
 		break;
 	default:
