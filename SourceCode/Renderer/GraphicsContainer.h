@@ -6,15 +6,13 @@ class GraphicsContainer
 {
 private:
 protected:
-	unsigned int noVertices;
-	unsigned int noIndices;
+	unsigned int numVertices;
+	unsigned int numIndices;
 public:
-	GraphicsContainer(
-		unsigned int noVertices,
-		unsigned int noIndices)
+	GraphicsContainer(unsigned int numVertices, unsigned int numIndices)
 	{
-		this->noVertices = noVertices;
-		this->noIndices = noIndices;
+		this->numVertices = numVertices;
+		this->numIndices = numIndices;
 	}
 	virtual ~GraphicsContainer() {}
 };
