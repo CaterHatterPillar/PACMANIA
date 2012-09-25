@@ -3,7 +3,7 @@
 
 #include "CommonGL.h"
 #include "GraphicsContainerGL.h"
-//#include "FXManagementGL.h"
+#include "FXManagementGL.h"
 
 #include "../Renderer.h"
 
@@ -16,54 +16,24 @@
 
 #include "../../Math/PacMath.h"
 
-static const char* VS = "												\n\
-						#version 330									\n\
-																		\n\
-						layout (location = 0) in vec3 Position;			\n\
-																		\n\
-						uniform mat4 wvp;								\n\
-																		\n\
-						out vec4 Color;									\n\
-																		\n\
-						void main()										\n\
-						{												\n\
-						gl_Position = wvp * vec4(Position, 1.0f);		\n\
-						Color = vec4(clamp(Position, 0.0, 1.0), 1.0);	\n\
-						}";
-static const char* PS = "						\n\
-						#version 330			\n\
-												\n\
-						in vec4 Color;			\n\
-												\n\
-						out vec4 fragColor;		\n\
-												\n\
-						void main()				\n\
-						{						\n\
-							fragColor = Color;	\n\
-						}";
-
 class RendererGL : public Renderer
 {
 private:
-	//static FXManagementGL* fxManagement;
+	FXManagementGL* fxManagement;
 
-	/*Buffers*/
-	static GLuint vertexBuffer;
-	static GLuint indexBuffer;
-	static GLuint shaderProgram;
-	static GLuint worldViewProjFX;
+	MatF4 view;
+	MatF4 proj;
+	MatF4 worldViewProj;
 
-	static MatF4 view;
-	static MatF4 proj;
-	static MatF4 trans;
+	GLuint viewFX;
+	GLuint projFX;
+	GLuint worldViewProjFX;
 protected:
 public:
 	RendererGL();
 	~RendererGL();
 
 	void init()	;
-	static void initShaders();
-	static void initBuffers();
 
 	void update(double delta);
 	void msgRender(Msg* msg);
@@ -72,16 +42,9 @@ public:
 	void cleanUp();
 	void renderFrame();
 
-	/*Callback*/
 	static void renderSpec();
-	//static void setShader();
-
-	//temp
-	static void addShader(
-		GLuint		shaderProgram, 
-		const char*	shaderText, 
-		GLenum		shaderType);
+	static void renderGraphicsGL(GraphicsContainerGL* containerGL);
+	static void setShader();
 };
-
 
 #endif //OPENGL_H

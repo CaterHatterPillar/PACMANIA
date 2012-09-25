@@ -59,7 +59,7 @@ int WINAPI WinMain(
 #include "Renderer/GL/CameraGL.h"
 #include "Renderer/Camera.h"
 #include "InputGL.h"
-//#include "Renderer/GL/SimpleGeometry.h"
+#include "Renderer/GL/SimpleGeometry.h"
 
 int main(int argc, char**	argv)
 {
@@ -75,8 +75,8 @@ int main(int argc, char**	argv)
 	RendererGL* glRenderer = new RendererGL();
 	glRenderer->init();
 
-	//SimpleGeometry* simpleGeometry = new SimpleGeometry();
-	//simpleGeometry->init();
+	SimpleGeometry* simpleGeometry = new SimpleGeometry();
+	simpleGeometry->init();
 
 	CameraGL* camGL = new CameraGL(F_O_V, (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 1.0f, 1000.0f, SCREEN_WIDTH, SCREEN_HEIGHT);
 	camGL->init();
@@ -94,14 +94,14 @@ int main(int argc, char**	argv)
 		glRenderer->update(1.0);
 		glWindow->update(1.0);
 		
-		//simpleGeometry->update(1.0);
+		simpleGeometry->update(1.0);
 	}
 
 	delete glWindow;
 	delete glRenderer;
 	delete camGL;
 	delete input;
-	//delete simpleGeometry;
+	delete simpleGeometry;
 
 	return 0;
 }
