@@ -1,22 +1,31 @@
 #ifndef GRAPHICSCONTAINER_H
 #define GRAPHICSCONTAINER_H
 
+enum ShaderId
+{
+	VERTEX_SHADER_DEFAULT,
+	PIXEL_SHADER_DEFAULT
+};
+
 //Make abstract
 class GraphicsContainer
 {
 private:
 protected:
-	unsigned int noVertices;
-	unsigned int noIndices;
+	unsigned int numVertices;
+	unsigned int numIndices;
+	ShaderId vertexShaderId;
+	ShaderId pixelShaderId;
 public:
-	GraphicsContainer(
-		unsigned int noVertices,
-		unsigned int noIndices)
+	GraphicsContainer(unsigned int numVertices, unsigned int numIndices)
 	{
-		this->noVertices = noVertices;
-		this->noIndices = noIndices;
+		this->numVertices = numVertices;
+		this->numIndices = numIndices;
 	}
 	virtual ~GraphicsContainer() {}
+	
+	ShaderId getVertexShaderId(){ return vertexShaderId;}
+	ShaderId getPixelShaderId(){ return pixelShaderId;}
 };
 
 #endif //GRAPHICSCONTAINER_H

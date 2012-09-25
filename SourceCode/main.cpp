@@ -1,4 +1,4 @@
-//#define WINDOWS
+#define WINDOWS
 
 /*Common include*/
 #include "Singleton.h"
@@ -9,7 +9,7 @@
 /*Windows include*/
 #include "renderer/DX/WindowDX.h"
 #include "renderer/DX/RendererDX.h"
-#include "Renderer/Camera.h"
+#include "Renderer/DX/CameraDX.h"
 
 int WINAPI WinMain(
 	HINSTANCE hInstance, 
@@ -29,7 +29,7 @@ int WINAPI WinMain(
 	dxRenderer->update(1.0f);
 	dxRenderer->init();
 
-	Camera* camera = new Camera();
+	Camera* camera = new CameraDX((float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, PI/4, 100.0f, 1.0f);
 	camera->init();
 
 
