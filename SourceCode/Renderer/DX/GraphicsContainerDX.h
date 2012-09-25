@@ -3,10 +3,12 @@
 
 #include "../GraphicsContainer.h"
 
-class GraphicsContainer : public GraphicsContainer
+class GraphicsContainerDX : public GraphicsContainer
 {
 private:
+
 public:
+
 };
 
 #endif //GRAPHICSCONTAINERDX_H

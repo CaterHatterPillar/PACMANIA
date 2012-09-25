@@ -14,8 +14,8 @@ private:
 protected:
 	unsigned int numVertices;
 	unsigned int numIndices;
-	Shader vertexShaderId;
-	Shader pixelShaderId;
+	ShaderId vertexShaderId;
+	ShaderId pixelShaderId;
 public:
 	GraphicsContainer(unsigned int numVertices, unsigned int numIndices)
 	{
@@ -24,8 +24,8 @@ public:
 	}
 	virtual ~GraphicsContainer() {}
 	
-	Shader getVertexShaderId(){ return vertexShaderId;}
-	Shader getPixelShaderId(){ return pixelShaderId;}
+	ShaderId getVertexShaderId(){ return vertexShaderId;}
+	ShaderId getPixelShaderId(){ return pixelShaderId;}
 };
 
 #endif //GRAPHICSCONTAINER_H
