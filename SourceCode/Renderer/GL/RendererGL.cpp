@@ -158,7 +158,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 	*/
 
 	/*Set index buffer*/
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 
 	/*Draw-call using indices*/
 	glDrawElements(

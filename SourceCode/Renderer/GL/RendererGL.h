@@ -19,7 +19,7 @@
 class RendererGL : public Renderer
 {
 private:
-	FXManagementGL* fxManagement;
+	static FXManagementGL* fxManagement;
 
 	static MatF4 view;
 	static MatF4 proj;

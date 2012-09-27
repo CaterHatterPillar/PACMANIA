@@ -1,12 +1,9 @@
-#define WINDOWS
-
-
 /*Common include*/
 #include "Singleton.h"
 #include "Messaging/ObserverDirector.h"
 #include "Common.h"
 
-#ifdef WINDOWS
+#ifdef _WIN32
 /*Windows include*/
 #include "renderer/DX/WindowDX.h"
 #include "renderer/DX/RendererDX.h"
@@ -46,7 +43,7 @@ int WINAPI WinMain(
 }
 #endif
 
-#ifndef WINDOWS
+#ifndef _WIN32
 /*Linux include*/
 
 /*memleaks*/
