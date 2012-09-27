@@ -128,12 +128,10 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 
 	setShader();
 
-	glEnableVertexAttribArray(0); //pos
-	//glEnableVertexAttribArray(1); //norm
-	//glEnableVertexAttribArray(2); //tex
+	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vb);
-
+	
 	glVertexAttribPointer(
 		0,			//Index of attribute
 		3,			//Number of components in attribute (x, y, z)
@@ -160,7 +158,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 	*/
 
 	/*Set index buffer*/
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 	/*Draw-call using indices*/
 	glDrawElements(
@@ -168,8 +166,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 		numIndices,			//Number of indices
 		GL_UNSIGNED_INT,	//Index-type (for size)
 		0);					//Offset
-
-	/*Disable*/
+		
 	glDisableVertexAttribArray(0); //pos
 	//glDisableVertexAttribArray(1); //norm
 	//glDisableVertexAttribArray(2); //tex
@@ -193,4 +190,38 @@ void RendererGL::setShader()
 	//world.translation(0.0f, 0.0f, 5.0f);
 	//worldViewProj = proj * view * world;
 	//glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
+	
+	std::vector<UniformGL*>* uniforms = fx->Uniforms();
+	for(unsigned int i = 0; i < uniforms->size(); i++)
+	{
+		UniformGL*		uniformGL	= uniforms->at(i);
+		GLuint			handle		= uniformGL->Uniform();
+		UNIFORM_TYPE	type		= uniformGL->Type();
+
+		if(type == MATRIX4F)
+		{
+			MatF4 world;
+			world.translation(1.0f, 1.0f, 1.0f);
+
+			MatF4 trans = world * view * proj;
+			glUniformMatrix4fv(handle, 1, GL_TRUE, &trans.m[0][0]);
+		}
+		else
+			throw 0; //temp
+
+		GLuint uniform = glGetUniformLocation(programFX, "transform");//handle);
+		assert(uniform != 0xFFFFFFFF);
+
+		MatF4 world;
+		world.translation(0.0f, 0.0f, 5.0f);
+
+		MatF4 trans = proj * view * world;
+		glUniformMatrix4fv(uniform, 1, GL_TRUE, &trans.m[0][0]);
+	}
 }
+
+/*Update transform*/
+		//MatF4 world;
+		//world.translation(0.0f, 0.0f, 5.0f);
+		//trans = proj * view * world;
+		//glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &trans.m[0][0]);

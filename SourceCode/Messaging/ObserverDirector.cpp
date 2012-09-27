@@ -42,6 +42,7 @@ void ObserverDirector::update(double delta)
 		default:
 			throw 0; //temp, make fix
 			break;
+
 		}
 	}
 }
@@ -64,6 +65,7 @@ void ObserverDirector::subscribeMsg(Msg* msg)
 	subscribe(subMsg->Subscriber(), subMsg->Subscription());
 	delete subMsg;
 }
+
 void ObserverDirector::subscribe(Component* subscriber, MsgType subscription)
 {	//todoist, check if observer already exists - modify original subscriber
 	observers->push_back(new Observer(subscriber, subscription));
@@ -108,11 +110,11 @@ void ObserverDirector::msgRender(Msg* msg)
 		Observer* observer = observers->at(i);
 		if(observer->isSubscriber(type))
 		{
+
 			MsgRender* newInstance = new MsgRender(renderMsg);
 			observer->getComponent()->push(newInstance);
 		}
 	}
-
 	delete renderMsg;
 }
 void ObserverDirector::msgMouseClick(Msg* msg)

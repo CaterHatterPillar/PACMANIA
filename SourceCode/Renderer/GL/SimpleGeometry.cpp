@@ -62,11 +62,9 @@ void SimpleGeometry::init()
 }
 void SimpleGeometry::update(double delta)
 {
-	if(graphicsContainer)
-	{
-		MsgRender* msgRender = new MsgRender(graphicsContainer);
-		Singleton<ObserverDirector>::get().push(msgRender);
-	}
+	/*Simple geometry wishes to be rendered each frame*/
+	MsgRender* msgRender = new MsgRender(graphicsContainer);
+	Singleton<ObserverDirector>::get().push(msgRender);
 }
 
 SimpleGeometry::SimpleGeometry()

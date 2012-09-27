@@ -1,4 +1,5 @@
-//#define WINDOWS
+#define WINDOWS
+
 
 /*Common include*/
 #include "Singleton.h"
@@ -107,4 +108,4 @@ int main(int argc, char**	argv)
 	return 0;
 }
 
-#endif 
+#endif //main.cpp

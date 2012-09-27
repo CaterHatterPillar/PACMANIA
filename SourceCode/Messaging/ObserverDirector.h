@@ -22,19 +22,22 @@ class ObserverDirector : public Component
 private:
 	std::vector<Observer*>* observers;
 
-	void msgDXWindowHandle(Msg* msg);
-
 	void subscribeMsg(Msg* msg);
 	void subscribe(
 		Component*	subscriber, 
 		MsgType		subscription);
-	void msgGlut(Msg* msg);
-	void msgGlutCallback(Msg* msg);
 	void msgRender(Msg* msg);
 	void msgMouseClick(Msg* msg);
 	void msgMouseMove(Msg* msg);
 	void msgKeyboard(Msg* msg);
 	void msgCamera(Msg* msg);
+
+	/*win*/
+	void msgDXWindowHandle(Msg* msg);
+
+	/*linux*/
+	void msgGlut(Msg* msg);
+	void msgGlutCallback(Msg* msg);
 protected:
 public:
 	ObserverDirector();

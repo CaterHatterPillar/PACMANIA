@@ -1,1 +1,79 @@
+
 #include "GraphicsContainerDX.h"
+
+
+GraphicsContainerDX::GraphicsContainerDX(LPCTSTR textureFilename,
+										 ShaderId vertexShaderId,
+										 ShaderId pixelShaderId,
+										 std::vector<PosNormTex>* vertices,
+										 std::vector<unsigned int>* indices,
+										 unsigned int numVertices, 
+										 unsigned int numIndices,
+										 unsigned int numFaces,
+										 unsigned int stride,
+										 unsigned int offset) : GraphicsContainer(vertexShaderId, pixelShaderId,
+																					  vertices, indices,
+																					  numVertices, numIndices,
+																					  numFaces, stride, offset)
+{
+	this->textureFilename = textureFilename;
+}
+
+GraphicsContainerDX::~GraphicsContainerDX()
+{
+	vertexBuffer->Release();
+	indexBuffer->Release();
+}
+
+void GraphicsContainerDX::createVertexBuffer(ID3D11Device* device)
+{
+	D3D11_BUFFER_DESC vbd;
+	vbd.Usage = D3D11_USAGE_DYNAMIC;
+	vbd.ByteWidth = sizeof(PosNormTex) * vertices->size();
+	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	vbd.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA vinitData;
+	vinitData.pSysMem = &vertices[0];
+	device->CreateBuffer(&vbd, &vinitData, &vertexBuffer);
+}
+
+void GraphicsContainerDX::createIndexBuffer(ID3D11Device* device)
+{
+	D3D11_BUFFER_DESC ibd;
+	ibd.Usage = D3D11_USAGE_DYNAMIC;
+	ibd.ByteWidth = sizeof(unsigned int)*numFaces*3;
+	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	ibd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	ibd.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA iinitData;
+	iinitData.pSysMem = &indices[0];
+	device->CreateBuffer(&ibd, &iinitData, &indexBuffer);
+}
+
+void GraphicsContainerDX::createTexture(ID3D11Device* device, LPCTSTR textureFilename)
+{
+	D3DX11CreateShaderResourceViewFromFile(device,
+										   textureFilename,
+										   NULL,
+										   NULL,
+										   &texture,
+										   NULL);
+}
+
+ID3D11Buffer* GraphicsContainerDX::getVertexBuffer()
+{
+	return vertexBuffer;
+}
+
+ID3D11Buffer* GraphicsContainerDX::getIndexBuffer()
+{
+	return indexBuffer;
+}
+
+ID3D11ShaderResourceView* GraphicsContainerDX::getTexture()
+{
+	return texture;
+}

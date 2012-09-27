@@ -11,8 +11,8 @@ static const char* VS = "													\n\
 						#version 330										\n\
 																			\n\
 						layout (location = 0) in vec3 Position;				\n\
-						/*layout (location = 1) in vec3 Normal;*/				\n\
-						/*layout (location = 2) in vec2 Tex;*/					\n\
+						/*layout (location = 1) in vec3 Normal;*/			\n\
+						/*layout (location = 2) in vec2 Tex;*/				\n\
 																			\n\
 						/*uniform mat4 wvp;*/								\n\
 																			\n\
