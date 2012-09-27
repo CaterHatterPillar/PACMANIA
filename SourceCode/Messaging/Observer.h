@@ -1,8 +1,8 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-#include "Common.h"
-#include "Component.h"
+#include "../Common.h"
+#include "../Component.h"
 
 class Observer
 {
@@ -18,7 +18,8 @@ public:
 	bool isSubscriber(MsgType subscription)
 	{
 		bool subscribed = false;
-		for(UINT i = 0; i < subscriptions->size(); i++)
+
+		for(unsigned int i = 0; i < subscriptions->size(); i++)
 		{
 			if(subscriptions->at(i) == subscription)
 				subscribed = true;
