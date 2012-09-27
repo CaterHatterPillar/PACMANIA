@@ -14,13 +14,13 @@ static const char* VS = "													\n\
 						/*layout (location = 1) in vec3 Normal;*/				\n\
 						/*layout (location = 2) in vec2 Tex;*/					\n\
 																			\n\
-						/*uniform mat4 wvp;*/									\n\
+						/*uniform mat4 wvp;*/								\n\
 																			\n\
 						out vec4 Color;										\n\
 																			\n\
 						void main()											\n\
 						{													\n\
-						gl_Position = /*wvp */ vec4(Position, 1.0f);			\n\
+						gl_Position = /*wvp */ vec4(Position, 1.0f);		\n\
 						Color = vec4(clamp(Position, 0.0, 1.0), 1.0);		\n\
 						}";
 static const char* PS = "												\n\

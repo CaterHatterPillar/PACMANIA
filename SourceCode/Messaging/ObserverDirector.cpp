@@ -5,55 +5,45 @@ void ObserverDirector::init()
 }
 void ObserverDirector::update(double delta)
 {
-	while(peek() != nullptr)
+	while(peek())
 	{
 		Msg* msg = pop();
 
-		if(msg)
+		MsgType type = msg->Type();
+		switch(type)
 		{
-			MsgType type = msg->Type();
-			switch(type)
-			{
-			case SUBSCRIBE:
-				subscribeMsg(msg);
-				break;
-			case MSG_GLUT:
-				msgGlut(msg);
-				break;
-			case MSG_GLUT_CALLBACK:
-				msgGlutCallback(msg);
-				break;
-			case RENDER:
-				msgRender(msg);
-				break;
-			case INPUT_MOUSE_MOVE:
-				msgMouseMove(msg);
-				break;
-			case INPUT_MOUSE_CLICK:
-				msgMouseClick(msg);
-				break;
-			case INPUT_KEYBOARD_MSG:
-				msgKeyboard(msg);
-				break;
-			case CAMERA:
-				msgCamera(msg);
-				break;
-			case DX_WINDOW_HANDLE:
-				msgDXWindowHandle(msg);
-				break;
-			default:
-				throw 0; //temp, make fix
-				break;
-			}
+		case SUBSCRIBE:
+			subscribeMsg(msg);
+			break;
+		case MSG_GLUT:
+			msgGlut(msg);
+			break;
+		case MSG_GLUT_CALLBACK:
+			msgGlutCallback(msg);
+			break;
+		case RENDER:
+			msgRender(msg);
+			break;
+		case INPUT_MOUSE_MOVE:
+			msgMouseMove(msg);
+			break;
+		case INPUT_MOUSE_CLICK:
+			msgMouseClick(msg);
+			break;
+		case INPUT_KEYBOARD_MSG:
+			msgKeyboard(msg);
+			break;
+		case CAMERA:
+			msgCamera(msg);
+			break;
+		case DX_WINDOW_HANDLE:
+			msgDXWindowHandle(msg);
+			break;
+		default:
+			throw 0; //temp, make fix
+			break;
 		}
 	}
-}
-
-void ObserverDirector::subscribeMsg(Msg* msg)
-{
-	SubscriptionMsg* subMsg = (SubscriptionMsg*)msg;
-	subscribe(subMsg->Subscriber(), subMsg->Subscription());
-	delete subMsg;
 }
 
 void ObserverDirector::msgDXWindowHandle(Msg* msg)
@@ -68,6 +58,12 @@ void ObserverDirector::msgDXWindowHandle(Msg* msg)
 	}
 }
 
+void ObserverDirector::subscribeMsg(Msg* msg)
+{
+	SubscriptionMsg* subMsg = (SubscriptionMsg*)msg;
+	subscribe(subMsg->Subscriber(), subMsg->Subscription());
+	delete subMsg;
+}
 void ObserverDirector::subscribe(Component* subscriber, MsgType subscription)
 {	//todoist, check if observer already exists - modify original subscriber
 	observers->push_back(new Observer(subscriber, subscription));
@@ -105,17 +101,19 @@ void ObserverDirector::msgGlutCallback(Msg* msg)
 void ObserverDirector::msgRender(Msg* msg)
 {
 	MsgType type = msg->Type();
-	MsgRender* msgRender = (MsgRender*)msg;
+	MsgRender* renderMsg = (MsgRender*)msg;
+
 	for(unsigned int i = 0; i < observers->size(); i++)
 	{
 		Observer* observer = observers->at(i);
 		if(observer->isSubscriber(type))
 		{
-			MsgRender* newInstance = new MsgRender(msgRender);
+			MsgRender* newInstance = new MsgRender(renderMsg);
 			observer->getComponent()->push(newInstance);
 		}
 	}
-	delete msgRender;
+
+	delete renderMsg;
 }
 void ObserverDirector::msgMouseClick(Msg* msg)
 {

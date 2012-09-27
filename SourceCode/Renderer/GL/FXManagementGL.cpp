@@ -112,7 +112,7 @@ FXManagementGL::~FXManagementGL()
 	{
 		for(unsigned int i = 0; i < fxs->size(); i++)
 			if(fxs->at(i))
-				delete fxs;
+				delete fxs->at(i);
 		delete fxs;
 	}
 }

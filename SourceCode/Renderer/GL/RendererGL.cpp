@@ -139,16 +139,15 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 		3,			//Number of components in attribute (x, y, z)
 		GL_FLOAT,	//Data type of each component
 		GL_FALSE,	//Specifies if we want attribute to be normalized
-		stride,		//Stride
+		0,			//Stride
 		0);			//Offset
-
 	/*
 	glVertexAttribPointer(
 		1,			//Index of attribute
 		3,			//Number of components in attribute (x, y, z)
 		GL_FLOAT,	//Data type of each component
 		GL_FALSE,	//Specifies if we want attribute to be normalized
-		stride,		//Stride
+		0,			//Stride
 		(void*)(sizeof(VecF3)));			//Offset
 
 	glVertexAttribPointer(
@@ -156,7 +155,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 		2,			//Number of components in attribute (x, y, z)
 		GL_FLOAT,	//Data type of each component
 		GL_FALSE,	//Specifies if we want attribute to be normalized
-		stride,		//Stride
+		0,			//Stride
 		(void*)(sizeof(VecF3) * 2));			//Offset
 	*/
 

@@ -2,6 +2,7 @@
 
 void SimpleGeometry::init()
 {
+	/*
 	std::vector<PosNormTex>* vertices = new std::vector<PosNormTex>();
 	
 	PosNormTex vertex;
@@ -40,12 +41,19 @@ void SimpleGeometry::init()
 
 	unsigned int stride = sizeof(PosNormTex);
 	unsigned int offset = 0;
+	*/
+
+	unsigned int numVertices = 4;
+	unsigned int numIndices = 12;
+	unsigned int numFaces = 4;
+	unsigned int stride = 0;
+	unsigned int offset = 0;
 
 	graphicsContainer = new GraphicsContainerGL(
 		VERTEX_SHADER_DEFAULT,
 		PIXEL_SHADER_DEFAULT,
-		vertices,
-		indices,
+		nullptr, //vertices,
+		nullptr, //indices,
 		numVertices,
 		numIndices,
 		numFaces,

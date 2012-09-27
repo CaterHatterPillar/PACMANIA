@@ -91,17 +91,18 @@ int main(int argc, char**	argv)
 		input->update(1.0);
 		camGL->update(1.0);
 
+		simpleGeometry->update(1.0);
+
 		glRenderer->update(1.0);
 		glWindow->update(1.0);
-		
-		simpleGeometry->update(1.0);
 	}
 
-	delete glWindow;
-	delete glRenderer;
 	delete camGL;
 	delete input;
 	delete simpleGeometry;
+
+	delete glWindow;
+	delete glRenderer;
 
 	return 0;
 }
