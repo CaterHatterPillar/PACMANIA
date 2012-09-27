@@ -35,7 +35,6 @@ private:
 	void msgMouseMove(Msg* msg);
 	void msgKeyboard(Msg* msg);
 	void msgCamera(Msg* msg);
->>>>>>> Renderer
 protected:
 public:
 	ObserverDirector();
