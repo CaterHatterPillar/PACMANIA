@@ -1,39 +1,18 @@
 #ifndef FXMANAGEMENTGL_H
 #define FXMANAGEMENTGL_H
 
-#include "../../Common.h"
-#include "CommonGL.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <fstream>
 
 #include "FXGL.h"
+#include "CommonGL.h"
+#include "../GraphicsContainer.h"
+#include "../../Common.h"
 
-/*Tempshaders*/
-static const char* VS = "													\n\
-						#version 330										\n\
-																			\n\
-						layout (location = 0) in vec3 Position;				\n\
-						/*layout (location = 1) in vec3 Normal;*/			\n\
-						/*layout (location = 2) in vec2 Tex;*/				\n\
-																			\n\
-						/*uniform mat4 wvp;*/								\n\
-																			\n\
-						out vec4 Color;										\n\
-																			\n\
-						void main()											\n\
-						{													\n\
-						gl_Position = /*wvp */ vec4(Position, 1.0f);		\n\
-						Color = vec4(clamp(Position, 0.0, 1.0), 1.0);		\n\
-						}";
-static const char* PS = "												\n\
-						#version 330									\n\
-																		\n\
-						in vec4 Color;									\n\
-																		\n\
-						out vec4 fragColor;								\n\
-																		\n\
-						void main()										\n\
-						{												\n\
-							fragColor = Color;							\n\
-						}";
+#define DEFAULT_VERTEX_PATH		"root/Resources/Shaders/GL/DefaultVertexShader.glsl"
+#define DEFAULT_FRAGMENT_PATH	"root/Resources/Shaders/GL/DefaultFragmentShader.glsl"
 
 class FXManagementGL
 {
@@ -41,16 +20,32 @@ private:
 	std::vector<FXGL*>* fxs;
 
 	void initFXs();
+	void createFX(
+		ShaderId vertexShaderID,
+		ShaderId fragmentShaderID);
+	
+	GLuint createProgramFX(
+		ShaderId vertexShaderID,
+		ShaderId fragmentShaderID);
+	void fetchShaderPaths(
+		ShaderId		vs,
+		std::string&	vss,
+		ShaderId		fs,
+		std::string&	fss);
 
-	//param - file name, enum
-	void createFX(ID_FX idFX);
-	GLuint createProgramFX();
-	GLuint createObjFX(const char*	shaderText, GLenum shaderType);
+	GLuint createObjFX(
+		const char*	shaderText,
+		GLenum		shaderType);
+
+	/*loading*/
+	char* file2string(const char *path);
 protected:
 public:
 	void init();
 
-	FXGL* getFX(ID_FX idFX);
+	FXGL* getFX(
+		ShaderId vertexShaderID,
+		ShaderId fragmentShaderID);
 
 	FXManagementGL();
 	~FXManagementGL();

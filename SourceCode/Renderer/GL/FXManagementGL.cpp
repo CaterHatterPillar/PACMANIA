@@ -6,21 +6,44 @@ void FXManagementGL::init()
 }
 void FXManagementGL::initFXs()
 {
-	createFX(BASIC);
+	/*Create default shader-combination*/
+	createFX(
+		VERTEX_SHADER_DEFAULT,
+		PIXEL_SHADER_DEFAULT);
 }
 
-void FXManagementGL::createFX(ID_FX idFX)
+void FXManagementGL::createFX(
+	ShaderId vertexShaderID,
+	ShaderId fragmentShaderID)
 {
-	GLuint programFX = createProgramFX();
-	FXGL* fx = new FXGL(idFX, programFX);
+	GLuint programFX = createProgramFX(
+		vertexShaderID,
+		fragmentShaderID);
+	FXGL* fx = new FXGL(
+		vertexShaderID, 
+		fragmentShaderID,
+		programFX);
 	//fx->loadUniform("wvp", MATRIX4F); //temp
 	fxs->push_back(fx);
 }
-GLuint FXManagementGL::createProgramFX()
+GLuint FXManagementGL::createProgramFX(
+	ShaderId vertexShaderID,
+	ShaderId fragmentShaderID)
 {
 	GLuint programFX = glCreateProgram();
 	if(programFX == 0)
 		throw 0;
+
+	std::string vertexPath;
+	std::string fragmentPath;
+	fetchShaderPaths(
+		vertexShaderID,
+		vertexPath,
+		fragmentShaderID,
+		fragmentPath);
+
+	const char* VS = file2string(vertexPath.c_str());
+	const char* PS = file2string(fragmentPath.c_str());
 
 	GLuint	vertexShader	= createObjFX(VS, GL_VERTEX_SHADER);
 	GLuint	fragmentShader	= createObjFX(PS, GL_FRAGMENT_SHADER);
@@ -51,8 +74,39 @@ GLuint FXManagementGL::createProgramFX()
 		fprintf(stderr, "Invalid shader program: '%s'\n", errorLog);
 		throw 0;
 	}
+
+	return programFX;
 }
-GLuint FXManagementGL::createObjFX(const char*	shaderText, GLenum shaderType)
+void FXManagementGL::fetchShaderPaths(
+	ShaderId		vs,
+	std::string&	vss,
+	ShaderId		fs,
+	std::string&	fss)
+{
+	switch(vs)
+	{
+	case VERTEX_SHADER_DEFAULT:
+		vss = DEFAULT_VERTEX_PATH;
+		break;
+	default:
+		throw 0;
+		break;
+	}
+
+	switch(fs)
+	{
+	case PIXEL_SHADER_DEFAULT:
+		fss = DEFAULT_FRAGMENT_PATH;
+		break;
+	default:
+		throw 0;
+		break;
+	}
+}
+
+GLuint FXManagementGL::createObjFX(
+	const char*	shaderText,
+	GLenum		shaderType)
 {
 	GLuint shaderObj = glCreateShader(shaderType);
 	if(shaderObj == 0)
@@ -83,19 +137,57 @@ GLuint FXManagementGL::createObjFX(const char*	shaderText, GLenum shaderType)
 	return shaderObj;
 }
 
-FXGL* FXManagementGL::getFX(ID_FX idFX)
+char* FXManagementGL::file2string(const char *path)
+{
+	FILE *fd;
+	long len,
+		r;
+	char *str;
+
+	if (!(fd = fopen(path, "r")))
+	{
+		fprintf(stderr, "Can't open file '%s' for reading\n", path);
+		throw 0;
+	}
+
+	fseek(fd, 0, SEEK_END);
+	len = ftell(fd);
+
+	printf("File '%s' is %ld long\n", path, len);
+
+	fseek(fd, 0, SEEK_SET);
+
+	if (!(str = (char*)malloc(len * sizeof(char))))
+	{
+		fprintf(stderr, "Can't malloc space for '%s'\n", path);
+		throw 0;
+	}
+
+	r = fread(str, sizeof(char), len, fd);
+
+	str[r - 1] = '\0'; /* Shader sources have to term with null */
+
+	fclose(fd);
+
+	return str;
+}
+
+FXGL* FXManagementGL::getFX(
+	ShaderId vertexShaderID,
+	ShaderId fragmentShaderID)
 {
 	FXGL* fx = nullptr;
 
 	bool foundFX = false;
-	for(unsigned int i = 0; 
-		i < fxs->size() && !foundFX; 
-		i++)
+	for(unsigned int i = 0; i < fxs->size() && !foundFX; i++)
 	{
-		if(fxs->at(i)->IDFX() == idFX)
+		if(fxs->at(i)->VertexShader() == vertexShaderID)
 		{
-			foundFX = true;
-			fx = fxs->at(i);
+			if(fxs->at(i)->FragmentShader() == fragmentShaderID)
+			{
+				fx		= fxs->at(i);
+				foundFX	= true;
+			}
 		}
 	}
 

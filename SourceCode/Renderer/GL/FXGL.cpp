@@ -16,9 +16,14 @@ void FXGL::loadUniform(
 		throw 0; //fix
 }
 
-FXGL::FXGL(ID_FX idFX, GLuint programFX)
+FXGL::FXGL(
+	ShaderId	vertexShader,
+	ShaderId	fragmentShader,
+	GLuint		programFX)
 {
-	this->idFX		= idFX;
+	this->vertexShader		= vertexShader;
+	this->fragmentShader	= fragmentShader;
+
 	this->programFX	= programFX;
 
 	uniforms = new std::vector<UniformGL*>();
