@@ -9,6 +9,7 @@
 #include "Messaging\ObserverDirector.h"
 #include "Singleton.h"
 #include "Messaging\MsgRender.h"
+#include "Behaviours/MoveBehaviourPlayer.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ private:
 	MatF4 worldMatrix;
 
 	GraphicsContainer* graphicsContainer;
+	MoveBehaviour* moveBehaviour;
 
 	void rebuildTranslationMatrix();
 	void rebuildRotationMatrix();
@@ -54,6 +56,7 @@ public:
 	MatF4 getScalingMatrix();
 
 	void setGraphicsContainer(GraphicsContainer* graphicsContainer);
+	void setMoveBehaviour(MoveBehaviour* moveBehaviour);
 
 	void update(double delta);
 };

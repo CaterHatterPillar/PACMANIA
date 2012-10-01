@@ -60,6 +60,10 @@ void WindowsContainer::main(
 
 	gameEntity->setGraphicsContainer(graphicsContainer);
 
+	MoveBehaviour* moveBehaviour = new MoveBehaviourPlayer();
+	moveBehaviour->init();
+	gameEntity->setMoveBehaviour(moveBehaviour);
+
 	while(dxWindow->isActive())
 	{
 		Singleton<ObserverDirector>::get().update(1.0);
