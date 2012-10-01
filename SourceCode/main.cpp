@@ -5,7 +5,7 @@
 #include "Common.h"
 
 #ifdef _WIN32
-#include "Windows.h"
+#include "WindowsContainer.h"
 
 int WINAPI WinMain(
 	HINSTANCE	hInstance, 

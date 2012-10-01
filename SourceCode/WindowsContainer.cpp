@@ -101,8 +101,8 @@ void WindowsContainer::main(
 		PIXEL_SHADER_DEFAULT, 
 		vertices, 
 		indices, 
-		24, 
-		24, 
+		vertices->size(), 
+		indices->size(), 
 		8, 
 		sizeof(PosNormTex), 
 		0);

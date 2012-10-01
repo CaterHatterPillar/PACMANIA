@@ -4,6 +4,8 @@
 #include <Windows.h>
 #include <WindowsX.h>
 
+#include <D3Dcompiler.h>
+
 #include "ConstantBuffers.h"
 #include "../../Math/PacMath.h"
 

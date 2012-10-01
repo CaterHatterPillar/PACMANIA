@@ -66,6 +66,11 @@ void RendererDX::createDeviceAndSwapChain()
 	unsigned int index = 0;
 	bool deviceCreated = false;
 
+	UINT createDeviceFlags = 0;
+#ifdef _DEBUG
+	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
 	while(index < numDriverTypes && !deviceCreated)
 	{	
 		HRESULT hr;
@@ -73,7 +78,7 @@ void RendererDX::createDeviceAndSwapChain()
 		hr = D3D11CreateDeviceAndSwapChain(	NULL,
 											driverType, //D3D_DRIVER_TYPE_HARDWARE,
 											NULL,
-											NULL, //D3D11_CREATE_DEVICE_DEBUG,	//Enables shader debugging with PIX
+											createDeviceFlags, //D3D11_CREATE_DEVICE_DEBUG,	//Enables shader debugging with PIX
 											featureLevels,
 											numFeatureLevels,
 											D3D11_SDK_VERSION, 
@@ -221,32 +226,11 @@ void RendererDX::update(double delta)
 void RendererDX::renderFrame()
 {
 	viewProj = viewMatrix * projectionMatrix;
-	
-	//MatF4 final = cube->getWorldMatrix() * viewProj;
-	//shaderManager->updateCBufferPerFrame(final, cube->getWorldMatrix());
 
 	devcon->ClearRenderTargetView(backBuffer, BLACK);
 	devcon->ClearDepthStencilView(zBuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
-	//devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
-	//devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
-	//devcon->IASetInputLayout(shaderManager->getInputLayout());
-
-	//UINT stride = sizeof(Vertex); 
-	//UINT offset = 0;
-
 	devcon->OMSetDepthStencilState(0, 0);
-
-	/*
-	ID3D11Buffer* vertexBuffer = cube->getVertexBuffer();
-
-	devcon->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-	devcon->IASetIndexBuffer(cube->getIndexBuffer(), DXGI_FORMAT_R32_UINT, 0);
-	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	*/
-
-
-	//devcon->DrawIndexed(cube->getNumIndices(), 0, 0);
 
 	for(UINT i = 0; i < renderList->size(); i++)
 	{
@@ -261,8 +245,6 @@ void RendererDX::renderContainer(GraphicsContainerDX* container)
 		container->createVertexBuffer(device);
 	if(!container->getIndexBuffer())
 		container->createIndexBuffer(device);
-
-	MatF4 debug = container->getWorldMatrix();
 
 	MatF4 final = container->getWorldMatrix() * viewProj;
 	shaderManager->updateCBufferPerFrame(final, container->getWorldMatrix());
