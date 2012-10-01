@@ -5,13 +5,8 @@ cbuffer constantBuffer
 	float4x4 matWorld;
 }
 
-//Texture2D Texture;
-//SamplerState ss
-//{
-//    Filter = MIN_MAG_MIP_LINEAR;
-//    AddressU = Wrap;
-//    AddressV = Wrap;
-//};
+Texture2D texDiffuse : register( t0 );
+SamplerState ss : register( s0 );
 
 
 struct VOut
@@ -43,5 +38,9 @@ VOut VShader(float3 position : POSITION, float3 normal : NORMAL, float2 texcoord
 
 float4 PShader(VOut pIn) : SV_TARGET
 {
-	return float4(0.0f, 1.0f, 0.0f, 1.0f);
+	float4 color = texDiffuse.Sample(ss, pIn.texcoord);
+
+	clip(color.a-0.1);
+
+	return color;
 }

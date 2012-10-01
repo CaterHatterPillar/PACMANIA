@@ -180,9 +180,9 @@ void RendererDX::createSamplerState()
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
@@ -262,14 +262,16 @@ void RendererDX::renderContainer(GraphicsContainerDX* container)
 	if(!container->getIndexBuffer())
 		container->createIndexBuffer(device);
 	if(!container->getTexture())
-		container->createTexture();
+		container->createTexture(device);
 
 	MatF4 final = container->getWorldMatrix() * viewProj;
 	shaderManager->updateCBufferPerFrame(final, container->getWorldMatrix());
 
 	devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
 	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
-	devcon->PSSetSamplers(0, 1, &samplerStateDefault());
+	devcon->PSSetSamplers(0, 1, &samplerStateDefault);
+	ID3D11ShaderResourceView* texture = container->getTexture();
+	devcon->PSSetShaderResources(0, 1, &texture);
 	devcon->IASetInputLayout(shaderManager->getInputLayout());
 
 	UINT numVertices	= container->getNumVertices();
