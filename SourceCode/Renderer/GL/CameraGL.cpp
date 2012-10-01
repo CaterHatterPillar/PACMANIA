@@ -56,13 +56,13 @@ void CameraGL::keyboard(KEY key)
 {
 	switch(key)
 	{
-	case KEY_UP:
+	case KEY_W:
 		position -= (look * STEP_SCALE);
 		break;
-	case KEY_DOWN:
+	case KEY_S:
 		position += (look * STEP_SCALE);
 		break;
-	case KEY_LEFT:
+	case KEY_A:
 		{
 			VecF3 left = look.cross(up);
 			left.normalize();
@@ -70,7 +70,7 @@ void CameraGL::keyboard(KEY key)
 			position += left;
 			break;
 		}
-	case KEY_RIGHT:
+	case KEY_D:
 		{
 			VecF3 right = up.cross(look);
 			right.normalize();
@@ -79,7 +79,6 @@ void CameraGL::keyboard(KEY key)
 			break;
 		}
 	default:
-		throw 0;
 		break;
 	}
 

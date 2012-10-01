@@ -1,4 +1,5 @@
 #include "WindowsContainer.h"
+#include "Game.h"
 
 /*Windows include*/
 #include "renderer/DX/WindowDX.h"
@@ -16,28 +17,27 @@ void WindowsContainer::main(
 {
 	Singleton<ObserverDirector>::get().init();
 
-	WindowDX* dxWindow = new WindowDX(hInstance, nCmdShow);
-	RendererDX* dxRenderer = new RendererDX();
 
-	dxWindow->init();
+	WindowDX*	dxWindow	= new WindowDX(hInstance, nCmdShow);
+	RendererDX*	dxRenderer	= new RendererDX();
+	CameraDX*	dxCamera	= new CameraDX(
+		(float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 
+		PI/4, 
+		100.0f, 
+		1.0f);
+	initWindows(
+		dxWindow, 
+		dxRenderer, 
+		dxCamera);
 
-	Singleton<ObserverDirector>::get().update(1.0);
-
-	dxRenderer->update(1.0f);
-	dxRenderer->init();
-
-	Camera* camera = new CameraDX((float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, PI/4, 100.0f, 1.0f);
-	camera->init();
-
-	GameEntity* gameEntity = new GameEntity(VecF3(0.0f, 0.0f, 0.0f), VecF3(0.0f, 0.0f, 0.0f), VecF3(1.0f, 1.0f, 1.0f));
 	
+	GameEntity* gameEntity = new GameEntity(VecF3(0.0f, 0.0f, 0.0f), VecF3(0.0f, 0.0f, 0.0f), VecF3(1.0f, 1.0f, 1.0f));
 	vector<PosNormTex>* vertices = new vector<PosNormTex>;
 	vertices->push_back(PosNormTex(VecF3(-1.0f, 1.0f, 1.0f),	VecF3(0.0f, 0.0f, 1.0f),	VecF2(0.0f, 0.0f)));   
 	vertices->push_back(PosNormTex(VecF3(1.0f, 1.0f, 1.0f),		VecF3(0.0f, 0.0f, 1.0f),	VecF2(1.0f, 0.0f)));
 	vertices->push_back(PosNormTex(VecF3(-1.0f, -1.0f, 1.0f),	VecF3(0.0f, 0.0f, 1.0f),	VecF2(0.0f, 1.0f)));
 	vertices->push_back(PosNormTex(VecF3(1.0f, -1.0f, 1.0f),	VecF3(0.0f, 0.0f, 1.0f),	VecF2(1.0f, 1.0f)));																				 
 	
-
 	std::vector<unsigned int>* indices = new std::vector<unsigned int>();
 	indices->push_back(0);
 	indices->push_back(1);
@@ -45,6 +45,7 @@ void WindowsContainer::main(
 	indices->push_back(2);
 	indices->push_back(1);
 	indices->push_back(3);
+	
 
 	GraphicsContainer* graphicsContainer = new GraphicsContainerDX(
 		"root/Textures/PacmanTex.png", 
@@ -59,17 +60,30 @@ void WindowsContainer::main(
 		0);
 
 	gameEntity->setGraphicsContainer(graphicsContainer);
+	
+	MoveBehaviour* moveBehaviour = new MoveBehaviourPlayer();
+	moveBehaviour->init();
+	gameEntity->setMoveBehaviour(moveBehaviour);
 
-	while(dxWindow->isActive())
-	{
-		Singleton<ObserverDirector>::get().update(1.0);
 
-		dxWindow->update(1.0);
-		camera->update(1.0f);
+	Game* game = new Game(dxCamera, dxWindow, dxRenderer, gameEntity);
+	game->run();
 
-		gameEntity->update(1.0f);
+	/*CleanUp*/
+	delete game;
+}
 
-		dxRenderer->update(1.0f);
-		dxRenderer->renderFrame();
-	}
+void WindowsContainer::initWindows(
+		WindowDX*	dxWindow,
+		RendererDX*	dxRenderer,
+		CameraDX*	dxCamera)
+{
+	dxWindow->init();
+
+	Singleton<ObserverDirector>::get().update(1.0);
+	dxRenderer->update(1.0f);
+
+	dxRenderer->init();
+
+	dxCamera->init();
 }

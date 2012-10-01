@@ -7,12 +7,10 @@ bool WindowDX::leftMouseButton;
 bool WindowDX::rightMouseButton;
 HWND WindowDX::hWnd;
 
-WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow)
+WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow) : Window()
 {
 	this->hInstance = hInstance;
 	this->cmdShow = cmdShow;
-
-	this->active = true;
 
 	keys.resize(NUM_KEYS, false);
 
@@ -112,6 +110,26 @@ void WindowDX::sendKeyboardInput(WPARAM key, bool isPressed)
 		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_D);
 		Singleton<ObserverDirector>::get().push(msgKeyboard);
 	}
+	if(key == VK_UP)
+	{
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_UP);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+	if(key == VK_LEFT)
+	{
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_LEFT);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+	if(key == VK_DOWN)
+	{
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_DOWN);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
+	if(key == VK_RIGHT)
+	{
+		MsgKeyboard* msgKeyboard = new MsgKeyboard(KEY_RIGHT);
+		Singleton<ObserverDirector>::get().push(msgKeyboard);
+	}
 }
 
 void WindowDX::sendMouseMove()
@@ -196,11 +214,6 @@ void WindowDX::update(double delta)
 HWND WindowDX::getWindowHandle()
 {
 	return hWnd;
-}
-
-bool WindowDX::isActive()
-{
-	return active;
 }
 
 InputContainer WindowDX::getInput()

@@ -6,18 +6,20 @@ GameEntity::GameEntity()
 	rotation			= VecF3(0.0f, 0.0f, 0.0f);
 	scale				= VecF3(1.0f, 1.0f, 1.0f);
 	graphicsContainer	= NULL;
+	moveBehaviour		= NULL;
 
 	initMatrices();
 }
 
 GameEntity::GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale)
 {
-	this->position			= position;
-	this->rotation			= rotation;
-	this->scale				= scale;
+	this->position	= position;
+	this->rotation	= rotation;
+	this->scale		= scale;
 
-	graphicsContainer = NULL;
-	
+	graphicsContainer	= NULL;
+	moveBehaviour		= NULL;
+
 	initMatrices();
 }
 
@@ -25,21 +27,26 @@ GameEntity::~GameEntity()
 {
 	if(graphicsContainer)
 		delete graphicsContainer;
+	if(moveBehaviour)
+		delete moveBehaviour;
 }
 
 void GameEntity::rebuildTranslationMatrix()
 {
 	translationMatrix.translation(position.x, position.y, position.z);
+	rebuildWorldMatrix();
 }
 
 void GameEntity::rebuildRotationMatrix()
 {
 	rotationMatrix.rotation(rotation.x, rotation.y, rotation.z);
+	rebuildWorldMatrix();
 }
 
 void GameEntity::rebuildScalingMatrix()
 {
 	scalingMatrix.scaling(scale.x, scale.y, scale.z);
+	rebuildWorldMatrix();
 }
 
 void GameEntity::rebuildWorldMatrix()
@@ -129,8 +136,31 @@ void GameEntity::setGraphicsContainer(GraphicsContainer* graphicsContainer)
 	this->graphicsContainer = graphicsContainer;
 }
 
+void GameEntity::setMoveBehaviour(MoveBehaviour* moveBehaviour)
+{
+	this->moveBehaviour = moveBehaviour;
+}
+
 void GameEntity::update(double delta)
 {
+	if(moveBehaviour)
+	{
+		moveBehaviour->update(1.0f);
+		VecF3 temp = moveBehaviour->getDirection()*0.0001;
+		position += temp;
+
+		if(moveBehaviour->getDirection().x == -1)
+			rotation.z = -90;
+		if(moveBehaviour->getDirection().x == 1)
+			rotation.z = 90;
+		if(moveBehaviour->getDirection().y == -1)
+			rotation.z = 180;
+		if(moveBehaviour->getDirection().y == 1)
+			rotation.z = 0;
+
+		rebuildTranslationMatrix();
+		rebuildRotationMatrix();
+	}
 	if(graphicsContainer)
 	{
 		graphicsContainer->setWorldMatrix(worldMatrix);

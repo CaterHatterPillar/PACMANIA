@@ -68,8 +68,6 @@ private:
 	static bool leftMouseButton;
 	static bool rightMouseButton;
 
-	bool active;
-
 	static HWND hWnd;
 	HINSTANCE hInstance;
 	int cmdShow;
@@ -93,7 +91,6 @@ public:
 
 	void update(double delta);
 	HWND getWindowHandle();
-	bool isActive();
 
 	InputContainer getInput();
 };

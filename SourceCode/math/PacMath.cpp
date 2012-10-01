@@ -83,6 +83,38 @@ void MatF4::translation(float x, float y, float z)
 	m[3][0] = 0.0f; m[3][1] = 0.0f; m[3][2] = 0.0f; m[3][3] = 1.0f;
 }
 
+void MatF4::transpose()
+{
+	float temp[4][4];
+	temp[0][0] = m[0][0];
+	temp[1][0] = m[0][1];
+	temp[2][0] = m[0][2];
+	temp[3][0] = m[0][3];
+
+	temp[0][1] = m[1][0];
+	temp[1][1] = m[1][1];
+	temp[2][1] = m[1][2];
+	temp[3][1] = m[1][3];
+
+	temp[0][2] = m[2][0];
+	temp[1][2] = m[2][1];
+	temp[2][2] = m[2][2];
+	temp[3][2] = m[2][3];
+
+	temp[0][3] = m[3][0];
+	temp[1][3] = m[3][1];
+	temp[2][3] = m[3][2];
+	temp[3][3] = m[3][3];
+
+	for(int i=0; i<4; i++)
+	{
+		for(int j=0; j<4; j++)
+		{
+			m[i][j] = temp[i][j];
+		}
+	}
+}
+
 Quaternion::Quaternion(float _x, float _y, float _z, float _w)
 {
     x = _x;

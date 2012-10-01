@@ -129,6 +129,7 @@ public:
 	void scaling(float x, float y, float z);
 	void rotation(float x, float y, float z);
 	void translation(float x, float y, float z);
+	void transpose();
 };
 
 struct Quaternion

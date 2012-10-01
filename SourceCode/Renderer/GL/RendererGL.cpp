@@ -119,7 +119,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 	GLuint vb = containerGL->VB();
 	GLuint ib = containerGL->IB();
 
-	setShader(vertexShaderID, fragmentShaderID);
+	setShader(vertexShaderID, fragmentShaderID, containerGL);
 	setBuffers(vb, ib);
 
 	glDrawElements(
@@ -128,7 +128,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 		GL_UNSIGNED_INT,	//Index-type (for size)
 		0);					//Offset
 }
-void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader)
+void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader, GraphicsContainerGL* containerGL)
 {
 	/*Get correct shader program*/
 	FXGL* fx			= fxManagement->getFX(vertexShader, fragmentShader);
@@ -143,8 +143,7 @@ void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader)
 	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
 	assert(worldViewProjFX != 0xFFFFFFFF);
 
-	MatF4 world;
-	world.translation(0.0f, 0.0f, 5.0f);
+	MatF4 world = containerGL->getWorldMatrix();
 	worldViewProj = proj * view * world;
 	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
 }

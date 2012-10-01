@@ -45,7 +45,7 @@ public:
 	static void renderSpec();
 	static void prepareRender();
 	static void renderGraphicsGL(GraphicsContainerGL* containerGL);
-	static void setShader(ShaderId vertexShader, ShaderId fragmentShader);
+	static void setShader(ShaderId vertexShader, ShaderId fragmentShader, GraphicsContainerGL* containerGL);
 	static void setBuffers(GLuint vb, GLuint ib);
 	static void deBindGraphicsGL();
 };

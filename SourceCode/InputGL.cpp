@@ -67,14 +67,35 @@ void InputGL::keyboardSpecialSpec(int key, int x, int y)
 }
 void InputGL::keyboardSpec(unsigned char key, int x, int y)
 {
-	//Send msg of exiting glut
+	KEY k;
+	bool validKey = false;
+
 	switch (key)
 	{
-	case 'q':
-		throw 0;
+	case 'w':
+		k = KEY_W;
+		validKey = true;
+		break;
+	case 'a':
+		k = KEY_A;
+		validKey = true;
+		break;
+	case 's':
+		k = KEY_S;
+		validKey = true;
+		break;
+	case 'd':
+		k = KEY_D;
+		validKey = true;
 		break;
 	default:
 		break;
+	}
+
+	if(validKey)
+	{
+		MsgKeyboard* keyboardMsg = new MsgKeyboard(k);
+		Singleton<ObserverDirector>::get().push(keyboardMsg);
 	}
 }
 void InputGL::mouseSpec(int x, int y)

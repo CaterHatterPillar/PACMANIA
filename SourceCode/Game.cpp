@@ -7,6 +7,7 @@ void Game::run()
 		double delta = tickTimer();
 		
 		/*Update stuff here*/
+		pacman->update(delta);
 		camera->update(delta);
 		window->update(delta);
 		renderer->update(delta);

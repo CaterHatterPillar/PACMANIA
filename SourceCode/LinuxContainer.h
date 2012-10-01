@@ -25,6 +25,7 @@ public:
 		RendererGL*	rendererGL,
 		InputGL*	inputGL,
 		CameraGL*	cameraGL);
+	GameEntity* initPacman();
 	void main(int argc, char** argv);
 
 	LinuxContainer() {}
