@@ -5,11 +5,13 @@ void Game::run()
 	do
 	{
 		double delta = tickTimer();
+		
 		/*Update stuff here*/
-
 		camera->update(delta);
-		renderer->update(delta);
 		window->update(delta);
+		renderer->update(delta);
 		Singleton<ObserverDirector>::get().update(delta);
+		
+		renderer->renderFrame();
 	} while(window->isActive());
 }

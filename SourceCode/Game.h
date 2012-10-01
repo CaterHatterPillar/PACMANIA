@@ -43,7 +43,7 @@ public:
 #endif //GAME_H
 
 /*
-testEntity = new GameEntity(VecF3(1.0f, 1.0f, 1.0f), VecF3(1.0f, 1.0f, 1.0f), VecF3(1.0f, 1.0f, 1.0f));
+gameEntity = new GameEntity(VecF3(1.0f, 1.0f, 1.0f), VecF3(1.0f, 1.0f, 1.0f), VecF3(1.0f, 1.0f, 1.0f));
 std::vector<PosNormTex>* vertices = new std::vector<PosNormTex>();
 PosNormTex vertex;
 vertex.pos = VecF3(-1.0f, -1.0f, 0.0f);
@@ -82,5 +82,5 @@ numIndices,
 numFaces,
 stride,
 offset);
-testEntity->setGraphicsContainer(graphicsContainer);
+gameEntity->setGraphicsContainer(graphicsContainer);
 */
