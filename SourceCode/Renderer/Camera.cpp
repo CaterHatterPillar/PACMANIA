@@ -13,7 +13,7 @@ void Camera::init()
 }
 void Camera::update(double delta)
 {
-	bool updateMatrices = true;
+	bool updateMatrices = false;
 
 	Msg* msg = peek();
 	while(msg)
