@@ -30,7 +30,7 @@ public:
 
 	void createVertexBuffer(ID3D11Device* device);
 	void createIndexBuffer(ID3D11Device* device);
-	void createTexture(ID3D11Device* device, LPCTSTR textureFilename);
+	void createTexture(ID3D11Device* device);
 
 	ID3D11Buffer* getVertexBuffer();
 	ID3D11Buffer* getIndexBuffer();

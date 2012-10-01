@@ -19,6 +19,7 @@ GraphicsContainerDX::GraphicsContainerDX(LPCTSTR textureFilename,
 	this->textureFilename = textureFilename;
 	vertexBuffer = NULL;
 	indexBuffer = NULL;
+	texture = NULL;
 }
 
 GraphicsContainerDX::~GraphicsContainerDX()
@@ -55,7 +56,7 @@ void GraphicsContainerDX::createIndexBuffer(ID3D11Device* device)
 	device->CreateBuffer(&ibd, &iinitData, &indexBuffer);
 }
 
-void GraphicsContainerDX::createTexture(ID3D11Device* device, LPCTSTR textureFilename)
+void GraphicsContainerDX::createTexture(ID3D11Device* device)
 {
 	D3DX11CreateShaderResourceViewFromFile(device,
 										   textureFilename,

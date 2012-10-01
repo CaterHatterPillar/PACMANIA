@@ -1,12 +1,5 @@
-
-/*Common include*/
-#include "Singleton.h"
-#include "Messaging/ObserverDirector.h"
-#include "Common.h"
-
 #ifndef _WIN32
 #include "WindowsContainer.h"
-
 int WINAPI WinMain(
 	HINSTANCE	hInstance, 
 	HINSTANCE	hPrevInstance, 
@@ -23,7 +16,6 @@ int WINAPI WinMain(
 
 #ifdef _WIN32
 #include "LinuxContainer.h"
-
 int main(int argc, char** argv)
 {
 	LinuxContainer linux;

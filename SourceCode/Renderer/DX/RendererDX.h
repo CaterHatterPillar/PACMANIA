@@ -38,6 +38,7 @@ private:
 	ID3D11RenderTargetView* backBuffer;
 	ID3D11DepthStencilView* zBuffer;
 	ID3D11RasterizerState* rasterizerState;
+	ID3D11SamplerState* samplerStateDefault; 
 
 	ShaderManagerDX* shaderManager;
 	Cube* cube;
@@ -54,6 +55,7 @@ private:
 	void createBackBuffer();
 	void createViewport();
 	void createRasterizerState();
+	void createSamplerState();
 	void createShaderManager();
 
 	void createCube();
