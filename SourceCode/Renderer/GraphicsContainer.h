@@ -26,6 +26,8 @@ protected:
 	unsigned int numFaces;
 	unsigned int stride;
 	unsigned int offset;
+
+	MatF4 worldMatrix;
 public:
 	GraphicsContainer(
 		ShaderId vertexShaderId,
@@ -52,6 +54,8 @@ public:
 		this->numFaces		= numFaces;
 		this->stride		= stride;
 		this->offset		= offset;
+
+		worldMatrix.identity();
 	}
 	virtual ~GraphicsContainer() {}
 	
@@ -63,6 +67,9 @@ public:
 	unsigned int getNumFaces()		{ return numFaces;		}
 	unsigned int getStride()		{ return stride;		}
 	unsigned int getOffset()		{ return offset;		}
+
+	MatF4 getWorldMatrix() { return worldMatrix; }
+	void setWorldMatrix(MatF4 worldMatrix) { this->worldMatrix = worldMatrix; }
 };
 
 #endif //GRAPHICSCONTAINER_H

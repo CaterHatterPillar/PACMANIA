@@ -10,6 +10,8 @@ RendererDX::RendererDX()
 
 	SubscriptionMsg* msg3 = new SubscriptionMsg(this, RENDER);
 	Singleton<ObserverDirector>::get().push(msg3);
+
+	renderList = new vector<GraphicsContainer*>;
 }
 
 RendererDX::~RendererDX()
@@ -194,6 +196,8 @@ void RendererDX::init()
 
 void RendererDX::update(double delta)
 {
+	renderList->resize(0);
+
 	Msg* msg = peek();
 	while(msg != nullptr)
 	{
@@ -205,6 +209,9 @@ void RendererDX::update(double delta)
 			case CAMERA:
 				handleMsgCamera(msg);
 				break;
+			case RENDER:
+				handleMsgRender(msg);
+				break;
 		}
 
 		msg = pop();
@@ -213,32 +220,71 @@ void RendererDX::update(double delta)
 
 void RendererDX::renderFrame()
 {
-
-	MatF4 viewProj = viewMatrix * projectionMatrix;
-	MatF4 final = cube->getWorldMatrix() * viewProj;
-	shaderManager->updateCBufferPerFrame(final, cube->getWorldMatrix());
+	viewProj = viewMatrix * projectionMatrix;
+	
+	//MatF4 final = cube->getWorldMatrix() * viewProj;
+	//shaderManager->updateCBufferPerFrame(final, cube->getWorldMatrix());
 
 	devcon->ClearRenderTargetView(backBuffer, BLACK);
 	devcon->ClearDepthStencilView(zBuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
-	devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
-	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
-	devcon->IASetInputLayout(shaderManager->getInputLayout());
+	//devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
+	//devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
+	//devcon->IASetInputLayout(shaderManager->getInputLayout());
 
-	UINT stride = sizeof(Vertex); 
-	UINT offset = 0;
+	//UINT stride = sizeof(Vertex); 
+	//UINT offset = 0;
 
 	devcon->OMSetDepthStencilState(0, 0);
 
+	/*
 	ID3D11Buffer* vertexBuffer = cube->getVertexBuffer();
 
 	devcon->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 	devcon->IASetIndexBuffer(cube->getIndexBuffer(), DXGI_FORMAT_R32_UINT, 0);
 	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	*/
 
-	devcon->DrawIndexed(cube->getNumIndices(), 0, 0);
+
+	//devcon->DrawIndexed(cube->getNumIndices(), 0, 0);
+
+	for(UINT i = 0; i < renderList->size(); i++)
+	{
+		renderContainer((GraphicsContainerDX*)renderList->at(i));
+	}
 
 	swapChain->Present(0, 0);
+}
+void RendererDX::renderContainer(GraphicsContainerDX* container)
+{
+	if(!container->getVertexBuffer())
+		container->createVertexBuffer(device);
+	if(!container->getIndexBuffer())
+		container->createIndexBuffer(device);
+
+	MatF4 debug = container->getWorldMatrix();
+
+	MatF4 final = container->getWorldMatrix() * viewProj;
+	shaderManager->updateCBufferPerFrame(final, container->getWorldMatrix());
+
+	devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
+	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
+	devcon->IASetInputLayout(shaderManager->getInputLayout());
+
+	UINT numVertices	= container->getNumVertices();
+	UINT numIndices		= container->getNumIndices();
+	UINT numFaces		= container->getNumFaces();
+	UINT stride			= container->getStride();
+	UINT offset			= container->getOffset();
+
+	ID3D11Buffer* vertexBuffer = container->getVertexBuffer();
+	ID3D11Buffer* indexBuffer = container->getIndexBuffer();
+
+	devcon->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+	devcon->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	devcon->DrawIndexed(numIndices, 0, 0);
 }
 
 void RendererDX::cleanUp()
@@ -267,6 +313,13 @@ void RendererDX::handleMsgCamera(Msg* msg)
 	projectionMatrix = msgCamera->Proj();
 
 	delete msgCamera;
+}
+
+void RendererDX::handleMsgRender(Msg* msg)
+{
+	MsgRender* renderMsg = (MsgRender*)msg;
+	renderList->push_back(renderMsg->getGraphicsContainer());
+	delete renderMsg;
 }
 
 void RendererDX::input(InputContainer inputContainer)

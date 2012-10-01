@@ -15,18 +15,16 @@ GameEntity::GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale)
 	this->position			= position;
 	this->rotation			= rotation;
 	this->scale				= scale;
-	this->components		= components;
-	this->graphicsContainer = graphicsContainer;
+
+	graphicsContainer = NULL;
 	
 	initMatrices();
 }
 
 GameEntity::~GameEntity()
 {
-	for(unsigned int i=0; i<components.size(); i++)
-		delete components[i];
-
-	delete graphicsContainer;
+	if(graphicsContainer)
+		delete graphicsContainer;
 }
 
 void GameEntity::rebuildTranslationMatrix()
@@ -135,7 +133,9 @@ void GameEntity::update(double delta)
 {
 	if(graphicsContainer)
 	{
-		MsgRender* renderMsg = new MsgRender(graphicsContainer, worldMatrix);
+		graphicsContainer->setWorldMatrix(worldMatrix);
+
+		MsgRender* renderMsg = new MsgRender(graphicsContainer);
 		Singleton<ObserverDirector>::get().push(renderMsg);
 	}
 }

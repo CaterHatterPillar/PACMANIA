@@ -17,6 +17,8 @@ GraphicsContainerDX::GraphicsContainerDX(LPCTSTR textureFilename,
 																					  numFaces, stride, offset)
 {
 	this->textureFilename = textureFilename;
+	vertexBuffer = NULL;
+	indexBuffer = NULL;
 }
 
 GraphicsContainerDX::~GraphicsContainerDX()
@@ -35,7 +37,7 @@ void GraphicsContainerDX::createVertexBuffer(ID3D11Device* device)
 	vbd.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA vinitData;
-	vinitData.pSysMem = &vertices[0];
+	vinitData.pSysMem = &vertices->at(0);
 	device->CreateBuffer(&vbd, &vinitData, &vertexBuffer);
 }
 
@@ -43,13 +45,13 @@ void GraphicsContainerDX::createIndexBuffer(ID3D11Device* device)
 {
 	D3D11_BUFFER_DESC ibd;
 	ibd.Usage = D3D11_USAGE_DYNAMIC;
-	ibd.ByteWidth = sizeof(unsigned int)*numFaces*3;
+	ibd.ByteWidth = sizeof(unsigned int)*indices->size();
 	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	ibd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	ibd.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA iinitData;
-	iinitData.pSysMem = &indices[0];
+	iinitData.pSysMem = &indices->at(0);
 	device->CreateBuffer(&ibd, &iinitData, &indexBuffer);
 }
 

@@ -6,6 +6,11 @@
 struct Pos
 {
 	VecF3 pos;
+
+	Pos(VecF3 position)
+	{
+		this->pos = position;
+	}
 };
 
 #endif //POS_H

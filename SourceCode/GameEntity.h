@@ -7,6 +7,7 @@
 #include "Renderer/GraphicsContainer.h"
 #include "Math/PacMath.h"
 #include "Messaging\ObserverDirector.h"
+#include "Singleton.h"
 #include "Messaging\MsgRender.h"
 
 using namespace std;

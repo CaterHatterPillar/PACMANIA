@@ -7,6 +7,7 @@
 #include "ShaderManagerDX.h"
 #include "InputContainer.h"
 #include "Cube.h"
+#include "GraphicsContainerDX.h"
 
 #include "../GraphicsContainer.h"
 #include "../../Messaging/MsgDXWindowHandle.h"
@@ -43,6 +44,7 @@ private:
 
 	MatF4 viewMatrix;
 	MatF4 projectionMatrix;
+	MatF4 viewProj;
 
 	D3D_FEATURE_LEVEL featureLevel;
 	char* featureLevelToString(D3D_FEATURE_LEVEL fl);
@@ -58,7 +60,9 @@ private:
 
 	void handleMsgDXWindowHandle(Msg* msg);
 	void handleMsgCamera(Msg* msg);
+	void handleMsgRender(Msg* msg);
 
+	void renderContainer(GraphicsContainerDX* container);
 protected:
 public:
 	RendererDX();
