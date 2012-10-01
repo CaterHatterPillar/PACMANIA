@@ -13,7 +13,6 @@ int WINAPI WinMain(
 }
 #endif
 
-
 #ifdef _WIN32
 #include "LinuxContainer.h"
 int main(int argc, char** argv)
