@@ -4,8 +4,8 @@
 #include "Messaging/ObserverDirector.h"
 #include "Common.h"
 
-#ifdef _WIN32
-#include "Windows.h"
+#ifndef _WIN32
+#include "WindowsContainer.h"
 
 int WINAPI WinMain(
 	HINSTANCE	hInstance, 
@@ -21,8 +21,8 @@ int WINAPI WinMain(
 #endif
 
 
-#ifndef _WIN32
-#include "Linux.h"
+#ifdef _WIN32
+#include "LinuxContainer.h"
 
 int main(int argc, char** argv)
 {
