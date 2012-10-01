@@ -19,7 +19,7 @@ public:
 		this->subscriber	= subscriber;
 		this->subscription	= subscription;
 	}
-	~SubscriptionMsg(){}
+	virtual ~SubscriptionMsg(){}
 };
 
 #endif //SUBSCRIPTIONMSG_H
