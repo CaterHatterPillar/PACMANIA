@@ -19,6 +19,7 @@ GraphicsContainerDX::GraphicsContainerDX(LPCTSTR textureFilename,
 	this->textureFilename = textureFilename;
 	vertexBuffer = NULL;
 	indexBuffer = NULL;
+	texture = NULL;
 }
 
 GraphicsContainerDX::~GraphicsContainerDX()
