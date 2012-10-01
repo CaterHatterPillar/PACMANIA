@@ -1,9 +1,7 @@
 #include "WindowGL.h"
 
-WindowGL::WindowGL(int argc, char** argv)
+WindowGL::WindowGL(int argc, char** argv) : Window()
 {
-	running = true;
-
 	this->argc = argc;
 	this->argv = argv;
 }
@@ -146,7 +144,7 @@ void WindowGL::glut(Msg* msg)
 		glutWarpPointerMsg(glutMsg);
 		break;
 	case QUIT:
-		running = false;
+		active = false;
 		glutLeaveMainLoop();
 		break;
 	default:
