@@ -18,7 +18,7 @@ public:
 	{
 		this->hWnd = msg->hWnd;
 	}
-	~MsgDXWindowHandle()
+	virtual ~MsgDXWindowHandle()
 	{
 
 	}

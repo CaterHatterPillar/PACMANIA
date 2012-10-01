@@ -7,6 +7,7 @@ struct Pos
 {
 	VecF3 pos;
 
+	Pos() {}
 	Pos(VecF3 position)
 	{
 		this->pos = position;

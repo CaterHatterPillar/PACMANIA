@@ -40,7 +40,7 @@ public:
 		this->intFirst	= glutMsg->IntFirst();
 		this->intSecond	= glutMsg->IntSecond();
 	}
-	~MsgGlut()
+	virtual ~MsgGlut()
 	{
 
 	}

@@ -48,6 +48,9 @@ GLuint FXManagementGL::createProgramFX(
 	GLuint	vertexShader	= createObjFX(VS, GL_VERTEX_SHADER);
 	GLuint	fragmentShader	= createObjFX(PS, GL_FRAGMENT_SHADER);
 
+	delete [] VS;
+	delete [] PS;
+
 	/*Links the newly compiled shader object with the shader program object*/
 	glAttachShader(programFX, vertexShader);
 	glAttachShader(programFX, fragmentShader);

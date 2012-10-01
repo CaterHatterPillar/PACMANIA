@@ -33,7 +33,7 @@ public:
 	{
 		key = keyboardMsg->Key();
 	}
-	~MsgKeyboard() {}
+	virtual ~MsgKeyboard() {}
 
 	KEY	Key() { return key;	}
 };

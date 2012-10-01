@@ -12,13 +12,19 @@
 #include "Renderer/GL/CameraGL.h"
 #include "Renderer/Camera.h"
 #include "InputGL.h"
-#include "Renderer/GL/SimpleGeometry.h"
+#include "GameEntity.h"
+#include "Game.h"
 
 class LinuxContainer
 {
 private:
 protected:
 public:
+	void initLinux(
+		WindowGL*	windowGL, 
+		RendererGL*	rendererGL,
+		InputGL*	inputGL,
+		CameraGL*	cameraGL);
 	void main(int argc, char** argv);
 
 	LinuxContainer() {}

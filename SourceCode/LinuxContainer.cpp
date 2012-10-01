@@ -7,39 +7,45 @@ void LinuxContainer::main(int argc, char** argv)
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 
 	Singleton<ObserverDirector>::get().init();
+	WindowGL*	glWindow	= new WindowGL(argc, argv);
+	RendererGL*	glRenderer	= new RendererGL();
+	InputGL*	input		= new InputGL();
+	CameraGL*	camGL		= new CameraGL(
+		F_O_V,
+		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 
+		1.0f, 
+		1000.0f, 
+		SCREEN_WIDTH, 
+		SCREEN_HEIGHT);
 
-	WindowGL* glWindow = new WindowGL(argc, argv);
-	glWindow->init();
+	initLinux(
+		glWindow, 
+		glRenderer, 
+		input, 
+		camGL);
 
-	RendererGL* glRenderer = new RendererGL();
-	glRenderer->init();
+	Game* game = new Game(
+		camGL, 
+		glWindow, 
+		glRenderer);
+	game->run();
 
-	SimpleGeometry* simpleGeometry = new SimpleGeometry();
-	simpleGeometry->init();
-
-	CameraGL* camGL = new CameraGL(F_O_V, (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 1.0f, 1000.0f, SCREEN_WIDTH, SCREEN_HEIGHT);
-	camGL->init();
-
-	InputGL* input = new InputGL();
-	input->init();
-
-	while(glWindow->Running())
-	{
-		Singleton<ObserverDirector>::get().update(1.0);
-
-		input->update(1.0);
-		camGL->update(1.0);
-
-		simpleGeometry->update(1.0);
-
-		glRenderer->update(1.0);
-		glWindow->update(1.0);
-	}
-
+	//Clean up
+	delete game;
 	delete camGL;
 	delete input;
-	delete simpleGeometry;
-
 	delete glWindow;
 	delete glRenderer;
+}
+
+void LinuxContainer::initLinux(
+	WindowGL*	windowGL, 
+	RendererGL*	rendererGL,
+	InputGL*	inputGL,
+	CameraGL*	cameraGL)
+{
+	windowGL->init();
+	rendererGL->init();
+	cameraGL->init();
+	inputGL->init();
 }

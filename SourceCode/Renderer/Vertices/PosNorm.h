@@ -7,6 +7,7 @@ struct PosNorm : public Pos
 {
 	VecF3 norm;
 
+	PosNorm() {}
 	PosNorm(VecF3 position, VecF3 normal) : Pos(position)
 	{
 		this->norm = normal;
