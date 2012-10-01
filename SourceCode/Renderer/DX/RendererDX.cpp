@@ -7,6 +7,9 @@ RendererDX::RendererDX()
 
 	SubscriptionMsg* msg2 = new SubscriptionMsg(this, CAMERA);
 	Singleton<ObserverDirector>::get().push(msg2);
+
+	SubscriptionMsg* msg3 = new SubscriptionMsg(this, RENDER);
+	Singleton<ObserverDirector>::get().push(msg3);
 }
 
 RendererDX::~RendererDX()
