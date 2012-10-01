@@ -3,7 +3,7 @@
 #include "Messaging/ObserverDirector.h"
 #include "Common.h"
 
-#ifndef _WIN32
+#ifdef _WIN32
 #include "Windows.h"
 int WINAPI WinMain(
 	HINSTANCE	hInstance, 
@@ -18,7 +18,7 @@ int WINAPI WinMain(
 }
 #endif
 
-#ifdef _WIN32
+#ifndef _WIN32
 #include "Linux.h"
 int main(int argc, char** argv)
 {

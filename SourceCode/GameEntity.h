@@ -6,6 +6,8 @@
 #include "Component.h"
 #include "Renderer/GraphicsContainer.h"
 #include "Math/PacMath.h"
+#include "Messaging\ObserverDirector.h"
+#include "Messaging\MsgRender.h"
 
 using namespace std;
 
@@ -21,7 +23,6 @@ private:
 	MatF4 scalingMatrix;
 	MatF4 worldMatrix;
 
-	vector<Component*> components;
 	GraphicsContainer* graphicsContainer;
 
 	void rebuildTranslationMatrix();
@@ -32,8 +33,7 @@ private:
 
 public:
 	GameEntity();
-	GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale,
-				vector<Component*> components, GraphicsContainer* graphicsContainer);
+	GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale);
 	~GameEntity();
 
 	void setPosition(VecF3 position);
@@ -51,6 +51,8 @@ public:
 	MatF4 getTranslationMatrix();
 	MatF4 getRotationMatrix();
 	MatF4 getScalingMatrix();
+
+	void setGraphicsContainer(GraphicsContainer* graphicsContainer);
 
 	void update(double delta);
 };

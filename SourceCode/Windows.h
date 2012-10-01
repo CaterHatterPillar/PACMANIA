@@ -1,6 +1,9 @@
 #ifndef WINDOWSCONTAINER_H
 #define WINDOWSCONTAINER_H
 
+#include <Windows.h>
+#include <WindowsX.h>
+
 class Windows
 {
 private:
