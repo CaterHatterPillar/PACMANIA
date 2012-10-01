@@ -4,12 +4,16 @@
 #include "Renderer/Camera.h"
 #include "Renderer/Window.h"
 #include "Renderer/Renderer.h"
+#include "GameTimer.h"
 
 class Game
 {
 private:
-	bool running;
+	/*Members*/
+	bool		running;
+	GameTimer*	gameTimer;
 
+	/*Ext*/
 	Camera*		camera;
 	Window*		window;
 	Renderer*	renderer;
@@ -17,6 +21,31 @@ protected:
 public:
 	void run();
 
+	double tickTimer()
+	{
+		gameTimer->tick();
+		double delta = gameTimer->getDeltaTime();
+
+		static int frameCount = 0;
+		static float t_base = 0.0f;
+		frameCount++;
+
+		/*Calculate frames per second*/
+		if((gameTimer->getGameTime() - t_base) >= 1.0f)
+		{
+			float fps = (float)frameCount;	//Frames per second
+			float mspf = 1000.0f / fps;		//Milliseconds per frame
+
+			//Msg* msg = new DebugMsg((int)fps, FPS);
+			//Singleton<ObserverDirector>::get().push(msg);
+
+			//Reset for next average
+			frameCount = 0;
+			t_base += 1.0f;
+		}
+
+		return delta;
+	}
 	Game(
 		Camera*		camera,
 		Window*		window,
@@ -27,6 +56,9 @@ public:
 		this->camera	= camera;
 		this->window	= window;
 		this->renderer	= renderer;
+
+		gameTimer = new GameTimer();
+		gameTimer->reset();
 	}
 	~Game()
 	{
