@@ -4,6 +4,7 @@
 #include "Renderer/Camera.h"
 #include "Renderer/Window.h"
 #include "Renderer/Renderer.h"
+#include "GameEntity.h"
 
 class Game
 {
@@ -15,6 +16,7 @@ private:
 	Camera*		camera;
 	Window*		window;
 	Renderer*	renderer;
+	GameEntity* pacman;
 protected:
 public:
 	void run();
@@ -27,13 +29,15 @@ public:
 	Game(
 		Camera*		camera,
 		Window*		window,
-		Renderer*	renderer)
+		Renderer*	renderer,
+		GameEntity*	pacman)
 	{
 		running = true;
 
 		this->camera	= camera;
 		this->window	= window;
 		this->renderer	= renderer;
+		this->pacman	= pacman;
 	}
 	~Game()
 	{

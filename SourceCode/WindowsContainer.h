@@ -18,6 +18,10 @@ public:
 		HINSTANCE	hPrevInstance, 
 		LPSTR		lpCmdLine, 
 		int			nCmdShow);
+	void initWindows(
+		WindowDX*	dxWindow,
+		RendererDX*	dxRenderer,
+		CameraDX*	dxCamera);
 
 	WindowsContainer()	{}
 	~WindowsContainer()	{}

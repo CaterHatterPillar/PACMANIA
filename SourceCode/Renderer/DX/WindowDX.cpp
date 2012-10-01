@@ -7,12 +7,10 @@ bool WindowDX::leftMouseButton;
 bool WindowDX::rightMouseButton;
 HWND WindowDX::hWnd;
 
-WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow)
+WindowDX::WindowDX(HINSTANCE hInstance, int cmdShow) : Window()
 {
 	this->hInstance = hInstance;
 	this->cmdShow = cmdShow;
-
-	this->active = true;
 
 	keys.resize(NUM_KEYS, false);
 
@@ -216,11 +214,6 @@ void WindowDX::update(double delta)
 HWND WindowDX::getWindowHandle()
 {
 	return hWnd;
-}
-
-bool WindowDX::isActive()
-{
-	return active;
 }
 
 InputContainer WindowDX::getInput()
