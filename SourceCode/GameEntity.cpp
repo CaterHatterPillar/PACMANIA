@@ -133,6 +133,9 @@ void GameEntity::setGraphicsContainer(GraphicsContainer* graphicsContainer)
 
 void GameEntity::update(double delta)
 {
-	for(unsigned int i=0; i<components.size(); i++)
-		components[i]->update(delta);
+	if(graphicsContainer)
+	{
+		MsgRender* renderMsg = new MsgRender(graphicsContainer, worldMatrix);
+		Singleton<ObserverDirector>::get().push(renderMsg);
+	}
 }
