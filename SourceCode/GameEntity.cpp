@@ -10,8 +10,7 @@ GameEntity::GameEntity()
 	initMatrices();
 }
 
-GameEntity::GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale,
-						vector<Component*> components, GraphicsContainer* graphicsContainer)
+GameEntity::GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale)
 {
 	this->position			= position;
 	this->rotation			= rotation;
@@ -125,6 +124,11 @@ MatF4 GameEntity::getRotationMatrix()
 MatF4 GameEntity::getScalingMatrix()
 {
 	return scalingMatrix;
+}
+
+void GameEntity::setGraphicsContainer(GraphicsContainer* graphicsContainer)
+{
+	this->graphicsContainer = graphicsContainer;
 }
 
 void GameEntity::update(double delta)
