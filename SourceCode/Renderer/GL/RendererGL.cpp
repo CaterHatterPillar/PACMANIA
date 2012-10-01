@@ -1,4 +1,4 @@
-#include "RendererGL.h"
+﻿#include "RendererGL.h"
 
 FXManagementGL* RendererGL::fxManagement;
 
@@ -41,9 +41,9 @@ void RendererGL::init()
 	MsgGlutCallback* callbackMsg = new MsgGlutCallback(renderSpec, DISPLAY_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //set a colour for brevity
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
-
 void RendererGL::update(double delta)
 {
 	renderList->resize(0);
@@ -70,21 +70,6 @@ void RendererGL::update(double delta)
 	}
 }
 
-void RendererGL::msgRender(Msg* msg)
-{
-	MsgRender* msgRender = (MsgRender*)msg;
-	renderList->push_back(msgRender->getGraphicsContainer());
-	delete msgRender;
-}
-void RendererGL::msgCamera(Msg* msg)
-{
-	MsgCamera* cameraMsg = (MsgCamera*)msg;
-	
-	this->proj = cameraMsg->Proj();
-	this->view = cameraMsg->View();
-
-	delete cameraMsg;
-}
 void RendererGL::renderFrame()
 {
 }
@@ -92,17 +77,22 @@ void RendererGL::renderFrame()
 /*Callback renderspec*/
 void RendererGL::renderSpec()
 {
-	/*Clear backbuffer*/
-	glClear(GL_COLOR_BUFFER_BIT);
+	prepareRender();
 
 	GraphicsContainerGL* graphicsGL;
 	for(unsigned int i = 0; i < renderList->size(); i++)
 	{
 		graphicsGL = (GraphicsContainerGL*)(renderList->at(i));
 		renderGraphicsGL(graphicsGL);
+		deBindGraphicsGL();
 	}
 	
 	glutSwapBuffers();
+}
+void RendererGL::prepareRender()
+{
+	glClear(GL_COLOR_BUFFER_BIT);	//clear backbuffer
+	glClear(GL_DEPTH_BUFFER_BIT);	//clear depthbuffer
 }
 void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 {
@@ -117,64 +107,31 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 		containerGL->OutdatedIB(false);
 	}
 
-	GLuint vb = containerGL->VB();
-	GLuint ib = containerGL->IB();
-
 	unsigned int numVertices	= containerGL->getNumVertices();
 	unsigned int numIndices		= containerGL->getNumIndices();
 	unsigned int numFaces		= containerGL->getNumFaces();
 	unsigned int stride			= containerGL->getStride();
 	unsigned int offset			= containerGL->getOffset();
 
-	setShader();
+	ShaderId vertexShaderID		= containerGL->getVertexShaderId();
+	ShaderId fragmentShaderID	= containerGL->getPixelShaderId();
 
-	glEnableVertexAttribArray(0);
+	GLuint vb = containerGL->VB();
+	GLuint ib = containerGL->IB();
 
-	glBindBuffer(GL_ARRAY_BUFFER, vb);
-	
-	glVertexAttribPointer(
-		0,			//Index of attribute
-		3,			//Number of components in attribute (x, y, z)
-		GL_FLOAT,	//Data type of each component
-		GL_FALSE,	//Specifies if we want attribute to be normalized
-		0,			//Stride
-		0);			//Offset
-	/*
-	glVertexAttribPointer(
-		1,			//Index of attribute
-		3,			//Number of components in attribute (x, y, z)
-		GL_FLOAT,	//Data type of each component
-		GL_FALSE,	//Specifies if we want attribute to be normalized
-		0,			//Stride
-		(void*)(sizeof(VecF3)));			//Offset
+	setShader(vertexShaderID, fragmentShaderID);
+	setBuffers(vb, ib);
 
-	glVertexAttribPointer(
-		2,			//Index of attribute
-		2,			//Number of components in attribute (x, y, z)
-		GL_FLOAT,	//Data type of each component
-		GL_FALSE,	//Specifies if we want attribute to be normalized
-		0,			//Stride
-		(void*)(sizeof(VecF3) * 2));			//Offset
-	*/
-
-	/*Set index buffer*/
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-
-	/*Draw-call using indices*/
 	glDrawElements(
 		GL_TRIANGLES,		//Type to render
 		numIndices,			//Number of indices
 		GL_UNSIGNED_INT,	//Index-type (for size)
 		0);					//Offset
-		
-	glDisableVertexAttribArray(0); //pos
-	//glDisableVertexAttribArray(1); //norm
-	//glDisableVertexAttribArray(2); //tex
 }
-void RendererGL::setShader()
+void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader)
 {
 	/*Get correct shader program*/
-	FXGL* fx			= fxManagement->getFX(BASIC);
+	FXGL* fx			= fxManagement->getFX(vertexShader, fragmentShader);
 	GLuint programFX	= fx->ProgramFX();
 
 	/*Checks whether or not the program object can execute the pipeline in it's current state*/
@@ -183,45 +140,67 @@ void RendererGL::setShader()
 	glUseProgram(programFX);
 
 	/*Connect uniforms*/
-	//worldViewProjFX = glGetUniformLocation(programFX, "wvp");
-	//assert(worldViewProjFX != 0xFFFFFFFF);
+	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
+	assert(worldViewProjFX != 0xFFFFFFFF);
 
-	//MatF4 world;
-	//world.translation(0.0f, 0.0f, 5.0f);
-	//worldViewProj = proj * view * world;
-	//glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
-	
-	std::vector<UniformGL*>* uniforms = fx->Uniforms();
-	for(unsigned int i = 0; i < uniforms->size(); i++)
-	{
-		UniformGL*		uniformGL	= uniforms->at(i);
-		GLuint			handle		= uniformGL->Uniform();
-		UNIFORM_TYPE	type		= uniformGL->Type();
+	MatF4 world;
+	world.translation(0.0f, 0.0f, 5.0f);
+	worldViewProj = proj * view * world;
+	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
+}
+void RendererGL::setBuffers(GLuint vb, GLuint ib)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, vb);
 
-		if(type == MATRIX4F)
-		{
-			MatF4 world;
-			world.translation(1.0f, 1.0f, 1.0f);
+	glVertexAttribPointer(
+		0,							//Index of attribute
+		3,							//Number of components in attribute (x, y, z)
+		GL_FLOAT,					//Data type of each component
+		GL_FALSE,					//Specifies if we want attribute to be normalized
+		sizeof(PosNormTex),			//Stride
+		0);							//Offset of attribute
+	glEnableVertexAttribArray(PosNormTex_POS);
 
-			MatF4 trans = world * view * proj;
-			glUniformMatrix4fv(handle, 1, GL_TRUE, &trans.m[0][0]);
-		}
-		else
-			throw 0; //temp
+	glVertexAttribPointer(
+		1,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(PosNormTex),
+		(void*)(sizeof(VecF3)));
+	glEnableVertexAttribArray(PosNormTex_NORM);
 
-		GLuint uniform = glGetUniformLocation(programFX, "transform");//handle);
-		assert(uniform != 0xFFFFFFFF);
+	glVertexAttribPointer(
+		2,
+		2,
+		GL_FLOAT,
+		GL_FALSE,
+		sizeof(PosNormTex),
+		(void*)(sizeof(VecF3) * 2));
+	glEnableVertexAttribArray(PosNormTex_TEX);
 
-		MatF4 world;
-		world.translation(0.0f, 0.0f, 5.0f);
-
-		MatF4 trans = proj * view * world;
-		glUniformMatrix4fv(uniform, 1, GL_TRUE, &trans.m[0][0]);
-	}
+	/*Set index buffer*/
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+}
+void RendererGL::deBindGraphicsGL()
+{
+	glDisableVertexAttribArray(PosNormTex_POS);
+	glDisableVertexAttribArray(PosNormTex_NORM);
+	glDisableVertexAttribArray(PosNormTex_TEX);
 }
 
-/*Update transform*/
-		//MatF4 world;
-		//world.translation(0.0f, 0.0f, 5.0f);
-		//trans = proj * view * world;
-		//glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &trans.m[0][0]);
+void RendererGL::msgRender(Msg* msg)
+{
+	MsgRender* msgRender = (MsgRender*)msg;
+	renderList->push_back(msgRender->getGraphicsContainer());
+	delete msgRender;
+}
+void RendererGL::msgCamera(Msg* msg)
+{
+	MsgCamera* cameraMsg = (MsgCamera*)msg;
+
+	this->proj = cameraMsg->Proj();
+	this->view = cameraMsg->View();
+
+	delete cameraMsg;
+}

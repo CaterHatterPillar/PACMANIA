@@ -1,4 +1,4 @@
-#include "Windows.h"
+#include "WindowsContainer.h"
 
 /*Windows include*/
 #include "renderer/DX/WindowDX.h"
@@ -7,7 +7,8 @@
 #include "GameEntity.h"
 #include "Renderer/DX/GraphicsContainerDX.h"
 
-void Windows::main(
+void WindowsContainer::main(
+
 	HINSTANCE	hInstance, 
 	HINSTANCE	hPrevInstance, 
 	LPSTR		lpCmdLine, 

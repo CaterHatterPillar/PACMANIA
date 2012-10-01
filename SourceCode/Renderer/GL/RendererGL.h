@@ -43,8 +43,11 @@ public:
 	void renderFrame();
 
 	static void renderSpec();
+	static void prepareRender();
 	static void renderGraphicsGL(GraphicsContainerGL* containerGL);
-	static void setShader();
+	static void setShader(ShaderId vertexShader, ShaderId fragmentShader);
+	static void setBuffers(GLuint vb, GLuint ib);
+	static void deBindGraphicsGL();
 };
 
 #endif //OPENGL_H

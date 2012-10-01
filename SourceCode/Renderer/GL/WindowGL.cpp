@@ -38,8 +38,11 @@ void WindowGL::init()
 		GLUT_ACTION_ON_WINDOW_CLOSE,
 		GLUT_ACTION_CONTINUE_EXECUTION);
 	
-	//glutGameModeString("1920x1200@32");
-	//glutEnterGameMode();
+	std::string width	= TO_STRING((int)SCREEN_WIDTH);
+	std::string height	= TO_STRING((int)SCREEN_HEIGHT);
+	std::string gameModeString = width + "x" + height + "@" + TO_STRING(32);
+	glutGameModeString(gameModeString.c_str());
+	glutEnterGameMode();
 
 	/*Initialize GLEW,
 	* must be initialized after glut
