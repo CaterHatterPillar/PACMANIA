@@ -19,7 +19,7 @@ public:
 	{
 		this->graphicsContainer = msg->getGraphicsContainer();
 	}
-	~MsgRender() {}
+	virtual ~MsgRender() {}
 
 	GraphicsContainer* getGraphicsContainer() { return graphicsContainer; }
 };

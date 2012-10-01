@@ -20,7 +20,7 @@ public:
 		dX = msgMouseMove->DX();
 		dY = msgMouseMove->DY();
 	}
-	~MsgMouseMove() {}
+	virtual ~MsgMouseMove() {}
 
 	long DY() { return dY;	}
 	long DX() { return dX;	}

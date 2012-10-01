@@ -20,7 +20,7 @@ public:
 		mouse1 = mouseClickMsg->Mouse1();
 		mouse2 = mouseClickMsg->Mouse2();
 	}
-	~MsgMouseClick() {}
+	virtual ~MsgMouseClick() {}
 
 	bool Mouse1() { return mouse1; }
 	bool Mouse2() { return mouse2; }

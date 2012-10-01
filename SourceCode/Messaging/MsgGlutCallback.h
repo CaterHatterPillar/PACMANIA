@@ -33,7 +33,7 @@ public:
 		callback		= msgGlutCallback->Callback();
 		callbackType	= msgGlutCallback->CallBackType();
 	}
-	~MsgGlutCallback() {}
+	virtual ~MsgGlutCallback() {}
 
 	void*			Callback()		{ return callback;		}
 	CALLBACK_TYPE	CallBackType()	{ return callbackType;	}

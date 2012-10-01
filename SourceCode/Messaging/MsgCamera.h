@@ -21,7 +21,7 @@ public:
 		view = msgCamera->View();
 		proj = msgCamera->Proj();
 	}
-	~MsgCamera() {}
+	virtual ~MsgCamera() {}
 
 	MatF4 View() { return view; }
 	MatF4 Proj() { return proj; }
