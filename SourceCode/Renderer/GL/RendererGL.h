@@ -4,6 +4,7 @@
 #include "CommonGL.h"
 #include "GraphicsContainerGL.h"
 #include "FXManagementGL.h"
+#include "Texture.h"
 
 #include "../Renderer.h"
 
@@ -28,12 +29,18 @@ private:
 	static GLuint viewFX;
 	static GLuint projFX;
 	static GLuint worldViewProjFX;
+
+	static Texture texture;
+	static GLuint sampler;
 protected:
 public:
 	RendererGL();
 	~RendererGL();
 
-	void init()	;
+	void init();
+	void initShaders();
+	void initTextures();
+	bool loadTGATexture(const char* szFileName, GLenum minFilter, GLenum magFilter, GLenum wrapMode);
 
 	void update(double delta);
 	void msgRender(Msg* msg);

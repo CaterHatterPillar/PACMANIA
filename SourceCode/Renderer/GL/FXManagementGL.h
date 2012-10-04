@@ -8,6 +8,8 @@
 
 #include "FXGL.h"
 #include "CommonGL.h"
+#include "Texture.h"
+
 #include "../GraphicsContainer.h"
 #include "../../Common.h"
 
