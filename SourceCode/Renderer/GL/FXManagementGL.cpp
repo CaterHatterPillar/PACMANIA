@@ -2,54 +2,54 @@
 
 void FXManagementGL::init()
 {
-	initFXs();
+        initFXs();
 }
 void FXManagementGL::initFXs()
 {
-	/*Create default shader-combination*/
-	createFX(
-		VERTEX_SHADER_DEFAULT,
-		PIXEL_SHADER_DEFAULT);
+        /*Create default shader-combination*/
+        createFX(
+                VERTEX_SHADER_DEFAULT,
+                PIXEL_SHADER_DEFAULT);
 }
-
+ 
 void FXManagementGL::createFX(
-	ShaderId vertexShaderID,
-	ShaderId fragmentShaderID)
+        ShaderId vertexShaderID,
+        ShaderId fragmentShaderID)
 {
-	GLuint programFX = createProgramFX(
-		vertexShaderID,
-		fragmentShaderID);
-	FXGL* fx = new FXGL(
-		vertexShaderID, 
-		fragmentShaderID,
-		programFX);
-	//fx->loadUniform("wvp", MATRIX4F); //temp
-	fxs->push_back(fx);
+        GLuint programFX = createProgramFX(
+                vertexShaderID,
+                fragmentShaderID);
+        FXGL* fx = new FXGL(
+                vertexShaderID,
+                fragmentShaderID,
+                programFX);
+        //fx->loadUniform("wvp", MATRIX4F); //temp
+        fxs->push_back(fx);
 }
 GLuint FXManagementGL::createProgramFX(
-	ShaderId vertexShaderID,
-	ShaderId fragmentShaderID)
+        ShaderId vertexShaderID,
+        ShaderId fragmentShaderID)
 {
-	GLuint programFX = glCreateProgram();
-	if(programFX == 0)
-		throw 0;
-
-	std::string vertexPath;
-	std::string fragmentPath;
-	fetchShaderPaths(
-		vertexShaderID,
-		vertexPath,
-		fragmentShaderID,
-		fragmentPath);
-
-	const char* VS = file2string(vertexPath.c_str());
-	const char* PS = file2string(fragmentPath.c_str());
-
-	GLuint	vertexShader	= createObjFX(VS, GL_VERTEX_SHADER);
-	GLuint	fragmentShader	= createObjFX(PS, GL_FRAGMENT_SHADER);
-
-	delete [] VS;
-	delete [] PS;
+        GLuint programFX = glCreateProgram();
+        if(programFX == 0)
+                throw 0;
+ 
+        std::string vertexPath;
+        std::string fragmentPath;
+        fetchShaderPaths(
+                vertexShaderID,
+                vertexPath,
+                fragmentShaderID,
+                fragmentPath);
+ 
+        const char* VS = file2string(vertexPath.c_str());
+        const char* PS = file2string(fragmentPath.c_str());
+ 
+        GLuint  vertexShader    = createObjFX(VS, GL_VERTEX_SHADER);
+        GLuint  fragmentShader  = createObjFX(PS, GL_FRAGMENT_SHADER);
+ 
+        delete [] VS;
+        delete [] PS;
 
 	/*Links the newly compiled shader object with the shader program object*/
 	glAttachShader(programFX, vertexShader);
@@ -86,25 +86,30 @@ void FXManagementGL::fetchShaderPaths(
 	ShaderId		fs,
 	std::string&	fss)
 {
+	std::string path = SHADER_PATH;
+	std::string shader;
+
 	switch(vs)
 	{
 	case VERTEX_SHADER_DEFAULT:
-		vss = DEFAULT_VERTEX_PATH;
+		shader	= SHADER_DEFAULT_VERTEX;
 		break;
 	default:
 		throw 0;
 		break;
 	}
+	vss = path + shader;
 
 	switch(fs)
 	{
 	case PIXEL_SHADER_DEFAULT:
-		fss = DEFAULT_FRAGMENT_PATH;
+		shader	= SHADER_DEFAULT_FRAGMENT;
 		break;
 	default:
 		throw 0;
 		break;
 	}
+	fss = path + shader;
 }
 
 GLuint FXManagementGL::createObjFX(

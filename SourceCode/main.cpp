@@ -1,4 +1,4 @@
-#ifdef _WIN32
+#ifndef _WIN32
 #include "WindowsContainer.h"
 int WINAPI WinMain(
 	HINSTANCE	hInstance, 
@@ -11,9 +11,9 @@ int WINAPI WinMain(
 
 	return 0;
 }
-#endif
 
-#ifndef _WIN32
+#else
+
 #include "LinuxContainer.h"
 int main(int argc, char** argv)
 {
@@ -22,4 +22,4 @@ int main(int argc, char** argv)
 
 	return 0;
 }
-#endif
+#endif //_WIN32

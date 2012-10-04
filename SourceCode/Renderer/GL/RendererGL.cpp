@@ -195,7 +195,10 @@ void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader, Graph
 
 	glUniform1i(sampler, 0);
 
-	MatF4 world = containerGL->getWorldMatrix();
+	MatF4 translation	= containerGL->getTranslationMatrix();
+	MatF4 scaling		= containerGL->getScalingMatrix();
+	MatF4 rotation		= containerGL->getRotationMatrix();
+	MatF4 world			= translation * scaling * rotation;
 	worldViewProj = proj * view * world;
 	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
 }
