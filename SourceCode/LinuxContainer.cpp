@@ -35,10 +35,6 @@ void LinuxContainer::main(int argc, char** argv)
 
 	//Clean up
 	delete game;
-	delete camGL;
-	delete input;
-	delete glWindow;
-	delete glRenderer;
 }
 
 void LinuxContainer::initLinux(
