@@ -51,8 +51,9 @@ void GameEntity::rebuildScalingMatrix()
 
 void GameEntity::rebuildWorldMatrix()
 {
-	worldMatrix = scalingMatrix * rotationMatrix * translationMatrix;
-}
+	//rotationMatrix.identity();
+	worldMatrix = scalingMatrix * translationMatrix * rotationMatrix;
+} 
 
 void GameEntity::initMatrices()
 {
@@ -146,7 +147,7 @@ void GameEntity::update(double delta)
 	if(moveBehaviour)
 	{
 		moveBehaviour->update(1.0f);
-		VecF3 temp = moveBehaviour->getDirection()*0.0001;
+		VecF3 temp = moveBehaviour->getDirection()*0.01;
 		position += temp;
 
 		if(moveBehaviour->getDirection().x == -1)
