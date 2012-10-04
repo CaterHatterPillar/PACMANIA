@@ -6,7 +6,7 @@ layout (location = 1) in vec3 Normal;
 layout (location = 2) in vec2 Tex;
 
 /*OUT*/
-out vec4 Color;
+out vec2 TexCoord0;
 
 /*UNIFORMS*/
 uniform mat4 wvp;
@@ -14,5 +14,5 @@ uniform mat4 wvp;
 void main()
 {
 	gl_Position = wvp * vec4(Position, 1.0f);	
-	Color = vec4(clamp(Position, 0.0, 1.0), 1.0);
+	TexCoord0 = Tex;
 }
