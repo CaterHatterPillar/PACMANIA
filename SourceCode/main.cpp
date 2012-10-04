@@ -11,14 +11,14 @@ int WINAPI WinMain(
 
 	return 0;
 }
-#endif
 
-#ifndef _WIN32
+#else
+
 #include "LinuxContainer.h"
 int main(int argc, char** argv)
 {
-	LinuxContainer linux;
-	linux.main(argc, argv);
+	LinuxContainer linuxContainer;
+	linuxContainer.mainContainer(argc, argv);
 
 	return 0;
 }

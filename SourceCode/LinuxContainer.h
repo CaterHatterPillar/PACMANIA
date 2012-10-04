@@ -1,12 +1,6 @@
 #ifndef LINUXCONTAINER_H
 #define LINUXCONTAINER_H
 
-/*memleaks*/
-#include <vld.h>
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
 #include "Renderer/GL/WindowGL.h"
 #include "Renderer/GL/RendererGL.h"
 #include "Renderer/GL/CameraGL.h"
@@ -26,7 +20,7 @@ public:
 		InputGL*	inputGL,
 		CameraGL*	cameraGL);
 	GameEntity* initPacman();
-	void main(int argc, char** argv);
+	void mainContainer(int argc, char** argv);
 
 	LinuxContainer() {}
 	~LinuxContainer() {}

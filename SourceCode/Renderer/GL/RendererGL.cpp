@@ -38,7 +38,7 @@ void RendererGL::init()
 	Singleton<ObserverDirector>::get().push(subscription);
 
 	/*Send initial callback-specs to GLUT*/
-	MsgGlutCallback* callbackMsg = new MsgGlutCallback(renderSpec, DISPLAY_FUNC);
+	MsgGlutCallback* callbackMsg = new MsgGlutCallback((void*)renderSpec, DISPLAY_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
 	glEnable(GL_DEPTH_TEST);
@@ -143,7 +143,13 @@ void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader, Graph
 	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
 	assert(worldViewProjFX != 0xFFFFFFFF);
 
-	MatF4 world = containerGL->getWorldMatrix();
+	MatF4 world, translation, rotation, scaling;
+	translation = containerGL->getTranslationMatrix();
+	rotation = containerGL->getRotationMatrix();
+	scaling = containerGL->getScalingMatrix();
+
+	world = scaling * translation * rotation;
+
 	worldViewProj = proj * view * world;
 	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
 }

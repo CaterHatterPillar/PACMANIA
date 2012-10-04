@@ -3,7 +3,6 @@
 
 #include "CommonGL.h"
 #include "../GraphicsContainer.h"
-#include "../../VarStatus.h"
 
 class GraphicsContainerGL : public GraphicsContainer
 {

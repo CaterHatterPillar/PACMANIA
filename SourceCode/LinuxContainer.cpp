@@ -1,11 +1,7 @@
 #include "LinuxContainer.h"
 
-void LinuxContainer::main(int argc, char** argv)
+void LinuxContainer::mainContainer(int argc, char** argv)
 {
-	/*Memleaks*/
-	_CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
-
 	Singleton<ObserverDirector>::get().init();
 	WindowGL*	glWindow	= new WindowGL(argc, argv);
 	RendererGL*	glRenderer	= new RendererGL();

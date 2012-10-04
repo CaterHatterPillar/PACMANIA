@@ -52,7 +52,7 @@ void WindowGL::init()
 void WindowGL::update(double delta)
 {
 	Msg* msg = peek();
-	while(msg != nullptr)
+	while(msg != NULL)
 	{
 		msg = pop();
 		if(msg)
@@ -105,32 +105,32 @@ void WindowGL::glutCallback(Msg* msg)
 void WindowGL::glutCallbackDisplayFunc(MsgGlutCallback* callbackMsg)
 {
 	glutDisplayFunc(
-		(void (__cdecl *)(void))
+		(void (*)(void))
 		(callbackMsg->Callback()));
 }
 void WindowGL::glutCallbackIdleFunc(MsgGlutCallback* callbackMsg)
 {
 	glutIdleFunc(
-		(void (__cdecl *)(void))
+		(void (*)(void))
 		(callbackMsg->Callback())
 		);
 }
 void WindowGL::glutCallbackSpecialFunc(MsgGlutCallback* callbackMsg)
 {
 	glutSpecialFunc(
-		(void (__cdecl *)(int, int, int))
+		(void (*)(int, int, int))
 		(callbackMsg->Callback()));
 }
 void WindowGL::glutCallBackPassiveMotionFunc(MsgGlutCallback* callbackMsg)
 {
 	glutPassiveMotionFunc(
-		(void (__cdecl *)(int, int))
+		(void (*)(int, int))
 		(callbackMsg->Callback()));
 }
 void WindowGL::glutCallbackKeyboardFunc(MsgGlutCallback* callbackMsg)
 {
 	glutKeyboardFunc(
-		(void (__cdecl *)(unsigned char, int, int))
+		(void (*)(unsigned char, int, int))
 		(callbackMsg->Callback()));
 }
 
