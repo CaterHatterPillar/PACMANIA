@@ -264,8 +264,17 @@ void RendererDX::renderContainer(GraphicsContainerDX* container)
 	if(!container->getTexture())
 		container->createTexture(device);
 
-	MatF4 final = container->getWorldMatrix() * viewProj;
-	shaderManager->updateCBufferPerFrame(final, container->getWorldMatrix());
+	MatF4 translationMatrix, rotationMatrix, scalingMatrix, worldMatrix;
+	translationMatrix = container->getTranslationMatrix();
+	translationMatrix.transpose();
+	rotationMatrix = container->getRotationMatrix();
+	scalingMatrix = container->getScalingMatrix();
+
+	worldMatrix = scalingMatrix * rotationMatrix * translationMatrix;
+
+	//OpneGL and DirectX use different Matrices therefor the world matrix must be transposed
+	MatF4 final = worldMatrix * viewProj;
+	shaderManager->updateCBufferPerFrame(final, worldMatrix);
 
 	devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
 	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
