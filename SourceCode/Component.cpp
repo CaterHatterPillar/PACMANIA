@@ -2,7 +2,7 @@
 
 Msg* Component::pop() 
 {
-	Msg* msg = nullptr;
+	Msg* msg = NULL;
 	if(!msgs.empty())
 	{
 		msg = msgs.front();
@@ -13,7 +13,7 @@ Msg* Component::pop()
 }
 Msg* Component::peek()
 {
-	Msg* msg = nullptr;
+	Msg* msg = NULL;
 	if(!msgs.empty())
 		msg = msgs.front();
 	return msg;

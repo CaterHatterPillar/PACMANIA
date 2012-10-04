@@ -53,4 +53,4 @@
             ~FXManagementGL();
     };
      
-    #endif //FXMANAGEMENT_H
+#endif //FXMANAGEMENT_H

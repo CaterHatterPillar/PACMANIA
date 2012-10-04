@@ -184,7 +184,7 @@ FXGL* FXManagementGL::getFX(
 	ShaderId vertexShaderID,
 	ShaderId fragmentShaderID)
 {
-	FXGL* fx = nullptr;
+	FXGL* fx = NULL;
 
 	bool foundFX = false;
 	for(unsigned int i = 0; i < fxs->size() && !foundFX; i++)

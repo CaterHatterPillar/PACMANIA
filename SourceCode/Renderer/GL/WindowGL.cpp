@@ -52,7 +52,7 @@ void WindowGL::init()
 void WindowGL::update(double delta)
 {
 	Msg* msg = peek();
-	while(msg != nullptr)
+	while(msg != NULL)
 	{
 		msg = pop();
 		if(msg)

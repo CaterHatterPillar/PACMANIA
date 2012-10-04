@@ -7,13 +7,13 @@ void InputGL::init()
 {
 	/*Init GLUT callbacks*/
 	MsgGlutCallback* callbackMsg
-		= new MsgGlutCallback(keyboardSpecialSpec, SPECIAL_FUNC);
+		= new MsgGlutCallback((void*)keyboardSpecialSpec, SPECIAL_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
-	callbackMsg = new MsgGlutCallback(keyboardSpec, KEYBOARD_FUNC);
+	callbackMsg = new MsgGlutCallback((void*)keyboardSpec, KEYBOARD_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
-	callbackMsg = new MsgGlutCallback(mouseSpec, PASSIVE_MOTION_FUNC);
+	callbackMsg = new MsgGlutCallback((void*)mouseSpec, PASSIVE_MOTION_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
 	lastMouseX = 0;

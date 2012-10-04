@@ -100,7 +100,7 @@ void CameraGL::update(double delta)
 void CameraGL::updateProj()
 {
 	MatF4 perspective;
-	ZeroMemory(&perspective, sizeof(MatF4));
+	//ZeroMemory(&perspective, sizeof(MatF4));
 
 	const float ar         = Aspect();
 	const float zRange     = ZNear() - ZFar();

@@ -26,9 +26,10 @@
 
 //Linux
 #ifdef linux
-#define GLEW_STATIC
-#include <glew.h>
-#include <glut.h>
+//#define GLEW_STATIC
+#include <GL/glew.h>
+#include <GL/glut.h>
+#include <GL/freeglut.h>
 #endif
 
 #endif //COMMONGL_H

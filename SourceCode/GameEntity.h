@@ -6,9 +6,9 @@
 #include "Component.h"
 #include "Renderer/GraphicsContainer.h"
 #include "Math/PacMath.h"
-#include "Messaging\ObserverDirector.h"
+#include "Messaging/ObserverDirector.h"
 #include "Singleton.h"
-#include "Messaging\MsgRender.h"
+#include "Messaging/MsgRender.h"
 #include "Behaviours/MoveBehaviourPlayer.h"
 
 using namespace std;

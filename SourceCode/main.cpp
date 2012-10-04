@@ -17,8 +17,8 @@ int WINAPI WinMain(
 #include "LinuxContainer.h"
 int main(int argc, char** argv)
 {
-	LinuxContainer linux;
-	linux.main(argc, argv);
+	LinuxContainer linuxContainer;
+	linuxContainer.mainContainer(argc, argv);
 
 	return 0;
 }
