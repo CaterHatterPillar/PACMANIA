@@ -4,7 +4,7 @@
 //Windows
 #ifdef _WIN32
 #include <windows.h>
-#include <gl\glew.h>
+#include <glew.h>
 #include <freeglut.h>
 #include <gl\gl.h>
 #endif
@@ -27,9 +27,9 @@
 //Linux
 #ifdef linux
 //#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GL/glut.h>
-#include <GL/freeglut.h>
+#include <glew.h>
+#include <glut.h>
+#include <freeglut.h>
 #endif
 
 #endif //COMMONGL_H
