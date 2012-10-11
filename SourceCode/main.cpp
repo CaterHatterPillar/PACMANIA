@@ -8,7 +8,6 @@ int WINAPI WinMain(
 {
 	WindowsContainer win;
 	win.main(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-
 	return 0;
 }
 

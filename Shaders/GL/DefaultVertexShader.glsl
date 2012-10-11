@@ -6,6 +6,7 @@ layout (location = 1) in vec3 Normal;
 layout (location = 2) in vec2 Tex;
 
 /*OUT*/
+out vec4 gl_Position;
 out vec2 TexCoord0;
 
 /*UNIFORMS*/
