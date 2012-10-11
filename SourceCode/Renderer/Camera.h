@@ -37,7 +37,7 @@ protected:
 	virtual void updateView() = 0;
 
 	void msgMouseMove(Msg* msg);
-	virtual void mouse(const int dX, const int dY)	= 0;
+	virtual void mouse(const float dX, const float dY)	= 0;
 
 	void msgKeyboard(Msg* msg);
 	virtual void keyboard(KEY key)		= 0;
