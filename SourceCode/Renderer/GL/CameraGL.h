@@ -8,29 +8,22 @@
 class CameraGL : public Camera
 {
 private:
-	float angleH;
-	float angleV;
-
 	void updateProj();
 	void updateView();
-	void updateRotation();
 protected:
 public:
 	CameraGL(
 		float fov, 
 		float aspect, 
 		float zNear, 
-		float zFar,
-
-		unsigned int screenWidth,
-		unsigned int screenHeight);
+		float zFar);
 	~CameraGL();
 
 	void init();
 	void update(double delta);
 
 	void keyboard(KEY key);
-	void mouse(const int x, const int y);
+	void mouse(const float dX, const float dY);
 
 	void pitch(const float angle);
 	void yaw(const float angle);
