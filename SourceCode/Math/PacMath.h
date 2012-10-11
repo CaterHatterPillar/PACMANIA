@@ -100,7 +100,8 @@ public:
     float m[4][4];
 
     MatF4()
-    {        
+    {
+		identity(); 
     }
 
     inline void identity()
