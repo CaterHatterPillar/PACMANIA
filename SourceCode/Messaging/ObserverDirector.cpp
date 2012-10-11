@@ -36,9 +36,9 @@ void ObserverDirector::update(double delta)
 		case CAMERA:
 			msgCamera(msg);
 			break;
-//		case DX_WINDOW_HANDLE:
-//			msgDXWindowHandle(msg);
-//			break;
+		case DX_WINDOW_HANDLE:
+			msgDXWindowHandle(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
@@ -47,7 +47,7 @@ void ObserverDirector::update(double delta)
 	}
 }
 
-/*void ObserverDirector::msgDXWindowHandle(Msg* msg)
+void ObserverDirector::msgDXWindowHandle(Msg* msg)
 {
 	MsgDXWindowHandle* msgDX = (MsgDXWindowHandle*)msg;
 
@@ -57,7 +57,7 @@ void ObserverDirector::update(double delta)
 		if(observer->isSubscriber(msg->Type()))
 			observer->getComponent()->push(msgDX);
 	}
-}*/
+}
 
 void ObserverDirector::subscribeMsg(Msg* msg)
 {

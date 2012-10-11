@@ -147,7 +147,7 @@ void GameEntity::update(double delta)
 	if(moveBehaviour)
 	{
 		moveBehaviour->update(1.0f);
-		VecF3 temp = moveBehaviour->getDirection()*0.01;
+		VecF3 temp = moveBehaviour->getDirection()*0.001;
 		position += temp;
 
 		if(moveBehaviour->getDirection().x == -1)

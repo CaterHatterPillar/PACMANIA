@@ -93,7 +93,7 @@ void RendererDX::createDeviceAndSwapChain()
 			char title[256];
 			sprintf_s(	title,
 						sizeof(title),
-						"Wonderland | Direct3D 11.0 device initiated with Direct3D %s feature level",
+						"PACMANIA | Direct3D 11.0 device initiated with Direct3D %s feature level",
 						featureLevelToString(featureLevel));
 			SetWindowText(hWnd, title);
 			
