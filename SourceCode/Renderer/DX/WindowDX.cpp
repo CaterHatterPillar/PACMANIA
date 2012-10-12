@@ -32,7 +32,7 @@ void WindowDX::mouseDeltaMove(LPARAM lParam)
 	MapWindowPoints(hWnd, NULL, &point, 1);
 	
 	//Get current mouse position
-	int mouseX = GET_X_LPARAM(lParam)+point.x;
+	int mouseX = GET_X_LPARAM(lParam)+point.x; 
 	int mouseY = GET_Y_LPARAM(lParam)+point.y;
 
 	//Calculate relative mouse movement
