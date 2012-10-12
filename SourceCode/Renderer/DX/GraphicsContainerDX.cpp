@@ -55,7 +55,7 @@ void GraphicsContainerDX::createIndexBuffer(ID3D11Device* device)
 	device->CreateBuffer(&ibd, &iinitData, &indexBuffer);
 }
 
-void GraphicsContainerDX::setTexture(ID3D11ShaderResourceView* texure)
+void GraphicsContainerDX::setTexture(ID3D11ShaderResourceView* texture)
 {
 	this->texture = texture;
 }

@@ -316,6 +316,8 @@ void RendererDX::cleanUp()
 	backBuffer->Release();
 
 	delete shaderManager;
+	if(textureManager)
+		delete textureManager;
 }
 
 void RendererDX::handleMsgDXWindowHandle(Msg* msg)

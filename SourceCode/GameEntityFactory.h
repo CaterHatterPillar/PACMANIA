@@ -18,10 +18,10 @@ public:
 	GameEntityFactory();
 	~GameEntityFactory();
 
-	virtual GameEntity* createPacman();
-	virtual GameEntity* createGhost();
-	virtual GameEntity* createPill();
-	virtual GameEntity* createBloodyPill();
+	virtual GameEntity* createPacman() = 0;
+	virtual GameEntity* createGhost() = 0;
+	virtual GameEntity* createPill() = 0;
+	virtual GameEntity* createBloodyPill() = 0;
 };
 
 #endif //GAMEENTITYFACTORY
