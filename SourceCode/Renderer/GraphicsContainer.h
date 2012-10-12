@@ -26,7 +26,7 @@ protected:
 	ShaderId vertexShaderId;
 	ShaderId pixelShaderId;
 
-	TextureId texture;
+	TextureId textureId;
 
 	std::vector<PosNormTex>*	vertices;
 	std::vector<unsigned int>*	indices;
@@ -44,7 +44,7 @@ public:
 	GraphicsContainer(
 		ShaderId vertexShaderId,
 		ShaderId pixelShaderId,
-		TextureId texture,
+		TextureId textureId,
 
 		std::vector<PosNormTex>* vertices,
 		std::vector<unsigned int>* indices,
@@ -59,7 +59,7 @@ public:
 		this->vertexShaderId	= vertexShaderId;
 		this->pixelShaderId		= pixelShaderId;
 
-		this->texture = texture;
+		this->textureId = textureId;
 
 		this->vertices	= vertices;
 		this->indices	= indices;
