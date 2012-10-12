@@ -27,27 +27,6 @@ void GraphicsContainerGL::createTex(std::string pathTex)
 	{
 		//Creates a texture and put it's ID in the given integer variable
 		glGenTextures(1, &tex.texID);
-		//Setting as active texture
-		glBindTexture(GL_TEXTURE_2D, texture.texID);
-
-		//Load texture into memory
-		glTexImage2D(
-			GL_TEXTURE_2D, 
-			0, 
-			tex.bpp / 8, 
-			tex.width, 
-			tex.height, 
-			0, 
-			tex.type, 
-			GL_UNSIGNED_BYTE, 
-			tex.imageData);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glEnable(GL_TEXTURE_2D);
-
-		if(tex.imageData)
-			free(tex.imageData); //Free raw image data
 	}
 	else
 		throw 0;
@@ -85,6 +64,9 @@ GraphicsContainerGL::GraphicsContainerGL(
 }
 GraphicsContainerGL::~GraphicsContainerGL()
 {
+	if(tex.imageData)
+		free(tex.imageData); //Free raw image data
+
 	DELETE_NULL(vertices);
 	DELETE_NULL(indices);
 }

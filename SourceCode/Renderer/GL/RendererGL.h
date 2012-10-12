@@ -52,9 +52,10 @@ public:
 	static void renderGraphicsGL(GraphicsContainerGL* containerGL);
 	static void setShader(ShaderId vertexShader, ShaderId fragmentShader, GraphicsContainerGL* containerGL);
 	static void setBuffers(GLuint vb, GLuint ib);
+	static void setTextures(Texture& tex);
 	static void deBindGraphicsGL();
 
-	std::string fetchTexPath(TextureId texId);
+	static std::string fetchTexPath(TextureId texId);
 };
 
 #endif //OPENGL_H

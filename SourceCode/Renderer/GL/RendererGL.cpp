@@ -30,7 +30,6 @@ void RendererGL::cleanUp()
 void RendererGL::init()
 {
 	initShaders();
-	initTextures();
 
 	/*Subscribe*/
 	SubscriptionMsg* subscription = new SubscriptionMsg(this, RENDER);
@@ -115,7 +114,9 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 	}
 	if(containerGL->OutdatedTex())
 	{
-		
+		std::string texPath = fetchTexPath(containerGL->getTextureId());
+		containerGL->createTex(texPath);
+		containerGL->OutdatedTex(false);
 	}
 
 	unsigned int numVertices	= containerGL->getNumVertices();
@@ -132,6 +133,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 
 	setShader(vertexShaderID, fragmentShaderID, containerGL);
 	setBuffers(vb, ib);
+	setTextures(containerGL->Tex());
 
 	glDrawElements(
 		GL_TRIANGLES,		//Type to render
@@ -200,6 +202,27 @@ void RendererGL::setBuffers(GLuint vb, GLuint ib)
 	/*Set index buffer*/
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 }
+void RendererGL::setTextures(Texture& tex)
+{
+	//Setting as active texture
+	glBindTexture(GL_TEXTURE_2D, tex.texID);
+
+	//Load texture into memory
+	glTexImage2D(
+		GL_TEXTURE_2D, 
+		0, 
+		tex.bpp / 8, 
+		tex.width, 
+		tex.height, 
+		0, 
+		tex.type, 
+		GL_UNSIGNED_BYTE, 
+		tex.imageData);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glEnable(GL_TEXTURE_2D);
+}
 void RendererGL::deBindGraphicsGL()
 {
 	glDisableVertexAttribArray(PosNormTex_POS);
@@ -237,6 +260,6 @@ std::string RendererGL::fetchTexPath(TextureId texId)
 		break;
 	}
 
-	std::string texPath += texName;
+	texPath += texName;
 	return texPath;
 }
