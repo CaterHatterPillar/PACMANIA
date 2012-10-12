@@ -67,7 +67,7 @@ private:
 	void handleMsgCamera(Msg* msg);
 	void handleMsgRender(Msg* msg);
 
-	void renderContainer(GraphicsContainerDX* container);
+	void renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling);
 protected:
 public:
 	RendererDX();

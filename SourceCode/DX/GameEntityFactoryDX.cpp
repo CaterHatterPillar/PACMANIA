@@ -38,6 +38,7 @@ GameEntity* GameEntityFactoryDX::createPacman(VecF3 position)
 																	offset);
 
 	MoveBehaviour* moveBehaviour = new MoveBehaviourPlayer();
+	moveBehaviour->init();
 
 	entity->setGraphicsContainer(graphicsContainer);
 	entity->setMoveBehaviour(moveBehaviour);

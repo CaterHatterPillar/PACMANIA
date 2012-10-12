@@ -39,10 +39,12 @@ void ObserverDirector::update(double delta)
 		case DX_WINDOW_HANDLE:
 			msgDXWindowHandle(msg);
 			break;
+		case ENTITY_STATE:
+			msgEntityState(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
-
 		}
 	}
 }

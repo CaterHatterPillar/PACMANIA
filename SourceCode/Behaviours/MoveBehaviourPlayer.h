@@ -73,6 +73,7 @@ public:
 		dir.x=1;
 		dir.y=0;
 		isMoving = false;
+
 	};
 	virtual ~MoveBehaviourPlayer()
 	{
@@ -164,7 +165,20 @@ public:
 
 		// Interpolate rotation on cube
 		interpolateRotation(dt);
+
+		// Send message of current state to all relevent listeners
+		sendMsgEntityState();
+
+		// Draw labyrinth
+		maze->draw();
 	};
+
+	void sendMsgEntityState()
+	{
+		MsgEntityState* msg = new MsgEntityState(position, 0);
+		Singleton<ObserverDirector>::get().push(msg);
+	};	
+
 
 	void interpolateRotation(float dt)
 	{
@@ -182,8 +196,8 @@ public:
 
 		// Update parent
 		position = VecF3((float)pos.x, (float)pos.y, 0.0f);
-		//rotation = quarot.toMatrix();
-		rotation = mat_rot;
+		rotation = qua_rot.toMatrix();
+		//rotation = mat_rot;
 	};
 
 	void msgKeyboard(Msg* msg)

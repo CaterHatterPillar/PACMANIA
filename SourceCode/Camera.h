@@ -12,8 +12,6 @@
 #include "Messaging/MsgKeyboard.h"
 #include "Messaging/MsgCamera.h"
 
-const static float STEP_SCALE = 0.1f;
-
 class Camera : public Component
 {
 private:
@@ -25,6 +23,7 @@ private:
 	unsigned int screenWidth;
 	unsigned int screenHeight;
 protected:
+	float STEP_SCALE;
 	VecF3 position;
 	VecF3 right;
 	VecF3 up;
@@ -41,6 +40,9 @@ protected:
 
 	void msgKeyboard(Msg* msg);
 	virtual void keyboard(KEY key)		= 0;
+
+	void msgEntityState(Msg* _msg);
+
 
 	virtual void strafe(const float velocity)	= 0;
 	virtual void walk(const float velocity)		= 0;
