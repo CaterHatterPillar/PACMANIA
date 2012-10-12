@@ -3,14 +3,16 @@
 
 #include "Common.h"
 #include "Component.h"
-#include "GraphicsContainer.h"
+
 #include "Math/PacMath.h"
+
+#include "Messaging\MsgRender.h"
 
 class Renderer : public Component
 {
 private:
 protected:
-	static std::vector<GraphicsContainer*>* renderList;
+	static std::vector<MsgRender*>* renderList;
 public:
 	virtual void init()					= 0;
 	virtual void update(double delta)	= 0;

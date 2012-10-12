@@ -1,3 +1,3 @@
 #include "Renderer.h"
 
-std::vector<GraphicsContainer*>* Renderer::renderList;
+std::vector<MsgRender*>* Renderer::renderList;
