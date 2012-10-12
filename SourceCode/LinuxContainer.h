@@ -1,13 +1,15 @@
 #ifndef LINUXCONTAINER_H
 #define LINUXCONTAINER_H
 
+#include "Game.h"
+#include "GameEntity.h"
+
+#include "Renderer/Camera.h"
+
 #include "Renderer/GL/WindowGL.h"
 #include "Renderer/GL/RendererGL.h"
 #include "Renderer/GL/CameraGL.h"
-#include "Renderer/Camera.h"
-#include "InputGL.h"
-#include "GameEntity.h"
-#include "Game.h"
+#include "Renderer/GL/InputGL.h"
 
 class LinuxContainer
 {
