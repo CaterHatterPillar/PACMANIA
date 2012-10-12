@@ -27,8 +27,8 @@ void LinuxContainer::mainContainer(int argc, char** argv)
 		pacman);
 	game->run();
 
-	//Clean up
-	delete game;
+	DELETE_NULL(input); //handled via callbacks outside of game
+	DELETE_NULL(game);
 }
 
 void LinuxContainer::initLinux(
@@ -62,6 +62,7 @@ GameEntity* LinuxContainer::initPacman()
 	GraphicsContainer* graphicsContainer = new GraphicsContainerGL( 
 		VERTEX_SHADER_DEFAULT, 
 		PIXEL_SHADER_DEFAULT, 
+		TEXTURE_PACMAN,
 		vertices, 
 		indices, 
 		vertices->size(), 
