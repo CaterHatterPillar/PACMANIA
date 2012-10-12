@@ -7,12 +7,10 @@ void LinuxContainer::mainContainer(int argc, char** argv)
 	RendererGL*	glRenderer	= new RendererGL();
 	InputGL*	input		= new InputGL();
 	CameraGL*	camGL		= new CameraGL(
-		F_O_V,
+		(float)F_O_V,
 		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 
-		1.0f, 
-		1000.0f, 
-		SCREEN_WIDTH, 
-		SCREEN_HEIGHT);
+		(float)Z_NEAR, 
+		(float)Z_FAR);
 
 	initLinux(
 		glWindow, 

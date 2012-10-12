@@ -15,9 +15,9 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-#define F_O_V	60
+#define F_O_V	45
 #define Z_NEAR	1
-#define Z_FAR	1000
+#define Z_FAR	100
 
 template <class T>
 inline std::string TO_STRING(const T& t)
