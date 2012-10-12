@@ -155,9 +155,11 @@ void GameEntity::update(double delta)
 	}
 	if(graphicsContainer)
 	{
-		graphicsContainer->setMatrices(translationMatrix, rotationMatrix, scalingMatrix);
-
-		MsgRender* renderMsg = new MsgRender(graphicsContainer);
+		MsgRender* renderMsg = new MsgRender(
+			graphicsContainer, 
+			translationMatrix, 
+			rotationMatrix, 
+			scalingMatrix);
 		Singleton<ObserverDirector>::get().push(renderMsg);
 	}
 }
