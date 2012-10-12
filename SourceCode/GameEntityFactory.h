@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Game/GameEntity.h"
-#include "Renderer/Vertices/PosNormTex.h"
+#include "Vertices/PosNormTex.h"
 
 using namespace std;
 

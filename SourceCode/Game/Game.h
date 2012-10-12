@@ -1,9 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "../Renderer/Camera.h"
-#include "../Renderer/Window.h"
-#include "../Renderer/Renderer.h"
+#include "../Camera.h"
+#include "../Window.h"
+#include "../Renderer.h"
 #include "GameEntity.h"
 
 // Windows

@@ -2,7 +2,7 @@
 #define MSGRENDER_H
 
 #include "Msg.h"
-#include "../Renderer/GraphicsContainer.h"
+#include "../GraphicsContainer.h"
 #include "../Math/PacMath.h"
 
 class MsgRender : public Msg

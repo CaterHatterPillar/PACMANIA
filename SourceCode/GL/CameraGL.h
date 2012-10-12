@@ -3,7 +3,7 @@
 
 #include "CommonGL.h"
 #include "../Camera.h"
-#include "../../Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 class CameraGL : public Camera
 {

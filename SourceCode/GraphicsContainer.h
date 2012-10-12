@@ -1,7 +1,7 @@
 #ifndef GRAPHICSCONTAINER_H
 #define GRAPHICSCONTAINER_H
 
-#include "../Common.h"
+#include "Common.h"
 #include "Vertices/PosNormTex.h"
 
 enum ShaderId

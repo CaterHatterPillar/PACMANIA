@@ -4,12 +4,12 @@
 #include "Game/Game.h"
 #include "Game/GameEntity.h"
 
-#include "Renderer/Camera.h"
+#include "Camera.h"
 
-#include "Renderer/GL/WindowGL.h"
-#include "Renderer/GL/RendererGL.h"
-#include "Renderer/GL/CameraGL.h"
-#include "Renderer/GL/InputGL.h"
+#include "GL/WindowGL.h"
+#include "GL/RendererGL.h"
+#include "GL/CameraGL.h"
+#include "GL/InputGL.h"
 
 class LinuxContainer
 {

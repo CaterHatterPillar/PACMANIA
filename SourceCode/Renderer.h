@@ -1,10 +1,10 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "../Common.h"
-#include "../Component.h"
+#include "Common.h"
+#include "Component.h"
 #include "GraphicsContainer.h"
-#include "../Math/PacMath.h"
+#include "Math/PacMath.h"
 
 class Renderer : public Component
 {

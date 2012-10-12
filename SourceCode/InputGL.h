@@ -7,7 +7,7 @@
 
 #include "Math/PacMath.h"
 
-#include "Renderer/GL/CommonGL.h"
+#include "GL/CommonGL.h"
 
 #include "Messaging/ObserverDirector.h"
 #include "Messaging/MsgGlutCallback.h"

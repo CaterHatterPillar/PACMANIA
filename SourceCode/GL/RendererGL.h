@@ -8,14 +8,14 @@
 
 #include "../Renderer.h"
 
-#include "../../Common.h"
-#include "../../Singleton.h"
+#include "../Common.h"
+#include "../Singleton.h"
 
-#include "../../Messaging/ObserverDirector.h"
-#include "../../Messaging/MsgGlutCallback.h"
-#include "../../Messaging/MsgCamera.h"
+#include "../Messaging/ObserverDirector.h"
+#include "../Messaging/MsgGlutCallback.h"
+#include "../Messaging/MsgCamera.h"
 
-#include "../../Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 class RendererGL : public Renderer
 {

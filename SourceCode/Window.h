@@ -1,7 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "../Component.h"
+#include "Component.h"
 
 class Window : public Component
 {

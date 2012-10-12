@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../Component.h"
-#include "../Renderer/GraphicsContainer.h"
+#include "../GraphicsContainer.h"
 #include "../Math/PacMath.h"
 #include "../Messaging/ObserverDirector.h"
 #include "../Singleton.h"

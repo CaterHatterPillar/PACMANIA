@@ -1,7 +1,7 @@
 #ifndef POS_H
 #define POS_H
 
-#include "../../Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 struct Pos
 {
