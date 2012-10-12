@@ -1,8 +1,8 @@
 #ifndef LINUXCONTAINER_H
 #define LINUXCONTAINER_H
 
-#include "Game.h"
-#include "GameEntity.h"
+#include "Game/Game.h"
+#include "Game/GameEntity.h"
 
 #include "Renderer/Camera.h"
 

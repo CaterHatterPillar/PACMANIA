@@ -107,7 +107,7 @@ public:
 	}
 	virtual void update(double delta)
 	{
-		float dt = (float)delta/1000;
+		float dt = (float)delta/1;
 		handleMessages();
 
 		// True: entity is in move state
@@ -171,7 +171,7 @@ public:
 		MatF4 mat_rot;
 		VecF3 vec_eye(0.0f, 0.0f, 0.0f);
 		VecF3 vec_at((float)dir.x, (float)dir.y, 0.0f);
-		VecF3 vec_up(0.0f, 0.0f, 1.0f);
+		VecF3 vec_up(0.0f, 0.0f, -1.0f);
 		mat_rot.lookAtLH(vec_eye, vec_at, vec_up);
 		Quaternion qua_rot(&mat_rot);
 
@@ -181,8 +181,8 @@ public:
 
 		// Update parent
 		position = VecF3((float)pos.x, (float)pos.y, 0.0f);
-		rotation = qua_rot.toMatrix();
-		//rotation = mat_rot;
+		//rotation = quarot.toMatrix();
+		rotation = mat_rot;
 	};
 
 	void msgKeyboard(Msg* msg)
