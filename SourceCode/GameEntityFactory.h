@@ -1,9 +1,12 @@
 #ifndef GAMEENTITYFACTORY_H
 #define GAMEENTITYFACTORY_H
 
-#include <vector>
+#include "Common.h"
 
 #include "Game/GameEntity.h"
+
+#include "Behaviours/MoveBehaviourPlayer.h"
+
 #include "Vertices/PosNormTex.h"
 
 using namespace std;
@@ -21,10 +24,10 @@ public:
 	GameEntityFactory();
 	~GameEntityFactory();
 
-	virtual GameEntity* createPacman(VecF3 position) = 0;
-	virtual GameEntity* createGhost(VecF3 position) = 0;
-	virtual GameEntity* createPill(VecF3 position) = 0;
-	virtual GameEntity* createBloodyPill(VecF3 position) = 0;
+	virtual GameEntity* createPacman(VecF3 position)		= 0;
+	virtual GameEntity* createGhost(VecF3 position)			= 0;
+	virtual GameEntity* createPill(VecF3 position)			= 0;
+	virtual GameEntity* createBloodyPill(VecF3 position)	= 0;
 };
 
 #endif //GAMEENTITYFACTORY

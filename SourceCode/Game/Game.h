@@ -1,25 +1,24 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "GameEntity.h"
+#include "../GameEntityFactory.h"
+
 #include "../Camera.h"
 #include "../Window.h"
 #include "../Renderer.h"
-#include "GameEntity.h"
-
-// Windows
-#include <windows.h>
 
 class Game
 {
 private:
 	/*Members*/
-	bool		running;
+	bool running;
 
 	/*Ext*/
-	Camera*		camera;
-	Window*		window;
-	Renderer*	renderer;
-	GameEntity* pacman;
+	Camera*				camera;
+	Window*				window;
+	Renderer*			renderer;
+	GameEntityFactory*	entityFac;
 protected:
 public:
 	void run();
@@ -61,31 +60,31 @@ public:
 		
 		return 1.0/1000;
 
-		#endif
+		#endif //_WIN32
 	}
 	Game(
-		Camera*		camera,
-		Window*		window,
-		Renderer*	renderer,
-		GameEntity*	pacman)
+		Camera*				camera,
+		Window*				window,
+		Renderer*			renderer,
+		GameEntityFactory*	entityFac)
 	{
 		running = true;
 
 		this->camera	= camera;
 		this->window	= window;
 		this->renderer	= renderer;
-		this->pacman	= pacman;
+		this->entityFac = entityFac;
 	}
 	~Game()
 	{
-		if(pacman)
-			delete pacman;
 		if(camera)
 			delete camera;
 		if(window)
 			delete window;
 		if(renderer)
 			delete renderer;
+		if(entityFac)
+			delete entityFac;
 	}
 };
 
