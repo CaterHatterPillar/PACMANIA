@@ -107,7 +107,7 @@ public:
 	}
 	virtual void update(double delta)
 	{
-		float dt = (float)delta/1000;
+		float dt = (float)delta;
 		handleMessages();
 
 		// True: entity is in move state
