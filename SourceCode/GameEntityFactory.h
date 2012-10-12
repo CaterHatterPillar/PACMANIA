@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "GameEntity.h"
+#include "Game/GameEntity.h"
 #include "Renderer/Vertices/PosNormTex.h"
 
 using namespace std;
@@ -14,6 +14,9 @@ private:
 protected:
 	vector<PosNormTex>* createVerticesPlane();
 	vector<unsigned int>* createIndicesPlane();
+
+	vector<PosNormTex>* createVerticesCube();
+	vector<unsigned int>* createIndicesCube();
 public:
 	GameEntityFactory();
 	~GameEntityFactory();
