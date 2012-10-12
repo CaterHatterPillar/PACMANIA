@@ -12,7 +12,7 @@ GLuint	RendererGL::sampler;
 RendererGL::RendererGL() : Renderer()
 {
 	fxManagement	= new FXManagementGL();
-	renderList		= new std::vector<GraphicsContainer*>();
+	renderList		= new std::vector<MsgRender*>();
 }
 RendererGL::~RendererGL()
 {
@@ -20,7 +20,14 @@ RendererGL::~RendererGL()
 		delete fxManagement;
 
 	if(renderList)
+	{
+		for(int i = 0; i < renderList->size(); i++)
+		{
+			if(renderList->at(i))
+				delete renderList->at(i);
+		}
 		delete renderList;
+	}
 }
 void RendererGL::cleanUp()
 {
@@ -85,13 +92,20 @@ void RendererGL::renderSpec()
 {
 	prepareRender();
 
-	GraphicsContainerGL* graphicsGL;
+	MsgRender* renderMsg;
 	for(unsigned int i = 0; i < renderList->size(); i++)
 	{
-		graphicsGL = (GraphicsContainerGL*)(renderList->at(i));
-		renderGraphicsGL(graphicsGL);
+		renderMsg = renderList->at(i);
+		renderGraphicsGL(
+			(GraphicsContainerGL*)(renderMsg->getGraphicsContainer()),
+			renderMsg->getTranslationMatrix(),
+			renderMsg->getRotationMatrix(),
+			renderMsg->getScalingMatrix());
 		deBindGraphicsGL();
+
+		delete renderMsg;
 	}
+	
 	
 	glutSwapBuffers();
 }
@@ -100,7 +114,11 @@ void RendererGL::prepareRender()
 	glClear(GL_COLOR_BUFFER_BIT);	//clear backbuffer
 	glClear(GL_DEPTH_BUFFER_BIT);	//clear depthbuffer
 }
-void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
+void RendererGL::renderGraphicsGL(
+	GraphicsContainerGL*	containerGL,
+	MatF4					translation,
+	MatF4					rotation,
+	MatF4					scaling)
 {
 	if(containerGL->OutdatedVB())
 	{
@@ -131,7 +149,7 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 	GLuint vb = containerGL->VB();
 	GLuint ib = containerGL->IB();
 
-	setShader(vertexShaderID, fragmentShaderID, containerGL);
+	setShader(vertexShaderID, fragmentShaderID, translation, rotation, scaling);
 	setBuffers(vb, ib);
 	setTextures(containerGL->Tex());
 
@@ -141,7 +159,12 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 		GL_UNSIGNED_INT,	//Index-type (for size)
 		0);					//Offset
 }
-void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader, GraphicsContainerGL* containerGL)
+void RendererGL::setShader(
+	ShaderId vertexShader, 
+	ShaderId fragmentShader, 
+	MatF4 translation,
+	MatF4 rotation,
+	MatF4 scaling)
 {
 	/*Get correct shader program*/
 	FXGL* fx			= fxManagement->getFX(vertexShader, fragmentShader);
@@ -160,9 +183,6 @@ void RendererGL::setShader(ShaderId vertexShader, ShaderId fragmentShader, Graph
 
 	glUniform1i(sampler, 0);
 
-	MatF4 translation	= containerGL->getTranslationMatrix();
-	MatF4 scaling		= containerGL->getScalingMatrix();
-	MatF4 rotation		= containerGL->getRotationMatrix();
 	MatF4 world			= translation * scaling * rotation;
 	
 	worldViewProj = proj * view * world;
@@ -233,8 +253,7 @@ void RendererGL::deBindGraphicsGL()
 void RendererGL::msgRender(Msg* msg)
 {
 	MsgRender* msgRender = (MsgRender*)msg;
-	renderList->push_back(msgRender->getGraphicsContainer());
-	delete msgRender;
+	renderList->push_back(msgRender);
 }
 void RendererGL::msgCamera(Msg* msg)
 {

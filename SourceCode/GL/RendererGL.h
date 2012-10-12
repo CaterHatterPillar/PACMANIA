@@ -49,8 +49,18 @@ public:
 
 	static void renderSpec();
 	static void prepareRender();
-	static void renderGraphicsGL(GraphicsContainerGL* containerGL);
-	static void setShader(ShaderId vertexShader, ShaderId fragmentShader, GraphicsContainerGL* containerGL);
+	static void renderGraphicsGL(
+		GraphicsContainerGL* containerGL,
+		MatF4 translation,
+		MatF4 rotation,
+		MatF4 scaling);
+	static void setShader(
+		ShaderId vertexShader, 
+		ShaderId fragmentShader, 
+		
+		MatF4 translation,
+		MatF4 rotation,
+		MatF4 scaling);
 	static void setBuffers(GLuint vb, GLuint ib);
 	static void setTextures(Texture& tex);
 	static void deBindGraphicsGL();
