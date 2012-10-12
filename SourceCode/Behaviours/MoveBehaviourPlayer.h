@@ -163,7 +163,20 @@ public:
 
 		// Interpolate rotation on cube
 		interpolateRotation(dt);
+
+		// Send message of current state to all relevent listeners
+		sendMsgEntityState();
+
+		// Draw labyrinth
+		maze->draw();
 	};
+
+	void sendMsgEntityState()
+	{
+		MsgEntityState* msg = new MsgEntityState(position, 0);
+		Singleton<ObserverDirector>::get().push(msg);
+	};	
+
 
 	void interpolateRotation(float dt)
 	{

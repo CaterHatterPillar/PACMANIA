@@ -10,9 +10,14 @@ void Camera::init()
 	//Subscribe to keyboard input
 	subscription = new SubscriptionMsg(this, INPUT_KEYBOARD_MSG);
 	Singleton<ObserverDirector>::get().push(subscription);
+
+	//Subscribe to game state
+	subscription = new SubscriptionMsg(this, ENTITY_STATE);
+	Singleton<ObserverDirector>::get().push(subscription);
 }
 void Camera::update(double delta)
 {
+	STEP_SCALE = (float)delta;
 	bool updateMatrices = false;
 
 	Msg* msg = peek();
@@ -31,6 +36,9 @@ void Camera::update(double delta)
 			case INPUT_KEYBOARD_MSG:
 				msgKeyboard(msg);
 				updateMatrices = true;
+				break;
+			case ENTITY_STATE:
+				msgEntityState(msg);
 				break;
 			}
 		}
@@ -60,4 +68,11 @@ void Camera::msgKeyboard(Msg* msg)
 	MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
 	keyboard(keyboardMsg->Key());
 	delete keyboardMsg;
+}
+void Camera::msgEntityState(Msg* _msg)
+{
+	MsgEntityState* msg = (MsgEntityState*)_msg;
+	position.x = msg->pos.x;
+	position.y = msg->pos.y;
+	delete msg;
 }

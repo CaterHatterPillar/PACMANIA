@@ -2,6 +2,8 @@
 #define MAZE_H
 
 #include "../Math/PacMath.h"
+#include "../Renderer/DX/GraphicsContainerDX.h"
+#include "../Messaging/ObserverDirector.h"
 #include <fstream>
 using namespace std;
 
@@ -12,12 +14,11 @@ private:
 	static const int sizeY=31;
 	int grid[sizeX][sizeY];
 
+	GraphicsContainerDX* graphicsContainer;
+
 public:
 	Maze()
 	{
-		// World cordinates
-		//D3DXMatrixIdentity(&position);
-
 		// Init grid
 		createMaze();
 	};
@@ -69,6 +70,35 @@ public:
 		//D3DXMatrixTranslation(&translation, (float)x-sizeX-10.0f, 20.0f, (float)y-sizeY);
 		
 		return MatF4();
+	};
+
+	MatF4 getTranslation(int x, int y)
+	{
+		MatF4 translation;
+		float middleX = (float)sizeX*0.5f-0.5f; // middle of grid
+		float middleY = (float)sizeY*0.5f-0.5f; // middle of grid
+		translation.translation((float)x-sizeX, (float)y-sizeY, 0.0f);
+		
+		return translation;
+	};
+
+	void draw()
+	{
+		//Draw maze
+		for(int y = 0; y<sizeY; y++)
+		{
+			for(int x = 0; x<sizeX; x++)
+			{
+				if(getTile(x,y)==1)
+				{
+					/*vector<PosNormTex>* vertices = new vector<PosNormTex>;
+
+					graphicsContainer->setMatrices(getTranslation(x,y), MatF4(), MatF4());
+					MsgRender* renderMsg = new MsgRender(graphicsContainer);
+					Singleton<ObserverDirector>::get().push(renderMsg);*/
+				}
+			}
+		}
 	};
 
 	int getSizeX()

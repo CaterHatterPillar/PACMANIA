@@ -14,6 +14,7 @@
 #include "MsgMouseClick.h"
 #include "MsgMouseMove.h"
 #include "MsgKeyboard.h"
+#include "MsgEntityState.h"
 
 #include "MsgDXWindowHandle.h"
 
@@ -31,6 +32,21 @@ private:
 	void msgMouseMove(Msg* msg);
 	void msgKeyboard(Msg* msg);
 	void msgCamera(Msg* msg);
+	void msgEntityState(Msg* msg)
+	{
+		MsgType type = msg->Type();
+		MsgEntityState* msgEntityState = (MsgEntityState*)msg;
+		for(unsigned int i = 0; i < observers->size(); i++)
+		{
+			Observer* observer = observers->at(i);
+			if(observer->isSubscriber(type))
+			{
+				MsgEntityState* newInstance = new MsgEntityState(msgEntityState);
+				observer->getComponent()->push(newInstance);
+			}
+		}
+		delete msgEntityState;
+	}
 
 	/*win*/
 	void msgDXWindowHandle(Msg* msg);
