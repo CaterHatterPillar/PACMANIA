@@ -17,6 +17,11 @@ protected:
 public:
 	GameEntityFactory();
 	~GameEntityFactory();
+
+	virtual GameEntity* createPacman();
+	virtual GameEntity* createGhost();
+	virtual GameEntity* createPill();
+	virtual GameEntity* createBloodyPill();
 };
 
 #endif //GAMEENTITYFACTORY
