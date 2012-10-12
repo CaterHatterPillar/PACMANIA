@@ -21,10 +21,10 @@ public:
 	GameEntityFactory();
 	~GameEntityFactory();
 
-	virtual GameEntity* createPacman() = 0;
-	virtual GameEntity* createGhost() = 0;
-	virtual GameEntity* createPill() = 0;
-	virtual GameEntity* createBloodyPill() = 0;
+	virtual GameEntity* createPacman(VecF3 position) = 0;
+	virtual GameEntity* createGhost(VecF3 position) = 0;
+	virtual GameEntity* createPill(VecF3 position) = 0;
+	virtual GameEntity* createBloodyPill(VecF3 position) = 0;
 };
 
 #endif //GAMEENTITYFACTORY
