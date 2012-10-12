@@ -14,11 +14,10 @@ private:
 	ID3D11Buffer* indexBuffer;
 
 	ID3D11ShaderResourceView* texture;
-	LPCTSTR textureFilename;
 public:
-	GraphicsContainerDX(LPCTSTR textureFilename,
-						ShaderId vertexShaderId,
+	GraphicsContainerDX(ShaderId vertexShaderId,
 						ShaderId pixelShaderId,
+						TextureId textureId,
 						std::vector<PosNormTex>* vertices,
 						std::vector<unsigned int>* indices,
 						unsigned int numVertices, 
@@ -30,7 +29,8 @@ public:
 
 	void createVertexBuffer(ID3D11Device* device);
 	void createIndexBuffer(ID3D11Device* device);
-	void createTexture(ID3D11Device* device);
+
+	void setTexture(ID3D11ShaderResourceView* texture);
 
 	ID3D11Buffer* getVertexBuffer();
 	ID3D11Buffer* getIndexBuffer();

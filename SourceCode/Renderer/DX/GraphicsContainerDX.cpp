@@ -2,16 +2,16 @@
 #include "GraphicsContainerDX.h"
 
 
-GraphicsContainerDX::GraphicsContainerDX(LPCTSTR textureFilename,
-										 ShaderId vertexShaderId,
+GraphicsContainerDX::GraphicsContainerDX(ShaderId vertexShaderId,
 										 ShaderId pixelShaderId,
+										 TextureId textureId,
 										 std::vector<PosNormTex>* vertices,
 										 std::vector<unsigned int>* indices,
 										 unsigned int numVertices, 
 										 unsigned int numIndices,
 										 unsigned int numFaces,
 										 unsigned int stride,
-										 unsigned int offset) : GraphicsContainer(vertexShaderId, pixelShaderId,
+										 unsigned int offset) : GraphicsContainer(vertexShaderId, pixelShaderId, textureId,
 																					  vertices, indices,
 																					  numVertices, numIndices,
 																					  numFaces, stride, offset)
@@ -56,14 +56,9 @@ void GraphicsContainerDX::createIndexBuffer(ID3D11Device* device)
 	device->CreateBuffer(&ibd, &iinitData, &indexBuffer);
 }
 
-void GraphicsContainerDX::createTexture(ID3D11Device* device)
+void GraphicsContainerDX::setTexture(ID3D11ShaderResourceView* texure)
 {
-	D3DX11CreateShaderResourceViewFromFile(device,
-										   textureFilename,
-										   NULL,
-										   NULL,
-										   &texture,
-										   NULL);
+	this->texture = texture;
 }
 
 ID3D11Buffer* GraphicsContainerDX::getVertexBuffer()
