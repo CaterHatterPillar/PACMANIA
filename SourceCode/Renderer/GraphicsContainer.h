@@ -10,6 +10,14 @@ enum ShaderId
 	PIXEL_SHADER_DEFAULT
 };
 
+enum TextureId
+{
+	TEXTURE_PACMAN,
+	TEXTURE_PILL,
+	TEXTURE_PILL_BLOODY,
+	TEXTURE_GHOST
+};
+
 //Make abstract
 class GraphicsContainer
 {
@@ -17,6 +25,8 @@ private:
 protected:
 	ShaderId vertexShaderId;
 	ShaderId pixelShaderId;
+
+	TextureId texture;
 
 	std::vector<PosNormTex>*	vertices;
 	std::vector<unsigned int>*	indices;
@@ -34,6 +44,7 @@ public:
 	GraphicsContainer(
 		ShaderId vertexShaderId,
 		ShaderId pixelShaderId,
+		TextureId texture,
 
 		std::vector<PosNormTex>* vertices,
 		std::vector<unsigned int>* indices,
@@ -47,6 +58,8 @@ public:
 	{
 		this->vertexShaderId	= vertexShaderId;
 		this->pixelShaderId		= pixelShaderId;
+
+		this->texture = texture;
 
 		this->vertices	= vertices;
 		this->indices	= indices;
@@ -65,6 +78,8 @@ public:
 	
 	ShaderId getVertexShaderId()	{ return vertexShaderId;	}
 	ShaderId getPixelShaderId()		{ return pixelShaderId;		}
+
+	TextureId getTextureId()		{ return texture; }
 
 	unsigned int getNumVertices()	{ return numVertices;	}
 	unsigned int getNumIndices()	{ return numIndices;	}
