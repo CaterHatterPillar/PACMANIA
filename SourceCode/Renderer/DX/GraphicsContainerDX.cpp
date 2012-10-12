@@ -16,7 +16,6 @@ GraphicsContainerDX::GraphicsContainerDX(ShaderId vertexShaderId,
 																					  numVertices, numIndices,
 																					  numFaces, stride, offset)
 {
-	this->textureFilename = textureFilename;
 	vertexBuffer = NULL;
 	indexBuffer = NULL;
 	texture = NULL;
