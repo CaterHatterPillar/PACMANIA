@@ -6,14 +6,14 @@
 
 #include "InputContainer.h"
 
-#include "../../Common.h"
+#include "../Common.h"
 #include "../Window.h"
-#include "../../Messaging/ObserverDirector.h"
-#include "../../Singleton.h"
-#include "../../Messaging/MsgDXWindowHandle.h"
-#include "../../Messaging/MsgKeyboard.h"
-#include "../../Messaging/MsgMouseClick.h"
-#include "../../Messaging/MsgMouseMove.h"
+#include "../Messaging/ObserverDirector.h"
+#include "../Singleton.h"
+#include "../Messaging/MsgDXWindowHandle.h"
+#include "../Messaging/MsgKeyboard.h"
+#include "../Messaging/MsgMouseClick.h"
+#include "../Messaging/MsgMouseMove.h"
 
 
 #define VK_0 0x30

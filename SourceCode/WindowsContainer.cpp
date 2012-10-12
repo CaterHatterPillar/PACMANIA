@@ -2,11 +2,11 @@
 #include "Game/Game.h"
 
 /*Windows include*/
-#include "Renderer/DX/WindowDX.h"
-#include "Renderer/DX/RendererDX.h"
-#include "Renderer/DX/CameraDX.h"
+#include "DX/WindowDX.h"
+#include "DX/RendererDX.h"
+#include "DX/CameraDX.h"
 #include "Game/GameEntity.h"
-#include "Renderer/DX/GraphicsContainerDX.h"
+#include "DX/GraphicsContainerDX.h"
 
 void WindowsContainer::main(
 
