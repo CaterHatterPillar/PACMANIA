@@ -8,6 +8,7 @@
 #include "InputContainer.h"
 #include "Cube.h"
 #include "GraphicsContainerDX.h"
+#include "TextureManagerDX.h"
 
 #include "../GraphicsContainer.h"
 #include "../../Messaging/MsgDXWindowHandle.h"
@@ -41,6 +42,7 @@ private:
 	ID3D11SamplerState* samplerStateDefault; 
 
 	ShaderManagerDX* shaderManager;
+	TextureManagerDX* textureManager;
 	Cube* cube;
 
 	MatF4 viewMatrix;
@@ -57,6 +59,7 @@ private:
 	void createRasterizerState();
 	void createSamplerState();
 	void createShaderManager();
+	void createTextureManager();
 
 	void createCube();
 

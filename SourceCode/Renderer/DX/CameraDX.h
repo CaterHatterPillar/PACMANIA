@@ -11,7 +11,7 @@ public:
 	CameraDX(float aspect, float fov, float zf, float zn);
 	virtual ~CameraDX();
 
-	virtual void mouse(const int dX, const int dY);
+	virtual void mouse(const float dX, const float dY);
 	virtual void keyboard(KEY key);
 
 	virtual void updateView();

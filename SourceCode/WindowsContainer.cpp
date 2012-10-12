@@ -1,11 +1,11 @@
 #include "WindowsContainer.h"
-#include "Game.h"
+#include "Game/Game.h"
 
 /*Windows include*/
-#include "renderer/DX/WindowDX.h"
-#include "renderer/DX/RendererDX.h"
+#include "Renderer/DX/WindowDX.h"
+#include "Renderer/DX/RendererDX.h"
 #include "Renderer/DX/CameraDX.h"
-#include "GameEntity.h"
+#include "Game/GameEntity.h"
 #include "Renderer/DX/GraphicsContainerDX.h"
 
 void WindowsContainer::main(
@@ -22,7 +22,7 @@ void WindowsContainer::main(
 	RendererDX*	dxRenderer	= new RendererDX();
 	CameraDX*	dxCamera	= new CameraDX(
 		(float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 
-		PI/4, 
+		(float)PI/4, 
 		100.0f, 
 		1.0f);
 	initWindows(
@@ -47,10 +47,10 @@ void WindowsContainer::main(
 	indices->push_back(3);
 	
 
-	GraphicsContainer* graphicsContainer = new GraphicsContainerDX(
-		"root/Textures/PacmanTex.png", 
+	GraphicsContainer* graphicsContainer = new GraphicsContainerDX( 
 		VERTEX_SHADER_DEFAULT, 
-		PIXEL_SHADER_DEFAULT, 
+		PIXEL_SHADER_DEFAULT,
+		TEXTURE_PACMAN,
 		vertices, 
 		indices, 
 		vertices->size(), 

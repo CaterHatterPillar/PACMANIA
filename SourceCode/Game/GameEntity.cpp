@@ -51,7 +51,6 @@ void GameEntity::rebuildScalingMatrix()
 
 void GameEntity::rebuildWorldMatrix()
 {
-	//rotationMatrix.identity();
 	worldMatrix = scalingMatrix * translationMatrix * rotationMatrix;
 } 
 
@@ -147,20 +146,12 @@ void GameEntity::update(double delta)
 	if(moveBehaviour)
 	{
 		moveBehaviour->update(1.0f);
-		VecF3 temp = moveBehaviour->getDirection()*0.001;
-		position += temp;
-
-		if(moveBehaviour->getDirection().x == -1)
-			rotation.z = -90;
-		if(moveBehaviour->getDirection().x == 1)
-			rotation.z = 90;
-		if(moveBehaviour->getDirection().y == -1)
-			rotation.z = 180;
-		if(moveBehaviour->getDirection().y == 1)
-			rotation.z = 0;
+		position = moveBehaviour->getPosition();
+		rotationMatrix = moveBehaviour->getRotation();
+		rebuildWorldMatrix();
 
 		rebuildTranslationMatrix();
-		rebuildRotationMatrix();
+		
 	}
 	if(graphicsContainer)
 	{

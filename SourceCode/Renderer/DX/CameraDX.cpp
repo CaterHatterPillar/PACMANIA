@@ -17,7 +17,7 @@ CameraDX::~CameraDX()
 {
 }
 
-void CameraDX::mouse(const int dX, const int dY)
+void CameraDX::mouse(const float dX, const float dY)
 {
 	yaw(dX);
 	pitch(dY);
