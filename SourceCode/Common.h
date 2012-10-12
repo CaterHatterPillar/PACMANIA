@@ -19,6 +19,8 @@
 #define Z_NEAR	1
 #define Z_FAR	100
 
+#define DELETE_NULL(param) { if(param) { delete param; } param = NULL; }
+
 template <class T>
 inline std::string TO_STRING(const T& t)
 {
