@@ -47,10 +47,10 @@ void WindowsContainer::main(
 	indices->push_back(3);
 	
 
-	GraphicsContainer* graphicsContainer = new GraphicsContainerDX(
-		"root/Textures/PacmanTex.png", 
+	GraphicsContainer* graphicsContainer = new GraphicsContainerDX( 
 		VERTEX_SHADER_DEFAULT, 
-		PIXEL_SHADER_DEFAULT, 
+		PIXEL_SHADER_DEFAULT,
+		TEXTURE_PACMAN,
 		vertices, 
 		indices, 
 		vertices->size(), 

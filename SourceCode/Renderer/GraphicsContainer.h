@@ -79,7 +79,7 @@ public:
 	ShaderId getVertexShaderId()	{ return vertexShaderId;	}
 	ShaderId getPixelShaderId()		{ return pixelShaderId;		}
 
-	TextureId getTextureId()		{ return texture; }
+	TextureId getTextureId()		{ return textureId; }
 
 	unsigned int getNumVertices()	{ return numVertices;	}
 	unsigned int getNumIndices()	{ return numIndices;	}

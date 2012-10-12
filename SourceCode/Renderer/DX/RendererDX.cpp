@@ -196,6 +196,12 @@ void RendererDX::createShaderManager()
 	shaderManager->initialize();
 }
 
+void RendererDX::createTextureManager()
+{
+	textureManager = new TextureManagerDX();
+	textureManager->init(device);
+}
+
 void RendererDX::createCube()
 {
 	cube = new Cube(device);
@@ -212,6 +218,8 @@ void RendererDX::init()
 	createSamplerState();
 
 	createShaderManager();
+	createTextureManager();
+
 	createCube();
 }
 
@@ -262,7 +270,8 @@ void RendererDX::renderContainer(GraphicsContainerDX* container)
 	if(!container->getIndexBuffer())
 		container->createIndexBuffer(device);
 	if(!container->getTexture())
-		container->createTexture(device);
+		container->setTexture(textureManager->getTexture(container->getTextureId()));
+		
 
 	MatF4 translationMatrix, rotationMatrix, scalingMatrix, worldMatrix;
 	translationMatrix = container->getTranslationMatrix();
