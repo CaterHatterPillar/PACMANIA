@@ -5,6 +5,8 @@
 #include "Component.h"
 #include "Singleton.h"
 
+#include "Math/PacMath.h"
+
 #include "Renderer/GL/CommonGL.h"
 
 #include "Messaging/ObserverDirector.h"
@@ -16,8 +18,10 @@
 class InputGL : public Component
 {
 private:
-	static int lastMouseX;
-	static int lastMouseY;
+	static int halfWidth;
+	static int halfHeight;
+
+	static bool warpLock;
 protected:
 public:
 	void init();

@@ -4,7 +4,7 @@
 in vec2 TexCoord0;
 
 /*OUT*/
-out vec4 fragColor;
+out vec4 gl_FragColor;
 
 uniform sampler2D sampler;
 
@@ -15,5 +15,5 @@ void main()
 	if(tex.a <= 0.0f)
 		discard;
 
-	fragColor = tex; 
+	gl_FragColor = tex; 
 }

@@ -31,6 +31,7 @@ void WindowGL::init()
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);	//Initialize window
 	glutInitWindowPosition(100, 100);					//...
 	glutCreateWindow("PACMANIA");						//...
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutSetOption(
 		GLUT_ACTION_ON_WINDOW_CLOSE,

@@ -1,7 +1,8 @@
 #include "InputGL.h"
 
-int InputGL::lastMouseX;
-int InputGL::lastMouseY;
+int InputGL::halfWidth;
+int InputGL::halfHeight;
+bool InputGL::warpLock;
 
 void InputGL::init()
 {
@@ -15,9 +16,6 @@ void InputGL::init()
 
 	callbackMsg = new MsgGlutCallback((void*)mouseSpec, PASSIVE_MOTION_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
-
-	lastMouseX = 0;
-	lastMouseY = 0;
 }
 void InputGL::update(double delta)
 {
@@ -100,29 +98,27 @@ void InputGL::keyboardSpec(unsigned char key, int x, int y)
 }
 void InputGL::mouseSpec(int x, int y)
 {
-	bool mouseMoved = false;
-	if(x != lastMouseX)
+	if(!warpLock)
 	{
-		mouseMoved = true;
-		lastMouseX = x;
-	}
-	else if(y != lastMouseY)
-	{
-		mouseMoved = true;
-		lastMouseY = y;
-	}
+		int posX = halfWidth - x;
+		int posY = halfHeight - y;
 
-	if(mouseMoved)
-	{
-		MsgMouseMove* mouseMoveMsg
-			= new MsgMouseMove((long)x, (long)y);
+		MsgMouseMove* mouseMoveMsg = new MsgMouseMove((long)posX, (long)posY);
 		Singleton<ObserverDirector>::get().push(mouseMoveMsg);
+
+		MsgGlut* glutMsg = new MsgGlut(WARP_POINTER, halfWidth, halfHeight);
+		Singleton<ObserverDirector>::get().push(glutMsg);
+		warpLock = true;
 	}
+	else
+		warpLock = false;
 }
 
 InputGL::InputGL()
 {
-
+	halfWidth = SCREEN_WIDTH / 2;
+	halfHeight = SCREEN_HEIGHT / 2;
+	warpLock = false;
 }
 InputGL::~InputGL()
 {
