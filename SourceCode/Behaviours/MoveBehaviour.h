@@ -11,11 +11,13 @@ class MoveBehaviour : public Component
 {
 private:
 protected:
-	VecF3 direction;
+	MatF4 rotation;
+	VecF3 position;
 public:
-	MoveBehaviour() { direction = VecF3(0.0f, 0.0f, 0.0f); }
+	MoveBehaviour() {}
 	~MoveBehaviour() { }
-	VecF3 getDirection() { return direction; }
+	MatF4 getRotation() { return rotation; }
+	VecF3 getPosition() { return position; }
 };
 
 #endif //MOVEBEHAVIOR_H

@@ -1,4 +1,4 @@
-/*#ifndef MSGDXWINDOWHANDLE_H
+#ifndef MSGDXWINDOWHANDLE_H
 #define MSGDXWINDOWHANDLE_H
 
 #include "Msg.h"
@@ -29,4 +29,4 @@ public:
 	}
 };
 
-#endif*/
+#endif

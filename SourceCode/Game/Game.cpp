@@ -4,7 +4,7 @@ void Game::run()
 {
 	do
 	{
-		double delta = tickTimer();
+		float delta = tickTimer();
 		
 		/*Update stuff here*/
 		pacman->update(delta);

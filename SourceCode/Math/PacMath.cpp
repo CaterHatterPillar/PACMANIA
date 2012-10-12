@@ -123,7 +123,7 @@ Quaternion::Quaternion(float _x, float _y, float _z, float _w)
     w = _w;
 }
 
-void		Quaternion::normalize()
+void Quaternion::normalize()
 {
     float length = sqrtf(x * x + y * y + z * z + w * w);
     x /= length;

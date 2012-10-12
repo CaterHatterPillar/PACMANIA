@@ -1,9 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Renderer/Camera.h"
-#include "Renderer/Window.h"
-#include "Renderer/Renderer.h"
+#include "../Renderer/Camera.h"
+#include "../Renderer/Window.h"
+#include "../Renderer/Renderer.h"
 #include "GameEntity.h"
 
 class Game
@@ -21,9 +21,9 @@ protected:
 public:
 	void run();
 
-	double tickTimer()
+	float tickTimer()
 	{
-		double delta = 1.0;
+		float delta = 1.0f;
 		return delta;
 	}
 	Game(

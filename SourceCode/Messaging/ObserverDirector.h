@@ -15,7 +15,7 @@
 #include "MsgMouseMove.h"
 #include "MsgKeyboard.h"
 
-//#include "MsgDXWindowHandle.h"
+#include "MsgDXWindowHandle.h"
 
 class ObserverDirector : public Component
 {
@@ -33,7 +33,7 @@ private:
 	void msgCamera(Msg* msg);
 
 	/*win*/
-	//void msgDXWindowHandle(Msg* msg);
+	void msgDXWindowHandle(Msg* msg);
 
 	/*linux*/
 	void msgGlut(Msg* msg);
