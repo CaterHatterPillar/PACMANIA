@@ -2,12 +2,15 @@
 
 void Game::run()
 {
+	GameEntity* pacman = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f));	//tmep
+
 	do
 	{
 		double delta = tickTimer();
+
+		pacman->update(delta);
 		
 		/*Update stuff here*/
-		pacman->update(delta);
 		camera->update(delta);
 		window->update(delta);
 		renderer->update(delta);
@@ -15,4 +18,7 @@ void Game::run()
 		
 		renderer->renderFrame();
 	} while(window->isActive());
+
+	if(pacman)	//tmep
+		delete pacman;
 }
