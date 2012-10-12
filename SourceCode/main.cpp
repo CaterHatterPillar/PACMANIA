@@ -1,4 +1,4 @@
-#ifdef _WIN32
+#ifndef _WIN32
 #include "WindowsContainer.h"
 int WINAPI WinMain(
 	HINSTANCE	hInstance, 
@@ -13,11 +13,13 @@ int WINAPI WinMain(
 
 #else
 
+#include "vld.h" //insert debug-flag here
 #include "LinuxContainer.h"
 int main(int argc, char** argv)
 {
-	LinuxContainer linuxContainer;
-	linuxContainer.mainContainer(argc, argv);
+	LinuxContainer* linuxContainer = new LinuxContainer();
+	linuxContainer->mainContainer(argc, argv);
+	DELETE_NULL(linuxContainer);
 
 	return 0;
 }
