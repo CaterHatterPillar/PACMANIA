@@ -7,7 +7,7 @@
 #include <D3Dcompiler.h>
 
 #include "ConstantBuffers.h"
-#include "../../Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 class ShaderManagerDX
 {

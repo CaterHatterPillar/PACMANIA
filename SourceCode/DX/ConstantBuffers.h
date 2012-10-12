@@ -5,7 +5,7 @@
 #include <D3DX11.h>
 #include <D3DX10.h>
 
-#include "../../Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 struct CBufferPerFrame
 {
