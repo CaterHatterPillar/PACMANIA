@@ -3,8 +3,7 @@
 void Camera::init()
 {
 	//Subscribe to mouse movement
-	SubscriptionMsg* subscription
-		= new SubscriptionMsg(this, INPUT_MOUSE_MOVE);
+	SubscriptionMsg* subscription = new SubscriptionMsg(this, INPUT_MOUSE_MOVE);
 	Singleton<ObserverDirector>::get().push(subscription);
 
 	//Subscribe to keyboard input
@@ -17,7 +16,7 @@ void Camera::init()
 }
 void Camera::update(double delta)
 {
-	STEP_SCALE = (float)delta;
+	STEP_SCALE = 1.0f;
 	bool updateMatrices = false;
 
 	Msg* msg = peek();

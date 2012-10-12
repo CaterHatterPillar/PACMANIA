@@ -2,7 +2,7 @@
 #define MAZE_H
 
 #include "../Math/PacMath.h"
-#include "../Renderer/DX/GraphicsContainerDX.h"
+#include "../DX/GraphicsContainerDX.h"
 #include "../Messaging/ObserverDirector.h"
 #include <fstream>
 using namespace std;
