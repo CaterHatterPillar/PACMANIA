@@ -9,18 +9,6 @@ void GraphicsContainerGL::createVB()
 		sizeof(PosNormTex) * vertices->size(),
 		&(vertices->at(0)), 
 		GL_STATIC_DRAW);
-
-	/*
-	VecF3 vertices[4];
-	vertices[0] = VecF3(-1.0f, -1.0f, 0.0f);
-	vertices[1] = VecF3(0.0f, -1.0f, 1.0f);
-	vertices[2] = VecF3(1.0f, -1.0f, 0.0f);
-	vertices[3] = VecF3(0.0f, 1.0f, 0.0f);
-
-	glGenBuffers(1, &vb);
-	glBindBuffer(GL_ARRAY_BUFFER, vb); 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	*/
 }
 void GraphicsContainerGL::createIB()
 {
@@ -31,23 +19,44 @@ void GraphicsContainerGL::createIB()
 		sizeof(unsigned int) * indices->size(), 
 		&(indices->at(0)), 
 		GL_STATIC_DRAW);
+}
+void GraphicsContainerGL::createTex(std::string pathTex)
+{
+	bool textureLoaded = LoadTGA(&tex, pathTex.c_str());
+	if(textureLoaded)
+	{
+		//Creates a texture and put it's ID in the given integer variable
+		glGenTextures(1, &tex.texID);
+		//Setting as active texture
+		glBindTexture(GL_TEXTURE_2D, texture.texID);
 
-	/*
-	unsigned int indices[] = { 
-		0, 3, 1,
-		1, 3, 2,
-		2, 3, 0,
-		0, 2, 1};
+		//Load texture into memory
+		glTexImage2D(
+			GL_TEXTURE_2D, 
+			0, 
+			tex.bpp / 8, 
+			tex.width, 
+			tex.height, 
+			0, 
+			tex.type, 
+			GL_UNSIGNED_BYTE, 
+			tex.imageData);
 
-	glGenBuffers(1, &ib);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	*/
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+
+		if(tex.imageData)
+			free(tex.imageData); //Free raw image data
+	}
+	else
+		throw 0;
 }
 
 GraphicsContainerGL::GraphicsContainerGL(
 	ShaderId vertexShaderId,
 	ShaderId pixelShaderId,
+	TextureId texture,
 
 	std::vector<PosNormTex>*	vertices,
 	std::vector<unsigned int>*	indices,
@@ -59,6 +68,8 @@ GraphicsContainerGL::GraphicsContainerGL(
 	unsigned int offset) : GraphicsContainer(
 		vertexShaderId,
 		pixelShaderId,
+
+		texture,
 
 		vertices,
 		indices,
@@ -74,8 +85,6 @@ GraphicsContainerGL::GraphicsContainerGL(
 }
 GraphicsContainerGL::~GraphicsContainerGL()
 {
-	if(vertices)
-		delete vertices;
-	if(indices)
-		delete indices;
+	DELETE_NULL(vertices);
+	DELETE_NULL(indices);
 }

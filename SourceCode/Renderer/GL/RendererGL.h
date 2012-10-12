@@ -30,7 +30,6 @@ private:
 	static GLuint projFX;
 	static GLuint worldViewProjFX;
 
-	static Texture texture;
 	static GLuint sampler;
 protected:
 public:
@@ -39,7 +38,6 @@ public:
 
 	void init();
 	void initShaders();
-	void initTextures();
 	bool loadTGATexture(const char* szFileName, GLenum minFilter, GLenum magFilter, GLenum wrapMode);
 
 	void update(double delta);
@@ -55,6 +53,8 @@ public:
 	static void setShader(ShaderId vertexShader, ShaderId fragmentShader, GraphicsContainerGL* containerGL);
 	static void setBuffers(GLuint vb, GLuint ib);
 	static void deBindGraphicsGL();
+
+	std::string fetchTexPath(TextureId texId);
 };
 
 #endif //OPENGL_H

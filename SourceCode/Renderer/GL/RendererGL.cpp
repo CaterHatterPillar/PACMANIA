@@ -5,10 +5,8 @@ FXManagementGL* RendererGL::fxManagement;
 MatF4	RendererGL::view;
 MatF4	RendererGL::proj;
 MatF4	RendererGL::worldViewProj;
-
 GLuint	RendererGL::worldViewProjFX;
 
-Texture RendererGL::texture;
 GLuint	RendererGL::sampler;
 
 RendererGL::RendererGL() : Renderer()
@@ -51,45 +49,6 @@ void RendererGL::init()
 void RendererGL::initShaders()
 {
 	fxManagement->init();
-}
-void RendererGL::initTextures()
-{
-	if(LoadTGA(&texture, "root/Textures/PacmanTex.tga"))
-	{
-		// This tells opengl to create 1 texture and put it's ID in the given integer variable
-		// OpenGL keeps a track of loaded textures by numbering them: the first one you load is 1, second is 2, ...and so on.
-		glGenTextures(1, &texture.texID);
-		// Binding the texture to GL_TEXTURE_2D is like telling OpenGL that the texture with this ID is now the current 2D texture in use
-		// If you draw anything the used texture will be the last binded texture
-		glBindTexture(GL_TEXTURE_2D, texture.texID);
-
-		// This call will actualy load the image data into OpenGL and your video card's memory. The texture is allways loaded into the current texture
-		// you have selected with the last glBindTexture call
-		// It asks for the width, height, type of image (determins the format of the data you are giveing to it) and the pointer to the actual data
-		glTexImage2D(
-			GL_TEXTURE_2D, 
-			0, 
-			texture.bpp / 8, 
-			texture.width, 
-			texture.height, 
-			0, 
-			texture.type, 
-			GL_UNSIGNED_BYTE, 
-			texture.imageData);
-
-		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-		glEnable(GL_TEXTURE_2D);
-		if(texture.imageData)
-		{
-			// You can now free the image data that was allocated by LoadTGA
-			// You don't want to keep a few Mb of worthless data on heap. It's worthless because OpenGL stores the image someware else after
-			// you call glTexImage2D (usualy in you video card)
-			free(texture.imageData); 
-		}
-	}
-	else
-		throw 0;
 }
 
 void RendererGL::update(double delta)
@@ -153,6 +112,10 @@ void RendererGL::renderGraphicsGL(GraphicsContainerGL* containerGL)
 	{
 		containerGL->createIB();
 		containerGL->OutdatedIB(false);
+	}
+	if(containerGL->OutdatedTex())
+	{
+		
 	}
 
 	unsigned int numVertices	= containerGL->getNumVertices();
@@ -258,4 +221,22 @@ void RendererGL::msgCamera(Msg* msg)
 	this->view = cameraMsg->View();
 
 	delete cameraMsg;
+}
+
+std::string RendererGL::fetchTexPath(TextureId texId)
+{
+	std::string texName;
+	std::string texPath = "root/Textures/";
+	switch(texId)
+	{
+	case TEXTURE_PACMAN:
+		texName = "PacManTex.tga";
+		break;
+	default:
+		texName = "PlaceHolder.tga";
+		break;
+	}
+
+	std::string texPath += texName;
+	return texPath;
 }
