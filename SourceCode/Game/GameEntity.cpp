@@ -145,7 +145,7 @@ void GameEntity::update(double delta)
 {
 	if(moveBehaviour)
 	{
-		moveBehaviour->update(1.0f);
+		moveBehaviour->update(delta);
 		position = moveBehaviour->getPosition();
 		rotationMatrix = moveBehaviour->getRotation();
 		rebuildWorldMatrix();
