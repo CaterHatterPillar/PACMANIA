@@ -10,6 +10,7 @@
 #include "GL/RendererGL.h"
 #include "GL/CameraGL.h"
 #include "GL/InputGL.h"
+#include "GL/GameEntityFactoryGL.h"
 
 class LinuxContainer
 {
@@ -21,7 +22,6 @@ public:
 		RendererGL*	rendererGL,
 		InputGL*	inputGL,
 		CameraGL*	cameraGL);
-	GameEntity* initPacman();
 	void mainContainer(int argc, char** argv);
 
 	LinuxContainer() {}
