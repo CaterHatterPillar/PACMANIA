@@ -1,7 +1,7 @@
 #ifndef RENDERERDX_H
 #define RENDERERDX_H
 
-#include "../../Common.h"
+#include "../Common.h"
 #include "../Renderer.h"
 
 #include "ShaderManagerDX.h"
@@ -11,13 +11,13 @@
 #include "TextureManagerDX.h"
 
 #include "../GraphicsContainer.h"
-#include "../../Messaging/MsgDXWindowHandle.h"
-#include "../../Messaging/MsgCamera.h"
-#include "../../Messaging/SubscriptionMsg.h"
-#include "../../Messaging/ObserverDirector.h"
-#include "../../Singleton.h"
+#include "../Messaging/MsgDXWindowHandle.h"
+#include "../Messaging/MsgCamera.h"
+#include "../Messaging/SubscriptionMsg.h"
+#include "../Messaging/ObserverDirector.h"
+#include "../Singleton.h"
 
-#include "../../Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 #include <D3D11.h>
 #include <D3DX11.h>
@@ -67,7 +67,7 @@ private:
 	void handleMsgCamera(Msg* msg);
 	void handleMsgRender(Msg* msg);
 
-	void renderContainer(GraphicsContainerDX* container);
+	void renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling);
 protected:
 public:
 	RendererDX();

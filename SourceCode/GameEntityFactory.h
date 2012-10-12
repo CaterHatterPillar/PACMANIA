@@ -1,10 +1,13 @@
 #ifndef GAMEENTITYFACTORY_H
 #define GAMEENTITYFACTORY_H
 
-#include <vector>
+#include "Common.h"
 
-#include "GameEntity.h"
-#include "Renderer/Vertices/PosNormTex.h"
+#include "Game/GameEntity.h"
+
+#include "Behaviours/MoveBehaviourPlayer.h"
+
+#include "Vertices/PosNormTex.h"
 
 using namespace std;
 
@@ -14,14 +17,17 @@ private:
 protected:
 	vector<PosNormTex>* createVerticesPlane();
 	vector<unsigned int>* createIndicesPlane();
+
+	vector<PosNormTex>* createVerticesCube();
+	vector<unsigned int>* createIndicesCube();
 public:
 	GameEntityFactory();
 	~GameEntityFactory();
 
-	virtual GameEntity* createPacman() = 0;
-	virtual GameEntity* createGhost() = 0;
-	virtual GameEntity* createPill() = 0;
-	virtual GameEntity* createBloodyPill() = 0;
+	virtual GameEntity* createPacman(VecF3 position)		= 0;
+	virtual GameEntity* createGhost(VecF3 position)			= 0;
+	virtual GameEntity* createPill(VecF3 position)			= 0;
+	virtual GameEntity* createBloodyPill(VecF3 position)	= 0;
 };
 
 #endif //GAMEENTITYFACTORY

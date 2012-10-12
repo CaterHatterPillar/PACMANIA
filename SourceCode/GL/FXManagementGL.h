@@ -10,7 +10,7 @@
     #include "FXGL.h"
     #include "CommonGL.h"
     #include "../GraphicsContainer.h"
-    #include "../../Common.h"
+    #include "../Common.h"
      
 	#define SHADER_PATH				"root/Shaders/GL/"
     #define SHADER_DEFAULT_VERTEX	"DefaultVertexShader.glsl"

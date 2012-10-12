@@ -1,7 +1,7 @@
 #ifndef GRAPHICSCONTAINER_H
 #define GRAPHICSCONTAINER_H
 
-#include "../Common.h"
+#include "Common.h"
 #include "Vertices/PosNormTex.h"
 
 enum ShaderId
@@ -36,10 +36,6 @@ protected:
 	unsigned int numFaces;
 	unsigned int stride;
 	unsigned int offset;
-
-	MatF4 translationMatrix;
-	MatF4 rotationMatrix;
-	MatF4 scalingMatrix;
 public:
 	GraphicsContainer(
 		ShaderId vertexShaderId,
@@ -69,10 +65,6 @@ public:
 		this->numFaces		= numFaces;
 		this->stride		= stride;
 		this->offset		= offset;
-
-		translationMatrix.identity();
-		rotationMatrix.identity();
-		scalingMatrix.identity();
 	}
 	virtual ~GraphicsContainer() {}
 	
@@ -86,19 +78,6 @@ public:
 	unsigned int getNumFaces()		{ return numFaces;		}
 	unsigned int getStride()		{ return stride;		}
 	unsigned int getOffset()		{ return offset;		}
-
-	MatF4 getTranslationMatrix() { return translationMatrix; }
-	MatF4 getRotationMatrix() { return rotationMatrix; }
-	MatF4 getScalingMatrix() { return scalingMatrix; } 
-	void setTranslationMatrix(MatF4 translationMatrix) { this->translationMatrix = translationMatrix; }
-	void setRotationMatrix(MatF4 rotationMatrix) { this->rotationMatrix = rotationMatrix; }
-	void setScalingMatrix(MatF4 scalingMatrix) { this->scalingMatrix = scalingMatrix; }
-	void setMatrices( MatF4 translationMatrix, MatF4 rotationMatrix, MatF4 scalingMatrix)
-	{
-		this->translationMatrix = translationMatrix;
-		this->rotationMatrix = rotationMatrix;
-		this->scalingMatrix = scalingMatrix;
-	}
 };
 
 #endif //GRAPHICSCONTAINER_H

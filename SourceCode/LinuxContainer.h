@@ -1,13 +1,16 @@
 #ifndef LINUXCONTAINER_H
 #define LINUXCONTAINER_H
 
-#include "Renderer/GL/WindowGL.h"
-#include "Renderer/GL/RendererGL.h"
-#include "Renderer/GL/CameraGL.h"
-#include "Renderer/Camera.h"
-#include "InputGL.h"
-#include "GameEntity.h"
-#include "Game.h"
+#include "Game/Game.h"
+#include "Game/GameEntity.h"
+
+#include "Camera.h"
+
+#include "GL/WindowGL.h"
+#include "GL/RendererGL.h"
+#include "GL/CameraGL.h"
+#include "GL/InputGL.h"
+#include "GL/GameEntityFactoryGL.h"
 
 class LinuxContainer
 {
@@ -19,7 +22,6 @@ public:
 		RendererGL*	rendererGL,
 		InputGL*	inputGL,
 		CameraGL*	cameraGL);
-	GameEntity* initPacman();
 	void mainContainer(int argc, char** argv);
 
 	LinuxContainer() {}

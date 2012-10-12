@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#include "../../Math/PacMath.h"
+#include "../Math/PacMath.h"
 
 using namespace std;
 

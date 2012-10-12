@@ -1,19 +1,19 @@
 #ifndef INPUTGL_H
 #define INPUTGL_H
 
-#include "Common.h"
-#include "Component.h"
-#include "Singleton.h"
+#include "../Common.h"
+#include "../Component.h"
+#include "../Singleton.h"
 
-#include "Math/PacMath.h"
+#include "../Math/PacMath.h"
 
-#include "Renderer/GL/CommonGL.h"
+#include "../GL/CommonGL.h"
 
-#include "Messaging/ObserverDirector.h"
-#include "Messaging/MsgGlutCallback.h"
-#include "Messaging/MsgKeyboard.h"
-#include "Messaging/MsgMouseClick.h"
-#include "Messaging/MsgMouseMove.h"
+#include "../Messaging/ObserverDirector.h"
+#include "../Messaging/MsgGlutCallback.h"
+#include "../Messaging/MsgKeyboard.h"
+#include "../Messaging/MsgMouseClick.h"
+#include "../Messaging/MsgMouseMove.h"
 
 class InputGL : public Component
 {

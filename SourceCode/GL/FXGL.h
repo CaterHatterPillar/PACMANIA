@@ -4,7 +4,7 @@
 #include "CommonGL.h"
 #include "UniformGL.h"
 #include "../GraphicsContainer.h"
-#include "../../Common.h"
+#include "../Common.h"
 
 class FXGL
 {

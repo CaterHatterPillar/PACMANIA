@@ -1,16 +1,16 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "../Math/PacMath.h"
+#include "Math/PacMath.h"
 
-#include "../Common.h"
-#include "../Component.h"
-#include "../Singleton.h"
+#include "Common.h"
+#include "Component.h"
+#include "Singleton.h"
 
-#include "../Messaging/ObserverDirector.h"
-#include "../Messaging/MsgMouseMove.h"
-#include "../Messaging/MsgKeyboard.h"
-#include "../Messaging/MsgCamera.h"
+#include "Messaging/ObserverDirector.h"
+#include "Messaging/MsgMouseMove.h"
+#include "Messaging/MsgKeyboard.h"
+#include "Messaging/MsgCamera.h"
 
 class Camera : public Component
 {

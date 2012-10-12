@@ -3,14 +3,14 @@
 
 #include "CommonGL.h"
 
-#include "../../Common.h"
+#include "../Common.h"
 
 #include "../Window.h"
-#include "../../Singleton.h"
-#include "../../Messaging/ObserverDirector.h"
-#include "../../Messaging/SubscriptionMsg.h"
-#include "../../Messaging/MsgGlut.h"
-#include "../../Messaging/MsgGlutCallback.h"
+#include "../Singleton.h"
+#include "../Messaging/ObserverDirector.h"
+#include "../Messaging/SubscriptionMsg.h"
+#include "../Messaging/MsgGlut.h"
+#include "../Messaging/MsgGlutCallback.h"
 
 class WindowGL : public Window
 {

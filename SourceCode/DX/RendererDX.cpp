@@ -11,7 +11,7 @@ RendererDX::RendererDX()
 	SubscriptionMsg* msg3 = new SubscriptionMsg(this, RENDER);
 	Singleton<ObserverDirector>::get().push(msg3);
 
-	renderList = new vector<GraphicsContainer*>;
+	renderList = new vector<MsgRender*>;
 }
 
 RendererDX::~RendererDX()
@@ -230,8 +230,11 @@ void RendererDX::update(double delta)
 	Msg* msg = peek();
 	while(msg != nullptr)
 	{
-		switch(msg->Type())
+		msg = pop();
+		if(msg)
 		{
+			switch(msg->Type())
+			{
 			case DX_WINDOW_HANDLE:
 				handleMsgDXWindowHandle(msg);
 				break;
@@ -241,9 +244,8 @@ void RendererDX::update(double delta)
 			case RENDER:
 				handleMsgRender(msg);
 				break;
+			}
 		}
-
-		msg = pop();
 	}
 }
 
@@ -256,14 +258,24 @@ void RendererDX::renderFrame()
 
 	devcon->OMSetDepthStencilState(0, 0);
 
+	MsgRender* renderMsg;
 	for(UINT i = 0; i < renderList->size(); i++)
 	{
-		renderContainer((GraphicsContainerDX*)renderList->at(i));
+		renderMsg = renderList->at(i);
+		renderContainer(
+			(GraphicsContainerDX*)renderMsg->getGraphicsContainer(),
+			renderMsg->getTranslationMatrix(),
+			renderMsg->getRotationMatrix(),
+			renderMsg->getScalingMatrix());
+		
+		delete renderList->at(i);
+		renderList->at(i) = NULL;
+		
 	}
 
 	swapChain->Present(0, 0);
 }
-void RendererDX::renderContainer(GraphicsContainerDX* container)
+void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling)
 {
 	if(!container->getVertexBuffer())
 		container->createVertexBuffer(device);
@@ -273,13 +285,9 @@ void RendererDX::renderContainer(GraphicsContainerDX* container)
 		container->setTexture(textureManager->getTexture(container->getTextureId()));
 		
 
-	MatF4 translationMatrix, rotationMatrix, scalingMatrix, worldMatrix;
-	translationMatrix = container->getTranslationMatrix();
-	translationMatrix.transpose();
-	rotationMatrix = container->getRotationMatrix();
-	scalingMatrix = container->getScalingMatrix();
-
-	worldMatrix = scalingMatrix * rotationMatrix * translationMatrix;
+	MatF4 worldMatrix;
+	translation.transpose();
+	worldMatrix = scaling * rotation * translation;
 
 	//OpneGL and DirectX use different Matrices therefor the world matrix must be transposed
 	MatF4 final = worldMatrix * viewProj;
@@ -315,6 +323,16 @@ void RendererDX::cleanUp()
 	zBuffer->Release();
 	backBuffer->Release();
 
+	if(renderList)
+	{
+		for(unsigned int i = 0; i < renderList->size(); i++)
+		{
+			if(renderList->at(i))
+				delete renderList->at(i);
+		}
+		delete renderList;
+	}
+
 	delete shaderManager;
 	if(textureManager)
 		delete textureManager;
@@ -341,8 +359,7 @@ void RendererDX::handleMsgCamera(Msg* msg)
 void RendererDX::handleMsgRender(Msg* msg)
 {
 	MsgRender* renderMsg = (MsgRender*)msg;
-	renderList->push_back(renderMsg->getGraphicsContainer());
-	delete renderMsg;
+	renderList->push_back(renderMsg);
 }
 
 void RendererDX::input(InputContainer inputContainer)

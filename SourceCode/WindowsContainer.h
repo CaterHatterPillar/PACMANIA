@@ -4,9 +4,9 @@
 #include <Windows.h>
 
 /*Windows include*/
-#include "renderer/DX/WindowDX.h"
-#include "renderer/DX/RendererDX.h"
-#include "Renderer/DX/CameraDX.h"
+#include "DX/WindowDX.h"
+#include "DX/RendererDX.h"
+#include "DX/CameraDX.h"
 
 class WindowsContainer
 {
