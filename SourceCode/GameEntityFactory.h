@@ -59,12 +59,12 @@ public:
 		GameEntity* entity = new GameEntity();
 		entity->setPosition(position);
 
-		vector<PosNormTex>* vertices	= createVerticesCube();
-		vector<unsigned int>* indices	= createIndicesCube();
+		vector<PosNormTex>* vertices	= createVerticesObj("root/Models/Pacman.obj");
+		vector<unsigned int>* indices	= createIndicesObj(vertices);
 
 		ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 		ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-		TextureId textureId		= TEXTURE_PACMAN;
+		TextureId textureId		= TEXTURE_PLACEHOLDER;
 
 		unsigned int numVertices	= vertices->size();
 		unsigned int numIndices		= indices->size();
@@ -89,7 +89,7 @@ public:
 		entity->setGraphicsContainer(graphicsContainer);
 		entity->setMoveBehaviour(moveBehaviour);
 
-
+		entity->setRotation(VecF3(0.0f, 0.0f, -90.0f));
 		entity->setScale(VecF3(0.5f,0.5f,0.5f));
 		return entity;
 	}
