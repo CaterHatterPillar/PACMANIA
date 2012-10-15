@@ -15,6 +15,7 @@ public:
 	virtual GameEntity* createGhost(VecF3 position);
 	virtual GameEntity* createPill(VecF3 position);
 	virtual GameEntity* createBloodyPill(VecF3 position);
+	virtual GameEntity* createWall(VecF3 position);
 
 };
 
