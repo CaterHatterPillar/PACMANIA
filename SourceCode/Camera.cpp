@@ -68,10 +68,14 @@ void Camera::msgKeyboard(Msg* msg)
 	keyboard(keyboardMsg->Key());
 	delete keyboardMsg;
 }
-void Camera::msgEntityState(Msg* _msg)
+void Camera::msgEntityState(Msg* msg)
 {
-	MsgEntityState* msg = (MsgEntityState*)_msg;
-	position.x = msg->pos.x;
-	position.y = msg->pos.y;
+	MsgEntityState* childMsg = (MsgEntityState*)msg;
+	
+	// Use LERP-to smooth out camera movement
+	VecF3 goalPos(childMsg->pos);
+	goalPos.z = position.z;
+
+	lerpCameraTransition(&goalPos);
 	delete msg;
 }

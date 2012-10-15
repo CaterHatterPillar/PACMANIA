@@ -22,6 +22,13 @@ private:
 
 	unsigned int screenWidth;
 	unsigned int screenHeight;
+
+	// Makes a smooth camera transition between this position and a goal position
+	// anyone with better name suggestions?
+	void lerpCameraTransition(VecF3 *goalPosition)
+	{
+		position.lerp(goalPosition, 0.001f);
+	}
 protected:
 	float STEP_SCALE;
 	VecF3 position;

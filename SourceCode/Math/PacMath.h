@@ -50,7 +50,6 @@ struct VecF3
         y = _y;
         z = _z;
     }
-
 	VecF3& operator+=(const VecF3& r)
     {
         x += r.x;
@@ -80,6 +79,12 @@ struct VecF3
     VecF3&	normalize();
     void	rotate(float angle, const VecF3& axis);
 	float	dot(VecF3 vec);
+	void	lerp(VecF3 *v, float factor)
+	{
+		x =  x * (1 - factor) + v->x * factor;
+		y =  y * (1 - factor) + v->y * factor;
+		z =  z * (1 - factor) + v->z * factor;
+	}
 };
 inline VecF3 operator+(const VecF3& left, const VecF3& right)
 {
