@@ -2,7 +2,8 @@
 
 void Game::run()
 {
-	GameEntity* pacman = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f));	//tmep
+	Maze* maze = entityFac->createMaze();
+	GameEntity* pacman = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);	//tmep
 
 //	GameEntity* pill = entityFac->createPill(VecF3(4.0f, 0.0f, 0.0f));
 //	GameEntity* bloodyPill = entityFac->createBloodyPill(VecF3(-3.0f, -2.0f, 3.0f)); 

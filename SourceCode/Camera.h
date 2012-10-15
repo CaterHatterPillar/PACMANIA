@@ -27,7 +27,7 @@ private:
 	// anyone with better name suggestions?
 	void lerpCameraTransition(VecF3 *goalPosition)
 	{
-		position.lerp(goalPosition, 0.001f);
+		position.lerp(goalPosition, 0.02f);
 	}
 protected:
 	float STEP_SCALE;

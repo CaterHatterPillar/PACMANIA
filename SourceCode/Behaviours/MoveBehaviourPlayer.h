@@ -59,9 +59,9 @@ private:
 	};
 protected:
 public:
-	MoveBehaviourPlayer()
+	MoveBehaviourPlayer(Maze* maze)
 	{
-		this->maze = new Maze();
+		this->maze = maze;
 
 		// Settings
 		speed = 4.3f;
