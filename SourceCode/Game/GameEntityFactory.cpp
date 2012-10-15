@@ -71,16 +71,16 @@ vector<PosNormTex>* GameEntityFactory::createVerticesPlane()
 	return vertices;
 }
 
-vector<unsigned int> GameEntityFactory::createIndicesPlane()
+vector<unsigned int>* GameEntityFactory::createIndicesPlane()
 {
-	vector<unsigned int> indices;
+	vector<unsigned int>* indices = new vector<unsigned int>;
 
-	indices.push_back(0);
-	indices.push_back(1);
-	indices.push_back(2);
-	indices.push_back(2);
-	indices.push_back(1);
-	indices.push_back(3);
+	indices->push_back(0);
+	indices->push_back(1);
+	indices->push_back(2);
+	indices->push_back(2);
+	indices->push_back(1);
+	indices->push_back(3);
 
 	return indices;
 }

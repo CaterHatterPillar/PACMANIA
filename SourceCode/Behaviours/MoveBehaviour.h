@@ -14,8 +14,8 @@ protected:
 	MatF4 rotation;
 	VecF3 position;
 public:
-	MoveBehaviour() {}
-	~MoveBehaviour() { }
+	MoveBehaviour(){}
+	~MoveBehaviour(){}
 	MatF4 getRotation() { return rotation; }
 	VecF3 getPosition() { return position; }
 };

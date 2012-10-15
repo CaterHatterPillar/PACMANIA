@@ -1,7 +1,7 @@
 #ifndef GAMEENTITYFACTORYDX_H
 #define GAMEENTITYFACTORYDX_H
 
-#include "../GameEntityFactory.h"
+#include "Game/GameEntityFactory.h"
 #include "GraphicsContainerDX.h"
 
 class GameEntityFactoryDX : public GameEntityFactory

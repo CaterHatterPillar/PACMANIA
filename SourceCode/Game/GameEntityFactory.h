@@ -1,13 +1,13 @@
 #ifndef GAMEENTITYFACTORY_H
 #define GAMEENTITYFACTORY_H
 
-#include "Common.h"
+#include "../Common.h"
 
-#include "Game/GameEntity.h"
+#include "GameEntity.h"
 
-#include "Behaviours/MoveBehaviourPlayer.h"
+#include "../Behaviours/MoveBehaviourPlayer.h"
 
-#include "Vertices/PosNormTex.h"
+#include "../Vertices/PosNormTex.h"
 
 #include <string>
 #include <fstream>
@@ -29,7 +29,7 @@ private:
 	void parseFace(fstream& infile);
 protected:
 	vector<PosNormTex>* createVerticesPlane();
-	vector<unsigned int> createIndicesPlane();
+	vector<unsigned int>* createIndicesPlane();
 
 	vector<PosNormTex>* createVerticesCube();
 	vector<unsigned int>* createIndicesCube();

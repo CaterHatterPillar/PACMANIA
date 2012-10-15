@@ -65,7 +65,7 @@ public:
 
 		// Settings
 		speed = 4.3f;
-		turningSpeed = 8.0f;
+		turningSpeed = 10.0f;
 		
 		// Starting values
 		pos = VecI2(1,1);
@@ -165,12 +165,10 @@ public:
 
 		// Interpolate rotation on cube
 		interpolateRotation(dt);
+		position = getPosition();
 
 		// Send message of current state to all relevent listeners
 		sendMsgEntityState();
-
-		// Draw labyrinth
-		maze->draw();
 	};
 
 	void sendMsgEntityState()
@@ -195,9 +193,16 @@ public:
 		qua_rot_tween = qua_rot;
 
 		// Update parent
-		position = VecF3((float)pos.x, (float)pos.y, 0.0f);
 		rotation = qua_rot.toMatrix();
 		//rotation = mat_rot;
+	};
+
+	VecF3 getPosition()
+	{
+		// Hides transition between grid
+		float xTween = -dir.x * pos_offset;
+		float yTween = -dir.y * pos_offset;
+		return VecF3(xTween+pos.x, yTween+pos.y, 0.0f);
 	};
 
 	void msgKeyboard(Msg* msg)
