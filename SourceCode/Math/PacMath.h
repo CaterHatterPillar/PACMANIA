@@ -251,6 +251,7 @@ struct Quaternion
 		ret.y = (1.0f - t) * q1->y + epsilon * t * q2->y;
 		ret.z = (1.0f - t) * q1->z + epsilon * t * q2->z;
 		ret.w = (1.0f - t) * q1->w + epsilon * t * q2->w;
+		ret.normalize();
 		return ret;
 	};
 	Quaternion conjugate();

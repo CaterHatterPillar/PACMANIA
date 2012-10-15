@@ -261,7 +261,7 @@ GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
 	entity->setMoveBehaviour(moveBehaviour);
 
 	entity->setRotation(VecF3(0.0f, 0.0f, -90.0f));
-	entity->setScale(VecF3(0.5f,0.5f,0.5f));
+	entity->setScale(VecF3(0.35f,0.35f,0.35f));
 	return entity;
 }
 
