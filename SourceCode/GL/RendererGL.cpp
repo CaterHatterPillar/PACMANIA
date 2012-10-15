@@ -50,7 +50,10 @@ void RendererGL::init()
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+	glDepthMask(GL_TRUE);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 void RendererGL::initShaders()
 {
@@ -273,6 +276,15 @@ std::string RendererGL::fetchTexPath(TextureId texId)
 	{
 	case TEXTURE_PACMAN:
 		texName = "PacManTex.tga";
+		break;
+	case TEXTURE_WALL:
+		texName = "Wall.tga";
+		break;
+	case TEXTURE_PILL:
+		texName = "Pill.tga";
+		break;
+	case TEXTURE_PILL_BLOODY:
+		texName = "BloodyPill.tga";
 		break;
 	default:
 		texName = "PlaceHolder.tga";
