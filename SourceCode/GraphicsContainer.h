@@ -2,22 +2,13 @@
 #define GRAPHICSCONTAINER_H
 
 #include "Common.h"
+#include "TextureId.h"
 #include "Vertices/PosNormTex.h"
 
 enum ShaderId
 {
 	VERTEX_SHADER_DEFAULT,
 	PIXEL_SHADER_DEFAULT
-};
-
-enum TextureId
-{
-	TEXTURE_PACMAN,
-	TEXTURE_PILL,
-	TEXTURE_PILL_BLOODY,
-	TEXTURE_GHOST,
-	TEXTURE_WALL,
-	TEXTURE_PLACEHOLDER
 };
 
 //Make abstract

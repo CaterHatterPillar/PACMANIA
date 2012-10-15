@@ -10,7 +10,7 @@ class GraphicsContainerGL : public GraphicsContainer
 private:
 	GLuint vb;
 	GLuint ib;
-	Texture tex;
+	Texture* tex;
 
 	bool outdatedVB;
 	bool outdatedIB;
@@ -19,13 +19,13 @@ protected:
 public:
 	void createVB();
 	void createIB();
-	void createTex(std::string pathTex);
+	void createTex(Texture* tex);
 
 	GraphicsContainerGL(
 		ShaderId vertexShaderId,
 		ShaderId pixelShaderId,
 
-		TextureId texture,
+		TextureId textureId,
 
 		std::vector<PosNormTex>* vertices,
 		std::vector<unsigned int>* indices,
@@ -44,9 +44,9 @@ public:
 	void OutdatedIB(bool outdatedIB)	{ this->outdatedIB	= outdatedIB;	}
 	void OutdatedTex(bool outdatedTex)	{ this->outdatedTex	= outdatedTex;	}
 
-	GLuint	VB()	{ return vb;	}
-	GLuint	IB()	{ return ib;	}
-	Texture Tex()	{ return tex;	}
+	GLuint		VB()	{ return vb;	}
+	GLuint		IB()	{ return ib;	}
+	Texture*	Tex()	{ return tex;	}
 };
 
 #endif //GRAPHICSCONTAINERGL_H
