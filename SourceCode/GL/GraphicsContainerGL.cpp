@@ -20,22 +20,15 @@ void GraphicsContainerGL::createIB()
 		&(indices->at(0)), 
 		GL_STATIC_DRAW);
 }
-void GraphicsContainerGL::createTex(std::string pathTex)
+void GraphicsContainerGL::createTex(Texture* tex)
 {
-	bool textureLoaded = LoadTGA(&tex, pathTex.c_str());
-	if(textureLoaded)
-	{
-		//Creates a texture and put it's ID in the given integer variable
-		glGenTextures(1, &tex.texID);
-	}
-	else
-		throw 0;
+	this->tex = tex;
 }
 
 GraphicsContainerGL::GraphicsContainerGL(
 	ShaderId vertexShaderId,
 	ShaderId pixelShaderId,
-	TextureId texture,
+	TextureId textureId,
 
 	std::vector<PosNormTex>*	vertices,
 	std::vector<unsigned int>*	indices,
@@ -48,7 +41,7 @@ GraphicsContainerGL::GraphicsContainerGL(
 		vertexShaderId,
 		pixelShaderId,
 
-		texture,
+		textureId,
 
 		vertices,
 		indices,
@@ -64,9 +57,6 @@ GraphicsContainerGL::GraphicsContainerGL(
 }
 GraphicsContainerGL::~GraphicsContainerGL()
 {
-	if(tex.imageData)
-		free(tex.imageData); //Free raw image data
-
 	DELETE_NULL(vertices);
 	DELETE_NULL(indices);
 }
