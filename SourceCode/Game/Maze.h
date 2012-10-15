@@ -14,11 +14,13 @@ private:
 	static const int sizeY=31;
 	int grid[sizeX][sizeY];
 
-	GraphicsContainerDX* graphicsContainer;
+	GraphicsContainer* graphicsContainer;
 
 public:
-	Maze()
+	Maze(GraphicsContainer* graphicsContainer)
 	{
+		this->graphicsContainer = graphicsContainer; 
+
 		// Init grid
 		createMaze();
 	};
@@ -77,8 +79,7 @@ public:
 		MatF4 translation;
 		float middleX = (float)sizeX*0.5f-0.5f; // middle of grid
 		float middleY = (float)sizeY*0.5f-0.5f; // middle of grid
-		translation.translation((float)x-sizeX, (float)y-sizeY, 0.0f);
-		
+		translation.translation(((float)x), ((float)y), 0.0f);
 		return translation;
 	};
 
@@ -91,11 +92,10 @@ public:
 			{
 				if(getTile(x,y)==1)
 				{
-					/*vector<PosNormTex>* vertices = new vector<PosNormTex>;
-
-					graphicsContainer->setMatrices(getTranslation(x,y), MatF4(), MatF4());
-					MsgRender* renderMsg = new MsgRender(graphicsContainer);
-					Singleton<ObserverDirector>::get().push(renderMsg);*/
+					MatF4 scale;
+					scale.scaling(0.5f,0.5f,0.5f);
+					MsgRender* renderMsg = new MsgRender(graphicsContainer, getTranslation(x,y), MatF4(), scale);
+					Singleton<ObserverDirector>::get().push(renderMsg);
 				}
 			}
 		}

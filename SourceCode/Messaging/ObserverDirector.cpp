@@ -53,7 +53,7 @@ void ObserverDirector::msgDXWindowHandle(Msg* msg)
 {
 	MsgDXWindowHandle* msgDX = (MsgDXWindowHandle*)msg;
 
-	for(int i=0; i<observers->size(); i++)
+	for(int i=0; i<(int)observers->size(); i++)
 	{
 		Observer* observer = observers->at(i);
 		if(observer->isSubscriber(msg->Type()))
