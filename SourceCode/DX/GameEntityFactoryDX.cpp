@@ -13,12 +13,12 @@ GameEntity* GameEntityFactoryDX::createPacman(VecF3 position)
 	GameEntity* entity = new GameEntity();
 	entity->setPosition(position);
 
-	vector<PosNormTex>* vertices	= createVerticesCube();
-	vector<unsigned int>* indices	= createIndicesCube();
+	vector<PosNormTex>* vertices	= createVerticesObj("root/Models/Pacman.obj");
+	vector<unsigned int>* indices	= createIndicesObj("root/Models/Pacman.obj");
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-	TextureId textureId		= TEXTURE_PACMAN;
+	TextureId textureId		= TEXTURE_PLACEHOLDER;
 
 	unsigned int numVertices	= vertices->size();
 	unsigned int numIndices		= indices->size();

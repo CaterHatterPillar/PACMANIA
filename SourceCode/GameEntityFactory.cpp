@@ -8,6 +8,52 @@ GameEntityFactory::~GameEntityFactory()
 {
 }
 
+void GameEntityFactory::parsePosition(fstream& infile)
+{
+	float x, y, z;
+	infile >> x >> y >> z;
+	positions.push_back(VecF3(x, y, z));
+}
+
+void GameEntityFactory::parseNormal(fstream& infile)
+{
+	float x, y, z;
+	infile >> x >> y >> z;
+	normals.push_back(VecF3(x, y, z));
+}
+
+void GameEntityFactory::parseTexcoord(fstream& infile)
+{
+	float u, v;
+	infile >> u >> v;
+	texcoords.push_back(VecF2(u, v));
+}
+
+void GameEntityFactory::parseFace(fstream& infile, vector<unsigned int>* indices)
+{	
+	for(unsigned int i=0; i<3; i++)
+	{
+		unsigned int index;
+		
+		infile >> index;
+		indices->push_back(index);
+		
+		if(infile.peek() == '/')
+		{
+			infile.ignore();
+			if(infile.peek() != '/')
+			{
+				infile.ignore();
+			}
+			if(infile.peek() == '/')
+			{
+				infile.ignore();
+				infile.ignore();
+			}
+		}
+	}
+}
+
 vector<PosNormTex>* GameEntityFactory::createVerticesPlane()
 {
 	vector<PosNormTex>* vertices = new vector<PosNormTex>;
@@ -126,6 +172,69 @@ vector<unsigned int>* GameEntityFactory::createIndicesCube()
 	indices->push_back(22);
 	indices->push_back(21);
 	indices->push_back(23);
+
+	return indices;
+}
+
+vector<PosNormTex>* GameEntityFactory::createVerticesObj(string filename)
+{
+	fstream infile(filename);
+
+	string temp;
+
+	if(infile)
+	{
+		while(!infile.eof())
+		{
+			temp = "unknown";
+			infile >> temp;
+			
+			if(temp == "v")
+				parsePosition(infile);
+			if(temp == "vn")
+				parseNormal(infile);
+			if(temp == "vt")
+				parseTexcoord(infile);
+		}
+	}
+
+	vector<VecF3> tempNormals;
+	for(int i=0; i<normals.size(); i++)
+	{
+		tempNormals.push_back(normals[i]);
+		tempNormals.push_back(normals[i]);
+		tempNormals.push_back(normals[i]);
+	}
+
+	vector<PosNormTex>* vertices = new vector<PosNormTex>;
+
+	for(int i=0; i<positions.size(); i++)
+	{
+		vertices->push_back(PosNormTex(positions[i], tempNormals[i], VecF2(0, 0)));
+	}
+
+	return vertices;
+}
+
+vector<unsigned int>* GameEntityFactory::createIndicesObj(string filename)
+{
+	fstream infile(filename);
+
+	string temp;
+
+	vector<unsigned int>* indices = new vector<unsigned int>;
+
+	if(infile)
+	{
+		while(!infile.eof())
+		{
+			temp = "unknown";
+			infile >> temp;
+			
+			if(temp == "f")
+				parseFace(infile, indices);
+		}
+	}
 
 	return indices;
 }

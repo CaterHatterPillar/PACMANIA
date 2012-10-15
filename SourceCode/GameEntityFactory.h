@@ -9,17 +9,33 @@
 
 #include "Vertices/PosNormTex.h"
 
+#include <string>
+#include <fstream>
+
 using namespace std;
 
 class GameEntityFactory
 {
 private:
+
+	vector<VecF3> positions;
+	vector<VecF3> normals;
+	vector<VecF2> texcoords;
+
+	void parsePosition(fstream& infile);
+	void parseNormal(fstream& infile);
+	void parseTexcoord(fstream& infile);
+	void parseFace(fstream& infile, vector<unsigned int>* indices);
 protected:
 	vector<PosNormTex>* createVerticesPlane();
 	vector<unsigned int>* createIndicesPlane();
 
 	vector<PosNormTex>* createVerticesCube();
 	vector<unsigned int>* createIndicesCube();
+
+	vector<PosNormTex>* createVerticesObj(string filename);
+	vector<unsigned int>* createIndicesObj(string filename);
+
 public:
 	GameEntityFactory();
 	~GameEntityFactory();
