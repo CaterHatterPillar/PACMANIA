@@ -22,10 +22,12 @@ private:
 	vector<VecF3> normals;
 	vector<VecF2> texcoords;
 
+	vector<PosNormTex> privateVertices;
+
 	void parsePosition(fstream& infile);
 	void parseNormal(fstream& infile);
 	void parseTexcoord(fstream& infile);
-	void parseFace(fstream& infile, vector<unsigned int>* indices);
+	void parseFace(fstream& infile);
 protected:
 	vector<PosNormTex>* createVerticesPlane();
 	vector<unsigned int>* createIndicesPlane();
@@ -34,7 +36,7 @@ protected:
 	vector<unsigned int>* createIndicesCube();
 
 	vector<PosNormTex>* createVerticesObj(string filename);
-	vector<unsigned int>* createIndicesObj(string filename);
+	vector<unsigned int>* createIndicesObj(vector<PosNormTex>* vertices);
 
 public:
 	GameEntityFactory();

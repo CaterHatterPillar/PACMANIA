@@ -29,28 +29,34 @@ void GameEntityFactory::parseTexcoord(fstream& infile)
 	texcoords.push_back(VecF2(u, v));
 }
 
-void GameEntityFactory::parseFace(fstream& infile, vector<unsigned int>* indices)
+void GameEntityFactory::parseFace(fstream& infile)
 {	
+	unsigned int iPosition, iNormal, iTexcoord;
+	PosNormTex vertex;
+	
 	for(unsigned int i=0; i<3; i++)
 	{
-		unsigned int index;
+		ZeroMemory(&vertex, sizeof(PosNormTex));
 		
-		infile >> index;
-		indices->push_back(index);
+		infile >> iPosition;
+		vertex.pos = positions[iPosition-1];
 		
 		if(infile.peek() == '/')
 		{
 			infile.ignore();
 			if(infile.peek() != '/')
 			{
-				infile.ignore();
+				infile >> iTexcoord;
+				vertex.tex = texcoords[iTexcoord-1];
 			}
 			if(infile.peek() == '/')
 			{
 				infile.ignore();
-				infile.ignore();
+				infile >> iNormal;
+				vertex.norm = normals[iNormal-1];
 			}
 		}
+		privateVertices.push_back(vertex);
 	}
 }
 
@@ -195,46 +201,26 @@ vector<PosNormTex>* GameEntityFactory::createVerticesObj(string filename)
 				parseNormal(infile);
 			if(temp == "vt")
 				parseTexcoord(infile);
+			if(temp == "f")
+				parseFace(infile);
 		}
-	}
-
-	vector<VecF3> tempNormals;
-	for(int i=0; i<normals.size(); i++)
-	{
-		tempNormals.push_back(normals[i]);
-		tempNormals.push_back(normals[i]);
-		tempNormals.push_back(normals[i]);
 	}
 
 	vector<PosNormTex>* vertices = new vector<PosNormTex>;
 
-	for(int i=0; i<positions.size(); i++)
+	for(unsigned int i=0; i<privateVertices.size(); i++)
 	{
-		vertices->push_back(PosNormTex(positions[i], tempNormals[i], VecF2(0, 0)));
+		vertices->push_back(privateVertices.at(i));
 	}
 
 	return vertices;
 }
 
-vector<unsigned int>* GameEntityFactory::createIndicesObj(string filename)
+vector<unsigned int>* GameEntityFactory::createIndicesObj(vector<PosNormTex>* vertices)
 {
-	fstream infile(filename);
-
-	string temp;
-
 	vector<unsigned int>* indices = new vector<unsigned int>;
-
-	if(infile)
-	{
-		while(!infile.eof())
-		{
-			temp = "unknown";
-			infile >> temp;
-			
-			if(temp == "f")
-				parseFace(infile, indices);
-		}
-	}
+	for(unsigned int i=0; i<vertices->size(); i++)
+		indices->push_back(i);
 
 	return indices;
 }

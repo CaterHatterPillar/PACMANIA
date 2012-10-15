@@ -14,7 +14,7 @@ GameEntity* GameEntityFactoryDX::createPacman(VecF3 position)
 	entity->setPosition(position);
 
 	vector<PosNormTex>* vertices	= createVerticesObj("root/Models/Pacman.obj");
-	vector<unsigned int>* indices	= createIndicesObj("root/Models/Pacman.obj");
+	vector<unsigned int>* indices	= createIndicesObj(vertices);
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
