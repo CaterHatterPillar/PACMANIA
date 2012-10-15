@@ -4,6 +4,7 @@
 #include "CommonGL.h"
 #include "GraphicsContainerGL.h"
 #include "FXManagementGL.h"
+#include "TexManagementGL.h"
 #include "Texture.h"
 
 #include "../Renderer.h"
@@ -20,7 +21,8 @@
 class RendererGL : public Renderer
 {
 private:
-	static FXManagementGL* fxManagement;
+	static FXManagementGL*	fxManagement;
+	static TexManagementGL*	texManagement;
 
 	static MatF4 view;
 	static MatF4 proj;
@@ -37,8 +39,6 @@ public:
 	~RendererGL();
 
 	void init();
-	void initShaders();
-	bool loadTGATexture(const char* szFileName, GLenum minFilter, GLenum magFilter, GLenum wrapMode);
 
 	void update(double delta);
 	void msgRender(Msg* msg);
@@ -62,10 +62,10 @@ public:
 		MatF4 rotation,
 		MatF4 scaling);
 	static void setBuffers(GLuint vb, GLuint ib);
-	static void setTextures(Texture& tex);
+	static void setTextures(Texture* tex);
 	static void deBindGraphicsGL();
 
-	static std::string fetchTexPath(TextureId texId);
+	
 };
 
 #endif //OPENGL_H

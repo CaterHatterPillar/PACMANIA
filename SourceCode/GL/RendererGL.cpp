@@ -1,6 +1,7 @@
 ﻿#include "RendererGL.h"
 
-FXManagementGL* RendererGL::fxManagement;
+FXManagementGL*		RendererGL::fxManagement;
+TexManagementGL*	RendererGL::texManagement;
 
 MatF4	RendererGL::view;
 MatF4	RendererGL::proj;
@@ -12,12 +13,13 @@ GLuint	RendererGL::sampler;
 RendererGL::RendererGL() : Renderer()
 {
 	fxManagement	= new FXManagementGL();
+	texManagement	= new TexManagementGL();
 	renderList		= new std::vector<MsgRender*>();
 }
 RendererGL::~RendererGL()
 {
-	if(fxManagement)
-		delete fxManagement;
+	DELETE_NULL(fxManagement);
+	DELETE_NULL(texManagement);
 
 	if(renderList)
 	{
@@ -36,7 +38,8 @@ void RendererGL::cleanUp()
 
 void RendererGL::init()
 {
-	initShaders();
+	fxManagement->init();
+	texManagement->init();
 
 	/*Subscribe*/
 	SubscriptionMsg* subscription = new SubscriptionMsg(this, RENDER);
@@ -49,15 +52,15 @@ void RendererGL::init()
 	MsgGlutCallback* callbackMsg = new MsgGlutCallback((void*)renderSpec, DISPLAY_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
+	/*Set z-buffer*/
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
+
+	/*Set backface cullint*/
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
+
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-}
-void RendererGL::initShaders()
-{
-	fxManagement->init();
 }
 
 void RendererGL::update(double delta)
@@ -135,8 +138,8 @@ void RendererGL::renderGraphicsGL(
 	}
 	if(containerGL->OutdatedTex())
 	{
-		std::string texPath = fetchTexPath(containerGL->getTextureId());
-		containerGL->createTex(texPath);
+		Texture* preloadedTex = texManagement->getTexture(containerGL->getTextureId());
+		containerGL->createTex(preloadedTex);
 		containerGL->OutdatedTex(false);
 	}
 
@@ -225,22 +228,22 @@ void RendererGL::setBuffers(GLuint vb, GLuint ib)
 	/*Set index buffer*/
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 }
-void RendererGL::setTextures(Texture& tex)
+void RendererGL::setTextures(Texture* tex)
 {
 	//Setting as active texture
-	glBindTexture(GL_TEXTURE_2D, tex.texID);
+	glBindTexture(GL_TEXTURE_2D, tex->texID);
 
 	//Load texture into memory
 	glTexImage2D(
 		GL_TEXTURE_2D, 
 		0, 
-		tex.bpp / 8, 
-		tex.width, 
-		tex.height, 
+		tex->bpp / 8, 
+		tex->width, 
+		tex->height, 
 		0, 
-		tex.type, 
+		tex->type, 
 		GL_UNSIGNED_BYTE, 
-		tex.imageData);
+		tex->imageData);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -266,31 +269,4 @@ void RendererGL::msgCamera(Msg* msg)
 	this->view = cameraMsg->View();
 
 	delete cameraMsg;
-}
-
-std::string RendererGL::fetchTexPath(TextureId texId)
-{
-	std::string texName;
-	std::string texPath = "root/Textures/";
-	switch(texId)
-	{
-	case TEXTURE_PACMAN:
-		texName = "PacManTex.tga";
-		break;
-	case TEXTURE_WALL:
-		texName = "Wall.tga";
-		break;
-	case TEXTURE_PILL:
-		texName = "Pill.tga";
-		break;
-	case TEXTURE_PILL_BLOODY:
-		texName = "BloodyPill.tga";
-		break;
-	default:
-		texName = "PlaceHolder.tga";
-		break;
-	}
-
-	texPath += texName;
-	return texPath;
 }
