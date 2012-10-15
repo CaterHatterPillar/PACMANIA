@@ -71,16 +71,16 @@ vector<PosNormTex>* GameEntityFactory::createVerticesPlane()
 	return vertices;
 }
 
-vector<unsigned int>* GameEntityFactory::createIndicesPlane()
+vector<unsigned int> GameEntityFactory::createIndicesPlane()
 {
-	vector<unsigned int>* indices;
+	vector<unsigned int> indices;
 
-	indices->push_back(0);
-	indices->push_back(1);
-	indices->push_back(2);
-	indices->push_back(2);
-	indices->push_back(1);
-	indices->push_back(3);
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(2);
+	indices.push_back(2);
+	indices.push_back(1);
+	indices.push_back(3);
 
 	return indices;
 }
@@ -223,4 +223,185 @@ vector<unsigned int>* GameEntityFactory::createIndicesObj(vector<PosNormTex>* ve
 		indices->push_back(i);
 
 	return indices;
+}
+
+GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
+{
+	GameEntity* entity = new GameEntity();
+	entity->setPosition(position);
+
+	vector<PosNormTex>* vertices	= createVerticesObj("root/Models/Pacman.obj");
+	vector<unsigned int>* indices	= createIndicesObj(vertices);
+
+	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
+	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
+	TextureId textureId		= TEXTURE_PLACEHOLDER;
+
+	unsigned int numVertices	= vertices->size();
+	unsigned int numIndices		= indices->size();
+	unsigned int numFaces		= indices->size() / 3;
+	unsigned int stride			= sizeof(PosNormTex);
+	unsigned int offset			= 0;
+
+	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		textureId,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	MoveBehaviour* moveBehaviour = new MoveBehaviourPlayer(maze);
+	moveBehaviour->init();
+
+	entity->setGraphicsContainer(graphicsContainer);
+	entity->setMoveBehaviour(moveBehaviour);
+
+	entity->setRotation(VecF3(0.0f, 0.0f, -90.0f));
+	entity->setScale(VecF3(0.5f,0.5f,0.5f));
+	return entity;
+}
+
+GameEntity* GameEntityFactory::createGhost( VecF3 position )
+{
+	return NULL;
+}
+
+GameEntity* GameEntityFactory::createPill( VecF3 position )
+{
+	GameEntity* entity = new GameEntity();
+	entity->setPosition(position);
+
+	vector<PosNormTex>* vertices	= createVerticesCube();
+	vector<unsigned int>* indices	= createIndicesCube();
+
+	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
+	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
+	TextureId textureId		= TEXTURE_PILL;
+
+	unsigned int numVertices	= vertices->size();
+	unsigned int numIndices		= indices->size();
+	unsigned int numFaces		= indices->size() / 3;
+	unsigned int stride			= sizeof(PosNormTex);
+	unsigned int offset			= 0;
+
+	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		textureId,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	entity->setGraphicsContainer(graphicsContainer);
+	entity->setMoveBehaviour(NULL);
+
+	return entity;
+}
+
+GameEntity* GameEntityFactory::createBloodyPill( VecF3 position )
+{
+	GameEntity* entity = new GameEntity();
+	entity->setPosition(position);
+
+	vector<PosNormTex>* vertices	= createVerticesCube();
+	vector<unsigned int>* indices	= createIndicesCube();
+
+	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
+	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
+	TextureId textureId		= TEXTURE_PILL_BLOODY;
+
+	unsigned int numVertices	= vertices->size();
+	unsigned int numIndices		= indices->size();
+	unsigned int numFaces		= indices->size() / 3;
+	unsigned int stride			= sizeof(PosNormTex);
+	unsigned int offset			= 0;
+
+	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		textureId,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	entity->setGraphicsContainer(graphicsContainer);
+	entity->setMoveBehaviour(NULL);
+
+	return entity;
+}
+
+GameEntity* GameEntityFactory::createWall( VecF3 position )
+{
+	GameEntity* entity = new GameEntity();
+	entity->setPosition(position);
+
+	vector<PosNormTex>* vertices	= createVerticesCube();
+	vector<unsigned int>* indices	= createIndicesCube();
+
+	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
+	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
+	TextureId textureId		= TEXTURE_WALL;
+
+	unsigned int numVertices	= vertices->size();
+	unsigned int numIndices		= indices->size();
+	unsigned int numFaces		= indices->size() / 3;
+	unsigned int stride			= sizeof(PosNormTex);
+	unsigned int offset			= 0;
+
+	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		textureId,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	entity->setGraphicsContainer(graphicsContainer);
+	entity->setMoveBehaviour(NULL);
+
+	return entity;
+}
+
+Maze* GameEntityFactory::createMaze()
+{
+	vector<PosNormTex>* vertices	= createVerticesCube();
+	vector<unsigned int>* indices	= createIndicesCube();
+
+	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
+	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
+	TextureId textureId		= TEXTURE_WALL;
+
+	unsigned int numVertices	= vertices->size();
+	unsigned int numIndices		= indices->size();
+	unsigned int numFaces		= indices->size() / 3;
+	unsigned int stride			= sizeof(PosNormTex);
+	unsigned int offset			= 0;
+
+	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		textureId,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	Maze* maze = new Maze(graphicsContainer);
+
+	return maze;
 }
