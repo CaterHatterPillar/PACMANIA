@@ -85,7 +85,7 @@ public:
 
 		ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 		ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-		TextureId textureId		= TEXTURE_PACMAN;
+		TextureId textureId		= TEXTURE_WALL;
 
 		unsigned int numVertices	= vertices->size();
 		unsigned int numIndices		= indices->size();
