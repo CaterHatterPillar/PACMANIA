@@ -33,6 +33,8 @@ private:
 	static GLuint worldViewProjFX;
 
 	static GLuint sampler;
+
+	static GraphicsContainerGL* prevGC;
 protected:
 public:
 	RendererGL();
@@ -56,13 +58,13 @@ public:
 		MatF4 scaling);
 	static void setShader(
 		ShaderId vertexShader, 
-		ShaderId fragmentShader, 
-		
+		ShaderId fragmentShader);
+	static void setUniform(
 		MatF4 translation,
 		MatF4 rotation,
 		MatF4 scaling);
-	static void setBuffers(GLuint vb, GLuint ib);
-	static void setTextures(Texture* tex);
+	static void setBuffers(GraphicsContainerGL* containerGL);
+	static void setTextures(GraphicsContainerGL* containerGL);
 	static void deBindGraphicsGL();
 
 	

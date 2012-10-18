@@ -10,16 +10,22 @@ GLuint	RendererGL::worldViewProjFX;
 
 GLuint	RendererGL::sampler;
 
+GraphicsContainerGL* RendererGL::prevGC;
+
 RendererGL::RendererGL() : Renderer()
 {
 	fxManagement	= new FXManagementGL();
 	texManagement	= new TexManagementGL();
 	renderList		= new std::vector<MsgRender*>();
+
+	prevGC = NULL;
 }
 RendererGL::~RendererGL()
 {
 	DELETE_NULL(fxManagement);
 	DELETE_NULL(texManagement);
+
+	prevGC = NULL;
 
 	if(renderList)
 	{
@@ -152,12 +158,13 @@ void RendererGL::renderGraphicsGL(
 	ShaderId vertexShaderID		= containerGL->getVertexShaderId();
 	ShaderId fragmentShaderID	= containerGL->getPixelShaderId();
 
-	GLuint vb = containerGL->VB();
-	GLuint ib = containerGL->IB();
-
-	setShader(vertexShaderID, fragmentShaderID, translation, rotation, scaling);
-	setBuffers(vb, ib);
-	setTextures(containerGL->Tex());
+	if(prevGC != containerGL)
+	{
+		setBuffers(containerGL);
+		setTextures(containerGL);
+		setShader(vertexShaderID, fragmentShaderID);
+	}
+	setUniform(translation, rotation, scaling);
 
 	glDrawElements(
 		GL_TRIANGLES,		//Type to render
@@ -167,35 +174,37 @@ void RendererGL::renderGraphicsGL(
 }
 void RendererGL::setShader(
 	ShaderId vertexShader, 
-	ShaderId fragmentShader, 
-	MatF4 translation,
-	MatF4 rotation,
-	MatF4 scaling)
+	ShaderId fragmentShader)
 {
 	/*Get correct shader program*/
 	FXGL* fx			= fxManagement->getFX(vertexShader, fragmentShader);
 	GLuint programFX	= fx->ProgramFX();
 
 	/*Checks whether or not the program object can execute the pipeline in it's current state*/
-	glValidateProgram(programFX);
+	//glValidateProgram(programFX);
 	/*Connect shader program to pipeline*/
 	glUseProgram(programFX);
 
 	/*Connect uniforms*/
 	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
-	assert(worldViewProjFX != 0xFFFFFFFF);
+	//assert(worldViewProjFX != 0xFFFFFFFF);
 	sampler = glGetUniformLocation(programFX, "sampler");
-	assert(sampler != 0xFFFFFFFF);
+	//assert(sampler != 0xFFFFFFFF);
 
 	glUniform1i(sampler, 0);
-
+}
+void RendererGL::setUniform(MatF4 translation, MatF4 rotation, MatF4 scaling)
+{
 	MatF4 world			= translation * scaling * rotation;
 	
 	worldViewProj = proj * view * world;
 	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
 }
-void RendererGL::setBuffers(GLuint vb, GLuint ib)
+void RendererGL::setBuffers(GraphicsContainerGL* containerGL)
 {
+	GLuint vb = containerGL->VB();
+	GLuint ib = containerGL->IB();
+
 	glBindBuffer(GL_ARRAY_BUFFER, vb);
 
 	glVertexAttribPointer(
@@ -227,9 +236,13 @@ void RendererGL::setBuffers(GLuint vb, GLuint ib)
 
 	/*Set index buffer*/
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+
+	prevGC = containerGL;
 }
-void RendererGL::setTextures(Texture* tex)
+void RendererGL::setTextures(GraphicsContainerGL* containerGL)
 {
+	Texture* tex = containerGL->Tex();
+
 	//Setting as active texture
 	glBindTexture(GL_TEXTURE_2D, tex->texID);
 
@@ -251,9 +264,9 @@ void RendererGL::setTextures(Texture* tex)
 }
 void RendererGL::deBindGraphicsGL()
 {
-	glDisableVertexAttribArray(PosNormTex_POS);
-	glDisableVertexAttribArray(PosNormTex_NORM);
-	glDisableVertexAttribArray(PosNormTex_TEX);
+	//glDisableVertexAttribArray(PosNormTex_POS);
+	//glDisableVertexAttribArray(PosNormTex_NORM);
+	//glDisableVertexAttribArray(PosNormTex_TEX);
 }
 
 void RendererGL::msgRender(Msg* msg)
