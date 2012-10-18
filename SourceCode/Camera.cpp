@@ -38,6 +38,7 @@ void Camera::update(double delta)
 				break;
 			case ENTITY_STATE:
 				msgEntityState(msg);
+				updateMatrices = true;
 				break;
 			}
 		}
