@@ -2,17 +2,20 @@
 
 TextureManagerDX::TextureManagerDX()
 {
+	placeholderTexture  = NULL;
 	pacmanTexture		= NULL;
 	ghostTexture		= NULL;
 	pillTexture			= NULL;
 	bloodyPillTexture	= NULL;
-	placeholderTexture  = NULL;
+	wallTexture			= NULL;
 
+	placeholderTextureFilename	= "root/Textures/PlaceHolder.png";
 	pacmanTextureFilename		= "root/Textures/PacmanTex.png";
 	ghostTextureFilename		= "root/Textures/PlaceHolder.png";
 	pillTextureFilename			= "root/Textures/Pill.png";
 	bloodyPillTextureFilename	= "root/Textures/BloodyPill.png";
-	placeholderTextureFilename	= "root/Textures/PlaceHolder.png";
+	wallTextureFilename			= "root/Textures/Wall.png";
+	
 
 }
 
@@ -33,6 +36,10 @@ TextureManagerDX::~TextureManagerDX()
 void TextureManagerDX::init(ID3D11Device* device)
 {	
 	HRESULT hr;
+	D3DX11CreateShaderResourceViewFromFile(device, placeholderTextureFilename, NULL, NULL, &placeholderTexture, &hr);
+	if(FAILED(hr))
+		MessageBox(NULL, "Failed to create placeholderTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
+	
 	D3DX11CreateShaderResourceViewFromFile(device, pacmanTextureFilename, NULL, NULL, &pacmanTexture, &hr);
 	if(FAILED(hr))
 		MessageBox(NULL, "Failed to create pacmanTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
@@ -49,9 +56,9 @@ void TextureManagerDX::init(ID3D11Device* device)
 	if(FAILED(hr))
 		MessageBox(NULL, "Failed to create bloodyPillTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
 
-	D3DX11CreateShaderResourceViewFromFile(device, placeholderTextureFilename, NULL, NULL, &placeholderTexture, &hr);
+	D3DX11CreateShaderResourceViewFromFile(device, wallTextureFilename, NULL, NULL, &wallTexture, &hr);
 	if(FAILED(hr))
-		MessageBox(NULL, "Failed to create placeholderTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
+		MessageBox(NULL, "Failed to create wallTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
 }
 
 ID3D11ShaderResourceView* TextureManagerDX::getTexture(TextureId id)
@@ -60,6 +67,9 @@ ID3D11ShaderResourceView* TextureManagerDX::getTexture(TextureId id)
 
 	switch(id)
 	{
+	case TEXTURE_PLACEHOLDER:
+		texture = placeholderTexture;
+		break;
 	case TEXTURE_PACMAN:
 		texture = pacmanTexture;
 		break;
@@ -72,10 +82,11 @@ ID3D11ShaderResourceView* TextureManagerDX::getTexture(TextureId id)
 	case TEXTURE_PILL_BLOODY:
 		texture = bloodyPillTexture;
 		break;
-	case TEXTURE_PLACEHOLDER:
-		texture = placeholderTexture;
+	case TEXTURE_WALL:
+		texture = wallTexture;
+		break;
 	default:
-		texture = placeholderTexture;
+		texture = wallTexture;
 		break;
 	}
 

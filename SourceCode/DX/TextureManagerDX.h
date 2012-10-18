@@ -13,17 +13,19 @@
 class TextureManagerDX
 {
 private:
+	ID3D11ShaderResourceView* placeholderTexture;
 	ID3D11ShaderResourceView* pacmanTexture;
 	ID3D11ShaderResourceView* ghostTexture;
 	ID3D11ShaderResourceView* pillTexture;
 	ID3D11ShaderResourceView* bloodyPillTexture;
-	ID3D11ShaderResourceView* placeholderTexture;
+	ID3D11ShaderResourceView* wallTexture;
 
+	LPCTSTR placeholderTextureFilename;
 	LPCTSTR pacmanTextureFilename;
 	LPCTSTR ghostTextureFilename;
 	LPCTSTR pillTextureFilename;
 	LPCTSTR bloodyPillTextureFilename;
-	LPCTSTR placeholderTextureFilename;
+	LPCTSTR wallTextureFilename;
 
 public:
 	TextureManagerDX();
