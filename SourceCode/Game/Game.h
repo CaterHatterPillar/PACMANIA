@@ -2,7 +2,6 @@
 #define GAME_H
 
 #include "GameEntityFactory.h"
-#include "Maze.h"
 
 #include "../Camera.h"
 #include "../Window.h"
