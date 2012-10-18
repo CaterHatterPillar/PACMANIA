@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PACMANIA", "PACMANIA\PACMANIA.vcxproj", "{FB7C9795-79AD-4679-A921-C1D1F3E1430B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacMAINia", "PacMAINia\PacMAINia.vcxproj", "{FB9DB7FD-2364-4CB8-AA60-F6557904E06B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FB7C9795-79AD-4679-A921-C1D1F3E1430B} = {FB7C9795-79AD-4679-A921-C1D1F3E1430B}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacmaniaTestRunner", "PacmaniaTestRunner\PacmaniaTestRunner.vcxproj", "{D7F5A0C5-094A-4862-BFC9-B5C3F71EC5E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB7C9795-79AD-4679-A921-C1D1F3E1430B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FB7C9795-79AD-4679-A921-C1D1F3E1430B}.Debug|Win32.Build.0 = Debug|Win32
+		{FB7C9795-79AD-4679-A921-C1D1F3E1430B}.Release|Win32.ActiveCfg = Release|Win32
+		{FB7C9795-79AD-4679-A921-C1D1F3E1430B}.Release|Win32.Build.0 = Release|Win32
+		{FB9DB7FD-2364-4CB8-AA60-F6557904E06B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FB9DB7FD-2364-4CB8-AA60-F6557904E06B}.Debug|Win32.Build.0 = Debug|Win32
+		{FB9DB7FD-2364-4CB8-AA60-F6557904E06B}.Release|Win32.ActiveCfg = Release|Win32
+		{FB9DB7FD-2364-4CB8-AA60-F6557904E06B}.Release|Win32.Build.0 = Release|Win32
+		{D7F5A0C5-094A-4862-BFC9-B5C3F71EC5E9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D7F5A0C5-094A-4862-BFC9-B5C3F71EC5E9}.Debug|Win32.Build.0 = Debug|Win32
+		{D7F5A0C5-094A-4862-BFC9-B5C3F71EC5E9}.Release|Win32.ActiveCfg = Release|Win32
+		{D7F5A0C5-094A-4862-BFC9-B5C3F71EC5E9}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

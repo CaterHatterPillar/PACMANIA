@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Behaviours\MoveBehaviourTest.cpp">
+      <Filter>Source\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Test\HookUpTest.cpp">
+      <Filter>Source\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Test\test_main.cpp">
+      <Filter>Source\Test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{6ad8e81e-5f70-4035-90d1-777666a3f065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Behaviours">
+      <UniqueIdentifier>{5e472b50-c2f8-4d3b-86b4-6f0d12e28078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Test">
+      <UniqueIdentifier>{f47f22c5-4bba-4e1b-bf30-6fda3d53eb89}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

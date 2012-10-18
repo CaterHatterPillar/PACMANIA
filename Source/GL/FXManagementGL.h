@@ -12,7 +12,7 @@
     #include "../GraphicsContainer.h"
     #include "../Common.h"
      
-	#define SHADER_PATH				"root/Shaders/GL/"
+	#define SHADER_PATH				"../../Shaders/GL/"
     #define SHADER_DEFAULT_VERTEX	"DefaultVertexShader.glsl"
     #define SHADER_DEFAULT_FRAGMENT	"DefaultFragmentShader.glsl"
      

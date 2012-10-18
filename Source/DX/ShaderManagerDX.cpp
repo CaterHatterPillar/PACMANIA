@@ -37,7 +37,7 @@ void ShaderManagerDX::createVertexShader()
 #endif
 
 	LPCSTR shaderModel = vertexShaderModel();
-	D3DX11CompileFromFile("root/Shaders/DX/Shader.hlsl", 0, 0, "VShader", shaderModel, shaderCompileFlags, 0, 0, &vs, &error, 0);
+	D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "VShader", shaderModel, shaderCompileFlags, 0, 0, &vs, &error, 0);
 	if(error != NULL)
 	{
 		MessageBox(NULL, "Vertex shader failed to compile", "Vertex shader error!", MB_OK | MB_ICONEXCLAMATION);
@@ -56,7 +56,7 @@ void ShaderManagerDX::createPixelShader()
 #endif
 
 	LPCSTR shaderModel = pixelShaderModel();
-	D3DX11CompileFromFile("root/Shaders/DX/Shader.hlsl", 0, 0, "PShader", shaderModel, shaderCompileFlags, 0, 0, &ps, &error, 0);
+	D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "PShader", shaderModel, shaderCompileFlags, 0, 0, &ps, &error, 0);
 	if(error != NULL)
 	{
 		MessageBox(NULL, "Pixel shader failed to compile", "Pixel shader error!", MB_OK | MB_ICONEXCLAMATION);

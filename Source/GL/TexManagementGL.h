@@ -4,7 +4,7 @@
 #include "Texture.h"
 #include "../GraphicsContainer.h"
 
-static const std::string texPath		= "root/Textures/";
+static const std::string texPath		= "../../Textures/";
 
 static const std::string texPacman		= "PacManTex.tga";
 static const std::string texWall		= "Wall.tga";

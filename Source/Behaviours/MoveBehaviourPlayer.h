@@ -3,7 +3,7 @@
 
 #include "MoveBehaviour.h"
 #include "../Messaging/MsgKeyboard.h"
-#include "Maze.h"
+#include "../Game/Maze.h"
 
 class MoveBehaviourPlayer : public MoveBehaviour
 {

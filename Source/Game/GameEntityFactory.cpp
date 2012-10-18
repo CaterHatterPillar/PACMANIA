@@ -230,7 +230,7 @@ GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
 	GameEntity* entity = new GameEntity();
 	entity->setPosition(position);
 
-	vector<PosNormTex>* vertices	= createVerticesObj("root/Models/Pacman.obj");
+	vector<PosNormTex>* vertices	= createVerticesObj("../../Models/Pacman.obj");
 	vector<unsigned int>* indices	= createIndicesObj(vertices);
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;

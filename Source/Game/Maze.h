@@ -39,7 +39,7 @@ public:
 	{
 		//Load High Score
 		string line;
-		string fileName = "root/Levels/maze1.txt";
+		string fileName = "../../Levels/maze1.txt";
 		ifstream f(fileName);
 		if(f.is_open())
 		{

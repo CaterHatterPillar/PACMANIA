@@ -9,12 +9,12 @@ TextureManagerDX::TextureManagerDX()
 	bloodyPillTexture	= NULL;
 	wallTexture			= NULL;
 
-	placeholderTextureFilename	= "root/Textures/PlaceHolder.png";
-	pacmanTextureFilename		= "root/Textures/PacmanTex.png";
-	ghostTextureFilename		= "root/Textures/PlaceHolder.png";
-	pillTextureFilename			= "root/Textures/Pill.png";
-	bloodyPillTextureFilename	= "root/Textures/BloodyPill.png";
-	wallTextureFilename			= "root/Textures/Wall.png";
+	placeholderTextureFilename	= "../../Textures/PlaceHolder.png";
+	pacmanTextureFilename		= "../../Textures/PacmanTex.png";
+	ghostTextureFilename		= "../../Textures/PlaceHolder.png";
+	pillTextureFilename			= "../../Textures/Pill.png";
+	bloodyPillTextureFilename	= "../../Textures/BloodyPill.png";
+	wallTextureFilename			= "../../Textures/Wall.png";
 	
 
 }
