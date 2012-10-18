@@ -3,7 +3,7 @@
 
 #include "MoveBehaviour.h"
 #include "../Messaging/MsgKeyboard.h"
-#include "Maze.h"
+#include "../Game/Maze.h"
 
 class MoveBehaviourPlayer : public MoveBehaviour
 {
@@ -106,7 +106,7 @@ public:
 			}
 		}
 	}
-	virtual void update(double delta)
+	void update(double delta)	
 	{
 		float dt = (float)delta;
 
@@ -167,9 +167,18 @@ public:
 		interpolateRotation(dt);
 		position = getPosition();
 
+		// Check collision with pills
+		checkCollisionWithPills();
+
 		// Send message of current state to all relevent listeners
 		sendMsgEntityState();
-	};
+	}
+
+	void checkCollisionWithPills()
+	{
+		VecF2 pos(position.x, position.y);
+		maze->checkCollisionWithPills(pos);
+	};	
 
 	void sendMsgEntityState()
 	{

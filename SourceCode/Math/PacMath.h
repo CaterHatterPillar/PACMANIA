@@ -90,6 +90,17 @@ struct VecF3
 		y =  y * (1 - factor) + v->y * factor;
 		z =  z * (1 - factor) + v->z * factor;
 	}
+
+	float length()
+	{
+		return sqrt(x * x + y * y + z * z);
+	}
+
+	float distanceTo(VecF3 v)
+	{
+		VecF3 v3(x-v.x,y-v.y,v.z-z);
+		return v3.length();
+	}
 };
 inline VecF3 operator+(const VecF3& left, const VecF3& right)
 {
@@ -114,6 +125,7 @@ inline VecF3 operator*(const VecF3& left, float scalar)
                  left.z * scalar);
     return ret;
 }
+
 
 class MatF4
 {

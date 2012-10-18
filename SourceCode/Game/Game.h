@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "GameEntity.h"
 #include "GameEntityFactory.h"
+#include "Maze.h"
 
 #include "../Camera.h"
 #include "../Window.h"

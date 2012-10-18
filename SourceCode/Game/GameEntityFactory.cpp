@@ -235,7 +235,7 @@ GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-	TextureId textureId		= TEXTURE_PLACEHOLDER;
+	TextureId textureId		= TEXTURE_PACMAN;
 
 	unsigned int numVertices	= vertices->size();
 	unsigned int numIndices		= indices->size();
@@ -275,8 +275,8 @@ GameEntity* GameEntityFactory::createPill( VecF3 position )
 	GameEntity* entity = new GameEntity();
 	entity->setPosition(position);
 
-	vector<PosNormTex>* vertices	= createVerticesCube();
-	vector<unsigned int>* indices	= createIndicesCube();
+	vector<PosNormTex>* vertices	= createVerticesPlane();
+	vector<unsigned int>* indices	= createIndicesPlane();
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
@@ -310,8 +310,8 @@ GameEntity* GameEntityFactory::createBloodyPill( VecF3 position )
 	GameEntity* entity = new GameEntity();
 	entity->setPosition(position);
 
-	vector<PosNormTex>* vertices	= createVerticesCube();
-	vector<unsigned int>* indices	= createIndicesCube();
+	vector<PosNormTex>* vertices	= createVerticesPlane();
+	vector<unsigned int>* indices	= createIndicesPlane();
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
@@ -382,7 +382,6 @@ Maze* GameEntityFactory::createMaze()
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-	TextureId textureId		= TEXTURE_WALL;
 
 	unsigned int numVertices	= vertices->size();
 	unsigned int numIndices		= indices->size();
@@ -390,9 +389,9 @@ Maze* GameEntityFactory::createMaze()
 	unsigned int stride			= sizeof(PosNormTex);
 	unsigned int offset			= 0;
 
-	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+	GraphicsContainer* gcWall = createGraphicsContainer(	vertexShaderId,
 		pixelShaderId,
-		textureId,
+		TEXTURE_WALL,
 		vertices,
 		indices,
 		numVertices,
@@ -401,7 +400,38 @@ Maze* GameEntityFactory::createMaze()
 		stride,
 		offset);
 
-	Maze* maze = new Maze(graphicsContainer);
+	vector<PosNormTex>* verticesPlane	= createVerticesPlane();
+	vector<unsigned int>* indicesPlane	= createIndicesPlane();
+
+	numVertices	= verticesPlane->size();
+	numIndices		= indicesPlane->size();
+	numFaces		= indicesPlane->size() / 3;
+	stride			= sizeof(PosNormTex);
+	offset			= 0;
+
+	GraphicsContainer* gcPill = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		TEXTURE_PILL,
+		verticesPlane,
+		indicesPlane,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	GraphicsContainer* gcPillBloody = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		TEXTURE_PILL_BLOODY,
+		verticesPlane,
+		indicesPlane,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	Maze* maze = new Maze(gcWall, gcPill, gcPillBloody);
 
 	return maze;
 }

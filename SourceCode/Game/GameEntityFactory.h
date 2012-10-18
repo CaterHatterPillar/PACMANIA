@@ -4,7 +4,6 @@
 #include "../Common.h"
 
 #include "GameEntity.h"
-
 #include "../Behaviours/MoveBehaviourPlayer.h"
 
 #include "../Vertices/PosNormTex.h"
