@@ -6,9 +6,13 @@ void Timer::start()
 
 #ifdef _WIN32
 	QueryPerformanceCounter((LARGE_INTEGER*)&startCount);
+	startTimeMicroSec = startCount.QuadPart	* (1000000.0 / frequency.QuadPart);
 #else
 	gettimeofday(&startCount, NULL);
+	startTimeMicroSec	= (startCount.tv_sec * 1000000.0) + startCount.tv_usec;
 #endif //_WIN32_GAMETIMER::START
+
+	double secondsLol = startTimeMicroSec * 0.000001;
 }
 void Timer::stop()
 {
@@ -16,8 +20,10 @@ void Timer::stop()
 
 #ifdef _WIN32
 	QueryPerformanceCounter(&endCount);
+	endTimeMicroSec = endCount.QuadPart	* (1000000.0 / frequency.QuadPart);
 #else
 	gettimeofday(&endCount, NULL);
+	endTimeMicroSec		= (endCount.tv_sec * 1000000.0) + endCount.tv_usec;
 #endif //_WIN32_GAMETIMER_STOP
 }
 void Timer::reset()
@@ -37,31 +43,20 @@ void Timer::reset()
 
 double Timer::getElapsedTimeMicroSec()
 {
-#ifdef _WIN32
 	if(ticking)
-		QueryPerformanceCounter(&endCount);
-
-	startTimeMicroSec	= startCount.QuadPart	* (1000000.0 / frequency.QuadPart);
-	endTimeMicroSec		= endCount.QuadPart		* (1000000.0 / frequency.QuadPart);
-#else
-	if(ticking)
-		gettimeofday(&endCount, NULL);
-	
-	startTimeMicroSec	= (startCount.tv_sec	* 1000000.0) + startCount.tv_usec;
-	endTimeMicroSec		= (endCount.tv_sec		* 1000000.0) + endCount.tv_usec;
-#endif //_WIN32_GAMETIMER::getElapsedTimeMicroSec
+		stop();
 
 	return endTimeMicroSec - startTimeMicroSec;
 }
 double Timer::getElapsedTimeMilliSec()
 {
-	float ms = getElapsedTimeMicroSec();
-	return ms * 0.001;
+	float ms = getElapsedTimeMicroSec() * 0.001;
+	return ms;
 }
 double Timer::getElapsedTimeSec()
 {
-	float ms = getElapsedTimeMicroSec();
-	return  ms * 0.000001;
+	float s = getElapsedTimeMicroSec() * 0.000001;
+	return  s;
 }
 
 Timer::Timer()

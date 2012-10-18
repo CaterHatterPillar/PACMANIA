@@ -38,7 +38,15 @@ public:
 	double getElapsedTimeSec();
 
 	Timer();
-	~Timer();
+	virtual ~Timer();
+
+	double getStartTimeMicroSec()	{ return startTimeMicroSec;				}
+	double getStartTimeMilliSec()	{ return startTimeMicroSec * 0.001;		}
+	double getStartTimeSec()		{ return startTimeMicroSec * 0.000001;	}
+
+	double getEndTimeMicroSec()		{ return endTimeMicroSec;				}
+	double getEndTimeMilliSec()		{ return endTimeMicroSec * 0.001;		}
+	double getEndTimeSec()			{ return endTimeMicroSec * 0.000001;	}
 };
 
 #endif //TIMER_H
