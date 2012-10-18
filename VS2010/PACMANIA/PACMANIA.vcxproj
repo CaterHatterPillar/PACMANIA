@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Camera.cpp" />
+    <ClCompile Include="..\..\Source\Component.cpp" />
+    <ClCompile Include="..\..\Source\DX\CameraDX.cpp" />
+    <ClCompile Include="..\..\Source\DX\Cube.cpp" />
+    <ClCompile Include="..\..\Source\DX\GraphicsContainerDX.cpp" />
+    <ClCompile Include="..\..\Source\DX\RendererDX.cpp" />
+    <ClCompile Include="..\..\Source\DX\ShaderManagerDX.cpp" />
+    <ClCompile Include="..\..\Source\DX\TextureManagerDX.cpp" />
+    <ClCompile Include="..\..\Source\DX\WindowDX.cpp" />
+    <ClCompile Include="..\..\Source\GameTimer.cpp" />
+    <ClCompile Include="..\..\Source\Game\Game.cpp" />
+    <ClCompile Include="..\..\Source\Game\GameEntity.cpp" />
+    <ClCompile Include="..\..\Source\Game\GameEntityFactory.cpp" />
+    <ClCompile Include="..\..\Source\GL\CameraGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\FXGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\FXManagementGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\GraphicsContainerGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\InputGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\RendererGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\TexManagementGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\Texture.cpp" />
+    <ClCompile Include="..\..\Source\GL\WindowGL.cpp" />
+    <ClCompile Include="..\..\Source\LinuxContainer.cpp" />
+    <ClCompile Include="..\..\Source\Math\PacMath.cpp" />
+    <ClCompile Include="..\..\Source\Messaging\ObserverDirector.cpp" />
+    <ClCompile Include="..\..\Source\Renderer.cpp" />
+    <ClCompile Include="..\..\Source\Timer.cpp" />
+    <ClCompile Include="..\..\Source\Window.cpp" />
+    <ClCompile Include="..\..\Source\WindowsContainer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourPlayer.h" />
+    <ClInclude Include="..\..\Source\Camera.h" />
+    <ClInclude Include="..\..\Source\Common.h" />
+    <ClInclude Include="..\..\Source\Component.h" />
+    <ClInclude Include="..\..\Source\DX\CameraDX.h" />
+    <ClInclude Include="..\..\Source\DX\ConstantBuffers.h" />
+    <ClInclude Include="..\..\Source\DX\Cube.h" />
+    <ClInclude Include="..\..\Source\DX\GameEntityFactoryDX.h" />
+    <ClInclude Include="..\..\Source\DX\GraphicsContainerDX.h" />
+    <ClInclude Include="..\..\Source\DX\InputContainer.h" />
+    <ClInclude Include="..\..\Source\DX\RendererDX.h" />
+    <ClInclude Include="..\..\Source\DX\ShaderManagerDX.h" />
+    <ClInclude Include="..\..\Source\DX\TextureManagerDX.h" />
+    <ClInclude Include="..\..\Source\DX\WindowDX.h" />
+    <ClInclude Include="..\..\Source\GameEntityFactory.h" />
+    <ClInclude Include="..\..\Source\GameTimer.h" />
+    <ClInclude Include="..\..\Source\Game\Game.h" />
+    <ClInclude Include="..\..\Source\Game\GameEntity.h" />
+    <ClInclude Include="..\..\Source\Game\Maze.h" />
+    <ClInclude Include="..\..\Source\GL\CameraGL.h" />
+    <ClInclude Include="..\..\Source\GL\CommonGL.h" />
+    <ClInclude Include="..\..\Source\GL\FXGL.h" />
+    <ClInclude Include="..\..\Source\GL\FXManagementGL.h" />
+    <ClInclude Include="..\..\Source\GL\GameEntityFactoryGL.h" />
+    <ClInclude Include="..\..\Source\GL\GraphicsContainerGL.h" />
+    <ClInclude Include="..\..\Source\GL\InputGL.h" />
+    <ClInclude Include="..\..\Source\GL\RendererGL.h" />
+    <ClInclude Include="..\..\Source\GL\TexManagementGL.h" />
+    <ClInclude Include="..\..\Source\GL\Texture.h" />
+    <ClInclude Include="..\..\Source\GL\UniformGL.h" />
+    <ClInclude Include="..\..\Source\GL\WindowGL.h" />
+    <ClInclude Include="..\..\Source\GraphicsContainer.h" />
+    <ClInclude Include="..\..\Source\LinuxContainer.h" />
+    <ClInclude Include="..\..\Source\Math\CommonMath.h" />
+    <ClInclude Include="..\..\Source\Math\PacMath.h" />
+    <ClInclude Include="..\..\Source\Messaging\Msg.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgCamera.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgEntityState.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgGlut.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgGlutCallback.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgKeyboard.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgMouseClick.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgMouseMove.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgRender.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgType.h" />
+    <ClInclude Include="..\..\Source\Messaging\Observer.h" />
+    <ClInclude Include="..\..\Source\Messaging\ObserverDirector.h" />
+    <ClInclude Include="..\..\Source\Messaging\SubscriptionMsg.h" />
+    <ClInclude Include="..\..\Source\Renderer.h" />
+    <ClInclude Include="..\..\Source\Singleton.h" />
+    <ClInclude Include="..\..\Source\Timer.h" />
+    <ClInclude Include="..\..\Source\Vertices\Pos.h" />
+    <ClInclude Include="..\..\Source\Vertices\PosNorm.h" />
+    <ClInclude Include="..\..\Source\Vertices\PosNormTex.h" />
+    <ClInclude Include="..\..\Source\Window.h" />
+    <ClInclude Include="..\..\Source\WindowsContainer.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FB7C9795-79AD-4679-A921-C1D1F3E1430B}</ProjectGuid>
+    <RootNamespace>PACMANIA</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\..\External\gl\include;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\Build\$(ProjectName)-$(Configuration)\</OutDir>
+    <IntDir>..\..\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\External\gl\include;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <OutDir>..\..\Build\$(ProjectName)-$(Configuration)\</OutDir>
+    <IntDir>..\..\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;freeglut.lib;d3d11.lib;d3dx11d.lib;D3DCompiler.lib;Effects11d.lib;dxerr.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32.lib;freeglut.lib;d3d11.lib;d3dx11d.lib;D3DCompiler.lib;Effects11d.lib;dxerr.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
