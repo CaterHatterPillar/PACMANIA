@@ -56,7 +56,7 @@ double Timer::getElapsedTimeMilliSec()
 double Timer::getElapsedTimeSec()
 {
 	float s = getElapsedTimeMicroSec() * 0.000001;
-	return  s;
+	return s;
 }
 
 Timer::Timer()

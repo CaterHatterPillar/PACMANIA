@@ -6,7 +6,7 @@
 //High precision time measurements are system specific
 #ifdef _WIN32
 #include <windows.h>
-#else
+#else //Linux, UNIX
 #include <sys/time.h>
 #endif //_WIN32_GAMETIMER::INCLUDES
 
