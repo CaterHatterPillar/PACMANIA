@@ -18,8 +18,8 @@ VecF3&	VecF3::normalize()
 }
 void	VecF3::rotate(float angle, const VecF3& axel)
 {
-    const float sinHalfAngle = sinf(RADIAN(angle/2));
-    const float cosHalfAngle = cosf(RADIAN(angle/2));
+    const float sinHalfAngle = sinf((float)RADIAN(angle/2));
+    const float cosHalfAngle = cosf((float)RADIAN(angle/2));
 
 	const float rX = axel.x * sinHalfAngle;
 	const float rY = axel.y * sinHalfAngle;

@@ -27,6 +27,8 @@ struct VecF2
 
 	VecF2()
 	{
+		x = 0.0f;
+		y = 0.0f;
 	}
 	VecF2(float _x, float _y)
 	{
@@ -43,6 +45,9 @@ struct VecF3
 
     VecF3()
     {
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
     }
     VecF3(float _x, float _y, float _z)
     {
@@ -246,6 +251,7 @@ struct Quaternion
 		ret.y = (1.0f - t) * q1->y + epsilon * t * q2->y;
 		ret.z = (1.0f - t) * q1->z + epsilon * t * q2->z;
 		ret.w = (1.0f - t) * q1->w + epsilon * t * q2->w;
+		ret.normalize();
 		return ret;
 	};
 	Quaternion conjugate();

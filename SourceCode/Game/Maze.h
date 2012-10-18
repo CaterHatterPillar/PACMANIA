@@ -83,6 +83,12 @@ public:
 		return translation;
 	};
 
+	void update(double delta)
+	{
+		//draw
+		draw();
+	};
+
 	void draw()
 	{
 		//Draw maze

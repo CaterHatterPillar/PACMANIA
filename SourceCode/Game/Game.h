@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include "GameEntity.h"
-#include "../GameEntityFactory.h"
+#include "GameEntityFactory.h"
 
 #include "../Camera.h"
 #include "../Window.h"

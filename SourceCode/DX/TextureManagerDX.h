@@ -17,11 +17,13 @@ private:
 	ID3D11ShaderResourceView* ghostTexture;
 	ID3D11ShaderResourceView* pillTexture;
 	ID3D11ShaderResourceView* bloodyPillTexture;
+	ID3D11ShaderResourceView* placeholderTexture;
 
 	LPCTSTR pacmanTextureFilename;
 	LPCTSTR ghostTextureFilename;
 	LPCTSTR pillTextureFilename;
 	LPCTSTR bloodyPillTextureFilename;
+	LPCTSTR placeholderTextureFilename;
 
 public:
 	TextureManagerDX();

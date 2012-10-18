@@ -15,6 +15,7 @@ void Game::run()
 		pacman->update(delta);
 //		pill->update(delta);
 //		bloodyPill->update(delta);
+		maze->update(delta);
 		
 		/*Update stuff here*/
 		camera->update(delta);
