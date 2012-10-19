@@ -53,6 +53,21 @@ Texture* TexManagementGL::loadTexture(TextureId id, std::string completePath)
 	{
 		//Creates a texture and put it's ID in the given integer variable
 		glGenTextures(1, &(texture->texID));
+
+		//Setting as active texture
+		glBindTexture(GL_TEXTURE_2D, texture->texID);
+
+		//Load texture into memory
+		glTexImage2D(
+			GL_TEXTURE_2D, 
+			0, 
+			texture->bpp / 8, 
+			texture->width, 
+			texture->height, 
+			0, 
+			texture->type, 
+			GL_UNSIGNED_BYTE, 
+			texture->imageData);
 	}
 	else
 	{
