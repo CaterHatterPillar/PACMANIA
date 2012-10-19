@@ -7,9 +7,6 @@
     <Filter Include="Source\Behaviours">
       <UniqueIdentifier>{2bb962e0-a9bf-41d7-9728-c4d75c74db7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\DX">
-      <UniqueIdentifier>{5c653e12-c06f-4de1-8abc-c7e94f47677e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Game">
       <UniqueIdentifier>{18ebcd5e-2493-4e0d-9536-d6784ab9acb5}</UniqueIdentifier>
     </Filter>
@@ -24,6 +21,9 @@
     </Filter>
     <Filter Include="Source\Vertices">
       <UniqueIdentifier>{982f2be3-228a-4e77-9965-058c8a0697c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DX">
+      <UniqueIdentifier>{7b8fd6ac-1f1b-4943-8d87-48240ef04e48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,27 +44,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\WindowsContainer.cpp">
       <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\CameraDX.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\Cube.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\GraphicsContainerDX.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\RendererDX.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\ShaderManagerDX.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\TextureManagerDX.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\WindowDX.cpp">
-      <Filter>Source\DX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Game\Game.cpp">
       <Filter>Source\Game</Filter>
@@ -114,6 +93,27 @@
     <ClCompile Include="..\..\Source\GL\TexManagementGL.cpp">
       <Filter>Source\GL</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DX\CameraDX.cpp">
+      <Filter>Source\DX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DX\Cube.cpp">
+      <Filter>Source\DX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DX\GraphicsContainerDX.cpp">
+      <Filter>Source\DX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DX\RendererDX.cpp">
+      <Filter>Source\DX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DX\ShaderManagerDX.cpp">
+      <Filter>Source\DX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DX\TextureManagerDX.cpp">
+      <Filter>Source\DX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DX\WindowDX.cpp">
+      <Filter>Source\DX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Camera.h">
@@ -148,36 +148,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourPlayer.h">
       <Filter>Source\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\CameraDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\ConstantBuffers.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\Cube.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\GameEntityFactoryDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\GraphicsContainerDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\InputContainer.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\RendererDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\ShaderManagerDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\TextureManagerDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\WindowDX.h">
-      <Filter>Source\DX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Game\Game.h">
       <Filter>Source\Game</Filter>
@@ -289,6 +259,36 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\GL\TexManagementGL.h">
       <Filter>Source\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\CameraDX.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\ConstantBuffers.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\Cube.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\GameEntityFactoryDX.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\GraphicsContainerDX.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\InputContainer.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\RendererDX.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\ShaderManagerDX.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\TextureManagerDX.h">
+      <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DX\WindowDX.h">
+      <Filter>Source\DX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
