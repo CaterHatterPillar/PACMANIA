@@ -44,7 +44,8 @@ void RendererGL::cleanUp()
 
 void RendererGL::init()
 {
-	fxManagement->init();
+	initFX();
+
 	texManagement->init();
 
 	/*Subscribe*/
@@ -67,6 +68,28 @@ void RendererGL::init()
 	glCullFace(GL_FRONT);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+}
+void RendererGL::initFX()
+{
+	fxManagement->init();
+
+	//Get correct shader program
+	FXGL* fx			= fxManagement->getFX(VERTEX_SHADER_DEFAULT, PIXEL_SHADER_DEFAULT);
+	GLuint programFX	= fx->ProgramFX();
+
+	//Checks whether or not the program object can execute the pipeline in it's current state
+	glValidateProgram(programFX);
+
+	//Connect shader program to pipeline
+	glUseProgram(programFX);
+
+	//Connect uniforms
+	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
+	assert(worldViewProjFX != 0xFFFFFFFF);
+	sampler = glGetUniformLocation(programFX, "sampler");
+	assert(sampler != 0xFFFFFFFF);
+
+	glUniform1i(sampler, 0);
 }
 
 void RendererGL::update(double delta)
@@ -149,53 +172,27 @@ void RendererGL::renderGraphicsGL(
 		containerGL->OutdatedTex(false);
 	}
 
-	unsigned int numVertices	= containerGL->getNumVertices();
-	unsigned int numIndices		= containerGL->getNumIndices();
-	unsigned int numFaces		= containerGL->getNumFaces();
-	unsigned int stride			= containerGL->getStride();
-	unsigned int offset			= containerGL->getOffset();
-
-	ShaderId vertexShaderID		= containerGL->getVertexShaderId();
-	ShaderId fragmentShaderID	= containerGL->getPixelShaderId();
-
-	if(prevGC != containerGL)
+	if(containerGL != prevGC)
 	{
 		setBuffers(containerGL);
 		setTextures(containerGL);
-		setShader(vertexShaderID, fragmentShaderID);
+
+		prevGC = containerGL;
 	}
+	rotation.transpose();
 	setUniform(translation, rotation, scaling);
 
+	unsigned int numIndices = containerGL->getNumIndices();
 	glDrawElements(
 		GL_TRIANGLES,		//Type to render
 		numIndices,			//Number of indices
 		GL_UNSIGNED_INT,	//Index-type (for size)
 		0);					//Offset
 }
-void RendererGL::setShader(
-	ShaderId vertexShader, 
-	ShaderId fragmentShader)
-{
-	/*Get correct shader program*/
-	FXGL* fx			= fxManagement->getFX(vertexShader, fragmentShader);
-	GLuint programFX	= fx->ProgramFX();
 
-	/*Checks whether or not the program object can execute the pipeline in it's current state*/
-	//glValidateProgram(programFX);
-	/*Connect shader program to pipeline*/
-	glUseProgram(programFX);
-
-	/*Connect uniforms*/
-	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
-	//assert(worldViewProjFX != 0xFFFFFFFF);
-	sampler = glGetUniformLocation(programFX, "sampler");
-	//assert(sampler != 0xFFFFFFFF);
-
-	glUniform1i(sampler, 0);
-}
 void RendererGL::setUniform(MatF4 translation, MatF4 rotation, MatF4 scaling)
 {
-	MatF4 world			= translation * scaling * rotation;
+	MatF4 world	= translation * scaling * rotation;
 	
 	worldViewProj = proj * view * world;
 	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
@@ -236,8 +233,6 @@ void RendererGL::setBuffers(GraphicsContainerGL* containerGL)
 
 	/*Set index buffer*/
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-
-	prevGC = containerGL;
 }
 void RendererGL::setTextures(GraphicsContainerGL* containerGL)
 {
@@ -245,18 +240,6 @@ void RendererGL::setTextures(GraphicsContainerGL* containerGL)
 
 	//Setting as active texture
 	glBindTexture(GL_TEXTURE_2D, tex->texID);
-
-	//Load texture into memory
-	glTexImage2D(
-		GL_TEXTURE_2D, 
-		0, 
-		tex->bpp / 8, 
-		tex->width, 
-		tex->height, 
-		0, 
-		tex->type, 
-		GL_UNSIGNED_BYTE, 
-		tex->imageData);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
