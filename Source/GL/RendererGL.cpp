@@ -164,6 +164,7 @@ void RendererGL::renderGraphicsGL(
 		setTextures(containerGL);
 		setShader(vertexShaderID, fragmentShaderID);
 	}
+	rotation.transpose();
 	setUniform(translation, rotation, scaling);
 
 	glDrawElements(

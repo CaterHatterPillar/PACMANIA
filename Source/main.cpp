@@ -1,4 +1,4 @@
-#ifdef _WIN32
+#ifndef _WIN32
 #include "WindowsContainer.h"
 int WINAPI WinMain(
 	HINSTANCE	hInstance, 
