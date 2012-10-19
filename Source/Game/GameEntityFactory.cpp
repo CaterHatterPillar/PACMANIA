@@ -280,7 +280,7 @@ GameEntity* GameEntityFactory::createPill( VecF3 position )
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-	TextureId textureId		= TEXTURE_PILL;
+	TextureId textureId		= TEXTURE_WALL;//TEXTURE_PILL;
 
 	unsigned int numVertices	= vertices->size();
 	unsigned int numIndices		= indices->size();
@@ -403,7 +403,7 @@ Maze* GameEntityFactory::createMaze()
 	vector<PosNormTex>* verticesPlane	= createVerticesPlane();
 	vector<unsigned int>* indicesPlane	= createIndicesPlane();
 
-	numVertices	= verticesPlane->size();
+	numVertices		= verticesPlane->size();
 	numIndices		= indicesPlane->size();
 	numFaces		= indicesPlane->size() / 3;
 	stride			= sizeof(PosNormTex);
