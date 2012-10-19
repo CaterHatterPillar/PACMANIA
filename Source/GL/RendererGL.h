@@ -41,6 +41,7 @@ public:
 	~RendererGL();
 
 	void init();
+	void initFX();
 
 	void update(double delta);
 	void msgRender(Msg* msg);
@@ -56,9 +57,9 @@ public:
 		MatF4 translation,
 		MatF4 rotation,
 		MatF4 scaling);
-	static void setShader(
-		ShaderId vertexShader, 
-		ShaderId fragmentShader);
+	//static void setShader(
+	//	ShaderId vertexShader, 
+	//	ShaderId fragmentShader);
 	static void setUniform(
 		MatF4 translation,
 		MatF4 rotation,
