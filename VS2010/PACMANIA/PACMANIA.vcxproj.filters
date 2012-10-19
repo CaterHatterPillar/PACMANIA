@@ -114,6 +114,9 @@
     <ClCompile Include="..\..\Source\DX\WindowDX.cpp">
       <Filter>Source\DX</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Game\Maze.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Camera.h">
