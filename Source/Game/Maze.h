@@ -8,12 +8,18 @@
 #include <fstream>
 using namespace std;
 
-struct Pill
+class Pill
 {
+public:
 	VecI2 pos;
 	bool isAlive;
 	bool isBloody;
 	float size;
+	float sizeOscillation;
+	float oscFactor;
+	float oscTotalFactor;
+	float oscSpeed;
+	
 
 	Pill(VecI2 pos, bool isBloody)
 	{
@@ -21,6 +27,12 @@ struct Pill
 		this->isBloody = isBloody;
 		isAlive = true;
 		size = 1.0f;
+
+		// Generate value between 0 -> 2PI
+		sizeOscillation = 2*(float)PI*(float)rand()/(float)RAND_MAX;
+		oscFactor = 0.1f+0.2f*(float)rand()/(float)RAND_MAX;
+		oscSpeed = 0.1f+0.3f*(float)rand()/(float)RAND_MAX;
+		oscTotalFactor = 0;
 	}
 
 	void checkCollision(VecF2 p2)
@@ -30,7 +42,7 @@ struct Pill
 
 		// True: Collision occures
 		float dist = v1.distanceTo(v2);
-		if(dist < 0.9f)
+		if(dist < 0.5f)
 		{
 			isAlive = false;
 		}
@@ -38,12 +50,31 @@ struct Pill
 
 	void update(float dt)
 	{
+		// Make pills oscillate
+		if(isAlive)
+		{
+			sizeOscillation+=2.0f*(float)PI*dt * oscSpeed;
+		}	
+
 		// Make pills shrink when eaten
 		if(!isAlive)
 		{
-			if(size>0.0f)
-				size-=dt * 4.0f;
+			if(getSize()>0.0f)
+				size-=dt * 6.0f;
 		}	
+	}
+
+	void setTotalFactor(int pillsEaten, int totalNrOfPills)
+	{
+ 		oscTotalFactor = (float)pillsEaten/50;
+		if(oscTotalFactor>1.0f)
+			oscTotalFactor = 1.0f;
+	}
+
+	float getSize()
+	{
+		float totalOscFactor = oscFactor*oscTotalFactor;
+		return size + totalOscFactor * sin(sizeOscillation);
 	}
 };
 
@@ -179,11 +210,25 @@ public:
 		}
 
 		// Draw pills
+		int pillsEaten = 0;
+		int pillsTotal = 0;
+		pillsTotal = 10;
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
-			float size = pills[i].size;
+			if(!pills[i].isAlive)
+			{
+				pillsEaten++;
+			}
+			pillsTotal++;
+		}
+
+		for(int i = 0; i<(int)pills.size(); i++)
+		{
+			float size = pills[i].getSize();
 			if(size>0.0f)
 			{
+				pills[i].setTotalFactor(pillsEaten, pillsTotal);
+
 				MatF4 scale;
 				int x = pills[i].pos.x;
 				int y = pills[i].pos.y;
