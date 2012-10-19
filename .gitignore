@@ -1,1 +1,6 @@
-*.db
+Build/
+VS2010/ipch/
+*.sdf
+*.vcxproj.user
+*.suo
+*.opensdf

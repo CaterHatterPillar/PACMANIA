@@ -64,7 +64,7 @@ public:
 		this->maze = maze;
 
 		// Settings
-		speed = 4.3f;
+		speed = 3.0f;
 		turningSpeed = 10.0f;
 		
 		// Starting values
