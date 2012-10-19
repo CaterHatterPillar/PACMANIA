@@ -172,14 +172,12 @@ void RendererGL::renderGraphicsGL(
 		containerGL->OutdatedTex(false);
 	}
 
-	if(prevGC != containerGL)
+	if(containerGL != prevGC)
 	{
 		setBuffers(containerGL);
 		setTextures(containerGL);
 
-		//ShaderId vertexShaderID		= containerGL->getVertexShaderId();
-		//ShaderId fragmentShaderID	= containerGL->getPixelShaderId();
-		//setShader(vertexShaderID, fragmentShaderID);
+		prevGC = containerGL;
 	}
 	setUniform(translation, rotation, scaling);
 
@@ -234,8 +232,6 @@ void RendererGL::setBuffers(GraphicsContainerGL* containerGL)
 
 	/*Set index buffer*/
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-
-	prevGC = containerGL;
 }
 void RendererGL::setTextures(GraphicsContainerGL* containerGL)
 {
@@ -269,28 +265,3 @@ void RendererGL::msgCamera(Msg* msg)
 
 	delete cameraMsg;
 }
-
-/*
-void RendererGL::setShader(
-	ShaderId vertexShader, 
-	ShaderId fragmentShader)
-{
-	//Get correct shader program
-	FXGL* fx			= fxManagement->getFX(vertexShader, fragmentShader);
-	GLuint programFX	= fx->ProgramFX();
-
-	//Checks whether or not the program object can execute the pipeline in it's current state
-	//glValidateProgram(programFX);
-
-	//Connect shader program to pipeline
-	glUseProgram(programFX);
-
-	//Connect uniforms
-	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
-	//assert(worldViewProjFX != 0xFFFFFFFF);
-	sampler = glGetUniformLocation(programFX, "sampler");
-	//assert(sampler != 0xFFFFFFFF);
-
-	glUniform1i(sampler, 0);
-}
-*/

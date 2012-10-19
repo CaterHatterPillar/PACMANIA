@@ -57,9 +57,7 @@ public:
 		MatF4 translation,
 		MatF4 rotation,
 		MatF4 scaling);
-	//static void setShader(
-	//	ShaderId vertexShader, 
-	//	ShaderId fragmentShader);
+
 	static void setUniform(
 		MatF4 translation,
 		MatF4 rotation,
