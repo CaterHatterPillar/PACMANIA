@@ -179,6 +179,7 @@ void RendererGL::renderGraphicsGL(
 
 		prevGC = containerGL;
 	}
+	rotation.transpose();
 	setUniform(translation, rotation, scaling);
 
 	unsigned int numIndices = containerGL->getNumIndices();
