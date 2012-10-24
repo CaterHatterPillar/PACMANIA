@@ -6,8 +6,13 @@
 class CameraDX : public Camera
 {
 private:
+protected:
+	void lerpCameraTransition(VecF3 *goalPosition)
+	{
+		//position.lerp(goalPosition, 0.02f);
+		position = goalPosition[0];
+	}
 public:
-
 	CameraDX(float aspect, float fov, float zf, float zn);
 	virtual ~CameraDX();
 

@@ -158,8 +158,8 @@ public:
 				pos=newPos;
 				pos_offset +=1.0f;
 				// Bugfix: it should only be possible for an entity to move a maximum of one square at every update
-				if(pos_offset<=0.0f)
-					pos_offset = 1.0f; // reset movement
+				if(pos_offset<0.0f)
+					pos_offset = 0.0f; // reset movement
 			}
 		}
 
