@@ -58,10 +58,10 @@
     <ClInclude Include="..\..\Source\DX\ShaderManagerDX.h" />
     <ClInclude Include="..\..\Source\DX\TextureManagerDX.h" />
     <ClInclude Include="..\..\Source\DX\WindowDX.h" />
-    <ClInclude Include="..\..\Source\GameEntityFactory.h" />
     <ClInclude Include="..\..\Source\GameTimer.h" />
     <ClInclude Include="..\..\Source\Game\Game.h" />
     <ClInclude Include="..\..\Source\Game\GameEntity.h" />
+    <ClInclude Include="..\..\Source\Game\GameEntityFactory.h" />
     <ClInclude Include="..\..\Source\Game\Maze.h" />
     <ClInclude Include="..\..\Source\GL\CameraGL.h" />
     <ClInclude Include="..\..\Source\GL\CommonGL.h" />

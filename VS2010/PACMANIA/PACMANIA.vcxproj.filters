@@ -257,9 +257,6 @@
     <ClInclude Include="..\..\Source\Timer.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GameEntityFactory.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\GL\TexManagementGL.h">
       <Filter>Source\GL</Filter>
     </ClInclude>
@@ -292,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\DX\WindowDX.h">
       <Filter>Source\DX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Game\GameEntityFactory.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
