@@ -57,6 +57,14 @@ GLuint FXManagementGL::createProgramFX(
 
 	glLinkProgram(programFX);
 
+	//Fix Constant buffer after linking program
+	//GLuint blockIndex = glGetUniformBlockIndex(programFX, "ColorBuffer"); //Get index of uniform block
+	//
+	////Allocate space for buffer
+	//GLint blockSize;
+	//glGetActiveUniformBlockiv(programFX, blockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+	//GLubyte * blockBuffer= (GLubyte *) malloc(blockSize);
+
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
