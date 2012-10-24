@@ -3,6 +3,11 @@
 
 #include "CommonMath.h"
 
+inline void clamp(int *x, int a, int b)
+{
+	x[0] = x[0] < a ? a : (x[0] > b ? b : x[0]);
+}
+
 struct VecI2
 {
     int x;
@@ -86,9 +91,9 @@ struct VecF3
 	float	dot(VecF3 vec);
 	void	lerp(VecF3 *v, float factor)
 	{
-		x =  x * (1 - factor) + v->x * factor;
-		y =  y * (1 - factor) + v->y * factor;
-		z =  z * (1 - factor) + v->z * factor;
+		x =  x * (1.0f - factor) + v->x * factor;
+		y =  y * (1.0f - factor) + v->y * factor;
+		z =  z * (1.0f - factor) + v->z * factor;
 	}
 
 	float length()

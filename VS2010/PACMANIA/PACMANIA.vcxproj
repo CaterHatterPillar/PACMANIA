@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\Source\Game\Game.cpp" />
     <ClCompile Include="..\..\Source\Game\GameEntity.cpp" />
     <ClCompile Include="..\..\Source\Game\GameEntityFactory.cpp" />
+    <ClCompile Include="..\..\Source\Game\Maze.cpp" />
     <ClCompile Include="..\..\Source\GL\CameraGL.cpp" />
     <ClCompile Include="..\..\Source\GL\FXGL.cpp" />
     <ClCompile Include="..\..\Source\GL\FXManagementGL.cpp" />

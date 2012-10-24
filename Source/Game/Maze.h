@@ -19,7 +19,6 @@ public:
 	float oscFactor;
 	float oscTotalFactor;
 	float oscSpeed;
-	
 
 	Pill(VecI2 pos, bool isBloody)
 	{
@@ -78,9 +77,11 @@ public:
 	}
 };
 
-class Maze{
+class Maze  : public Component
+{
 private:
 	MatF4 position;
+	VecI2 cullingPosition;
 	static const int sizeX=28;
 	static const int sizeY=31;
 	int grid[sizeX][sizeY];
@@ -103,6 +104,10 @@ public:
 
 		// Init grid
 		createMaze();
+
+		//Subscribe to game state
+		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_STATE);
+		Singleton<ObserverDirector>::get().push(subscription);
 	};
 
 	void createMaze()
@@ -180,8 +185,41 @@ public:
 		return translation;
 	};
 
+	void init()
+	{
+	}
+
+	void msgEntityState(Msg* msg)
+	{
+		MsgEntityState* childMsg = (MsgEntityState*)msg;
+		
+		// Get position
+		VecF3 goalPos(childMsg->pos);
+		cullingPosition = VecI2((int)goalPos.x, (int)goalPos.y);
+
+		delete msg;
+	}
+
 	void update(double delta)
 	{
+
+		// Check messages
+		Msg* msg = peek();
+		while(msg)
+		{
+			msg = pop();
+			if(msg)
+			{
+				MsgType type = msg->Type();
+				switch(type)
+				{
+				case ENTITY_STATE:
+					msgEntityState(msg);
+					break;
+				}
+			}
+		}
+
 		//Update pills
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
@@ -194,10 +232,22 @@ public:
 
 	void draw()
 	{
-		//Draw maze
-		for(int y = 0; y<sizeY; y++)
+		//
+		// Draw maze
+		//
+
+		// compute culling
+		int cullingSize = 4;
+		VecI2 cullStart(cullingPosition.x - cullingSize, cullingPosition.y - cullingSize);
+		VecI2 cullEnd(cullingPosition.x + cullingSize, cullingPosition.y + cullingSize);
+		clamp(&cullStart.x, 0, sizeX);
+		clamp(&cullStart.y, 0, sizeY);
+		clamp(&cullEnd.x, 0, sizeX);
+		clamp(&cullEnd.y, 0, sizeY);
+
+		for(int y = cullStart.y; y<cullEnd.y; y++)
 		{
-			for(int x = 0; x<sizeX; x++)
+			for(int x = cullStart.x; x<cullEnd.x; x++)
 			{
 				if(getTile(x,y)==1)
 				{
@@ -209,7 +259,11 @@ public:
 			}
 		}
 
+
+		//
 		// Draw pills
+		// 
+
 		int pillsEaten = 0;
 		int pillsTotal = 0;
 		pillsTotal = 10;
@@ -224,25 +278,30 @@ public:
 
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
-			float size = pills[i].getSize();
-			if(size>0.0f)
+			VecI2 pos(pills[i].pos.x,  pills[i].pos.y);
+			VecF3 v1((float)pos.x, (float)pos.y, 0.0f);
+			VecF3 v2((float)cullingPosition.x, (float)cullingPosition.y, 0.0f);
+			// FALSE: Cull all objects % distance from pacman
+			if(v1.distanceTo(v2) < 4.0f)
 			{
-				pills[i].setTotalFactor(pillsEaten, pillsTotal);
-
-				MatF4 scale;
-				int x = pills[i].pos.x;
-				int y = pills[i].pos.y;
-				if(!pills[i].isBloody)
+				float size = pills[i].getSize();
+				// FALSE: Cull all objects too small to see
+				if(size>0.0f)
 				{
-					scale.scaling(size*0.15f,size*0.2f,size*0.15f);
-					MsgRender* renderMsg = new MsgRender(gcPill, getTranslation(x,y), MatF4(), scale);
-					Singleton<ObserverDirector>::get().push(renderMsg);
-				}
-				if(pills[i].isBloody)
-				{
-					scale.scaling(size*0.25f,size*0.35f,size*0.25f);
-					MsgRender* renderMsg = new MsgRender(gcPillBloody, getTranslation(x,y), MatF4(), scale);
-					Singleton<ObserverDirector>::get().push(renderMsg);
+					pills[i].setTotalFactor(pillsEaten, pillsTotal);
+					MatF4 scale;
+					if(!pills[i].isBloody)
+					{
+						scale.scaling(size*0.15f,size*0.2f,size*0.15f);
+						MsgRender* renderMsg = new MsgRender(gcPill, getTranslation(pos.x,pos.y), MatF4(), scale);
+						Singleton<ObserverDirector>::get().push(renderMsg);
+					}
+					if(pills[i].isBloody)
+					{
+						scale.scaling(size*0.25f,size*0.35f,size*0.25f);
+						MsgRender* renderMsg = new MsgRender(gcPillBloody, getTranslation(pos.x,pos.y), MatF4(), scale);
+						Singleton<ObserverDirector>::get().push(renderMsg);
+					}
 				}
 			}
 		}
