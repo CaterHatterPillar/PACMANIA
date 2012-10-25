@@ -25,6 +25,9 @@
     <Filter Include="Source\DX">
       <UniqueIdentifier>{7b8fd6ac-1f1b-4943-8d87-48240ef04e48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GL\Shaders">
+      <UniqueIdentifier>{2976be2a-e209-441c-a800-a4c2c0d2ebdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Camera.cpp">
@@ -296,5 +299,13 @@
     <ClInclude Include="..\..\Source\Light.h">
       <Filter>Source</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl">
+      <Filter>Source\GL\Shaders</Filter>
+    </None>
+    <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl">
+      <Filter>Source\GL\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -103,6 +103,10 @@
     <ClInclude Include="..\..\Source\Window.h" />
     <ClInclude Include="..\..\Source\WindowsContainer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
+    <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB7C9795-79AD-4679-A921-C1D1F3E1430B}</ProjectGuid>
     <RootNamespace>PACMANIA</RootNamespace>
