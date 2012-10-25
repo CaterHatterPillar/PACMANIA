@@ -175,5 +175,8 @@ void GameEntity::update(double delta)
 	{
 		light->pos.x = position.x;
 		light->pos.y = position.y;
+
+		MsgLight* msgLight = new MsgLight(light);
+		Singleton<ObserverDirector>::get().push(msgLight);
 	}
 }

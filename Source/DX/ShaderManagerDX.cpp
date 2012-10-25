@@ -182,14 +182,19 @@ void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world, VecF3 came
 	devcon->UpdateSubresource(cBufferPerFrame, 0, 0, &cBuffer, 0, 0);
 }
 
-void ShaderManagerDX::updateCBufferLights(Light* lights, unsigned int numLights)
+void ShaderManagerDX::updateCBufferLights(std::vector<Light> lights)
 {
 	CBufferLights cBuffer;
-	for(int i=0; i<numLights; i++)
+	if(lights.size() < MAX_NUM_LIGHTS)
+		cBuffer.numLights = lights.size();
+	else
+		cBuffer.numLights = MAX_NUM_LIGHTS;
+
+	for(int i=0; i<cBuffer.numLights; i++)
 	{
 		cBuffer.lights[i] = lights[i];
 	}
-	cBuffer.numLights = numLights;
+	
 	devcon->UpdateSubresource(cBufferLights, 0, 0, &cBuffer, 0, 0);
 }
 
