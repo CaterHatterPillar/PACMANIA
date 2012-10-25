@@ -281,6 +281,56 @@ GameEntity* GameEntityFactory::createPacman(VecF3 position, Maze* maze)
 	return entity;
 }
 
+GameEntity* GameEntityFactory::createGhost(VecI2 position, Maze* maze)
+{
+	vector<PosNormTex>* vertices	= createVerticesObj("../../Models/Ghost.obj");
+	vector<unsigned int>* indices	= createIndicesObj(vertices);
+
+	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
+	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
+	TextureId textureId		= TEXTURE_GHOST;
+
+	unsigned int numVertices	= vertices->size();
+	unsigned int numIndices		= indices->size();
+	unsigned int numFaces		= indices->size() / 3;
+	unsigned int stride			= sizeof(PosNormTex);
+	unsigned int offset			= 0;
+
+	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		textureId,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	Light* light = new Light;
+	light->pos = VecF3(1.0f, 1.0f, -20.0f);
+	light->spotPow = 128.0f;
+	light->dir = VecF3(0.0f, 0.0f, 1.0f);
+	light->range = 1000.0f;
+	light->ambient = VecF4(-0.9f, -0.9f, -0.9f, 1.0f);
+	light->diffuse = VecF4(-0.9f, -0.9f, -0.9f, 1.0f);
+	light->specular = VecF4(-0.1f, -0.1f, -0.1f, 1.0f);
+	light->att = VecF3(1.6f, 0.0f, 0.0f);
+
+
+	// Build entity
+	MoveBehaviour* moveBehaviour = new MoveBehaviourMaze(maze, maze->getRandomFreePosition());
+	moveBehaviour->init();
+	GameEntity* entity = new GameEntity();
+	entity->setGraphicsContainer(graphicsContainer);
+	entity->setMoveBehaviour(moveBehaviour);
+	entity->setLight(light);
+
+	entity->setRotation(VecF3(90.0f, 0.0f, 0.0f));
+	entity->setScale(VecF3(0.35f,0.35f,0.35f));
+	return entity;
+}
+
 GameEntity* GameEntityFactory::createPill( VecF3 position )
 {
 	GameEntity* entity = new GameEntity();
