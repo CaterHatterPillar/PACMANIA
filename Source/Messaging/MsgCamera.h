@@ -9,22 +9,26 @@ class MsgCamera : public Msg
 private:
 	MatF4 view;
 	MatF4 proj;
+	VecF3 cameraPosition;
 protected:
 public:
-	MsgCamera(MatF4 view, MatF4 proj) : Msg(CAMERA)
+	MsgCamera(MatF4 view, MatF4 proj, VecF3 cameraPosition) : Msg(CAMERA)
 	{
 		this->view = view;
 		this->proj = proj;
+		this->cameraPosition = cameraPosition;
 	}
 	MsgCamera(MsgCamera* msgCamera) : Msg(CAMERA)
 	{
 		view = msgCamera->View();
 		proj = msgCamera->Proj();
+		cameraPosition = msgCamera->CameraPosition();
 	}
 	virtual ~MsgCamera() {}
 
 	MatF4 View() { return view; }
 	MatF4 Proj() { return proj; }
+	VecF3 CameraPosition() { return cameraPosition; }
 };
 
 /*
