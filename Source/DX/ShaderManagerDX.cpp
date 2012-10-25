@@ -190,7 +190,7 @@ void ShaderManagerDX::updateCBufferLights(std::vector<Light> lights)
 	else
 		cBuffer.numLights = MAX_NUM_LIGHTS;
 
-	for(int i=0; i<cBuffer.numLights; i++)
+	for(unsigned int i=0; i<cBuffer.numLights; i++)
 	{
 		cBuffer.lights[i] = lights[i];
 	}

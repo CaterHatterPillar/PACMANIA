@@ -48,7 +48,7 @@ VOut VShader(float3 position : POSITION, float3 normal : NORMAL, float2 texcoord
 float4 PShader(VOut pIn) : SV_TARGET
 {
 	float4 color 		= texDiffuse.Sample(ss, pIn.texcoord);
-	float4 ambient 	= float4(0.05f, 0.05f, 0.05f, 1.0f);
+	float4 ambient 	= float4(0.1f, 0.1f, 0.1f, 1.0f);
 	float4 diffuse 	= float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float4 specular 	= float4(1.0f, 1.0f, 1.0f, 0.0f);
 	specular.a *= 256.0f;
