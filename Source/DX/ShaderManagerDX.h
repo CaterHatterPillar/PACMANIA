@@ -18,6 +18,7 @@ private:
 	D3D_FEATURE_LEVEL featureLevel;
 
 	ID3D11Buffer* cBufferPerFrame;
+	ID3D11Buffer* cBufferLights;
 
 	ID3D11VertexShader* vertexShader;
 	ID3D11PixelShader* pixelShader;
@@ -37,6 +38,7 @@ private:
 
 	void createConstantBuffers();
 	void createCBufferPerFrame();
+	void createCBufferLights();
 	int calcConstantBufferSize(int structSize);
 
 public:
@@ -46,6 +48,7 @@ public:
 	void initialize();
 
 	void updateCBufferPerFrame(MatF4 final, MatF4 world);
+	void updateCBufferLights(Light* lights, unsigned int numLights);
 
 	ID3D11VertexShader* getVertexShader();
 	ID3D11PixelShader* getPixelShader();
