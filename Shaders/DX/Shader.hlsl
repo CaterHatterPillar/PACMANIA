@@ -5,6 +5,7 @@ cbuffer constantBuffer : register(b0)
 {
 	float4x4 matFinal;
 	float4x4 matWorld;
+	float3 cameraPosition;
 };
 
 cbuffer cbLights : register(b1)
@@ -46,9 +47,24 @@ VOut VShader(float3 position : POSITION, float3 normal : NORMAL, float2 texcoord
 
 float4 PShader(VOut pIn) : SV_TARGET
 {
-	float4 color = texDiffuse.Sample(ss, pIn.texcoord);
-
-	clip(color.a-0.1);
-
-	return color;
+	float4 color 		= texDiffuse.Sample(ss, pIn.texcoord);
+	float4 ambient 	= float4(0.05f, 0.05f, 0.05f, 1.0f);
+	float4 diffuse 	= float4(1.0f, 1.0f, 1.0f, 1.0f);
+	float4 specular 	= float4(1.0f, 1.0f, 1.0f, 0.0f);
+	specular.a *= 256.0f;
+	
+	float3 normalW = normalize(pIn.normalW);
+	
+	SurfaceInfo surface = {pIn.posW, normalW, diffuse, specular};
+	
+	float3 litColor = float3(0.0f, 0.0f, 0.0f);
+	for(int i=0; i<numLights; i++)
+		litColor += spotLight(surface, lights[i], cameraPosition);
+	
+	litColor += ambient;
+	
+	//clip(color.a-0.1);
+	//color = color * lights[0].ambient;
+	
+	return color * float4(litColor, 1.0f);
 }
