@@ -171,4 +171,9 @@ void GameEntity::update(double delta)
 			scalingMatrix);
 		Singleton<ObserverDirector>::get().push(renderMsg);
 	}
+	if(light)
+	{
+		light->pos.x = position.x;
+		light->pos.y = position.y;
+	}
 }
