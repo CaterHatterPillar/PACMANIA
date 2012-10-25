@@ -58,6 +58,9 @@ void RendererGL::init()
 	subscription = new SubscriptionMsg(this, CAMERA);
 	Singleton<ObserverDirector>::get().push(subscription);
 
+	subscription = new SubscriptionMsg(this, LIGHT);
+	Singleton<ObserverDirector>::get().push(subscription);
+
 	/*Send initial callback-specs to GLUT*/
 	MsgGlutCallback* callbackMsg = new MsgGlutCallback((void*)renderSpec, DISPLAY_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
@@ -113,6 +116,7 @@ void RendererGL::initFX()
 void RendererGL::update(double delta)
 {
 	renderList->resize(0);
+	curLight = 0;
 
 	Msg* msg = peek();
 	while(msg)
@@ -128,6 +132,9 @@ void RendererGL::update(double delta)
 				break;
 			case CAMERA:
 				msgCamera(msg);
+				break;
+			case LIGHT:
+				msgLight(msg);
 				break;
 			default:
 				throw 0; //temp
@@ -287,4 +294,23 @@ void RendererGL::msgCamera(Msg* msg)
 	this->camPos	= cameraMsg->CameraPosition();
 
 	delete cameraMsg;
+}
+void RendererGL::msgLight(Msg* msg)
+{
+	MsgLight* lightMsg = (MsgLight*)msg;
+
+	Light* light = lightMsg->getLight();
+
+	lights[curLight].pos		= light->pos;
+	lights[curLight].spotPow	= light->spotPow;
+	lights[curLight].dir		= light->dir;
+	lights[curLight].range		= light->range;
+	lights[curLight].ambient	= light->ambient;
+	lights[curLight].diffuse	= light->diffuse;
+	lights[curLight].specular	= light->specular;
+	lights[curLight].att		= light->att;
+
+	curLight++;
+
+	delete lightMsg;
 }

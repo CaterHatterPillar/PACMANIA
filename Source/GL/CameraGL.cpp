@@ -4,7 +4,7 @@ void CameraGL::updateProj()
 {
 	MatF4 perspective;
 
-	float tanRadFov = tan(RADIAN(FOV() / 2.0f));
+	float tanRadFov = (float)tan(RADIAN(FOV() / 2.0f));
 	perspective.m[0][0] = 1.0f / (Aspect()*tanRadFov);
 	perspective.m[1][1] = 1.0f / (tanRadFov);
 	perspective.m[2][2] = (-ZNear() - ZFar()) / (ZNear() - ZFar());
