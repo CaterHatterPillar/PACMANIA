@@ -48,6 +48,7 @@ private:
 	MatF4 viewMatrix;
 	MatF4 projectionMatrix;
 	MatF4 viewProj;
+	VecF3 cameraPosition;
 
 	D3D_FEATURE_LEVEL featureLevel;
 	char* featureLevelToString(D3D_FEATURE_LEVEL fl);

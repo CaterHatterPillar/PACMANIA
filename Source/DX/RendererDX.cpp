@@ -278,10 +278,18 @@ void RendererDX::renderFrame()
 void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling)
 {
 	/*LIGHTING TEST*/
-	Light lights[1];
-	lights[0].ambient = VecF4(0.5f, 0.5f, 0.5f, 1.0f);
+	Light lights[MAX_NUM_LIGHTS];
+	lights[0].pos = VecF3(1.0f, 1.0f, -20.0f);
+	lights[0].spotPow = 128.0f;
+	lights[0].dir = VecF3(0.0f, 0.0f, 1.0f);
+	lights[0].range = 1000.0f;
+	lights[0].ambient = VecF4(0.3f, 0.3f, 0.3f, 1.0f);
+	lights[0].diffuse = VecF4(1.0f, 1.0f, 1.0f, 1.0f);
+	lights[0].specular = VecF4(1.0f, 1.0f, 1.0f, 1.0f);
+	lights[0].att = VecF3(0.5f, 0.0f, 0.0f);
 	unsigned int numLights = 1;
 
+	shaderManager->updateCBufferLights(lights, numLights);
 
 	/*END OF LIGHTING TEST*/
 
@@ -299,7 +307,7 @@ void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translati
 
 	//OpneGL and DirectX use different Matrices therefor the world matrix must be transposed
 	MatF4 final = worldMatrix * viewProj;
-	shaderManager->updateCBufferPerFrame(final, worldMatrix);
+	shaderManager->updateCBufferPerFrame(final, worldMatrix, cameraPosition);
 
 	devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
 	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
@@ -360,6 +368,7 @@ void RendererDX::handleMsgCamera(Msg* msg)
 	MsgCamera* msgCamera = (MsgCamera*)msg;
 	viewMatrix = msgCamera->View();
 	projectionMatrix = msgCamera->Proj();
+	cameraPosition = msgCamera->CameraPosition();
 
 	delete msgCamera;
 }
