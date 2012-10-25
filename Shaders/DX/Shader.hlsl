@@ -1,9 +1,17 @@
 
-cbuffer constantBuffer
+#include "Light.hlsl"
+
+cbuffer constantBuffer : register(b0)
 {
 	float4x4 matFinal;
 	float4x4 matWorld;
-}
+};
+
+cbuffer cbLights : register(b1)
+{
+	Light lights[10];
+	uint numLights;
+};
 
 Texture2D texDiffuse : register( t0 );
 SamplerState ss : register( s0 );
