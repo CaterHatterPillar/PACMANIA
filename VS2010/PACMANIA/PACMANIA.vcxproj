@@ -87,6 +87,7 @@
     <ClInclude Include="..\..\Source\Messaging\MsgGlut.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgGlutCallback.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgKeyboard.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgLight.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgMouseClick.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgMouseMove.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgRender.h" />

@@ -11,6 +11,9 @@ RendererDX::RendererDX()
 	SubscriptionMsg* msg3 = new SubscriptionMsg(this, RENDER);
 	Singleton<ObserverDirector>::get().push(msg3);
 
+	SubscriptionMsg* msg4 = new SubscriptionMsg(this, LIGHT);
+	Singleton<ObserverDirector>::get().push(msg4);
+
 	renderList = new vector<MsgRender*>;
 }
 
@@ -244,6 +247,9 @@ void RendererDX::update(double delta)
 			case RENDER:
 				handleMsgRender(msg);
 				break;
+			case LIGHT:
+				handleMsgLight(msg);
+				break;
 			}
 		}
 	}
@@ -257,6 +263,8 @@ void RendererDX::renderFrame()
 	devcon->ClearDepthStencilView(zBuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 	devcon->OMSetDepthStencilState(0, 0);
+
+	updateLighting();
 
 	MsgRender* renderMsg;
 	for(UINT i = 0; i < renderList->size(); i++)
@@ -275,24 +283,15 @@ void RendererDX::renderFrame()
 
 	swapChain->Present(0, 0);
 }
+
+void RendererDX::updateLighting()
+{
+	shaderManager->updateCBufferLights(lights);
+	lights.clear();
+}
+
 void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling)
 {
-	/*LIGHTING TEST*/
-	Light lights[MAX_NUM_LIGHTS];
-	lights[0].pos = VecF3(1.0f, 1.0f, -20.0f);
-	lights[0].spotPow = 128.0f;
-	lights[0].dir = VecF3(0.0f, 0.0f, 1.0f);
-	lights[0].range = 1000.0f;
-	lights[0].ambient = VecF4(0.3f, 0.3f, 0.3f, 1.0f);
-	lights[0].diffuse = VecF4(1.0f, 1.0f, 1.0f, 1.0f);
-	lights[0].specular = VecF4(1.0f, 1.0f, 1.0f, 1.0f);
-	lights[0].att = VecF3(0.5f, 0.0f, 0.0f);
-	unsigned int numLights = 1;
-
-	shaderManager->updateCBufferLights(lights, numLights);
-
-	/*END OF LIGHTING TEST*/
-
 	if(!container->getVertexBuffer())
 		container->createVertexBuffer(device);
 	if(!container->getIndexBuffer())
@@ -377,6 +376,13 @@ void RendererDX::handleMsgRender(Msg* msg)
 {
 	MsgRender* renderMsg = (MsgRender*)msg;
 	renderList->push_back(renderMsg);
+}
+
+void RendererDX::handleMsgLight(Msg* msg)
+{
+	MsgLight* msgLight = (MsgLight*)msg;
+	Light* light = msgLight->getLight();
+	lights.push_back((*light));
 }
 
 void RendererDX::input(InputContainer inputContainer)

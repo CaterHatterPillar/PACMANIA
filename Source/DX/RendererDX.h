@@ -11,6 +11,7 @@
 #include "TextureManagerDX.h"
 
 #include "../GraphicsContainer.h"
+#include "../Messaging/MsgLight.h"
 #include "../Messaging/MsgDXWindowHandle.h"
 #include "../Messaging/MsgCamera.h"
 #include "../Messaging/SubscriptionMsg.h"
@@ -30,6 +31,7 @@ class RendererDX : public Renderer
 {
 private:
 	std::vector<GraphicsContainer*> renderQueue;
+	std::vector<Light> lights;
 
 	HWND hWnd;
 
@@ -67,7 +69,9 @@ private:
 	void handleMsgDXWindowHandle(Msg* msg);
 	void handleMsgCamera(Msg* msg);
 	void handleMsgRender(Msg* msg);
+	void handleMsgLight(Msg* msg);
 
+	void updateLighting();
 	void renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling);
 protected:
 public:

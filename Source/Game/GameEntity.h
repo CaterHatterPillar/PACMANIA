@@ -10,6 +10,7 @@
 #include "../Singleton.h"
 #include "../Messaging/MsgRender.h"
 #include "../Behaviours/MoveBehaviourPlayer.h"
+#include "../Light.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ private:
 
 	GraphicsContainer* graphicsContainer;
 	MoveBehaviour* moveBehaviour;
+	Light* light;
 
 	void rebuildTranslationMatrix();
 	void rebuildRotationMatrix();
@@ -57,6 +59,7 @@ public:
 
 	void setGraphicsContainer(GraphicsContainer* graphicsContainer);
 	void setMoveBehaviour(MoveBehaviour* moveBehaviour);
+	void setLight(Light* light);
 
 	void update(double delta);
 };
