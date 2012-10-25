@@ -293,5 +293,8 @@
     <ClInclude Include="..\..\Source\Game\GameEntityFactory.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Light.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

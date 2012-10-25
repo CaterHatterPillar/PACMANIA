@@ -76,6 +76,7 @@
     <ClInclude Include="..\..\Source\GL\UniformGL.h" />
     <ClInclude Include="..\..\Source\GL\WindowGL.h" />
     <ClInclude Include="..\..\Source\GraphicsContainer.h" />
+    <ClInclude Include="..\..\Source\Light.h" />
     <ClInclude Include="..\..\Source\LinuxContainer.h" />
     <ClInclude Include="..\..\Source\Math\CommonMath.h" />
     <ClInclude Include="..\..\Source\Math\PacMath.h" />
