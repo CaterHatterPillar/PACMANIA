@@ -7,10 +7,18 @@
 
 #include "../Math/PacMath.h"
 
+#include "../Light.h"
+
 struct CBufferPerFrame
 {
 	MatF4 final;
 	MatF4 world;
+};
+
+struct CBufferLights
+{
+	Light lights[MAX_NUM_LIGHTS];
+	unsigned int numLights;
 };
 
 #endif
