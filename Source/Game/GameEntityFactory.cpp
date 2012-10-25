@@ -434,6 +434,40 @@ GameEntity* GameEntityFactory::createWall( VecF3 position )
 	return entity;
 }
 
+GameEntity* GameEntityFactory::createBackgound()
+{
+	GameEntity* entity = new GameEntity();
+	vector<PosNormTex>* vertices = createVerticesPlane();
+	vector<unsigned int>* indices = createIndicesPlane();
+
+	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
+	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
+	TextureId textureId		= TEXTURE_BACKGROUND;
+
+	unsigned int numVertices	= vertices->size();
+	unsigned int numIndices		= indices->size();
+	unsigned int numFaces		= indices->size() / 3;
+	unsigned int stride			= sizeof(PosNormTex);
+	unsigned int offset			= 0;
+
+	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+		pixelShaderId,
+		textureId,
+		vertices,
+		indices,
+		numVertices,
+		numIndices,
+		numFaces,
+		stride,
+		offset);
+
+	entity->setGraphicsContainer(graphicsContainer);
+	entity->setPosition(VecF3(0.0f, 0.0f, 1.0f));
+	entity->setScale(VecF3(75.0f, 75.0f, 75.0f));
+
+	return entity;
+}
+
 Maze* GameEntityFactory::createMaze()
 {
 	vector<PosNormTex>* vertices	= createVerticesCube();

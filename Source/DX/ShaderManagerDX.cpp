@@ -15,6 +15,7 @@ ShaderManagerDX::~ShaderManagerDX()
 
 	cBufferPerFrame->Release();
 	cBufferLights->Release();
+	cBufferEffects->Release();
 
 	vertexShader->Release();
 	pixelShader->Release();
@@ -128,6 +129,7 @@ void ShaderManagerDX::createConstantBuffers()
 {
 	createCBufferPerFrame();
 	createCBufferLights();
+	createCBufferEffects();
 }
 
 void ShaderManagerDX::createCBufferPerFrame()
@@ -159,6 +161,24 @@ void ShaderManagerDX::createCBufferLights()
 		MessageBox(NULL, "CBufferLights creation failed!", "Constant Buffer error!", MB_OK | MB_ICONEXCLAMATION);
 	}
 	devcon->PSSetConstantBuffers(1, 1, &cBufferLights);
+}
+
+void ShaderManagerDX::createCBufferEffects()
+{
+	D3D11_BUFFER_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+
+	desc.Usage			= D3D11_USAGE_DEFAULT;
+	desc.ByteWidth		= calcConstantBufferSize(sizeof(CBufferEffects));
+	desc.BindFlags		= D3D11_BIND_CONSTANT_BUFFER;
+	desc.CPUAccessFlags = 0;
+
+	HRESULT hr = device->CreateBuffer(&desc, NULL, &cBufferEffects);
+	if(FAILED(hr))
+	{
+		MessageBox(NULL, "CBufferEffects creation failed!", "Constant Buffer error!", MB_OK | MB_ICONEXCLAMATION);
+	}
+	devcon->PSSetConstantBuffers(2, 1, &cBufferEffects);
 }
 
 int ShaderManagerDX::calcConstantBufferSize(int structSize)
@@ -196,6 +216,14 @@ void ShaderManagerDX::updateCBufferLights(std::vector<Light> lights)
 	}
 	
 	devcon->UpdateSubresource(cBufferLights, 0, 0, &cBuffer, 0, 0);
+}
+
+void ShaderManagerDX::updateCBufferEffects(VecF4 effect)
+{
+	CBufferEffects cBuffer;
+	cBuffer.effect = effect;
+
+	devcon->UpdateSubresource(cBufferEffects, 0, 0, &cBuffer, 0, 0);
 }
 
 ID3D11VertexShader* ShaderManagerDX::getVertexShader()

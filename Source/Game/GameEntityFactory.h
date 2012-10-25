@@ -58,6 +58,7 @@ public:
 	GameEntity* createPill(VecF3 position);
 	GameEntity* createBloodyPill(VecF3 position);
 	GameEntity* createWall(VecF3 position);
+	GameEntity* createBackgound();
 	Maze* createMaze();
 };
 

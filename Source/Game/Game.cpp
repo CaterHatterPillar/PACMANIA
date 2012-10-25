@@ -6,7 +6,7 @@ void Game::run()
 {
 	Maze* maze = entityFac->createMaze();
 	GameEntity* pacman = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);	//tmep
-
+	GameEntity* background = entityFac->createBackgound();
 	GameEntity* ghost = entityFac->createGhost(VecF3(3.0f, 1.0f, 0.0f));
 //	GameEntity* pill = entityFac->createPill(VecF3(4.0f, 0.0f, 0.0f));
 //	GameEntity* bloodyPill = entityFac->createBloodyPill(VecF3(-3.0f, -2.0f, 3.0f)); 
@@ -20,6 +20,7 @@ void Game::run()
 		pacman->update(delta);
 
 		ghost->update(delta);
+		background->update(delta);
 //		pill->update(delta);
 //		bloodyPill->update(delta);
 		maze->update(delta);

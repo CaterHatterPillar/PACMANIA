@@ -14,6 +14,11 @@ cbuffer cbLights : register(b1)
 	uint numLights;
 };
 
+cbuffer cbEffects : register(b2)
+{
+	float4 transitionEffect;
+};
+
 Texture2D texDiffuse : register( t0 );
 SamplerState ss : register( s0 );
 
@@ -60,11 +65,11 @@ float4 PShader(VOut pIn) : SV_TARGET
 	float3 litColor = float3(0.0f, 0.0f, 0.0f);
 	for(int i=0; i<numLights; i++)
 		litColor += spotLight(surface, lights[i], cameraPosition);
-	
+
 	litColor += ambient;
 	
 	//clip(color.a-0.1);
 	//color = color * lights[0].ambient;
 	
-	return color * float4(litColor, 1.0f);
+	return color * float4(litColor, 1.0f) ;
 }

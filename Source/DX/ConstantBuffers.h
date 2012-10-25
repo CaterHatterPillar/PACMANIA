@@ -22,4 +22,9 @@ struct CBufferLights
 	unsigned int numLights;
 };
 
+struct CBufferEffects
+{
+	VecF4 effect;
+};
+
 #endif
