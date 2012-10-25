@@ -50,7 +50,7 @@ void Camera::update(double delta)
 		updateView();
 
 		//Send new matrices
-		MsgCamera* cameraMsg = new MsgCamera(view, projection);
+		MsgCamera* cameraMsg = new MsgCamera(view, projection, position);
 		Singleton<ObserverDirector>::get().push(cameraMsg);
 	}
 }

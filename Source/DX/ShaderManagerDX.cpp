@@ -38,11 +38,11 @@ void ShaderManagerDX::createVertexShader()
 #endif
 
 	LPCSTR shaderModel = vertexShaderModel();
-	D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "VShader", shaderModel, shaderCompileFlags, 0, 0, &vs, &error, 0);
-	if(error != NULL)
+	HRESULT hr = D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "VShader", shaderModel, shaderCompileFlags, 0, 0, &vs, &error, 0);
+	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Vertex shader failed to compile", "Vertex shader error!", MB_OK | MB_ICONEXCLAMATION);
-		error->Release();
+		//error->Release();
 	}
 
 	device->CreateVertexShader(vs->GetBufferPointer(), vs->GetBufferSize(), NULL, &vertexShader);
@@ -57,11 +57,11 @@ void ShaderManagerDX::createPixelShader()
 #endif
 
 	LPCSTR shaderModel = pixelShaderModel();
-	D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "PShader", shaderModel, shaderCompileFlags, 0, 0, &ps, &error, 0);
-	if(error != NULL)
+	HRESULT hr = D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "PShader", shaderModel, shaderCompileFlags, 0, 0, &ps, &error, 0);
+	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Pixel shader failed to compile", "Pixel shader error!", MB_OK | MB_ICONEXCLAMATION);
-		error->Release();
+		//error->Release();
 	}
 
 	device->CreatePixelShader(ps->GetBufferPointer(), ps->GetBufferSize(), NULL, &pixelShader);
@@ -173,11 +173,12 @@ void ShaderManagerDX::initialize()
 	createConstantBuffers();
 }
 
-void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world)
+void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world, VecF3 cameraPosition)
 {
 	CBufferPerFrame cBuffer;
-	cBuffer.final = final;
-	cBuffer.world = world;
+	cBuffer.final			= final;
+	cBuffer.world			= world;
+	cBuffer.cameraPosition	= cameraPosition;
 	devcon->UpdateSubresource(cBufferPerFrame, 0, 0, &cBuffer, 0, 0);
 }
 
@@ -189,6 +190,7 @@ void ShaderManagerDX::updateCBufferLights(Light* lights, unsigned int numLights)
 		cBuffer.lights[i] = lights[i];
 	}
 	cBuffer.numLights = numLights;
+	devcon->UpdateSubresource(cBufferLights, 0, 0, &cBuffer, 0, 0);
 }
 
 ID3D11VertexShader* ShaderManagerDX::getVertexShader()

@@ -13,6 +13,7 @@ struct CBufferPerFrame
 {
 	MatF4 final;
 	MatF4 world;
+	VecF3 cameraPosition;
 };
 
 struct CBufferLights
