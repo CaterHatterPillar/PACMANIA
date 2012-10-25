@@ -3,6 +3,8 @@
 
 #include "Math/PacMath.h"
 
+static const int MAX_NUM_LIGHTS = 10;
+
 struct Light
 {
 	VecF3 pos;
