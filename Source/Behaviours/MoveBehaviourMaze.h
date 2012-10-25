@@ -1,11 +1,11 @@
-#ifndef MOVEBEHAVIOURPLAYER_H
-#define MOVEBEHAVIOURPLAYER_H
+#ifndef MOVEBEHAVIOURMAZE_H
+#define MOVEBEHAVIOURMAZE_H
 
 #include "MoveBehaviour.h"
 #include "../Messaging/MsgKeyboard.h"
 #include "../Game/Maze.h"
 
-class MoveBehaviourPlayer : public MoveBehaviour
+class MoveBehaviourMaze : public MoveBehaviour
 {
 private:
 	VecI2 pos;
@@ -41,6 +41,8 @@ private:
 			break;
 		}
 	};
+	
+protected:
 	void move(int x, int y)
 	{
 		isMoving = true;
@@ -57,9 +59,8 @@ private:
 	{
 		isMoving = false;
 	};
-protected:
 public:
-	MoveBehaviourPlayer(Maze* maze)
+	MoveBehaviourMaze(Maze* maze, VecI2 position)
 	{
 		this->maze = maze;
 
@@ -68,23 +69,28 @@ public:
 		turningSpeed = 10.0f;
 		
 		// Starting values
-		pos = VecI2(1,1);
+		pos = position;
 		pos_offset = 0.0f;
 		dir.x=1;
 		dir.y=0;
 		isMoving = false;
 
 	};
-	virtual ~MoveBehaviourPlayer()
+	virtual ~MoveBehaviourMaze()
 	{
 		delete maze;
 	};
 
 	virtual void init()
 	{
-		SubscriptionMsg* subscription = new SubscriptionMsg(this, INPUT_KEYBOARD_MSG);
-		Singleton<ObserverDirector>::get().push(subscription);
 	};
+
+	void respawn()
+	{
+		pos_offset = 0.0f;
+		pos = maze->getRandomFreePosition();
+	};
+
 	virtual void handleMessages()
 	{
 		Msg* msg = peek();
@@ -96,9 +102,6 @@ public:
 				MsgType type = msg->Type();
 				switch(type)
 				{
-				case INPUT_KEYBOARD_MSG:
-					msgKeyboard(msg);
-					break;
 				default:
 					throw 0; //temp
 					break;
@@ -134,12 +137,12 @@ public:
 			{
 				VecI2 newPos = VecI2(pos.x+dir_queue.x,  pos.y+dir_queue.y);
 				// True: queued direction would cause wall collision 
-				if(maze->getTile(newPos.x,newPos.y) == 1)
+				if(maze->isWallPos(newPos))
 				{
 					newPos.x = pos.x+dir.x;
 					newPos.y = pos.y+dir.y;
 					// True: old direction would cause collision 
-					if(maze->getTile(newPos.x,newPos.y) == 1)
+					if(maze->isWallPos(newPos))
 					{
 						// stop pacman and abort further testing
 						isMoving = false;
@@ -169,9 +172,6 @@ public:
 
 		// Check collision with pills
 		checkCollisionWithPills();
-
-		// Send message of current state to all relevent listeners
-		sendMsgEntityState();
 	}
 
 	void checkCollisionWithPills()
@@ -182,10 +182,7 @@ public:
 
 	void sendMsgEntityState()
 	{
-		MsgEntityState* msg = new MsgEntityState(position, 0);
-		Singleton<ObserverDirector>::get().push(msg);
 	};	
-
 
 	void interpolateRotation(float dt)
 	{
@@ -214,12 +211,6 @@ public:
 		return VecF3(xTween+pos.x, yTween+pos.y, 0.0f);
 	};
 
-	void msgKeyboard(Msg* msg)
-	{
-		MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
-		keyboard(keyboardMsg->Key());
-		delete keyboardMsg;
-	};
 };
 
 #endif //MOVEBEHAVIORPLAYER_H

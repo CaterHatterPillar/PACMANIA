@@ -230,7 +230,7 @@ vector<unsigned int>* GameEntityFactory::createIndicesObj(vector<PosNormTex>* ve
 	return indices;
 }
 
-GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
+GameEntity* GameEntityFactory::createPacman(VecF3 position, Maze* maze)
 {
 	GameEntity* entity = new GameEntity();
 	entity->setPosition(position);
@@ -259,7 +259,7 @@ GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
 		stride,
 		offset);
 
-	MoveBehaviour* moveBehaviour = new MoveBehaviourPlayer(maze);
+	MoveBehaviour* moveBehaviour = new MoveBehaviourMazePlayer(maze, maze->getRandomFreePosition());
 	moveBehaviour->init();
 
 	Light* light = new Light;
@@ -277,43 +277,6 @@ GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
 	entity->setLight(light);
 
 	entity->setRotation(VecF3(0.0f, 0.0f, -90.0f));
-	entity->setScale(VecF3(0.35f,0.35f,0.35f));
-	return entity;
-}
-
-GameEntity* GameEntityFactory::createGhost( VecF3 position )
-{
-	GameEntity* entity = new GameEntity();
-	entity->setPosition(position);
-	
-	vector<PosNormTex>* vertices	= createVerticesObj("../../Models/Ghost.obj");
-	vector<unsigned int>* indices	= createIndicesObj(vertices);
-
-	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
-	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-	TextureId textureId		= TEXTURE_GHOST;
-
-	unsigned int numVertices	= vertices->size();
-	unsigned int numIndices		= indices->size();
-	unsigned int numFaces		= indices->size() / 3;
-	unsigned int stride			= sizeof(PosNormTex);
-	unsigned int offset			= 0;
-
-	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
-		pixelShaderId,
-		textureId,
-		vertices,
-		indices,
-		numVertices,
-		numIndices,
-		numFaces,
-		stride,
-		offset);
-
-	entity->setGraphicsContainer(graphicsContainer);
-	entity->setMoveBehaviour(NULL);
-
-	entity->setRotation(VecF3(90.0f, 0.0f, 0.0f));
 	entity->setScale(VecF3(0.35f,0.35f,0.35f));
 	return entity;
 }
