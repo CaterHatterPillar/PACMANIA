@@ -42,6 +42,9 @@ void ObserverDirector::update(double delta)
 		case ENTITY_STATE:
 			msgEntityState(msg);
 			break;
+		case LIGHT:
+			msgLight(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
@@ -178,6 +181,21 @@ void ObserverDirector::msgCamera(Msg* msg)
 		}
 	}
 	delete msgCam;
+}
+
+void ObserverDirector::msgLight(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgLight* msgLight = (MsgLight*)msg;
+	for(unsigned int i = 0; i<observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgLight* newInstance = new MsgLight(msgLight);
+			observer->getComponent()->push(newInstance);
+		}
+	}
 }
 
 ObserverDirector::ObserverDirector() : Component()
