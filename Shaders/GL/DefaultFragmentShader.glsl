@@ -3,9 +3,9 @@
 /*CB*/
 uniform ColorBuffer
 {
-	vec3 redColor;
-	vec3 greenColor;
-	vec3 blueColor;
+	vec4 redColor;
+	vec4 greenColor;
+	vec4 blueColor;
 };
 
 /*IN*/
