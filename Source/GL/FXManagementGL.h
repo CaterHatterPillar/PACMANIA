@@ -53,7 +53,7 @@ public:
 	void init();
 	void initPerFrame(GLuint programFX);
 
-	void updatePerFrame(Light lights[]);
+	void updatePerFrame(Light lights[], VecF3 camPos);
 	
 	FXGL* getFX(
 		ShaderId vertexShaderID,

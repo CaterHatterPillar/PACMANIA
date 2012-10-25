@@ -29,6 +29,7 @@ private:
 	static MatF4 view;
 	static MatF4 proj;
 	static MatF4 worldViewProj;
+	VecF3	camPos;
 
 	static GLuint viewFX;
 	static GLuint projFX;

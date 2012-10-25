@@ -16,7 +16,8 @@ struct Light
 /*CB*/
 layout(std140) uniform PerFrame
 {
-	Light lights[10];
+	Light	lights[10];
+	vec3	camPos;
 };
 
 /*IN*/
@@ -34,5 +35,5 @@ void main()
 	if(tex.a <= 0.0f)
 		discard;
 
-	gl_FragColor = lights[7].diffuse; //tex
+	gl_FragColor = vec4(camPos, 1.0f); //lights[7].diffuse; //tex
 }

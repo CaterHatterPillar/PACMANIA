@@ -132,7 +132,7 @@ void RendererGL::update(double delta)
 		}
 	}
 
-	fxManagement->updatePerFrame(lights);
+	fxManagement->updatePerFrame(lights, camPos);
 }
 
 void RendererGL::renderFrame()
@@ -278,8 +278,9 @@ void RendererGL::msgCamera(Msg* msg)
 {
 	MsgCamera* cameraMsg = (MsgCamera*)msg;
 
-	this->proj = cameraMsg->Proj();
-	this->view = cameraMsg->View();
+	this->proj		= cameraMsg->Proj();
+	this->view		= cameraMsg->View();
+	this->camPos	= cameraMsg->CameraPosition();
 
 	delete cameraMsg;
 }

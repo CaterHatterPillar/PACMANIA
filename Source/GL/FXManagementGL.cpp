@@ -125,10 +125,11 @@ void FXManagementGL::initPerFrame(GLuint programFX)
 	glBindBufferBase(GL_UNIFORM_BUFFER, blockIndex, perFrameHandle);
 }
 
-void FXManagementGL::updatePerFrame(Light lights[])
+void FXManagementGL::updatePerFrame(Light lights[], VecF3 camPos)
 {
 	//Place data into buffer
 	memcpy(perFrameBuffer, lights,	10 * sizeof(Light));
+	memcpy(perFrameBuffer + 10 * sizeof(Light), &camPos, sizeof(VecF3));
 
 	glBufferData(
 		GL_UNIFORM_BUFFER,	//Specifies target type
