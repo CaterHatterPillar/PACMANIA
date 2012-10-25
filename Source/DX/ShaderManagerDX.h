@@ -47,7 +47,7 @@ public:
 
 	void initialize();
 
-	void updateCBufferPerFrame(MatF4 final, MatF4 world);
+	void updateCBufferPerFrame(MatF4 final, MatF4 world, VecF3 cameraPosition);
 	void updateCBufferLights(Light* lights, unsigned int numLights);
 
 	ID3D11VertexShader* getVertexShader();

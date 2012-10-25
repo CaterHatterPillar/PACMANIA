@@ -173,11 +173,12 @@ void ShaderManagerDX::initialize()
 	createConstantBuffers();
 }
 
-void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world)
+void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world, VecF3 cameraPosition)
 {
 	CBufferPerFrame cBuffer;
-	cBuffer.final = final;
-	cBuffer.world = world;
+	cBuffer.final			= final;
+	cBuffer.world			= world;
+	cBuffer.cameraPosition	= cameraPosition;
 	devcon->UpdateSubresource(cBufferPerFrame, 0, 0, &cBuffer, 0, 0);
 }
 
@@ -189,6 +190,7 @@ void ShaderManagerDX::updateCBufferLights(Light* lights, unsigned int numLights)
 		cBuffer.lights[i] = lights[i];
 	}
 	cBuffer.numLights = numLights;
+	devcon->UpdateSubresource(cBufferLights, 0, 0, &cBuffer, 0, 0);
 }
 
 ID3D11VertexShader* ShaderManagerDX::getVertexShader()
