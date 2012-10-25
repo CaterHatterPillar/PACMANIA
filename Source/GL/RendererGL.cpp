@@ -7,6 +7,7 @@ MatF4	RendererGL::view;
 MatF4	RendererGL::proj;
 MatF4	RendererGL::worldViewProj;
 GLuint	RendererGL::worldViewProjFX;
+GLuint	RendererGL::worldFX;
 
 GLuint	RendererGL::sampler;
 
@@ -101,6 +102,8 @@ void RendererGL::initFX()
 	//Connect uniforms
 	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
 	assert(worldViewProjFX != 0xFFFFFFFF);
+	worldFX = glGetUniformLocation(programFX, "world");
+	assert(worldFX != 0xFFFFFFFF);
 	sampler = glGetUniformLocation(programFX, "sampler");
 	assert(sampler != 0xFFFFFFFF);
 
@@ -213,6 +216,7 @@ void RendererGL::setUniform(MatF4 translation, MatF4 rotation, MatF4 scaling)
 	
 	worldViewProj = proj * view * world;
 	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
+	glUniformMatrix4fv(worldFX, 1, GL_TRUE, &world.m[0][0]);
 }
 void RendererGL::setBuffers(GraphicsContainerGL* containerGL)
 {

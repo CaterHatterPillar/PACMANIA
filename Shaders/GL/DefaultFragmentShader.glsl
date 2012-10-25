@@ -13,6 +13,50 @@ struct Light
 	float	pad1;
 };
 
+struct SurfaceInfo
+{
+	vec3 pos;
+	vec3 normal;
+	vec4 diffuse;
+	vec4 specular;
+};
+
+vec3 pointLight(SurfaceInfo surface, Light light, vec3 eyePos)
+{
+	vec3 litColor = vec3(0.0f, 0.0f, 0.0f);
+	vec3 lightVec = light.pos - surface.pos;
+	
+	float d = length(lightVec);
+	if(d > light.range)
+		return vec3(0.0f, 0.0f, 0.0f); //Fix this!!!!!!!
+		
+	lightVec /= d;
+	litColor += (surface.diffuse * light.ambient).xyz;
+	
+	float diffuseFactor = dot(lightVec, surface.normal);
+	if(diffuseFactor > 0.0f)
+	{
+		float	specPower		= max(surface.specular.a, 1.0f);
+		vec3	toEye			= normalize(eyePos - surface.pos);
+		vec3	R				= reflect(-lightVec, surface.normal);
+		float	specFactor		= pow(max(dot(R, toEye), 0.0f), specPower);
+		
+		litColor += diffuseFactor * (surface.diffuse * light.diffuse).xyz;
+		litColor += specFactor * (surface.specular  * light.specular).xyz;
+	}
+
+	return litColor / dot(light.att, vec3(1.0f, d, d*d));
+}
+
+vec3 spotLight(SurfaceInfo surface, Light light, vec3 eyePos)
+{
+	vec3 litColor = pointLight(surface, light, eyePos);
+	vec3 lightVec = normalize(light.pos - surface.pos);
+	
+	float s = pow(max(dot(-lightVec, light.dir), 0.0f), light.spotPow);
+	return litColor * s;
+}
+
 /*CB*/
 layout(std140) uniform PerFrame
 {
@@ -21,7 +65,9 @@ layout(std140) uniform PerFrame
 };
 
 /*IN*/
+in vec3 Normal0;
 in vec2 TexCoord0;
+in vec3 Pos0;
 
 /*OUT*/
 out vec4 gl_FragColor;
@@ -30,10 +76,29 @@ uniform sampler2D sampler;
 
 void main()
 {
-	vec4 tex	= texture2D(sampler, TexCoord0.xy);
+	vec4 albedo = texture2D(sampler, TexCoord0.xy);
+
+	vec4 ambient	= vec4(0.05f,	0.05f,	0.05f,	1.0f);
+	vec4 diffuse	= vec4(1.0f,	1.0f,	1.0f,	1.0f);
+	vec4 specular	= vec4(1.0f,	1.0f,	1.0f,	0.0f);
+	specular.a *= 256.0f;
 	
-	if(tex.a <= 0.0f)
+	vec3 normalW = normalize(Normal0);
+	SurfaceInfo surface;
+	surface.pos			= Pos0;
+	surface.normal		= Normal0;
+	surface.diffuse		= diffuse;
+	surface.specular	= specular;
+
+	vec3 litColor = vec3(0.0f, 0.0f, 0.0f);
+	for(unsigned int i = 0; i < 10; i++)
+	{
+		litColor += spotLight(surface, lights[i], camPos);
+	}
+	litColor += ambient.xyz;
+
+	if(albedo.a <= 0.0f)
 		discard;
 
-	gl_FragColor = vec4(camPos, 1.0f); //lights[7].diffuse; //tex
+	gl_FragColor = albedo * vec4(litColor, 1.0f);
 }

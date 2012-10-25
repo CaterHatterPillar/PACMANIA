@@ -31,8 +31,7 @@ private:
 	static MatF4 worldViewProj;
 	VecF3	camPos;
 
-	static GLuint viewFX;
-	static GLuint projFX;
+	static GLuint worldFX;
 	static GLuint worldViewProjFX;
 
 	static GLuint sampler;
