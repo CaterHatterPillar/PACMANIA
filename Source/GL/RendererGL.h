@@ -18,6 +18,8 @@
 
 #include "../Math/PacMath.h"
 
+#include "../Light.h"
+
 class RendererGL : public Renderer
 {
 private:
@@ -35,6 +37,9 @@ private:
 	static GLuint sampler;
 
 	static GraphicsContainerGL* prevGC;
+
+	/*Lighting*/
+	static Light lights[10];
 protected:
 public:
 	RendererGL();

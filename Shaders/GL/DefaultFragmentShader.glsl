@@ -1,11 +1,22 @@
 #version 330
 
-/*CB*/
-uniform ColorBuffer
+struct Light
 {
-	vec4 redColor;
-	vec4 greenColor;
-	vec4 blueColor;
+	vec3	pos;
+	float	spotPow;
+	vec3	dir;
+	float	range;
+	vec4	ambient;
+	vec4	diffuse;
+	vec4	specular;
+	vec3	att;
+	float	pad1;
+};
+
+/*CB*/
+layout(std140) uniform PerFrame
+{
+	Light lights[10];
 };
 
 /*IN*/
@@ -23,5 +34,5 @@ void main()
 	if(tex.a <= 0.0f)
 		discard;
 
-	gl_FragColor = tex; 
+	gl_FragColor = lights[7].diffuse; //tex
 }

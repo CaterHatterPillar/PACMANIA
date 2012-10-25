@@ -12,6 +12,8 @@ GLuint	RendererGL::sampler;
 
 GraphicsContainerGL* RendererGL::prevGC;
 
+Light RendererGL::lights[10];
+
 RendererGL::RendererGL() : Renderer()
 {
 	fxManagement	= new FXManagementGL();
@@ -68,6 +70,19 @@ void RendererGL::init()
 	glCullFace(GL_FRONT);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	/*Init lights*/
+	for(unsigned int i = 0; i < 10; i++)
+	{
+		lights[i].pos		= VecF3(1.0f, 1.0f, -20.0f);
+		lights[i].spotPow	= 128.0f;
+		lights[i].dir		= VecF3(0.0f, 0.0f, 1.0f);
+		lights[i].range		= 1000.0f;
+		lights[i].ambient	= VecF4(0.3f, 0.3f, 0.3f, 1.0f);
+		lights[i].diffuse	= VecF4(1.0f, 1.0f, 1.0f, 1.0f);
+		lights[i].specular	= VecF4(1.0f, 1.0f, 1.0f, 1.0f);
+		lights[i].att		= VecF3(0.5f, 0.0f, 0.0f);
+	}
 }
 void RendererGL::initFX()
 {
@@ -116,6 +131,8 @@ void RendererGL::update(double delta)
 			}
 		}
 	}
+
+	fxManagement->updatePerFrame(lights);
 }
 
 void RendererGL::renderFrame()
