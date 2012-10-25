@@ -14,6 +14,7 @@ ShaderManagerDX::~ShaderManagerDX()
 	devcon->Release();
 
 	cBufferPerFrame->Release();
+	cBufferLights->Release();
 
 	vertexShader->Release();
 	pixelShader->Release();
@@ -126,18 +127,38 @@ void ShaderManagerDX::createInputLayout()
 void ShaderManagerDX::createConstantBuffers()
 {
 	createCBufferPerFrame();
+	createCBufferLights();
 }
 
 void ShaderManagerDX::createCBufferPerFrame()
 {
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = 128; //calcConstantBufferSize(sizeof(CBufferPerFrame));
-	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bd.Usage			= D3D11_USAGE_DEFAULT;
+	bd.ByteWidth		= 128; //calcConstantBufferSize(sizeof(CBufferPerFrame));
+	bd.BindFlags		= D3D11_BIND_CONSTANT_BUFFER;
+	bd.CPUAccessFlags	= 0;
 
 	device->CreateBuffer(&bd, NULL, &cBufferPerFrame);
 	devcon->VSSetConstantBuffers(0, 1, &cBufferPerFrame);
+}
+
+void ShaderManagerDX::createCBufferLights()
+{
+	D3D11_BUFFER_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+
+	desc.Usage			= D3D11_USAGE_DEFAULT;
+	desc.ByteWidth		= calcConstantBufferSize(sizeof(CBufferLights));
+	desc.BindFlags		= D3D11_BIND_CONSTANT_BUFFER;
+	desc.CPUAccessFlags = 0;
+
+	HRESULT hr = device->CreateBuffer(&desc, NULL, &cBufferLights);
+	if(FAILED(hr))
+	{
+		MessageBox(NULL, "CBufferLights creation failed!", "Constant Buffer error!", MB_OK | MB_ICONEXCLAMATION);
+	}
+	devcon->PSSetConstantBuffers(1, 1, &cBufferLights);
 }
 
 int ShaderManagerDX::calcConstantBufferSize(int structSize)
@@ -158,6 +179,16 @@ void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world)
 	cBuffer.final = final;
 	cBuffer.world = world;
 	devcon->UpdateSubresource(cBufferPerFrame, 0, 0, &cBuffer, 0, 0);
+}
+
+void ShaderManagerDX::updateCBufferLights(Light* lights, unsigned int numLights)
+{
+	CBufferLights cBuffer;
+	for(int i=0; i<numLights; i++)
+	{
+		cBuffer.lights[i] = lights[i];
+	}
+	cBuffer.numLights = numLights;
 }
 
 ID3D11VertexShader* ShaderManagerDX::getVertexShader()

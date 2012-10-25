@@ -14,7 +14,7 @@ int WINAPI WinMain(
 
 #else
 
-//#include "vld.h" //insert debug-flag here
+#include "vld.h" //insert debug-flag here
 
 #include "LinuxContainer.h"
 int main(int argc, char** argv)
@@ -24,5 +24,5 @@ int main(int argc, char** argv)
 	DELETE_NULL(linuxContainer);
 
 	return 0;
-}
+}           
 #endif //_WIN32

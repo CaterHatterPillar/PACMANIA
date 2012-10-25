@@ -277,6 +277,14 @@ void RendererDX::renderFrame()
 }
 void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling)
 {
+	/*LIGHTING TEST*/
+	Light lights[1];
+	lights[0].ambient = VecF4(0.5f, 0.5f, 0.5f, 1.0f);
+	unsigned int numLights = 1;
+
+
+	/*END OF LIGHTING TEST*/
+
 	if(!container->getVertexBuffer())
 		container->createVertexBuffer(device);
 	if(!container->getIndexBuffer())

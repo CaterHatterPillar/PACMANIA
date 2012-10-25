@@ -1,5 +1,13 @@
 #version 330
 
+/*CB*/
+uniform ColorBuffer
+{
+	vec4 redColor;
+	vec4 greenColor;
+	vec4 blueColor;
+};
+
 /*IN*/
 in vec2 TexCoord0;
 

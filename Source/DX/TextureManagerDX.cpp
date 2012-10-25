@@ -11,7 +11,7 @@ TextureManagerDX::TextureManagerDX()
 
 	placeholderTextureFilename	= "../../Textures/PlaceHolder.png";
 	pacmanTextureFilename		= "../../Textures/PacmanTex.png";
-	ghostTextureFilename		= "../../Textures/PlaceHolder.png";
+	ghostTextureFilename		= "../../Textures/Ghost.png";
 	pillTextureFilename			= "../../Textures/Pill.png";
 	bloodyPillTextureFilename	= "../../Textures/BloodyPill.png";
 	wallTextureFilename			= "../../Textures/Wall.png";

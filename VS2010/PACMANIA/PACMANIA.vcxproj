@@ -58,10 +58,10 @@
     <ClInclude Include="..\..\Source\DX\ShaderManagerDX.h" />
     <ClInclude Include="..\..\Source\DX\TextureManagerDX.h" />
     <ClInclude Include="..\..\Source\DX\WindowDX.h" />
-    <ClInclude Include="..\..\Source\GameEntityFactory.h" />
     <ClInclude Include="..\..\Source\GameTimer.h" />
     <ClInclude Include="..\..\Source\Game\Game.h" />
     <ClInclude Include="..\..\Source\Game\GameEntity.h" />
+    <ClInclude Include="..\..\Source\Game\GameEntityFactory.h" />
     <ClInclude Include="..\..\Source\Game\Maze.h" />
     <ClInclude Include="..\..\Source\GL\CameraGL.h" />
     <ClInclude Include="..\..\Source\GL\CommonGL.h" />
@@ -76,6 +76,7 @@
     <ClInclude Include="..\..\Source\GL\UniformGL.h" />
     <ClInclude Include="..\..\Source\GL\WindowGL.h" />
     <ClInclude Include="..\..\Source\GraphicsContainer.h" />
+    <ClInclude Include="..\..\Source\Light.h" />
     <ClInclude Include="..\..\Source\LinuxContainer.h" />
     <ClInclude Include="..\..\Source\Math\CommonMath.h" />
     <ClInclude Include="..\..\Source\Math\PacMath.h" />
@@ -101,6 +102,10 @@
     <ClInclude Include="..\..\Source\Vertices\PosNormTex.h" />
     <ClInclude Include="..\..\Source\Window.h" />
     <ClInclude Include="..\..\Source\WindowsContainer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
+    <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB7C9795-79AD-4679-A921-C1D1F3E1430B}</ProjectGuid>
