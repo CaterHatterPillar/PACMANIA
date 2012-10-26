@@ -115,7 +115,13 @@ void RendererGL::initFX()
 
 void RendererGL::update(double delta)
 {
+	for(unsigned int i = 0; i < renderList->size(); i++)
+	{
+		delete renderList->at(i);
+		renderList->at(i) = NULL;
+	}
 	renderList->resize(0);
+
 	curLight = 0;
 
 	Msg* msg = peek();
@@ -164,8 +170,6 @@ void RendererGL::renderSpec()
 			renderMsg->getRotationMatrix(),
 			renderMsg->getScalingMatrix());
 		deBindGraphicsGL();
-
-		delete renderMsg;
 	}
 	
 	

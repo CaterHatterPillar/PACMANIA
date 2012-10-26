@@ -196,6 +196,7 @@ void ObserverDirector::msgLight(Msg* msg)
 			observer->getComponent()->push(newInstance);
 		}
 	}
+	delete msgLight;
 }
 
 ObserverDirector::ObserverDirector() : Component()
