@@ -24,8 +24,10 @@ private:
 		case KEY_RIGHT:
 			move(1,0);
 			break;
-		case KEY_S:
+		case KEY_D:
 			stop();
+			break;
+		case KEY_A:
 			respawn();
 			break;
 		}
