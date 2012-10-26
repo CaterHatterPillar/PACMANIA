@@ -273,6 +273,7 @@ GameEntity* GameEntityFactory::createPacman(VecF3 position, Maze* maze)
 	light->diffuse	= VecF4(0.7f, 0.7f, 0.7f, 1.0f);
 	light->specular	= VecF4(0.5f, 0.5f, 0.5f, 1.0f);
 	light->att		= VecF3(0.25f, 0.0f, 0.0f);
+	light->pad1		= 0.0f;
 
 	entity->setGraphicsContainer(graphicsContainer);
 	entity->setMoveBehaviour(moveBehaviour);
@@ -314,10 +315,11 @@ GameEntity* GameEntityFactory::createGhost(VecI2 position, Maze* maze)
 	light->spotPow = 128.0f;
 	light->dir = VecF3(0.0f, 0.0f, 1.0f);
 	light->range = 1000.0f;
-	light->ambient = VecF4(-0.9f, -0.9f, -0.9f, 1.0f);
-	light->diffuse = VecF4(-0.9f, -0.9f, -0.9f, 1.0f);
-	light->specular = VecF4(-0.1f, -0.1f, -0.1f, 1.0f);
+	light->ambient		= VecF4(-0.9f, -0.9f, -0.9f, 1.0f);
+	light->diffuse		= VecF4(-0.9f, -0.9f, -0.9f, 1.0f);
+	light->specular		= VecF4(-0.1f, -0.1f, -0.1f, 1.0f);
 	light->att = VecF3(1.6f, 0.0f, 0.0f);
+	light->pad1 = 1.0f;
 
 
 	// Build entity
