@@ -50,7 +50,7 @@ protected:
 	void msgKeyboard(Msg* msg);
 	virtual void keyboard(KEY key)		= 0;
 
-	void msgEntityState(Msg* _msg);
+	void msgEntityPlayerPos(Msg* _msg);
 
 
 	virtual void strafe(const float velocity)	= 0;

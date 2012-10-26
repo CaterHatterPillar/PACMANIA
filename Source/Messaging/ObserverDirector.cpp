@@ -39,9 +39,21 @@ void ObserverDirector::update(double delta)
 		case DX_WINDOW_HANDLE:
 			msgDXWindowHandle(msg);
 			break;
-		case ENTITY_STATE:
-			msgEntityState(msg);
+
+		// Entity messages
+		case ENTITY_PLAYER_POS:
+			msgEntityPlayerPos(msg);
 			break;
+		case ENTITY_PACMAN_POS:
+			msgEntityPacmanPos(msg);
+			break;
+		case ENTITY_GHOST_POS:
+			msgEntityGhostPos(msg);
+			break;
+		case ENTITY_PILL_POS:
+			msgEntityPillPos(msg);
+			break;
+
 		case LIGHT:
 			msgLight(msg);
 			break;
