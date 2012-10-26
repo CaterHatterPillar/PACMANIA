@@ -27,5 +27,6 @@ int main(int argc, char** argv)
 	DELETE_NULL(linuxContainer);
 
 	return 0;
-}           
+}     
+
 #endif //_WIN32
