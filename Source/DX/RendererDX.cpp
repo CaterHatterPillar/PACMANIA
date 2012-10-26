@@ -386,6 +386,8 @@ void RendererDX::handleMsgLight(Msg* msg)
 	MsgLight* msgLight = (MsgLight*)msg;
 	Light* light = msgLight->getLight();
 	lights.push_back((*light));
+
+	delete msgLight;
 }
 
 void RendererDX::input(InputContainer inputContainer)

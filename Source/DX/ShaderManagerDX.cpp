@@ -42,7 +42,7 @@ void ShaderManagerDX::createVertexShader()
 	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Vertex shader failed to compile", "Vertex shader error!", MB_OK | MB_ICONEXCLAMATION);
-		//error->Release();
+		error->Release();
 	}
 
 	device->CreateVertexShader(vs->GetBufferPointer(), vs->GetBufferSize(), NULL, &vertexShader);
@@ -61,7 +61,7 @@ void ShaderManagerDX::createPixelShader()
 	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Pixel shader failed to compile", "Pixel shader error!", MB_OK | MB_ICONEXCLAMATION);
-		//error->Release();
+		error->Release();
 	}
 
 	device->CreatePixelShader(ps->GetBufferPointer(), ps->GetBufferSize(), NULL, &pixelShader);

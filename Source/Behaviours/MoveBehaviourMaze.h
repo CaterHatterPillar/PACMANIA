@@ -78,7 +78,7 @@ public:
 	};
 	virtual ~MoveBehaviourMaze()
 	{
-		delete maze;
+	//	delete maze;
 	};
 
 	virtual void init()

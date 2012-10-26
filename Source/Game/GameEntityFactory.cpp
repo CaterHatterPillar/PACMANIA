@@ -464,6 +464,9 @@ Maze* GameEntityFactory::createMaze()
 	vector<PosNormTex>* verticesPlane	= createVerticesPlane();
 	vector<unsigned int>* indicesPlane	= createIndicesPlane();
 
+	vector<PosNormTex>* verticesPlane2	= createVerticesPlane();
+	vector<unsigned int>* indicesPlane2	= createIndicesPlane();
+
 	numVertices		= verticesPlane->size();
 	numIndices		= indicesPlane->size();
 	numFaces		= indicesPlane->size() / 3;
@@ -484,8 +487,8 @@ Maze* GameEntityFactory::createMaze()
 	GraphicsContainer* gcPillBloody = createGraphicsContainer(	vertexShaderId,
 		pixelShaderId,
 		TEXTURE_PILL_BLOODY,
-		verticesPlane,
-		indicesPlane,
+		verticesPlane2,
+		indicesPlane2,
 		numVertices,
 		numIndices,
 		numFaces,

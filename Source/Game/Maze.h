@@ -113,6 +113,16 @@ public:
 		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_STATE);
 		Singleton<ObserverDirector>::get().push(subscription);
 	};
+	
+	virtual ~Maze()
+	{
+		if(gcWall)
+			delete gcWall;
+		if(gcPill)
+			delete gcPill;
+		if(gcPillBloody)
+			delete gcPillBloody;
+	}
 
 	void createMaze()
 	{
