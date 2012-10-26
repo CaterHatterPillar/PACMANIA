@@ -268,8 +268,8 @@ void RendererDX::renderFrame()
 			renderMsg->getRotationMatrix(),
 			renderMsg->getScalingMatrix());
 		
-		delete renderMsg; //renderList->at(i);
-		//renderList->at(i) = NULL;
+		delete renderList->at(i);
+		renderList->at(i) = NULL;
 		
 	}
 	renderList->clear();

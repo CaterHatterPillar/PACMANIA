@@ -73,7 +73,7 @@ private:
 protected:
 public:
 	RendererDX();
-	~RendererDX();
+	virtual ~RendererDX();
 
 	virtual void init()	;
 	virtual void update(double delta);
