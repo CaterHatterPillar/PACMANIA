@@ -8,11 +8,7 @@
 class MoveBehaviourMaze : public MoveBehaviour
 {
 private:
-	VecI2 pos;
 	float pos_offset;
-	VecI2 dir_queue;
-	VecI2 dir;
-	bool isMoving;
 
 	Quaternion qua_rot_tween;
 	float speed;
@@ -43,6 +39,11 @@ private:
 	};
 	
 protected:
+	VecI2 pos;
+	VecI2 dir;
+	VecI2 dir_queue;
+	bool isMoving;
+
 	void move(int x, int y)
 	{
 		isMoving = true;
@@ -100,20 +101,22 @@ public:
 			if(msg)
 			{
 				MsgType type = msg->Type();
-				switch(type)
-				{
-				default:
-					throw 0; //temp
-					break;
-				}
+				//switch(type)
+				//{
+				//default:
+				//	throw 0; //temp
+				//	break;
+				//}
 			}
 		}
 	}
+	virtual void atIntersection() = 0;
 	void update(double delta)	
 	{
 		float dt = (float)delta;
 
 		handleMessages();
+		updateSpecific(delta);
 
 		// True: entity is in move state
 		if(isMoving)
@@ -135,6 +138,7 @@ public:
 			// False: player is at intersection 
 			else
 			{
+				atIntersection();
 				VecI2 newPos = VecI2(pos.x+dir_queue.x,  pos.y+dir_queue.y);
 				// True: queued direction would cause wall collision 
 				if(maze->isWallPos(newPos))
@@ -146,7 +150,6 @@ public:
 					{
 						// stop pacman and abort further testing
 						isMoving = false;
-						return; // abort, we're done
 					}
 				}
 				// Else: queued direction is valid for use
@@ -154,15 +157,27 @@ public:
 					dir = dir_queue;
 				}
 
-				//
-				// Perform movement
-				//
+				if(isMoving)
+				{
+					//
+					// Perform movement
+					//
 
-				pos=newPos;
-				pos_offset +=1.0f;
-				// Bugfix: it should only be possible for an entity to move a maximum of one square at every update
-				if(pos_offset<0.0f)
-					pos_offset = 0.0f; // reset movement
+					pos=newPos;
+					pos_offset +=1.0f;
+					// Bugfix: it should only be possible for an entity to move a maximum of one square at every update
+					if(pos_offset<0.0f)
+						pos_offset = 0.0f; // reset movement
+				}
+			}
+		}
+		// False: entity is stopped
+		else
+		{
+			// True: Player at intersection 
+			if(pos_offset<=0.0f)
+			{
+				atIntersection();
 			}
 		}
 
@@ -173,6 +188,8 @@ public:
 		// Check collision with pills
 		checkCollisionWithPills();
 	}
+
+	virtual void updateSpecific(double delta) = 0;
 
 	void checkCollisionWithPills()
 	{

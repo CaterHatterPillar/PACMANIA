@@ -78,9 +78,9 @@ void main()
 {
 	vec4 albedo = texture2D(sampler, TexCoord0.xy);
 
-	vec4 ambient	= vec4(0.05f,	0.05f,	0.05f,	1.0f);
+	vec4 ambient	= vec4(0.1f,	0.1f,	0.1f,	1.0f);
 	vec4 diffuse	= vec4(1.0f,	1.0f,	1.0f,	1.0f);
-	vec4 specular	= vec4(1.0f,	1.0f,	1.0f,	0.0f);
+	vec4 specular	= vec4(0.25f,	0.25f,	0.25f,	0.0f);
 	specular.a *= 256.0f;
 	
 	vec3 normalW = normalize(Normal0);

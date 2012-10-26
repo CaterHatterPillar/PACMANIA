@@ -14,6 +14,8 @@ private:
 protected:
 	static std::vector<MsgRender*>* renderList;
 public:
+	virtual ~Renderer();
+
 	virtual void init()					= 0;
 	virtual void update(double delta)	= 0;
 	virtual void renderFrame()			= 0;
