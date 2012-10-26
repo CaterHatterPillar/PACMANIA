@@ -1,47 +1,45 @@
 #include "Texture.h"
 
-TGAHeader tgaheader;									// TGA header
-TGA tga;												// TGA image data
+TGAHeader tgaheader;
+TGA tga;
 
-GLubyte uTGAcompare[12] = {0,0,2,0,0,0,0,0,0,0,0,0};	// Uncompressed TGA Header
-GLubyte cTGAcompare[12] = {0,0,10,0,0,0,0,0,0,0,0,0};	// Compressed TGA Header	
+GLubyte uTGAcompare[12] = {0,0,2,0,0,0,0,0,0,0,0,0};
+GLubyte cTGAcompare[12] = {0,0,10,0,0,0,0,0,0,0,0,0};
 
-bool LoadTGA(Texture * texture, const char * filename)				// Load a TGA file
+bool LoadTGA(Texture* texture, const char* filename)
 {
-	FILE * fTGA;												// File pointer to texture file
-	fTGA = fopen(filename, "rb");								// Open file for reading
+	FILE* fTGA;
+	fTGA = fopen(filename, "rb");
 
-	if(fTGA == NULL)											// If it didn't open....
+	if(fTGA == NULL)//If it didn't open....
 	{
-		//MessageBox(NULL, "Could not open texture file", "ERROR", MB_OK);	// Display an error message
-		return false;														// Exit function
+		return false;
 	}
 
-	if(fread(&tgaheader, sizeof(TGAHeader), 1, fTGA) == 0)					// Attempt to read 12 byte header from file
+	if(fread(&tgaheader, sizeof(TGAHeader), 1, fTGA) == 0) //Attempt to read 12 byte header from file
 	{
-		//MessageBox(NULL, "Could not read file header", "ERROR", MB_OK);		// If it fails, display an error message 
-		if(fTGA != NULL)													// Check to seeiffile is still open
+		if(fTGA != NULL) //Check to seeiffile is still open
 		{
-			fclose(fTGA);													// If it is, close it
+			fclose(fTGA); //If it is, close it
 		}
-		return false;														// Exit function
+		return false;
 	}
 
-	if(memcmp(uTGAcompare, &tgaheader, sizeof(tgaheader)) == 0)				// See if header matches the predefined header of 
-	{																		// an Uncompressed TGA image
-		LoadUncompressedTGA(texture, filename, fTGA);						// If so, jump to Uncompressed TGA loading code
+	if(memcmp(uTGAcompare, &tgaheader, sizeof(tgaheader)) == 0) //See if header matches the predefined header of 
+	{															//an Uncompressed TGA image
+		LoadUncompressedTGA(texture, filename, fTGA);			//If so, jump to Uncompressed TGA loading code
 	}
-	else if(memcmp(cTGAcompare, &tgaheader, sizeof(tgaheader)) == 0)		// See if header matches the predefined header of
-	{																		// an RLE compressed TGA image
-		LoadCompressedTGA(texture, filename, fTGA);							// If so, jump to Compressed TGA loading code
+	else if(memcmp(cTGAcompare, &tgaheader, sizeof(tgaheader)) == 0)	//See if header matches the predefined header of
+	{																	//an RLE compressed TGA image
+		LoadCompressedTGA(texture, filename, fTGA);						//If so, jump to Compressed TGA loading code
 	}
-	else																	// If header matches neither type
+	else																// If header matches neither type
 	{
-		//MessageBox(NULL, "TGA file be type 2 or type 10 ", "Invalid Image", MB_OK);	// Display an error
 		fclose(fTGA);
-		return false;																// Exit function
+		return false;
 	}
-	return true;															// All went well, continue on
+
+	return true;
 }
 
 bool LoadUncompressedTGA(Texture * texture, const char * filename, FILE * fTGA)	// Load an uncompressed TGA (note, much of this code is based on NeHe's 
@@ -111,33 +109,31 @@ bool LoadUncompressedTGA(Texture * texture, const char * filename, FILE * fTGA)	
 	return true;															// Return success
 }
 
-bool LoadCompressedTGA(Texture * texture, const char * filename, FILE * fTGA)		// Load COMPRESSED TGAs
+bool LoadCompressedTGA(Texture * texture, const char * filename, FILE * fTGA)
 { 
-	if(fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)					// Attempt to read header
+	if(fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)
 	{
-		//MessageBox(NULL, "Could not read info header", "ERROR", MB_OK);		// Display Error
-		if(fTGA != NULL)													// If file is open
+		if(fTGA != NULL)
 		{
-			fclose(fTGA);													// Close it
+			fclose(fTGA);
 		}
-		return false;														// Return failed
+		return false;
 	}
 
-	texture->width  = tga.header[1] * 256 + tga.header[0];					// Determine The TGA Width	(highbyte*256+lowbyte)
-	texture->height = tga.header[3] * 256 + tga.header[2];					// Determine The TGA Height	(highbyte*256+lowbyte)
-	texture->bpp	= tga.header[4];										// Determine Bits Per Pixel
-	tga.Width		= texture->width;										// Copy width to local structure
-	tga.Height		= texture->height;										// Copy width to local structure
-	tga.Bpp			= texture->bpp;											// Copy width to local structure
+	texture->width  = tga.header[1] * 256 + tga.header[0];	// Determine The TGA Width	(highbyte*256+lowbyte)
+	texture->height = tga.header[3] * 256 + tga.header[2];	// Determine The TGA Height	(highbyte*256+lowbyte)
+	texture->bpp	= tga.header[4];						// Determine Bits Per Pixel
+	tga.Width		= texture->width;						// Copy width to local structure
+	tga.Height		= texture->height;						// Copy width to local structure
+	tga.Bpp			= texture->bpp;							// Copy width to local structure
 
-	if((texture->width <= 0) || (texture->height <= 0) || ((texture->bpp != 24) && (texture->bpp !=32)))	//Make sure all texture info is ok
+	if((texture->width <= 0) || (texture->height <= 0) || ((texture->bpp != 24) && (texture->bpp !=32)))
 	{
-		//MessageBox(NULL, "Invalid texture information", "ERROR", MB_OK);	// If it isnt...Display error
-		if(fTGA != NULL)													// Check if file is open
+		if(fTGA != NULL)
 		{
-			fclose(fTGA);													// Ifit is, close it
+			fclose(fTGA);
 		}
-		return false;														// Return failed
+		return false;
 	}
 
 	if(texture->bpp == 24)													// If the BPP of the image is 24...

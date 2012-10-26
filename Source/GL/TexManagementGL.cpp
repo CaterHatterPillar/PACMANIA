@@ -109,7 +109,11 @@ TexManagementGL::~TexManagementGL()
 			if(textures->at(i))
 			{
 				free(textures->at(i)->imageData); //Free raw image data
-				DELETE_NULL(textures->at(i));
+				if(textures->at(i))
+				{
+					delete textures->at(i);
+					textures->at(i) = NULL;
+				}
 			}
 		}
 		delete textures;
