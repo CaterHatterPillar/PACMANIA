@@ -23,8 +23,12 @@ GraphicsContainerDX::GraphicsContainerDX(ShaderId vertexShaderId,
 
 GraphicsContainerDX::~GraphicsContainerDX()
 {
-	vertexBuffer->Release();
-	indexBuffer->Release();
+	if(vertexBuffer)
+		vertexBuffer->Release();
+	if(indexBuffer)
+		indexBuffer->Release();
+	if(texture)
+		texture->Release();
 }
 
 void GraphicsContainerDX::createVertexBuffer(ID3D11Device* device)
