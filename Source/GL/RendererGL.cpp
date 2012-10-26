@@ -70,8 +70,8 @@ void RendererGL::init()
 	glDepthMask(GL_TRUE);
 
 	/*Set backface cullint*/
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

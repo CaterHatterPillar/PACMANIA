@@ -163,7 +163,7 @@ void RendererDX::createRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rsd;
 
-	rsd.CullMode				= D3D11_CULL_BACK;
+	rsd.CullMode				= D3D11_CULL_NONE;
 	rsd.FillMode				= D3D11_FILL_SOLID;
 	rsd.FrontCounterClockwise	= false;
 	rsd.DepthBias				= false;
