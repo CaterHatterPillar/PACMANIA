@@ -266,6 +266,8 @@ FXManagementGL::FXManagementGL()
 }
 FXManagementGL::~FXManagementGL()
 {
+	free(perFrameBuffer);
+
 	if(fxs)
 	{
 		for(unsigned int i = 0; i < fxs->size(); i++)

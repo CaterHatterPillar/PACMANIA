@@ -59,7 +59,7 @@ private:
 protected:
 public:
 	ObserverDirector();
-	~ObserverDirector();
+	virtual ~ObserverDirector();
 
 	void init();
 	void update(double delta);
