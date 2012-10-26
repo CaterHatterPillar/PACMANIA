@@ -1,4 +1,4 @@
-#ifndef _WIN32
+#ifdef _WIN32
 
 #if defined( DEBUG ) || defined( _DEBUG)
 	#include "vld.h"
