@@ -78,13 +78,13 @@ void RendererGL::init()
 	/*Init lights*/
 	for(unsigned int i = 0; i < 10; i++)
 	{
-		lights[i].pos		= VecF3(1.0f, 1.0f, -20.0f);
+		lights[i].pos		= VecF3(1.0f, 1.0f, 20.0f);
 		lights[i].spotPow	= 128.0f;
-		lights[i].dir		= VecF3(0.0f, 0.0f, 1.0f);
+		lights[i].dir		= VecF3(0.0f, 0.0f, -1.0f);
 		lights[i].range		= 1000.0f;
 		lights[i].ambient	= VecF4(0.3f, 0.3f, 0.3f, 1.0f);
 		lights[i].diffuse	= VecF4(1.0f, 1.0f, 1.0f, 1.0f);
-		lights[i].specular	= VecF4(1.0f, 1.0f, 1.0f, 1.0f);
+		lights[i].specular	= VecF4(0.5f, 0.5f, 0.5f, 1.0f);
 		lights[i].att		= VecF3(0.5f, 0.0f, 0.0f);
 	}
 }
@@ -120,6 +120,7 @@ void RendererGL::update(double delta)
 		delete renderList->at(i);
 		renderList->at(i) = NULL;
 	}
+	renderList->clear();
 	renderList->resize(0);
 
 	curLight = 0;
