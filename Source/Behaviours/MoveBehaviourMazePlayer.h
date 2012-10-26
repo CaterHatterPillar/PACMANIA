@@ -40,6 +40,33 @@ public:
 		SubscriptionMsg* subscription = new SubscriptionMsg(this, INPUT_KEYBOARD_MSG);
 		Singleton<ObserverDirector>::get().push(subscription);
 	};
+
+	void runAI()
+	{
+		//// If ghost has stopped, choose new direction
+
+		//// Rotate 90*random degrees
+		//VecF3 tmpDir(1.0f,0.0f,0.0f);
+		//int random = rand() % 4;
+		//tmpDir.rotate(90.0f*random, VecF3(0.0f,0.0f,1.0f));
+
+		//// Convert vector to integer vector
+		//VecI2 newDir(round(tmpDir.x), round(tmpDir.y));
+
+		//// Do not move in opposite direction
+		//if(newDir == -dir)
+		//{
+		//}
+		//else
+		//{
+		//	// Try to move in new direction
+		//	move(newDir.x,newDir.y);
+		//}
+	};
+	void atIntersection()
+	{
+		runAI();
+	};
 	virtual void handleMessages()
 	{
 		Msg* msg = peek();
@@ -64,6 +91,10 @@ public:
 		// Send message of current state to all relevent listeners
 		sendMsgEntityState();
 	}
+
+	void updateSpecific(double delta)
+	{
+	};
 
 	void sendMsgEntityState()
 	{

@@ -107,7 +107,7 @@ public:
 		createMaze();
 
 		// Init random seed
-		 srand(time(NULL));
+		srand((unsigned)time(NULL));
 
 		//Subscribe to game state
 		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_STATE);

@@ -8,6 +8,14 @@ inline void clamp(int *x, int a, int b)
 	x[0] = x[0] < a ? a : (x[0] > b ? b : x[0]);
 }
 
+inline int round(float value)
+{
+	float roundDirection = 0.5f;
+	if(value<0)
+		roundDirection = -0.5f;
+	return (int)(value+roundDirection);
+}
+
 struct VecI2
 {
     int x;
@@ -23,7 +31,21 @@ struct VecI2
 		this->x = x; 
 		this->y=y;
 	}
+
+	VecI2 operator-()
+	{
+      VecI2 v;
+      v.x = -x;
+      v.y = -y;
+      return v;
+   }
 };
+
+inline bool operator==(const VecI2& left, const VecI2& right)
+{
+	return (left.x == right.x &&
+		left.y == right.y);
+}
 
 struct VecF2
 {
