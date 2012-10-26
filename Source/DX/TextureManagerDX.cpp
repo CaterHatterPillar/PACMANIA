@@ -61,8 +61,6 @@ void TextureManagerDX::init(ID3D11Device* device)
 	D3DX11CreateShaderResourceViewFromFile(device, wallTextureFilename, NULL, NULL, &wallTexture, &hr);
 	if(FAILED(hr))
 		MessageBox(NULL, "Failed to create wallTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
-
-	//device->Release();
 }
 
 ID3D11ShaderResourceView* TextureManagerDX::getTexture(TextureId id)

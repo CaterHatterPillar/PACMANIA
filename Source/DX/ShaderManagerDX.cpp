@@ -10,7 +10,11 @@ ShaderManagerDX::ShaderManagerDX(ID3D11Device* device, ID3D11DeviceContext* devc
 
 ShaderManagerDX::~ShaderManagerDX()
 {
-	device->Release();
+	/*
+	A device reference seems to be removed somewhere that it shouldn't be.
+	Not removing it here solves dx memory leaks.
+	*/
+	//device->Release(); 
 	devcon->Release();
 
 	cBufferPerFrame->Release();

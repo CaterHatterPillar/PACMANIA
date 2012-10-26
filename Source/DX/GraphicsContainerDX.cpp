@@ -23,10 +23,10 @@ GraphicsContainerDX::GraphicsContainerDX(ShaderId vertexShaderId,
 
 GraphicsContainerDX::~GraphicsContainerDX()
 {
-//	if(vertexBuffer)
-//		vertexBuffer->Release();
-//	if(indexBuffer)
-//		indexBuffer->Release();
+	if(vertexBuffer)
+		vertexBuffer->Release();
+	if(indexBuffer)
+		indexBuffer->Release();
 }
 
 void GraphicsContainerDX::createVertexBuffer(ID3D11Device* device)
@@ -41,8 +41,6 @@ void GraphicsContainerDX::createVertexBuffer(ID3D11Device* device)
 	D3D11_SUBRESOURCE_DATA vinitData;
 	vinitData.pSysMem = &vertices->at(0);
 	device->CreateBuffer(&vbd, &vinitData, &vertexBuffer);
-
-	//device->Release();
 }
 
 void GraphicsContainerDX::createIndexBuffer(ID3D11Device* device)
