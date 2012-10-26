@@ -262,15 +262,15 @@ GameEntity* GameEntityFactory::createPacman(VecF3 position, Maze* maze)
 	MoveBehaviour* moveBehaviour = new MoveBehaviourMazePlayer(maze, maze->getRandomFreePosition());
 	moveBehaviour->init();
 
-	Light* light = new Light;
-	light->pos = VecF3(1.0f, 1.0f, 20.0f);
-	light->spotPow = 128.0f;
-	light->dir = VecF3(0.0f, 0.0f, -1.0f);
-	light->range = 1000.0f;
-	light->ambient = VecF4(0.3f, 0.3f, 0.3f, 1.0f);
-	light->diffuse = VecF4(0.7f, 0.7f, 0.7f, 1.0f);
-	light->specular = VecF4(0.5f, 0.5f, 0.5f, 1.0f);
-	light->att = VecF3(0.25f, 0.0f, 0.0f);
+	Light* light	= new Light;
+	light->pos		= VecF3(1.0f, 1.0f, 20.0f);
+	light->spotPow	= 128.0f;
+	light->dir		= VecF3(0.0f, 0.0f, -1.0f);
+	light->range	= 1000.0f;
+	light->ambient	= VecF4(0.3f, 0.3f, 0.3f, 1.0f);
+	light->diffuse	= VecF4(0.7f, 0.7f, 0.7f, 1.0f);
+	light->specular	= VecF4(0.5f, 0.5f, 0.5f, 1.0f);
+	light->att		= VecF3(0.25f, 0.0f, 0.0f);
 
 	entity->setGraphicsContainer(graphicsContainer);
 	entity->setMoveBehaviour(moveBehaviour);
