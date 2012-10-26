@@ -4,7 +4,6 @@
 #include "../Common.h"
 
 #include "GameEntity.h"
-#include "../Behaviours/MoveBehaviourMazePlayer.h"
 #include "../Vertices/PosNormTex.h"
 
 #include <string>

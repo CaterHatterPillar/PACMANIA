@@ -45,6 +45,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h" />
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMaze.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h" />
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazePlayer.h" />
     <ClInclude Include="..\..\Source\Camera.h" />
     <ClInclude Include="..\..\Source\Common.h" />
@@ -106,6 +107,7 @@
     <ClInclude Include="..\..\Source\WindowsContainer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Levels\maze1.txt" />
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
   </ItemGroup>

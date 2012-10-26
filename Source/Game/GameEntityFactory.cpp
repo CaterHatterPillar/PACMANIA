@@ -1,4 +1,6 @@
 #include "GameEntityFactory.h"
+#include "../Behaviours/MoveBehaviourMazePlayer.h"
+#include "../Behaviours/MoveBehaviourMazeGhost.h"
 
 GameEntityFactory::GameEntityFactory()
 {
@@ -319,7 +321,7 @@ GameEntity* GameEntityFactory::createGhost(VecI2 position, Maze* maze)
 
 
 	// Build entity
-	MoveBehaviour* moveBehaviour = new MoveBehaviourMaze(maze, maze->getRandomFreePosition());
+	MoveBehaviour* moveBehaviour = new MoveBehaviourMazeGhost(maze, maze->getRandomFreePosition());
 	moveBehaviour->init();
 	GameEntity* entity = new GameEntity();
 	entity->setGraphicsContainer(graphicsContainer);

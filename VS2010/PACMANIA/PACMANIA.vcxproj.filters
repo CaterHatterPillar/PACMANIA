@@ -305,6 +305,9 @@
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazePlayer.h">
       <Filter>Source\Behaviours</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h">
+      <Filter>Source\Behaviours</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl">
@@ -312,6 +315,9 @@
     </None>
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl">
       <Filter>Source\GL\Shaders</Filter>
+    </None>
+    <None Include="..\..\Levels\maze1.txt">
+      <Filter>Source\Game</Filter>
     </None>
   </ItemGroup>
 </Project>
