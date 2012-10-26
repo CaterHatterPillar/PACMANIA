@@ -10,6 +10,9 @@
     <ClCompile Include="..\..\Source\Test\test_main.cpp">
       <Filter>Source\Test</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\TimerTest.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

@@ -307,5 +307,6 @@
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl">
       <Filter>Source\GL\Shaders</Filter>
     </None>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>
