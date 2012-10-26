@@ -39,7 +39,7 @@ private:
 public:
 	GameEntity();
 	GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale);
-	~GameEntity();
+	virtual ~GameEntity();
 
 	void setPosition(VecF3 position);
 	void setRotation(VecF3 rotaiton);

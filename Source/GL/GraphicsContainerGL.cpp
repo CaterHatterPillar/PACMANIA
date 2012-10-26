@@ -57,6 +57,4 @@ GraphicsContainerGL::GraphicsContainerGL(
 }
 GraphicsContainerGL::~GraphicsContainerGL()
 {
-	DELETE_NULL(vertices);
-	DELETE_NULL(indices);
 }

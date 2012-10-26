@@ -60,7 +60,7 @@ public:
 		ShaderId fragmentShaderID);
 	
 	FXManagementGL();
-	~FXManagementGL();
+	virtual ~FXManagementGL();
 };
  
 #endif //FXMANAGEMENT_H
