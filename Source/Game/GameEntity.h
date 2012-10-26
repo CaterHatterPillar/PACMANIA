@@ -9,7 +9,7 @@
 #include "../Messaging/ObserverDirector.h"
 #include "../Singleton.h"
 #include "../Messaging/MsgRender.h"
-#include "../Behaviours/MoveBehaviourPlayer.h"
+#include "../Behaviours/MoveBehaviourMazePlayer.h"
 #include "../Light.h"
 
 using namespace std;

@@ -6,6 +6,7 @@
 #include "../Messaging/ObserverDirector.h"
 
 #include <fstream>
+#include <time.h>
 using namespace std;
 
 class Pill
@@ -105,6 +106,9 @@ public:
 		// Init grid
 		createMaze();
 
+		// Init random seed
+		 srand(time(NULL));
+
 		//Subscribe to game state
 		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_STATE);
 		Singleton<ObserverDirector>::get().push(subscription);
@@ -119,6 +123,30 @@ public:
 
 		loadFromTextfile();
 	};
+
+	
+	VecI2 getRandomFreePosition()
+	{
+		VecI2 pos;
+		do
+		{
+			pos.x = rand() % sizeX;
+			pos.y = rand() % sizeY;
+		}
+		while(isWallPos(pos));
+
+		return pos;
+	}
+
+	bool isEmptyPos(VecI2 pos)
+	{
+		return getTile(pos) == 0;
+	}
+
+	bool isWallPos(VecI2 pos)
+	{
+		return getTile(pos) == 1;
+	}
 
 	void loadFromTextfile()
 	{
@@ -249,7 +277,8 @@ public:
 		{
 			for(int x = cullStart.x; x<cullEnd.x; x++)
 			{
-				if(getTile(x,y)==1)
+
+				if(isWallPos(VecI2(x,y)))
 				{
 					MatF4 scale;
 					scale.scaling(0.5f,0.5f,0.5f);
@@ -326,16 +355,16 @@ public:
 		return sizeY;
 	};
 
-	int getTile(int x, int y)
+	int getTile(VecI2 pos)
 	{
 		// treat coordinates outside of maze as empty tiles
-		if(x<0 || y<0)
+		if(pos.x<0 || pos.y<0)
 			return 0;
-		if(x>=sizeX || y>=sizeY)
+		if(pos.x>=sizeX || pos.y>=sizeY)
 			return 0;
 
 		// get maze tile
-		return grid[x][y];
+		return grid[pos.x][pos.y];
 	};
 };
 #endif

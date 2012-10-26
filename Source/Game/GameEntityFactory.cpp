@@ -230,7 +230,7 @@ vector<unsigned int>* GameEntityFactory::createIndicesObj(vector<PosNormTex>* ve
 	return indices;
 }
 
-GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
+GameEntity* GameEntityFactory::createPacman(VecF3 position, Maze* maze)
 {
 	GameEntity* entity = new GameEntity();
 	entity->setPosition(position);
@@ -259,7 +259,7 @@ GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
 		stride,
 		offset);
 
-	MoveBehaviour* moveBehaviour = new MoveBehaviourPlayer(maze);
+	MoveBehaviour* moveBehaviour = new MoveBehaviourMazePlayer(maze, maze->getRandomFreePosition());
 	moveBehaviour->init();
 
 	Light* light = new Light;
@@ -281,11 +281,8 @@ GameEntity* GameEntityFactory::createPacman( VecF3 position, Maze* maze )
 	return entity;
 }
 
-GameEntity* GameEntityFactory::createGhost( VecF3 position )
+GameEntity* GameEntityFactory::createGhost(VecI2 position, Maze* maze)
 {
-	GameEntity* entity = new GameEntity();
-	entity->setPosition(position);
-	
 	vector<PosNormTex>* vertices	= createVerticesObj("../../Models/Ghost.obj");
 	vector<unsigned int>* indices	= createIndicesObj(vertices);
 
@@ -320,8 +317,13 @@ GameEntity* GameEntityFactory::createGhost( VecF3 position )
 	light->specular = VecF4(-0.1f, -0.1f, -0.1f, 1.0f);
 	light->att = VecF3(1.6f, 0.0f, 0.0f);
 
+
+	// Build entity
+	MoveBehaviour* moveBehaviour = new MoveBehaviourMaze(maze, maze->getRandomFreePosition());
+	moveBehaviour->init();
+	GameEntity* entity = new GameEntity();
 	entity->setGraphicsContainer(graphicsContainer);
-	entity->setMoveBehaviour(NULL);
+	entity->setMoveBehaviour(moveBehaviour);
 	entity->setLight(light);
 
 	entity->setRotation(VecF3(90.0f, 0.0f, 0.0f));

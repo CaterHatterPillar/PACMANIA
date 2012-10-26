@@ -4,8 +4,7 @@
 #include "../Common.h"
 
 #include "GameEntity.h"
-#include "../Behaviours/MoveBehaviourPlayer.h"
-
+#include "../Behaviours/MoveBehaviourMazePlayer.h"
 #include "../Vertices/PosNormTex.h"
 
 #include <string>
@@ -54,7 +53,7 @@ public:
 	~GameEntityFactory();
 
 	GameEntity* createPacman(VecF3 position, Maze* maze);
-	GameEntity* createGhost(VecF3 position);
+	GameEntity* createGhost(VecI2 position, Maze* maze);
 	GameEntity* createPill(VecF3 position);
 	GameEntity* createBloodyPill(VecF3 position);
 	GameEntity* createWall(VecF3 position);
