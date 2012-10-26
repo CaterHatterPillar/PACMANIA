@@ -237,7 +237,7 @@ GameEntity* GameEntityFactory::createPacman(VecF3 position, Maze* maze)
 	GameEntity* entity = new GameEntity();
 	entity->setPosition(position);
 	
-	vector<PosNormTex>* vertices	= createVerticesObj("../../Models/Pacman.obj");
+	vector<PosNormTex>* vertices	= createVerticesObj("../../Models/PacmanInverseNormal.obj");
 	vector<unsigned int>* indices	= createIndicesObj(vertices);
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
@@ -265,14 +265,14 @@ GameEntity* GameEntityFactory::createPacman(VecF3 position, Maze* maze)
 	moveBehaviour->init();
 
 	Light* light = new Light;
-	light->pos = VecF3(1.0f, 1.0f, -20.0f);
+	light->pos = VecF3(1.0f, 1.0f, 20.0f);
 	light->spotPow = 128.0f;
-	light->dir = VecF3(0.0f, 0.0f, 1.0f);
+	light->dir = VecF3(0.0f, 0.0f, -1.0f);
 	light->range = 1000.0f;
 	light->ambient = VecF4(0.3f, 0.3f, 0.3f, 1.0f);
-	light->diffuse = VecF4(1.0f, 1.0f, 1.0f, 1.0f);
-	light->specular = VecF4(1.0f, 1.0f, 1.0f, 1.0f);
-	light->att = VecF3(0.5f, 0.0f, 0.0f);
+	light->diffuse = VecF4(0.7f, 0.7f, 0.7f, 1.0f);
+	light->specular = VecF4(0.5f, 0.5f, 0.5f, 1.0f);
+	light->att = VecF3(0.25f, 0.0f, 0.0f);
 
 	entity->setGraphicsContainer(graphicsContainer);
 	entity->setMoveBehaviour(moveBehaviour);
@@ -466,6 +466,9 @@ Maze* GameEntityFactory::createMaze()
 	vector<PosNormTex>* verticesPlane	= createVerticesPlane();
 	vector<unsigned int>* indicesPlane	= createIndicesPlane();
 
+	vector<PosNormTex>* verticesPlane2	= createVerticesPlane();
+	vector<unsigned int>* indicesPlane2	= createIndicesPlane();
+
 	numVertices		= verticesPlane->size();
 	numIndices		= indicesPlane->size();
 	numFaces		= indicesPlane->size() / 3;
@@ -486,8 +489,8 @@ Maze* GameEntityFactory::createMaze()
 	GraphicsContainer* gcPillBloody = createGraphicsContainer(	vertexShaderId,
 		pixelShaderId,
 		TEXTURE_PILL_BLOODY,
-		verticesPlane,
-		indicesPlane,
+		verticesPlane2,
+		indicesPlane2,
 		numVertices,
 		numIndices,
 		numFaces,

@@ -42,6 +42,8 @@ void TexManagementGL::init()
 
 		textures->push_back(tex);
 	}
+
+	delete loadTex;
 }
 Texture* TexManagementGL::loadTexture(TextureId id, std::string completePath)
 {
@@ -107,7 +109,11 @@ TexManagementGL::~TexManagementGL()
 			if(textures->at(i))
 			{
 				free(textures->at(i)->imageData); //Free raw image data
-				delete textures->at(i);
+				if(textures->at(i))
+				{
+					delete textures->at(i);
+					textures->at(i) = NULL;
+				}
 			}
 		}
 		delete textures;

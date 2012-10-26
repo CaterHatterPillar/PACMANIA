@@ -20,7 +20,11 @@ void WindowGL::init()
 	Singleton<ObserverDirector>::get().push(subscriptionMsg);
 
 	/*Initialize window through GLUT*/
+	glutInitContextVersion (3,3);						//test
+	glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);	//test
+
 	glutInit(&argc, argv);
+
 	glutInitDisplayMode(
 		GLUT_DOUBLE		|	//Double-buffer
 		GLUT_RGBA		|	//Back-buffer

@@ -163,7 +163,7 @@ void RendererDX::createRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rsd;
 
-	rsd.CullMode				= D3D11_CULL_BACK;
+	rsd.CullMode				= D3D11_CULL_NONE;
 	rsd.FillMode				= D3D11_FILL_SOLID;
 	rsd.FrontCounterClockwise	= false;
 	rsd.DepthBias				= false;
@@ -205,12 +205,6 @@ void RendererDX::createTextureManager()
 	textureManager->init(device);
 }
 
-void RendererDX::createCube()
-{
-	cube = new Cube(device);
-	cube->initialize();
-}
-
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
@@ -222,8 +216,6 @@ void RendererDX::init()
 
 	createShaderManager();
 	createTextureManager();
-
-	createCube();
 }
 
 void RendererDX::update(double delta)
@@ -276,10 +268,11 @@ void RendererDX::renderFrame()
 			renderMsg->getRotationMatrix(),
 			renderMsg->getScalingMatrix());
 		
-		delete renderList->at(i);
-		renderList->at(i) = NULL;
+		delete renderMsg; //renderList->at(i);
+		//renderList->at(i) = NULL;
 		
 	}
+	renderList->clear();
 
 	swapChain->Present(0, 0);
 }
@@ -333,10 +326,20 @@ void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translati
 
 void RendererDX::cleanUp()
 {
-	device->Release();
-	devcon->Release();
-	zBuffer->Release();
-	backBuffer->Release();
+	if(swapChain)
+		swapChain->Release();
+	if(device)
+		device->Release();
+	if(devcon)
+		devcon->Release();
+	if(backBuffer)
+		backBuffer->Release();
+	if(zBuffer)
+		zBuffer->Release();
+	if(rasterizerState)
+		rasterizerState->Release();
+	if(samplerStateDefault)
+		samplerStateDefault->Release();
 
 	if(renderList)
 	{
@@ -348,7 +351,8 @@ void RendererDX::cleanUp()
 		delete renderList;
 	}
 
-	delete shaderManager;
+	if(shaderManager)
+		delete shaderManager;
 	if(textureManager)
 		delete textureManager;
 }
@@ -383,6 +387,8 @@ void RendererDX::handleMsgLight(Msg* msg)
 	MsgLight* msgLight = (MsgLight*)msg;
 	Light* light = msgLight->getLight();
 	lights.push_back((*light));
+
+	delete msgLight;
 }
 
 void RendererDX::input(InputContainer inputContainer)

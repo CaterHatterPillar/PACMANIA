@@ -22,8 +22,14 @@ Msg* Component::peek()
 Component::Component() {}
 Component::~Component() 
 { 
+	Msg* msg;
 	for(unsigned int i = 0; i < msgs.size(); i++)
-		msgs.pop(); //calls message's destructor
+	{
+		msg = msgs.front();
+		msgs.pop();
+		delete msg;
+		//msgs.pop(); //calls message's destructor
+	}
 }
 
 void Component::push(Msg* msg) 

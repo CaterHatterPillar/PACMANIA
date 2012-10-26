@@ -115,7 +115,6 @@ void ObserverDirector::msgRender(Msg* msg)
 		Observer* observer = observers->at(i);
 		if(observer->isSubscriber(type))
 		{
-
 			MsgRender* newInstance = new MsgRender(renderMsg);
 			observer->getComponent()->push(newInstance);
 		}
@@ -196,6 +195,7 @@ void ObserverDirector::msgLight(Msg* msg)
 			observer->getComponent()->push(newInstance);
 		}
 	}
+	delete msgLight;
 }
 
 ObserverDirector::ObserverDirector() : Component()

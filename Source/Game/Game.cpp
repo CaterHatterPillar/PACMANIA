@@ -35,4 +35,8 @@ void Game::run()
 
 	if(pacman)	//tmep
 		delete pacman;
+	if(ghost)
+		delete ghost;
+	if(maze)
+		delete maze;
 }

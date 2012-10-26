@@ -10,7 +10,11 @@ ShaderManagerDX::ShaderManagerDX(ID3D11Device* device, ID3D11DeviceContext* devc
 
 ShaderManagerDX::~ShaderManagerDX()
 {
-	device->Release();
+	/*
+	A device reference seems to be removed somewhere that it shouldn't be.
+	Not removing it here solves dx memory leaks.
+	*/
+	//device->Release(); 
 	devcon->Release();
 
 	cBufferPerFrame->Release();
@@ -42,7 +46,7 @@ void ShaderManagerDX::createVertexShader()
 	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Vertex shader failed to compile", "Vertex shader error!", MB_OK | MB_ICONEXCLAMATION);
-		//error->Release();
+		error->Release();
 	}
 
 	device->CreateVertexShader(vs->GetBufferPointer(), vs->GetBufferSize(), NULL, &vertexShader);
@@ -61,7 +65,7 @@ void ShaderManagerDX::createPixelShader()
 	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Pixel shader failed to compile", "Pixel shader error!", MB_OK | MB_ICONEXCLAMATION);
-		//error->Release();
+		error->Release();
 	}
 
 	device->CreatePixelShader(ps->GetBufferPointer(), ps->GetBufferSize(), NULL, &pixelShader);
