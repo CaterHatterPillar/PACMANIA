@@ -205,12 +205,6 @@ void RendererDX::createTextureManager()
 	textureManager->init(device);
 }
 
-void RendererDX::createCube()
-{
-	cube = new Cube(device);
-	cube->initialize();
-}
-
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
@@ -222,8 +216,6 @@ void RendererDX::init()
 
 	createShaderManager();
 	createTextureManager();
-
-	createCube();
 }
 
 void RendererDX::update(double delta)
@@ -333,10 +325,20 @@ void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translati
 
 void RendererDX::cleanUp()
 {
-	device->Release();
-	devcon->Release();
-	zBuffer->Release();
-	backBuffer->Release();
+	if(swapChain)
+		swapChain->Release();
+	if(device)
+		device->Release();
+	if(devcon)
+		devcon->Release();
+	if(backBuffer)
+		backBuffer->Release();
+	if(zBuffer)
+		zBuffer->Release();
+	if(rasterizerState)
+		rasterizerState->Release();
+	if(samplerStateDefault)
+		samplerStateDefault->Release();
 
 	if(renderList)
 	{
@@ -348,7 +350,8 @@ void RendererDX::cleanUp()
 		delete renderList;
 	}
 
-	delete shaderManager;
+	if(shaderManager)
+		delete shaderManager;
 	if(textureManager)
 		delete textureManager;
 }

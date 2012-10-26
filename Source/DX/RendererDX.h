@@ -45,7 +45,6 @@ private:
 
 	ShaderManagerDX* shaderManager;
 	TextureManagerDX* textureManager;
-	Cube* cube;
 
 	MatF4 viewMatrix;
 	MatF4 projectionMatrix;
@@ -63,8 +62,6 @@ private:
 	void createSamplerState();
 	void createShaderManager();
 	void createTextureManager();
-
-	void createCube();
 
 	void handleMsgDXWindowHandle(Msg* msg);
 	void handleMsgCamera(Msg* msg);

@@ -21,6 +21,8 @@ TextureManagerDX::TextureManagerDX()
 
 TextureManagerDX::~TextureManagerDX()
 {
+	if(placeholderTexture)
+		placeholderTexture->Release();
 	if(pacmanTexture)
 		pacmanTexture->Release();
 	if(ghostTexture)
@@ -29,8 +31,8 @@ TextureManagerDX::~TextureManagerDX()
 		pillTexture->Release();
 	if(bloodyPillTexture)
 		bloodyPillTexture->Release();
-	if(placeholderTexture)
-		placeholderTexture->Release();
+	if(wallTexture)
+		wallTexture->Release();
 }
 
 void TextureManagerDX::init(ID3D11Device* device)
