@@ -75,15 +75,19 @@ public:
 		dir.x=1;
 		dir.y=0;
 		isMoving = false;
-
 	};
 	virtual ~MoveBehaviourMaze()
 	{
-	//	delete maze;
+		//	delete maze;
 	};
 
 	virtual void init()
 	{
+	};
+
+	bool isWallPos(VecI2 pos)
+	{
+		return maze->isWallPos(pos);
 	};
 
 	void respawn()

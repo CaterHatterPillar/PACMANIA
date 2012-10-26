@@ -26,6 +26,23 @@ struct VecI2
 		x=0;
 		y=0;
 	}
+
+	void normalize()
+	{
+		if(x==0 || y==0)
+			return;
+		if(abs(x)>abs(y))
+		{
+			x/=x;
+			y=0;
+		}
+		else
+		{
+			y/=y;
+			x=0;
+		}
+	}
+
 	VecI2(int x, int y)
 	{
 		this->x = x; 

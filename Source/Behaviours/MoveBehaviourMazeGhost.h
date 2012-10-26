@@ -6,35 +6,50 @@
 class MoveBehaviourMazeGhost : public MoveBehaviourMaze
 {
 private:
-	
+	VecI2 target;
 public:
 	MoveBehaviourMazeGhost(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
 	};
 	virtual void init()
 	{
+		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_PACMAN_POS);
+		Singleton<ObserverDirector>::get().push(subscription);
 	};
+
+	bool isValidDir(VecI2 newDir)
+	{
+		VecI2 newPos = VecI2(pos.x+newDir.x,  pos.y+newDir.y);
+
+		// True: Do not move in opposite direction
+		return !(newDir == -dir) && !isWallPos(newPos);
+	}
 
 	void runAI()
 	{
-		// If ghost has stopped, choose new direction
+		// Calc direction to target
+		VecI2 newDir;
+		newDir.x = target.x - pos.x;
+		newDir.y = target.y - pos.y;
+		newDir.normalize();
 
-		// Rotate 90*random degrees
-		VecF3 tmpDir(1.0f,0.0f,0.0f);
-		int random = rand() % 4;
-		tmpDir.rotate(90.0f*random, VecF3(0.0f,0.0f,1.0f));
-
-		// Convert vector to integer vector
-		VecI2 newDir(round(tmpDir.x), round(tmpDir.y));
-
-		// Do not move in opposite direction
-		if(newDir == -dir)
+		// True: Invalid direction, chose new
+		if(!isValidDir(newDir) || true)
 		{
+			// Rotate 90*random degrees
+			VecF3 tmpDir(1.0f,0.0f,0.0f);
+			int random = rand() % 4;
+			tmpDir.rotate(90.0f*random, VecF3(0.0f,0.0f,1.0f));
+
+			// Convert vector to integer vector
+			newDir = VecI2(round(tmpDir.x), round(tmpDir.y));
 		}
-		else
+
+		// True: queue valid direction
+		if(isValidDir(newDir))
 		{
 			// Try to move in new direction
-			move(newDir.x,newDir.y);
+			move(newDir.x, newDir.y);
 		}
 	};
 
@@ -56,16 +71,29 @@ public:
 			msg = pop();
 			if(msg)
 			{
-				//MsgType type = msg->Type();
-				//switch(type)
-				//{
-				//default:
-				//	throw 0; //temp
-				//	break;
-				//}
+				MsgType type = msg->Type();
+				switch(type)
+				{
+				case ENTITY_PACMAN_POS:
+					msgEntityPacmanPos(msg);
+					break;
+				default:
+					throw 0; //temp
+					break;
+				}
 			}
 		}
 	}
+
+	void msgEntityPacmanPos(Msg* msg)
+	{
+		MsgEntityPacmanPos* msgCast = (MsgEntityPacmanPos*)msg;
+
+		// Assign pacman possition as target
+		target = msgCast->pos;
+
+		delete msgCast;
+	};
 };
 
 #endif

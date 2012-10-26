@@ -110,7 +110,7 @@ public:
 		srand((unsigned)time(NULL));
 
 		//Subscribe to game state
-		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_STATE);
+		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_PLAYER_POS);
 		Singleton<ObserverDirector>::get().push(subscription);
 	};
 	
@@ -227,9 +227,9 @@ public:
 	{
 	}
 
-	void msgEntityState(Msg* msg)
+	void msgEntityPlayerPos(Msg* msg)
 	{
-		MsgEntityState* childMsg = (MsgEntityState*)msg;
+		MsgEntityPlayerPos* childMsg = (MsgEntityPlayerPos*)msg;
 		
 		// Get position
 		VecF3 goalPos(childMsg->pos);
@@ -251,8 +251,8 @@ public:
 				MsgType type = msg->Type();
 				switch(type)
 				{
-				case ENTITY_STATE:
-					msgEntityState(msg);
+				case ENTITY_PLAYER_POS:
+					msgEntityPlayerPos(msg);
 					break;
 				}
 			}

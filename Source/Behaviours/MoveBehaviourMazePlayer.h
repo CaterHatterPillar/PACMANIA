@@ -90,19 +90,25 @@ public:
 			}
 		}
 
-		// Send message of current state to all relevent listeners
-		sendMsgEntityState();
+		sendMsgEntityPlayerPos();
+		sendMsgEntityPacmanPos();
 	}
 
 	void updateSpecific(double delta)
 	{
 	};
 
-	void sendMsgEntityState()
+	void sendMsgEntityPlayerPos()
 	{
-		MsgEntityState* msg = new MsgEntityState(position, 0);
+		MsgEntityPlayerPos* msg = new MsgEntityPlayerPos(position);
 		Singleton<ObserverDirector>::get().push(msg);
-	};	
+	};
+
+	void sendMsgEntityPacmanPos()
+	{
+		MsgEntityPacmanPos* msg = new MsgEntityPacmanPos(pos);
+		Singleton<ObserverDirector>::get().push(msg);
+	};
 
 	void msgKeyboard(Msg* msg)
 	{
