@@ -268,8 +268,8 @@ void RendererDX::renderFrame()
 			renderMsg->getRotationMatrix(),
 			renderMsg->getScalingMatrix());
 		
-		delete renderMsg; //renderList->at(i);
-		//renderList->at(i) = NULL;
+		delete renderList->at(i);
+		renderList->at(i) = NULL;
 		
 	}
 	renderList->clear();
@@ -341,15 +341,15 @@ void RendererDX::cleanUp()
 	if(samplerStateDefault)
 		samplerStateDefault->Release();
 
-	if(renderList)
-	{
-		for(unsigned int i = 0; i < renderList->size(); i++)
-		{
-			if(renderList->at(i))
-				delete renderList->at(i);
-		}
-		delete renderList;
-	}
+	//if(renderList)
+	//{
+	//	for(unsigned int i = 0; i < renderList->size(); i++)
+	//	{
+	//		if(renderList->at(i))
+	//			delete renderList->at(i);
+	//	}
+	//	delete renderList;
+	//}
 
 	if(shaderManager)
 		delete shaderManager;

@@ -45,7 +45,7 @@ private:
 protected:
 public:
 	RendererGL();
-	~RendererGL();
+	virtual ~RendererGL();
 
 	void init();
 	void initFX();
