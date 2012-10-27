@@ -13,12 +13,16 @@ public:
 	};
 	virtual void init()
 	{
-		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_PACMAN_POS);
-		Singleton<ObserverDirector>::get().push(subscription);
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PACMAN_POS));
 	};
 
 	bool isValidDir(VecI2 newDir)
 	{
+		// Direction is not zero
+		if(newDir.x==0 && newDir.y==0)
+			return false;
+
+		// Do not collide with wall
 		VecI2 newPos = VecI2(pos.x+newDir.x,  pos.y+newDir.y);
 
 		// True: Do not move in opposite direction
@@ -27,30 +31,56 @@ public:
 
 	void runAI()
 	{
-		// Calc direction to target
 		VecI2 newDir;
-		newDir.x = target.x - pos.x;
-		newDir.y = target.y - pos.y;
-		newDir.normalize();
 
-		// True: Invalid direction, chose new
-		if(!isValidDir(newDir) || true)
+		// TRUE: Target is in line-of-sight, pick that direction
+		if(isInLineOfSight(pos, target))
 		{
-			// Rotate 90*random degrees
-			VecF3 tmpDir(1.0f,0.0f,0.0f);
+			// Calc direction to target
+			newDir.x = target.x - pos.x;
+			newDir.y = target.y - pos.y;
+			newDir.normalize();
+
+			speed = 3.3f;
+		}
+		else
+		{
+			speed = 2.6f;
+		}
+
+		
+		
+		// TRUE: Invalid direction, pick random direction
+		if(!isValidDir(newDir))
+		{
+			// Search every direction until we find a suitable
+			// if all direction fails it means we are in a dead end
+			// in which case we pick the opposite direction 
 			int random = rand() % 4;
-			tmpDir.rotate(90.0f*random, VecF3(0.0f,0.0f,1.0f));
+			for(int i=0; i<4; i++)
+			{
+				// Rotate 90*(random+i) degrees
+				VecF3 tmpDir(1.0f,0.0f,0.0f);
+				tmpDir.rotate(90.0f*(random+i), VecF3(0.0f,0.0f,1.0f));
+				newDir = VecI2(round(tmpDir.x), round(tmpDir.y));
 
-			// Convert vector to integer vector
-			newDir = VecI2(round(tmpDir.x), round(tmpDir.y));
+				// TRUE: Found direction, no further testing needed
+				if(isValidDir(newDir))
+				{
+					break; // Abort further testing
+				}
+			}
+
+			// TRUE: No valid direction found, we are in a dead end, pick opposite direction
+			if(!isValidDir(newDir))
+			{
+				newDir == -dir;
+			}
 		}
 
-		// True: queue valid direction
-		if(isValidDir(newDir))
-		{
-			// Try to move in new direction
-			move(newDir.x, newDir.y);
-		}
+
+		// Try to move in new direction
+		move(newDir.x, newDir.y);
 	};
 
 	void atIntersection()
@@ -83,13 +113,17 @@ public:
 				}
 			}
 		}
+
+		// Send messages
+		Singleton<ObserverDirector>::get().push(new MsgEntityGhostPos(pos, position));
 	}
+
 
 	void msgEntityPacmanPos(Msg* msg)
 	{
 		MsgEntityPacmanPos* msgCast = (MsgEntityPacmanPos*)msg;
 
-		// Assign pacman possition as target
+		// Assign pacman position as target
 		target = msgCast->pos;
 
 		delete msgCast;

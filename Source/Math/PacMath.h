@@ -29,16 +29,16 @@ struct VecI2
 
 	void normalize()
 	{
-		if(x==0 || y==0)
+		if(x==0 && y==0)
 			return;
 		if(abs(x)>abs(y))
 		{
-			x/=x;
+			x/=abs(x);
 			y=0;
 		}
 		else
 		{
-			y/=y;
+			y/=abs(y);
 			x=0;
 		}
 	}

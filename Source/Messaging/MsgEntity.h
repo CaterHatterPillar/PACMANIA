@@ -36,13 +36,16 @@ class MsgEntityGhostPos : public Msg
 {
 public:
 	VecI2 pos;
-	MsgEntityGhostPos(VecI2 pos) : Msg(ENTITY_GHOST_POS)
+	VecF3 position;
+	MsgEntityGhostPos(VecI2 pos, VecF3 position) : Msg(ENTITY_GHOST_POS)
 	{
 		this->pos = pos;
+		this->position = position;
 	}
 	MsgEntityGhostPos(MsgEntityGhostPos* msg) : Msg(ENTITY_GHOST_POS)
 	{
 		pos = msg->pos;
+		position = msg->position;
 	}
 };
 
