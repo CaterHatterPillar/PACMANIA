@@ -4,10 +4,10 @@
 
 void Game::run()
 {
-	Maze* maze = entityFac->createMaze();
-	GameEntity* pacman = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);	//tmep
+	maze = entityFac->createMaze();
+	spawnPacman();
+	spawnGhost();
 
-	GameEntity* ghost = entityFac->createGhost(VecI2(3, 1), maze);
 //	GameEntity* pill = entityFac->createPill(VecF3(4.0f, 0.0f, 0.0f));
 //	GameEntity* bloodyPill = entityFac->createBloodyPill(VecF3(-3.0f, -2.0f, 3.0f)); 
 
@@ -17,11 +17,10 @@ void Game::run()
 	{
 		double delta = gameTimer->tick();
 
-		pacman->update(delta);
-
-		ghost->update(delta);
-//		pill->update(delta);
-//		bloodyPill->update(delta);
+		// Update game entities
+		update(delta);
+		for(int i=0; i<(int)entities.size(); i++)
+			entities[i]->update(delta);
 		maze->update(delta);
 		
 		/*Update stuff here*/
@@ -32,11 +31,4 @@ void Game::run()
 		
 		renderer->renderFrame();
 	} while(window->isActive());
-
-	if(pacman)	//tmep
-		delete pacman;
-	if(ghost)
-		delete ghost;
-	if(maze)
-		delete maze;
 }
