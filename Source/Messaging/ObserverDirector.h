@@ -17,6 +17,7 @@
 #include "MsgEntity.h"
 #include "MsgLight.h"
 #include "MsgZoom.h"
+#include "MsgSound.h"
 
 #include "MsgDXWindowHandle.h"
 
@@ -36,6 +37,7 @@ private:
 	void msgCamera(Msg* msg);
 	void msgLight(Msg* msg);
 	void msgZoom(Msg* msg);
+	void msgSound(Msg* msg);
 
 	// Entity messages
 	void msgEntityPlayerPos(Msg* msg)

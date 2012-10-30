@@ -78,6 +78,10 @@ void ObserverDirector::update(double delta)
 		case ZOOM:
 			msgZoom(msg);
 			break;
+
+		case SOUND:
+			msgSound(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
@@ -228,6 +232,22 @@ void ObserverDirector::msgZoom(Msg* msg)
 		}
 	}
 	delete msgZoom;
+}
+
+void ObserverDirector::msgSound(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgSound* soundMsg = (MsgSound*)msg;
+	for(unsigned int i=0; i<observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgSound* newInstance =  new MsgSound(soundMsg);
+			observer->getComponent()->push(newInstance);
+		}
+	}
+	delete soundMsg;
 }
 
 void ObserverDirector::msgLight(Msg* msg)
