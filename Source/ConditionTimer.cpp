@@ -21,7 +21,6 @@ void ConditionTimer::reset()
 	timer->reset();
 	timer->start();
 
-	ticking		= true;
 	condition	= false;
 }
 void ConditionTimer::start()
