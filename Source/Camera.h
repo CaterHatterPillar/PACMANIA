@@ -22,7 +22,6 @@ private:
 
 	unsigned int screenWidth;
 	unsigned int screenHeight;
-
 protected:
 	// Makes a smooth camera transition between this position and a goal position
 	// anyone with better name suggestions?
