@@ -12,6 +12,8 @@
 #include "../Messaging/MsgZoom.h"
 #include "../Messaging/MsgEntity.h"
 
+enum Condition { RESTART, NO_CONDITION };
+
 class Game  : public Component
 {
 private:
@@ -19,6 +21,8 @@ private:
 	GameTimer* gameTimer;
 	bool running;
 
+	/*Condition*/
+	Condition curCondition;
 	ConditionTimer* conditionTimer;
 
 	/*Ext*/
@@ -40,6 +44,8 @@ public:
 	{
 		running			= true;
 		gameTimer		= new GameTimer();
+
+		curCondition	= NO_CONDITION;
 		conditionTimer	= new ConditionTimer(-1.0);
 
 		this->camera	= camera;
@@ -140,6 +146,7 @@ public:
 		entities.push_back(entity);
 	}
 
+	void handleGameConditions();
 	void startGame();
 	void endGame();
 	void restartGame(); 
