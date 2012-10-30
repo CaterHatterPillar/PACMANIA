@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "GameEntityFactory.h"
+#include "../ConditionTimer.h"
 
 #include "../SoundEngine.h"
 
@@ -13,12 +14,17 @@
 #include "../Messaging/MsgZoom.h"
 #include "../Messaging/MsgEntity.h"
 
+enum Condition { RESTART, NO_CONDITION };
+
 class Game  : public Component
 {
 private:
 	/*Members*/
-	bool running;
 	GameTimer* gameTimer;
+	bool gameRunning;
+
+	Condition curCondition;
+	ConditionTimer* conditionTimer;
 
 	/*Ext*/
 	Camera*				camera;
@@ -26,6 +32,7 @@ private:
 	Renderer*			renderer;
 	GameEntityFactory*	entityFac;
 	vector<GameEntity*> entities;
+	int num_entities;
 	Maze* maze;
 protected:
 public:
@@ -37,14 +44,18 @@ public:
 		Renderer*			renderer,
 		GameEntityFactory*	entityFac)
 	{
-		running		= true;
 		gameTimer	= new GameTimer();
+		conditionTimer = new ConditionTimer(-1.0);
 
 		this->camera	= camera;
 		this->window	= window;
 		this->renderer	= renderer;
 		this->entityFac = entityFac;
 
+		entities.resize(20);
+		num_entities = 0;
+		for(int i=0; i<(int)entities.size(); i++)
+			entities[i]=0;
 		init();
 	}
 	~Game()
@@ -59,6 +70,9 @@ public:
 			
 		if(gameTimer)
 			delete gameTimer;
+		if(conditionTimer)
+			delete conditionTimer;
+
 		if(camera)
 			delete camera;
 		if(window)
@@ -81,10 +95,13 @@ public:
 				switch(type)
 				{
 				case ENTITY_GHOST_SPAWN:
-					spawnGhost();
+					msgSpawnGhost(msg);
 					break;
 				case INPUT_KEYBOARD_MSG:
 					msgKeyboard(msg);
+					break;
+				case GAME_OVER:
+					msgGameOver(msg);
 					break;
 				default:
 					throw 0; //temp
@@ -96,6 +113,14 @@ public:
 	void init()
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
+	}
+
+	void msgSpawnGhost(Msg* msg)
+	{
+		spawnGhost();
+		delete msg;
 	}
 
 	void msgKeyboard(Msg* msg)
@@ -104,12 +129,28 @@ public:
 		keyboard(keyboardMsg->Key());
 		delete keyboardMsg;
 	}
+	void msgGameOver(Msg* msg)
+	{
+		MsgGameOver* gameOverMsg = (MsgGameOver*)msg;
+		endGame();
+		delete gameOverMsg;
+	}
 
 	void keyboard(KEY key)
 	{
 		switch(key)
 		{
 		case KEY_D:
+			maze->restart();
+			for(int i=0; i<(int)entities.size(); i++)
+			{
+				if(entities[i])
+					entities[i]->reset();
+			}
+			num_entities = 0;
+			spawnPacman();
+			break;
+		case KEY_W:
 			spawnGhost();
 			break;
 		default:
@@ -119,17 +160,27 @@ public:
 
 	void spawnGhost()
 	{
-		GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
-		entities.push_back(entity);
+		if(entities[num_entities] == 0)
+		{
+			GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
+			entities[num_entities]=entity;
+		}
+		num_entities++;
 	}
 	void spawnPacman()
 	{
-		GameEntity* entity = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);
-		entities.push_back(entity);
+		if(entities[num_entities] == 0)
+		{
+			GameEntity* entity = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);
+			entities[num_entities]=entity;
+		}
+		num_entities++;
 	}
 
+	void handleGameConditions();
 	void startGame();
 	void endGame();
+	void restartGame(); 
 };
 
 #endif

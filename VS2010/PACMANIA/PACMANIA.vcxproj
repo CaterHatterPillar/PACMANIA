@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\Camera.cpp" />
     <ClCompile Include="..\..\Source\Component.cpp" />
+    <ClCompile Include="..\..\Source\ConditionTimer.cpp" />
     <ClCompile Include="..\..\Source\DX\CameraDX.cpp" />
     <ClCompile Include="..\..\Source\DX\Cube.cpp" />
     <ClCompile Include="..\..\Source\DX\GraphicsContainerDX.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="..\..\Source\Camera.h" />
     <ClInclude Include="..\..\Source\Common.h" />
     <ClInclude Include="..\..\Source\Component.h" />
+    <ClInclude Include="..\..\Source\ConditionTimer.h" />
     <ClInclude Include="..\..\Source\DX\CameraDX.h" />
     <ClInclude Include="..\..\Source\DX\ConstantBuffers.h" />
     <ClInclude Include="..\..\Source\DX\Cube.h" />

@@ -25,7 +25,7 @@ private:
 			move(1,0);
 			break;
 		case KEY_D:
-			stop();
+			//stop();
 			break;
 		case KEY_A:
 			respawn();
@@ -36,11 +36,19 @@ protected:
 public:
 	MoveBehaviourMazePlayer(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
+		pos = VecI2(-3,16);
+		move(1,0);
 	};
 	virtual void init()
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_POS));
+	};
+
+	void reset()
+	{
+		pos = VecI2(-3,16);
+		move(1,0);
 	};
 
 	void runAI()
@@ -121,7 +129,7 @@ public:
 		if(dist < 0.4f)
 		{
 			// Send gameover message
-			Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
+			Singleton<ObserverDirector>::get().push(new MsgGameOver());
 		}
 	};
 

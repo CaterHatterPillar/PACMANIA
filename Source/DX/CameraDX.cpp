@@ -20,23 +20,23 @@ void CameraDX::mouse(const float dX, const float dY)
 
 void CameraDX::keyboard(KEY key)
 {
-	switch(key)
-	{
-	case KEY_W:
-		walk(STEP_SCALE);
-		break;
-	case KEY_A:
-		strafe(-STEP_SCALE);
-		break;
-	case KEY_S:
-		walk(-STEP_SCALE);
-		break;
-	case KEY_D:
-		strafe(STEP_SCALE);
-		break;
-	default:
-		break;
-	}
+	//switch(key)
+	//{
+	//case KEY_W:
+	//	walk(STEP_SCALE);
+	//	break;
+	//case KEY_A:
+	//	strafe(-STEP_SCALE);
+	//	break;
+	//case KEY_S:
+	//	walk(-STEP_SCALE);
+	//	break;
+	//case KEY_D:
+	//	//strafe(STEP_SCALE);
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 
 void CameraDX::updateView()

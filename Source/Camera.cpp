@@ -88,14 +88,13 @@ void Camera::update(double delta)
 void Camera::zoomIn()
 {
 	position.z = lerp(position.z, zoomedIn, lerpFac);
-	if(position.z == zoomedIn)
+	if(position.z >= zoomedIn - lerpFac)
 		zoomingIn = false;
-		
 }
 void Camera::zoomOut()
 {
 	position.z = lerp(position.z, zoomedOut, lerpFac);
-	if(position.z == zoomedOut)
+	if(position.z <= zoomedOut + lerpFac)
 		zoomingOut = false;
 }
 
@@ -133,9 +132,15 @@ void Camera::msgZoom(Msg* msg)
 	position.y = zoomMsg->getY();
 	
 	if(state == STATE_ZOOM_IN)
+	{
 		zoomingIn = true;
+		zoomingOut = false;
+	}
 	if(state == STATE_ZOOM_OUT)
+	{
 		zoomingOut = true;
+		zoomingIn = false;
+	}
 
 	delete zoomMsg;
 }

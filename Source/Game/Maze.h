@@ -114,6 +114,7 @@ public:
 		// Subscribe to game state
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PLAYER_POS));
 	};
+
 	
 	virtual ~Maze()
 	{
@@ -135,7 +136,13 @@ public:
 		loadFromTextfile();
 	};
 
+	void restart()
+	{
+		pills.clear();
+		createMaze();
+	};
 	
+
 	VecI2 getRandomFreePosition()
 	{
 		VecI2 pos;
@@ -229,7 +236,7 @@ public:
 		VecF3 goalPos(childMsg->pos);
 		cullingPosition = VecI2((int)goalPos.x, (int)goalPos.y);
 
-		delete msg;
+		delete childMsg;
 	}
 
 	void update(double delta)
@@ -382,5 +389,14 @@ public:
 		// get maze tile
 		return grid[pos.x][pos.y];
 	};
+
+	bool isOutsidePos(VecI2 pos)
+	{
+		if(pos.x<0 || pos.y<0)
+			return true;
+		if(pos.x>=sizeX || pos.y>=sizeY)
+			return true;
+		return false;
+	}
 };
 #endif

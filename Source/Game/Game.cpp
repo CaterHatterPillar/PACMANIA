@@ -24,10 +24,12 @@ void Game::run()
 	do
 	{
 		double delta = gameTimer->tick();
+		
+		handleGameConditions();
 
 		// Update game entities
 		update(delta);
-		for(int i=0; i<(int)entities.size(); i++)
+		for(int i=0; i<(int)num_entities; i++)
 			entities[i]->update(delta);
 		maze->update(delta);
 		
@@ -42,8 +44,34 @@ void Game::run()
 	} while(window->isActive());
 }
 
+void Game::handleGameConditions()
+{
+	if(conditionTimer->Ticking())
+	{
+		conditionTimer->tick();
+		if(conditionTimer->Condition())
+		{
+			switch(curCondition)
+			{
+			case RESTART:
+				restartGame();
+				break;
+			case NO_CONDITION:
+				throw 0; //someone made a mistake
+				break;
+			}
+
+			/*Reset everything*/
+			curCondition = NO_CONDITION;
+			conditionTimer->stop();
+			conditionTimer->reset();
+		}
+	}
+}
 void Game::startGame()
 {
+	gameRunning = true;
+
 	//Zoom in
 	VecF3 pacPos = entities[0]->getPosition();
 	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_IN);
@@ -51,4 +79,33 @@ void Game::startGame()
 }
 void Game::endGame()
 {
+	if(gameRunning)
+	{
+		//Start game over-timer
+		curCondition = RESTART;
+		conditionTimer->Condition(5.0);	//five sec condition
+		conditionTimer->reset();
+		conditionTimer->start();
+
+		//Zoom out
+		VecF3 pacPos = entities[0]->getPosition();
+		MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
+		Singleton<ObserverDirector>::get().push(zoomMsg);
+
+		gameRunning = false;
+	}
+}
+void Game::restartGame()
+{
+	//restart game here
+	maze->restart();
+	for(int i=0; i<(int)entities.size(); i++)
+	{
+		if(entities[i])
+			entities[i]->reset();
+	}
+	num_entities = 0;
+	spawnPacman();
+
+	startGame();
 }

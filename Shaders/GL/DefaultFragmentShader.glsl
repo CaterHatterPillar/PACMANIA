@@ -89,6 +89,8 @@ uniform sampler2D sampler;
 void main()
 {
 	vec4 albedo = texture2D(sampler, TexCoord0.xy);
+	if(albedo.a <= 0.0f)
+		discard;
 
 	vec4 ambient	= vec4(0.1f,	0.1f,	0.1f,	1.0f);
 	vec4 diffuse	= vec4(1.0f,	1.0f,	1.0f,	1.0f);
@@ -116,9 +118,6 @@ void main()
 	litColor += spotLight(surface, light9, camPos);
 
 	litColor += ambient.xyz;
-
-	if(albedo.a <= 0.0f)
-		discard;
 
 	gl_FragColor = albedo * vec4(litColor, 1.0f);
 }

@@ -89,7 +89,7 @@ void CameraGL::yaw(const float angle)
 
 void CameraGL::keyboard(KEY key)
 {
-	switch(key)
+	/*switch(key)
 	{
 	case KEY_W:
 		walk(STEP_SCALE);
@@ -105,7 +105,7 @@ void CameraGL::keyboard(KEY key)
 		break;
 	default:
 		break;
-	}
+	}*/
 }
 void CameraGL::mouse(const float dX, const float dY)
 {

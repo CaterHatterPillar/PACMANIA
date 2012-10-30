@@ -142,6 +142,12 @@ public:
 		return maze->isWallPos(pos);
 	};
 
+	// Returns true if position is a wall
+	bool isOutsidePos(VecI2 pos)
+	{
+		return maze->isOutsidePos(pos);
+	};
+
 	void respawn()
 	{
 		pos_offset = 0.0f;
