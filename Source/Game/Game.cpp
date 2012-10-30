@@ -18,14 +18,12 @@ void Game::run()
 	{
 		double delta = gameTimer->tick();
 		
-		//if(conditionTimer->Ticking())		//TEMP
-		//{
-		//	conditionTimer->tick();
-		//	if(conditionTimer->Condition())
-		//	{
-		//		endGame();
-		//	}
-		//}									//TEMP
+		if(conditionTimer->Ticking())
+		{
+			conditionTimer->tick();
+			if(conditionTimer->Condition())
+				restartGame();
+		}
 
 		// Update game entities
 		update(delta);
@@ -52,8 +50,20 @@ void Game::startGame()
 }
 void Game::endGame()
 {
+	//Start game over-timer
+	conditionTimer->Condition(5.0);	//five sec condition
+	conditionTimer->reset();
+	conditionTimer->start();
+
 	//Zoom out
 	VecF3 pacPos = entities[0]->getPosition();
 	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
 	Singleton<ObserverDirector>::get().push(zoomMsg);
+}
+void Game::restartGame()
+{
+	conditionTimer->stop();
+	conditionTimer->reset();
+
+	std::string temp;
 }

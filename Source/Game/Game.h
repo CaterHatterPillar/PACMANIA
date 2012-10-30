@@ -38,11 +38,9 @@ public:
 		Renderer*			renderer,
 		GameEntityFactory*	entityFac)
 	{
-		running		= true;
-		gameTimer	= new GameTimer();
-		conditionTimer = new ConditionTimer(5.0);
-		conditionTimer->reset();
-		conditionTimer->start();
+		running			= true;
+		gameTimer		= new GameTimer();
+		conditionTimer	= new ConditionTimer(-1.0);
 
 		this->camera	= camera;
 		this->window	= window;
@@ -144,6 +142,7 @@ public:
 
 	void startGame();
 	void endGame();
+	void restartGame(); 
 };
 
 #endif
