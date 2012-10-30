@@ -41,14 +41,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\Build\$(ProjectName)-$(Configuration)\</OutDir>
     <IntDir>..\..\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
-    <LibraryPath>..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;C:\[Software]\[Programs]\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\..\External\gl\include;$(DXSDK_DIR)\Include;C:\Program Files %28x86%29\Visual Leak Detector\include;C:\[Software]\[Programs]\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\External\fmod\lib;..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;C:\[Software]\[Programs]\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\External\fmod\inc;..\..\External\gl\include;$(DXSDK_DIR)\Include;C:\Program Files %28x86%29\Visual Leak Detector\include;C:\[Software]\[Programs]\Visual Leak Detector\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\..\Build\$(ProjectName)-$(Configuration)\</OutDir>
     <IntDir>..\..\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
-    <LibraryPath>..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;C:\[Software]\[Programs]\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\..\External\gl\include;$(DXSDK_DIR)\Include;C:\Program Files %28x86%29\Visual Leak Detector\include;C:\[Software]\[Programs]\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\External\fmod\lib;..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;C:\[Software]\[Programs]\Visual Leak Detector\lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\External\fmod\inc;..\..\External\gl\include;$(DXSDK_DIR)\Include;C:\Program Files %28x86%29\Visual Leak Detector\include;C:\[Software]\[Programs]\Visual Leak Detector\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -57,7 +57,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;freeglut.lib;d3d11.lib;d3dx11d.lib;d3dx10.lib;D3DCompiler.lib;dxerr.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodexL_vc.lib;glew32.lib;freeglut.lib;d3d11.lib;d3dx11d.lib;d3dx10.lib;D3DCompiler.lib;dxerr.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>false</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
@@ -72,7 +72,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32.lib;freeglut.lib;d3d11.lib;d3dx11d.lib;d3dx10.lib;D3DCompiler.lib;dxerr.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodex_vc.lib;glew32.lib;freeglut.lib;d3d11.lib;d3dx11d.lib;d3dx10.lib;D3DCompiler.lib;dxerr.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

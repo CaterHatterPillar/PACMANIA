@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\Source\Math\PacMath.cpp" />
     <ClCompile Include="..\..\Source\Messaging\ObserverDirector.cpp" />
     <ClCompile Include="..\..\Source\Renderer.cpp" />
+    <ClCompile Include="..\..\Source\SoundEngine.cpp" />
     <ClCompile Include="..\..\Source\Timer.cpp" />
     <ClCompile Include="..\..\Source\Window.cpp" />
     <ClCompile Include="..\..\Source\WindowsContainer.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="..\..\Source\Messaging\SubscriptionMsg.h" />
     <ClInclude Include="..\..\Source\Renderer.h" />
     <ClInclude Include="..\..\Source\Singleton.h" />
+    <ClInclude Include="..\..\Source\SoundEngine.h" />
     <ClInclude Include="..\..\Source\Timer.h" />
     <ClInclude Include="..\..\Source\Vertices\Pos.h" />
     <ClInclude Include="..\..\Source\Vertices\PosNorm.h" />
@@ -113,7 +115,6 @@
     <None Include="..\..\Shaders\DX\Shader.hlsl" />
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB7C9795-79AD-4679-A921-C1D1F3E1430B}</ProjectGuid>
@@ -144,14 +145,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\External\gl\include;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\External\fmod\inc;..\..\External\gl\include;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\Build\$(ProjectName)-$(Configuration)\</OutDir>
     <IntDir>..\..\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>..\..\External\gl\lib;$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\..\External\gl\include;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\External\fmod\inc;..\..\External\gl\include;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
     <OutDir>..\..\Build\$(ProjectName)-$(Configuration)\</OutDir>
     <IntDir>..\..\Build\Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
