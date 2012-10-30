@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\Source\Behaviours\MoveBehaviourTest.cpp" />
     <ClCompile Include="..\..\Source\Test\HookUpTest.cpp" />
     <ClCompile Include="..\..\Source\Test\test_main.cpp" />
+    <ClCompile Include="..\..\Source\TimerTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

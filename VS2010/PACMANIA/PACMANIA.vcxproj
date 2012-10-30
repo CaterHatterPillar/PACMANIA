@@ -111,6 +111,7 @@
     <None Include="..\..\Levels\maze1.txt" />
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FB7C9795-79AD-4679-A921-C1D1F3E1430B}</ProjectGuid>
