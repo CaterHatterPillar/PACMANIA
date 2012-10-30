@@ -1,5 +1,5 @@
-#ifndef SOUND_H
-#define SOUND_H
+#ifndef SOUNDENGINE_H
+#define SOUNDENGINE_H
 
 #include <fmod.hpp>
 #include <fmod.h>
@@ -13,6 +13,10 @@
 
 #include "Component.h"
 
+#include "Singleton.h"
+#include "Messaging/ObserverDirector.h"
+#include "Messaging/MsgSound.h"
+
 class SoundEngine : public Component
 {
 private:
@@ -24,12 +28,14 @@ private:
 	FMOD_CAPS			caps;
 	char				name[256];
 
-	FMOD::Sound*		sound;
-	FMOD::Channel*		channel;
+	FMOD::Sound*		soundAmbient;
+	FMOD::Channel*		channelAmbient;
 
 	void ERRCHECK(FMOD_RESULT result);
 	void windowsInit();
 	void loadSounds();
+
+	void msgSound(Msg* msg);
 protected:
 public:
 	SoundEngine();
@@ -42,4 +48,4 @@ public:
 };
 
 
-#endif //SOUND_H
+#endif //SOUNDENGINE_H
