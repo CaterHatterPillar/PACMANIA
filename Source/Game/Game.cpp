@@ -43,4 +43,8 @@ void Game::startGame()
 }
 void Game::endGame()
 {
+	//Zoom out
+	VecF3 pacPos = entities[0]->getPosition();
+	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
+	Singleton<ObserverDirector>::get().push(zoomMsg);
 }

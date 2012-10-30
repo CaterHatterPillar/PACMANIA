@@ -9,6 +9,7 @@
 #include "../GameTimer.h"
 
 #include "../Messaging/MsgZoom.h"
+#include "../Messaging/MsgEntity.h"
 
 class Game  : public Component
 {
@@ -83,6 +84,9 @@ public:
 				case INPUT_KEYBOARD_MSG:
 					msgKeyboard(msg);
 					break;
+				case GAME_OVER:
+					msgGameOver(msg);
+					break;
 				default:
 					throw 0; //temp
 					break;
@@ -93,6 +97,7 @@ public:
 	void init()
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
 	}
 
 	void msgKeyboard(Msg* msg)
@@ -100,6 +105,12 @@ public:
 		MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
 		keyboard(keyboardMsg->Key());
 		delete keyboardMsg;
+	}
+	void msgGameOver(Msg* msg)
+	{
+		MsgGameOver* gameOverMsg = (MsgGameOver*)msg;
+		endGame();
+		delete gameOverMsg;
 	}
 
 	void keyboard(KEY key)
