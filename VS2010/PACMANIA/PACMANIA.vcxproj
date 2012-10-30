@@ -108,6 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Levels\maze1.txt" />
+    <None Include="..\..\Shaders\DX\Light.hlsl" />
+    <None Include="..\..\Shaders\DX\Shader.hlsl" />
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
   </ItemGroup>
