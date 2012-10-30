@@ -11,7 +11,7 @@ void Camera::init()
 	Singleton<ObserverDirector>::get().push(subscription);
 
 	//Subscribe to game state
-	subscription = new SubscriptionMsg(this, ENTITY_STATE);
+	subscription = new SubscriptionMsg(this, ENTITY_PLAYER_POS);
 	Singleton<ObserverDirector>::get().push(subscription);
 }
 void Camera::update(double delta)
@@ -36,8 +36,8 @@ void Camera::update(double delta)
 				msgKeyboard(msg);
 				updateMatrices = true;
 				break;
-			case ENTITY_STATE:
-				msgEntityState(msg);
+			case ENTITY_PLAYER_POS:
+				msgEntityPlayerPos(msg);
 				updateMatrices = true;
 				break;
 			}
@@ -69,9 +69,9 @@ void Camera::msgKeyboard(Msg* msg)
 	keyboard(keyboardMsg->Key());
 	delete keyboardMsg;
 }
-void Camera::msgEntityState(Msg* msg)
+void Camera::msgEntityPlayerPos(Msg* msg)
 {
-	MsgEntityState* childMsg = (MsgEntityState*)msg;
+	MsgEntityPlayerPos* childMsg = (MsgEntityPlayerPos*)msg;
 	
 	// Use LERP-to smooth out camera movement
 	VecF3 goalPos(childMsg->pos);

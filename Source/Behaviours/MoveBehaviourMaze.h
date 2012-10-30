@@ -9,9 +9,7 @@ class MoveBehaviourMaze : public MoveBehaviour
 {
 private:
 	float pos_offset;
-
 	Quaternion qua_rot_tween;
-	float speed;
 	float turningSpeed; // turning speed (smaller is faster)
 	
 	Maze *maze;
@@ -43,6 +41,7 @@ protected:
 	VecI2 dir;
 	VecI2 dir_queue;
 	bool isMoving;
+	float speed;
 
 	void move(int x, int y)
 	{
@@ -52,9 +51,15 @@ protected:
 		if(x!=0 && y!=0)
 			x = 0; 
 
+		// Prevent zero vectors
+		if(x==0 && y==0)
+		{
+			throw "Negative vector, this shouldn't occur, please find out why.";
+		}
+
 		// Update movement queue
 		dir_queue.x=x;
-		dir_queue.y=y;
+		dir_queue.y=y;	
 	};
 	void stop()
 	{
@@ -75,15 +80,66 @@ public:
 		dir.x=1;
 		dir.y=0;
 		isMoving = false;
-
 	};
 	virtual ~MoveBehaviourMaze()
 	{
-	//	delete maze;
+		//	delete maze;
 	};
+
+	// Returns true if both position is in line of sight of eachother i.e. empty of maze segments
+	bool isInLineOfSight(VecI2 p1, VecI2 p2)
+	{
+		int x0 = p1.x;
+		int y0 = p1.y;
+		int x1 = p2.x;
+		int y1 = p2.y;
+
+		int dx = abs(x1 - x0);
+		int dy = abs(y1 - y0);
+		int sx = x0 < x1 ? 1 : -1;
+		int sy = y0 < y1 ? 1 : -1;
+		int err = dx - dy;
+
+		// Obstacle
+		while(true)
+		{
+			// TRUE: Sight is obscured by wall, there is no point in continuing
+			if(isWallPos(VecI2(x0, y0)))
+			{
+				return false;
+			}
+
+			// Break if end is reached
+			if(x0 == x1 && y0 == y1) 
+			{
+				break;
+			}
+
+			// Walk to next cell
+			int e2 = 2 * err;
+			if(e2 > -dy)
+			{
+				err = err - dy;
+				x0 = x0 + sx;
+			}
+			if(e2 < dx)
+			{
+				err = err + dx;
+				y0 = y0 + sy;
+			}
+		}
+
+		return true;
+	}
 
 	virtual void init()
 	{
+	};
+
+	// Returns true if position is a wall
+	bool isWallPos(VecI2 pos)
+	{
+		return maze->isWallPos(pos);
 	};
 
 	void respawn()

@@ -125,12 +125,49 @@ void FXManagementGL::initPerFrame(GLuint programFX)
 	glBindBufferBase(GL_UNIFORM_BUFFER, blockIndex, perFrameHandle);
 }
 
-void FXManagementGL::updatePerFrame(Light lights[], VecF3 camPos)
+void FXManagementGL::updatePerFrame(std::vector<Light> lights, VecF3 camPos)
 {
-	//Place data into buffer
-	memcpy(perFrameBuffer, lights,	10 * sizeof(Light));
-	memcpy(perFrameBuffer + 10 * sizeof(Light), &camPos, sizeof(VecF3));
-
+	FXGL* fx = getFX(VERTEX_SHADER_DEFAULT, PIXEL_SHADER_DEFAULT);
+	GLuint programHandle = fx->ProgramFX();
+	
+	// Query for the offsets of each block variable
+	const GLchar *names[] =
+	{
+		"camPos",
+		"light0.pos",
+		"light1.pos",
+		"light2.pos",
+		"light3.pos",
+		"light4.pos",
+		"light5.pos",
+		"light6.pos",
+		"light7.pos",
+		"light8.pos",
+		"light9.pos"
+	};
+	
+	//Fetch indices
+	GLuint indices[11];
+	glGetUniformIndices(
+		programHandle, 
+		11, 
+		names, 
+		indices);
+	
+	GLint offset[11];
+	glGetActiveUniformsiv(
+		programHandle, 
+		11, 
+		indices,
+		GL_UNIFORM_OFFSET,
+		offset);
+	
+	memcpy(perFrameBuffer + offset[0], &camPos, sizeof(VecF3));
+	for(unsigned int i = 1; i < 11; i++)
+	{
+		memcpy(perFrameBuffer + offset[i], &lights[i - 1], sizeof(Light));
+	}
+	
 	glBufferData(
 		GL_UNIFORM_BUFFER,	//Specifies target type
 		perFrameSize,		//Size in bytes

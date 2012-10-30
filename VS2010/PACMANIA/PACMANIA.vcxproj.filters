@@ -212,9 +212,6 @@
     <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h">
       <Filter>Source\Messaging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgEntityState.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Messaging\MsgGlut.h">
       <Filter>Source\Messaging</Filter>
     </ClInclude>
@@ -310,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h">
       <Filter>Source\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Messaging\MsgEntity.h">
+      <Filter>Source\Messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

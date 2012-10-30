@@ -39,8 +39,8 @@ public:
 	};
 	virtual void init()
 	{
-		SubscriptionMsg* subscription = new SubscriptionMsg(this, INPUT_KEYBOARD_MSG);
-		Singleton<ObserverDirector>::get().push(subscription);
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_POS));
 	};
 
 	void runAI()
@@ -83,6 +83,9 @@ public:
 				case INPUT_KEYBOARD_MSG:
 					msgKeyboard(msg);
 					break;
+				case ENTITY_GHOST_POS:
+					msgEntityGhostPos(msg);
+					break;
 				default:
 					throw 0; //temp
 					break;
@@ -90,25 +93,40 @@ public:
 			}
 		}
 
-		// Send message of current state to all relevent listeners
-		sendMsgEntityState();
+		Singleton<ObserverDirector>::get().push(new MsgEntityPlayerPos(position));
+		Singleton<ObserverDirector>::get().push(new MsgEntityPacmanPos(pos));
 	}
 
 	void updateSpecific(double delta)
 	{
 	};
 
-	void sendMsgEntityState()
-	{
-		MsgEntityState* msg = new MsgEntityState(position, 0);
-		Singleton<ObserverDirector>::get().push(msg);
-	};	
 
 	void msgKeyboard(Msg* msg)
 	{
 		MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
 		keyboard(keyboardMsg->Key());
 		delete keyboardMsg;
+	};
+
+	void checkCollisionWithGhost(VecI2 ghostPos, VecF3 ghostPosition)
+	{
+		VecF3 v1 = position;
+		VecF3 v2 = ghostPosition;
+
+		// TRUE: Collision occurs
+		float dist = v1.distanceTo(v2);
+		if(dist < 0.4f)
+		{
+			//respawn();
+		}
+	};
+
+	void msgEntityGhostPos(Msg* msg)
+	{
+		MsgEntityGhostPos* msgCast = (MsgEntityGhostPos*)msg;
+		checkCollisionWithGhost(msgCast->pos, msgCast->position);
+		delete msgCast;
 	};
 };
 

@@ -13,8 +13,6 @@ GLuint	RendererGL::sampler;
 
 GraphicsContainerGL* RendererGL::prevGC;
 
-Light RendererGL::lights[10];
-
 RendererGL::RendererGL() : Renderer()
 {
 	fxManagement	= new FXManagementGL();
@@ -101,6 +99,21 @@ void RendererGL::update(double delta)
 	renderList->resize(0);
 
 	curLight = 0;
+	lights.resize(0);
+	for(unsigned int i = 0; i < 10; i++)
+	{
+		Light l;
+		l.pos		= VecF3(-1000.0f, -1000.0f, -1000.0f);
+		l.spotPow	= 128.0f;
+		l.dir		= VecF3(0.0f, 0.0f, -1.0f);
+		l.range		= 1000.0f;
+		l.ambient	= VecF4(0.3f, 0.3f, 0.3f, 1.0f);
+		l.diffuse	= VecF4(0.7f, 0.7f, 0.7f, 1.0f);
+		l.specular	= VecF4(0.5f, 0.5f, 0.5f, 1.0f);
+		l.att		= VecF3(0.25f, 0.0f, 0.0f);
+
+		lights.push_back(l);
+	}
 
 	Msg* msg = peek();
 	while(msg)
@@ -282,15 +295,7 @@ void RendererGL::msgLight(Msg* msg)
 	MsgLight* lightMsg = (MsgLight*)msg;
 
 	Light* light = lightMsg->getLight();
-
-	lights[curLight].pos		= light->pos;
-	lights[curLight].spotPow	= light->spotPow;
-	lights[curLight].dir		= light->dir;
-	lights[curLight].range		= light->range;
-	lights[curLight].ambient	= light->ambient;
-	lights[curLight].diffuse	= light->diffuse;
-	lights[curLight].specular	= light->specular;
-	lights[curLight].att		= light->att;
+	lights[curLight] = (*light);
 
 	curLight++;
 
