@@ -21,7 +21,9 @@ public:
 		float fov, 
 		float aspect, 
 		float zNear, 
-		float zFar);
+		float zFar, 
+		float zoomedIn, 
+		float zoomedOut);
 	~CameraGL();
 
 	void init();
