@@ -40,11 +40,16 @@ public:
 		VecF3 v1((float)pos.x, (float)pos.y, 0.0f);
 		VecF3 v2(p2.x, p2.y, 0.0f);
 
-		// True: Collision occures
+		// TRUE: Collision occures
 		float dist = v1.distanceTo(v2);
 		if(dist < 0.5f)
 		{
 			isAlive = false;
+
+			// Send messages
+			Singleton<ObserverDirector>::get().push(new MsgEntityPillEaten());
+			if(isBloody)
+				Singleton<ObserverDirector>::get().push(new MsgEntityPillBloodyEaten());
 		}
 	}
 
@@ -87,9 +92,6 @@ private:
 	static const int sizeY=31;
 	int grid[sizeX][sizeY];
 
-	//GameEntity* pacman = new GameEntity();
-
-	//vector<GameEntity> pills;
 	GraphicsContainer* gcWall;
 	GraphicsContainer* gcPill;
 	GraphicsContainer* gcPillBloody;
@@ -109,9 +111,8 @@ public:
 		// Init random seed
 		srand((unsigned)time(NULL));
 
-		//Subscribe to game state
-		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_PLAYER_POS);
-		Singleton<ObserverDirector>::get().push(subscription);
+		// Subscribe to game state
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PLAYER_POS));
 	};
 	
 	virtual ~Maze()
@@ -160,7 +161,6 @@ public:
 
 	void loadFromTextfile()
 	{
-		//Load High Score
 		string line;
 		string fileName = "../../Levels/maze1.txt";
 		ifstream f(fileName);
@@ -205,12 +205,6 @@ public:
 
 	MatF4 getPosition(int x, int y)
 	{
-		//D3DXMATRIX translation;
-		//D3DXMatrixIdentity(&translation);
-		//float middleX = (float)sizeX*0.5f-0.5f; // middle of grid
-		//float middleY = (float)sizeY*0.5f-0.5f; // middle of grid
-		//D3DXMatrixTranslation(&translation, (float)x-sizeX-10.0f, 20.0f, (float)y-sizeY);
-
 		return MatF4();
 	};
 
@@ -240,7 +234,6 @@ public:
 
 	void update(double delta)
 	{
-
 		// Check messages
 		Msg* msg = peek();
 		while(msg)
@@ -258,13 +251,13 @@ public:
 			}
 		}
 
-		//Update pills
+		// Update pills
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
 			pills[i].update((float)delta);
 		}
 
-		//draw
+		// Draw
 		draw();
 	};
 
@@ -298,14 +291,12 @@ public:
 			}
 		}
 
-
 		//
-		// Draw pills
-		// 
+		// Spawn new ghosts
+		//
 
 		int pillsEaten = 0;
 		int pillsTotal = 0;
-		pillsTotal = 10;
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
 			if(!pills[i].isAlive)
@@ -314,6 +305,21 @@ public:
 			}
 			pillsTotal++;
 		}
+
+		float pillsRatio = (float)pillsEaten/pillsTotal;
+		static int current_num_ghosts = 0;
+		int goal_num_ghosts;
+		goal_num_ghosts = (int)(5*pillsRatio);
+		if(goal_num_ghosts>current_num_ghosts)
+		{
+			Singleton<ObserverDirector>::get().push(new MsgEntityGhostSpawn());
+			current_num_ghosts++;
+		};
+
+
+		//
+		// Draw pills
+		// 
 
 		for(int i = 0; i<(int)pills.size(); i++)
 		{

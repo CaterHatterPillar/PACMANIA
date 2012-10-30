@@ -77,6 +77,9 @@ public:
 				MsgType type = msg->Type();
 				switch(type)
 				{
+				case ENTITY_GHOST_SPAWN:
+					spawnGhost();
+					break;
 				case INPUT_KEYBOARD_MSG:
 					msgKeyboard(msg);
 					break;
@@ -89,7 +92,7 @@ public:
 	}
 	void init()
 	{
-		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
 	}
 
 	void msgKeyboard(Msg* msg)
