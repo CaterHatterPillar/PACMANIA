@@ -28,6 +28,9 @@
     <Filter Include="Source\GL\Shaders">
       <UniqueIdentifier>{2976be2a-e209-441c-a800-a4c2c0d2ebdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Timers">
+      <UniqueIdentifier>{38ab2e46-569e-4f63-9efd-d98858c9d4bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Camera.cpp">
@@ -81,12 +84,6 @@
     <ClCompile Include="..\..\Source\Messaging\ObserverDirector.cpp">
       <Filter>Source\Messaging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GameTimer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Game\GameEntityFactory.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
@@ -119,6 +116,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Game\Game.cpp">
       <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timer.cpp">
+      <Filter>Source\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ConditionTimer.cpp">
+      <Filter>Source\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GameTimer.cpp">
+      <Filter>Source\Timers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,12 +251,6 @@
     <ClInclude Include="..\..\Source\Vertices\PosNormTex.h">
       <Filter>Source\Vertices</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GameTimer.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timer.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\GL\TexManagementGL.h">
       <Filter>Source\GL</Filter>
     </ClInclude>
@@ -310,6 +310,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Game\Game.h">
       <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timer.h">
+      <Filter>Source\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ConditionTimer.h">
+      <Filter>Source\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GameTimer.h">
+      <Filter>Source\Timers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

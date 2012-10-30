@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "GameEntityFactory.h"
+#include "../ConditionTimer.h"
 
 #include "../Camera.h"
 #include "../Window.h"
@@ -15,8 +16,10 @@ class Game  : public Component
 {
 private:
 	/*Members*/
-	bool running;
 	GameTimer* gameTimer;
+	bool running;
+
+	ConditionTimer* conditionTimer;
 
 	/*Ext*/
 	Camera*				camera;
@@ -37,6 +40,9 @@ public:
 	{
 		running		= true;
 		gameTimer	= new GameTimer();
+		conditionTimer = new ConditionTimer(5.0);
+		conditionTimer->reset();
+		conditionTimer->start();
 
 		this->camera	= camera;
 		this->window	= window;
@@ -79,10 +85,13 @@ public:
 				switch(type)
 				{
 				case ENTITY_GHOST_SPAWN:
-					spawnGhost();
+					msgSpawnGhost(msg);
 					break;
 				case INPUT_KEYBOARD_MSG:
 					msgKeyboard(msg);
+					break;
+				case GAME_OVER:
+					msgGameOver(msg);
 					break;
 				default:
 					throw 0; //temp
@@ -95,6 +104,13 @@ public:
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
+	}
+
+	void msgSpawnGhost(Msg* msg)
+	{
+		spawnGhost();
+		delete msg;
 	}
 
 	void msgKeyboard(Msg* msg)
@@ -102,6 +118,12 @@ public:
 		MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
 		keyboard(keyboardMsg->Key());
 		delete keyboardMsg;
+	}
+	void msgGameOver(Msg* msg)
+	{
+		MsgGameOver* gameOverMsg = (MsgGameOver*)msg;
+		endGame();
+		delete gameOverMsg;
 	}
 
 	void keyboard(KEY key)
