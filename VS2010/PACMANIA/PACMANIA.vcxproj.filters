@@ -118,7 +118,7 @@
       <Filter>Source\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Game\Game.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +309,7 @@
       <Filter>Source\Messaging</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Game\Game.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
