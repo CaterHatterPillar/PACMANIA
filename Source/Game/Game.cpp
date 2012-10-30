@@ -11,10 +11,6 @@ void Game::run()
 	soundEngine->init();
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT, false));
 
-	Singleton<ObserverDirector>::get().update(1.0f);
-
-	soundEngine->update(1.0f);
-
 	maze = entityFac->createMaze();
 	spawnPacman();
 
@@ -40,7 +36,8 @@ void Game::run()
 		window->update(delta);
 		renderer->update(delta);
 		Singleton<ObserverDirector>::get().update(delta);
-		
+		soundEngine->update(delta);
+
 		renderer->renderFrame();
 	} while(window->isActive());
 }
