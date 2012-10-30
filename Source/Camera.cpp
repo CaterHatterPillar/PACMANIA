@@ -132,9 +132,15 @@ void Camera::msgZoom(Msg* msg)
 	position.y = zoomMsg->getY();
 	
 	if(state == STATE_ZOOM_IN)
+	{
 		zoomingIn = true;
+		zoomingOut = false;
+	}
 	if(state == STATE_ZOOM_OUT)
+	{
 		zoomingOut = true;
+		zoomingIn = false;
+	}
 
 	delete zoomMsg;
 }

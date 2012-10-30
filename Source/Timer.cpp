@@ -50,12 +50,12 @@ double Timer::getElapsedTimeMicroSec()
 }
 double Timer::getElapsedTimeMilliSec()
 {
-	float ms = (float)getElapsedTimeMicroSec() * 0.001;
+	float ms = (float)getElapsedTimeMicroSec() * 0.001f;
 	return ms;
 }
 double Timer::getElapsedTimeSec()
 {
-	float s = (float)getElapsedTimeMicroSec() * 0.000001;
+	float s = (float)getElapsedTimeMicroSec() * 0.000001f;
 	return s;
 }
 
