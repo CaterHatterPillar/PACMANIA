@@ -2,12 +2,18 @@
 
 #include <iostream>
 
+#include "../Messaging/MsgSound.h"
+
 void Game::run()
 {
 	SoundEngine* soundEngine = new SoundEngine();
 
 	soundEngine->init();
-	soundEngine->playSound();
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT, false));
+
+	Singleton<ObserverDirector>::get().update(1.0f);
+
+	soundEngine->update(1.0f);
 
 	maze = entityFac->createMaze();
 	spawnPacman();
