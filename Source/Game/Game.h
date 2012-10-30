@@ -9,6 +9,7 @@
 #include "../GameTimer.h"
 
 #include "../Messaging/MsgZoom.h"
+#include "../Messaging/MsgEntity.h"
 
 class Game  : public Component
 {

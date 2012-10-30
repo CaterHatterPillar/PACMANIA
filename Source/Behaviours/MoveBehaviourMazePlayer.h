@@ -120,7 +120,8 @@ public:
 		float dist = v1.distanceTo(v2);
 		if(dist < 0.4f)
 		{
-			//respawn();
+			// Send gameover message
+			Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
 		}
 	};
 
