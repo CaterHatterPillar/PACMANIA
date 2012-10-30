@@ -19,7 +19,7 @@ class Game  : public Component
 private:
 	/*Members*/
 	GameTimer* gameTimer;
-	bool running;
+	bool gameRunning;
 
 	Condition curCondition;
 	ConditionTimer* conditionTimer;
@@ -42,7 +42,6 @@ public:
 		Renderer*			renderer,
 		GameEntityFactory*	entityFac)
 	{
-		running		= true;
 		gameTimer	= new GameTimer();
 		conditionTimer = new ConditionTimer(-1.0);
 

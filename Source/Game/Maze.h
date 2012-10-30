@@ -236,7 +236,7 @@ public:
 		VecF3 goalPos(childMsg->pos);
 		cullingPosition = VecI2((int)goalPos.x, (int)goalPos.y);
 
-		delete msg;
+		delete childMsg;
 	}
 
 	void update(double delta)

@@ -62,6 +62,8 @@ void Game::handleGameConditions()
 }
 void Game::startGame()
 {
+	gameRunning = true;
+
 	//Zoom in
 	VecF3 pacPos = entities[0]->getPosition();
 	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_IN);
@@ -69,16 +71,21 @@ void Game::startGame()
 }
 void Game::endGame()
 {
-	//Start game over-timer
-	curCondition = RESTART;
-	conditionTimer->Condition(5.0);	//five sec condition
-	conditionTimer->reset();
-	conditionTimer->start();
+	if(gameRunning)
+	{
+		//Start game over-timer
+		curCondition = RESTART;
+		conditionTimer->Condition(5.0);	//five sec condition
+		conditionTimer->reset();
+		conditionTimer->start();
 
-	//Zoom out
-	VecF3 pacPos = entities[0]->getPosition();
-	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
-	Singleton<ObserverDirector>::get().push(zoomMsg);
+		//Zoom out
+		VecF3 pacPos = entities[0]->getPosition();
+		MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
+		Singleton<ObserverDirector>::get().push(zoomMsg);
+
+		gameRunning = false;
+	}
 }
 void Game::restartGame()
 {

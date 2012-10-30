@@ -16,6 +16,7 @@ public:
 	{
 		pos = msg->pos;
 	}
+	virtual ~MsgEntityPlayerPos() {}
 };
 
 class MsgEntityPacmanPos : public Msg
@@ -30,6 +31,7 @@ public:
 	{
 		pos = msg->pos;
 	}
+	virtual ~MsgEntityPacmanPos() {}
 };
 
 class MsgEntityGhostPos : public Msg
@@ -47,6 +49,7 @@ public:
 		pos = msg->pos;
 		position = msg->position;
 	}
+	virtual ~MsgEntityGhostPos() {}
 };
 
 class MsgEntityPillPos : public Msg
@@ -61,6 +64,7 @@ public:
 	{
 		pos = msg->pos;
 	}
+	virtual ~MsgEntityPillPos() {}
 };
 
 class MsgEntityGhostSpawn : public Msg
@@ -69,6 +73,7 @@ public:
 	MsgEntityGhostSpawn() : Msg(ENTITY_GHOST_SPAWN)
 	{
 	}
+	virtual ~MsgEntityGhostSpawn() {}
 };
 
 class MsgEntityPillEaten : public Msg
@@ -77,6 +82,7 @@ public:
 	MsgEntityPillEaten() : Msg(ENTITY_PILL_EATEN)
 	{
 	}
+	virtual ~MsgEntityPillEaten() {}
 };
 
 class MsgEntityPillBloodyEaten : public Msg
@@ -85,6 +91,7 @@ public:
 	MsgEntityPillBloodyEaten() : Msg(ENTITY_PILL_BLOODY_EATEN)
 	{
 	}
+	virtual ~MsgEntityPillBloodyEaten() {}
 };
 
 class MsgGameOver : public Msg
@@ -93,6 +100,7 @@ public:
 	MsgGameOver() : Msg(GAME_OVER)
 	{
 	}
+	virtual ~MsgGameOver() {}
 };
 
 class MsgGameWon : public Msg
@@ -101,6 +109,7 @@ public:
 	MsgGameWon() : Msg(GAME_WON)
 	{
 	}
+	virtual ~MsgGameWon() {}
 };
 
 #endif
