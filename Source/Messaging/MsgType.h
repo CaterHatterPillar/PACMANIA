@@ -21,7 +21,9 @@ enum MsgType {
 	ENTITY_PLAYER_POS,
 	ENTITY_PACMAN_POS,
 	ENTITY_GHOST_POS,
-	ENTITY_PILL_POS
+	ENTITY_PILL_POS,
+
+	ZOOM
 };
 
 //todoist: dela upp i win/linux
