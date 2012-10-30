@@ -31,6 +31,8 @@ private:
 	FMOD::Sound*		soundAmbient;
 	FMOD::Channel*		channelAmbient;
 
+
+
 	void ERRCHECK(FMOD_RESULT result);
 	void windowsInit();
 	void loadSounds();

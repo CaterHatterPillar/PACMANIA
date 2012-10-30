@@ -48,7 +48,7 @@ void SoundEngine::loadSounds()
 {
 	int flags = FMOD_LOOP_NORMAL | FMOD_2D | FMOD_HARDWARE;
 
-	result = system->createSound("../../Sounds/Ambient_Storm.mp3", flags, 0, &soundAmbient);
+	result = system->createSound("../../Sounds/AMBIENT.mp3", flags, 0, &soundAmbient);
 	ERRCHECK(result);
 }
 
