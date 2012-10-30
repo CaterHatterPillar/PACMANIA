@@ -94,6 +94,7 @@
     <ClInclude Include="..\..\Source\Messaging\MsgMouseClick.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgMouseMove.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgRender.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgSound.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgType.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgZoom.h" />
     <ClInclude Include="..\..\Source\Messaging\Observer.h" />
