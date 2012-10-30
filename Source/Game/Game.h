@@ -12,8 +12,6 @@
 #include "../Messaging/MsgZoom.h"
 #include "../Messaging/MsgEntity.h"
 
-enum Condition { RESTART, NO_CONDITION };
-
 class Game  : public Component
 {
 private:
@@ -21,8 +19,6 @@ private:
 	GameTimer* gameTimer;
 	bool running;
 
-	/*Condition*/
-	Condition curCondition;
 	ConditionTimer* conditionTimer;
 
 	/*Ext*/
@@ -43,11 +39,11 @@ public:
 		Renderer*			renderer,
 		GameEntityFactory*	entityFac)
 	{
-		running			= true;
-		gameTimer		= new GameTimer();
-
-		curCondition	= NO_CONDITION;
-		conditionTimer	= new ConditionTimer(-1.0);
+		running		= true;
+		gameTimer	= new GameTimer();
+		conditionTimer = new ConditionTimer(5.0);
+		conditionTimer->reset();
+		conditionTimer->start();
 
 		this->camera	= camera;
 		this->window	= window;
@@ -72,8 +68,6 @@ public:
 			
 		if(gameTimer)
 			delete gameTimer;
-		if(conditionTimer)
-			delete conditionTimer;
 		if(camera)
 			delete camera;
 		if(window)
@@ -178,10 +172,8 @@ public:
 		num_entities++;
 	}
 
-	void handleGameConditions();
 	void startGame();
 	void endGame();
-	void restartGame(); 
 };
 
 #endif

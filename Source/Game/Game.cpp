@@ -83,4 +83,14 @@ void Game::endGame()
 void Game::restartGame()
 {
 	//restart game here
+	maze->restart();
+	for(int i=0; i<(int)entities.size(); i++)
+	{
+		if(entities[i])
+			entities[i]->reset();
+	}
+	num_entities = 0;
+	spawnPacman();
+
+	startGame();
 }
