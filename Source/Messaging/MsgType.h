@@ -16,6 +16,7 @@ enum MsgType {
 	
 	MSG_GLUT,
 	MSG_GLUT_CALLBACK,
+	ZOOM,
 
 	// Pacman
 	ENTITY_PLAYER_POS,
@@ -23,7 +24,12 @@ enum MsgType {
 	ENTITY_GHOST_POS,
 	ENTITY_PILL_POS,
 
-	ZOOM
+	ENTITY_GHOST_SPAWN,
+	ENTITY_PILL_EATEN,
+	ENTITY_PILL_BLOODY_EATEN,
+
+	GAME_OVER,
+	GAME_WON
 };
 
 //todoist: dela upp i win/linux

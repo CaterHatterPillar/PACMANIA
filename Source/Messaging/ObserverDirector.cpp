@@ -54,6 +54,23 @@ void ObserverDirector::update(double delta)
 			msgEntityPillPos(msg);
 			break;
 
+		case ENTITY_GHOST_SPAWN:
+			msgEntityGhostSpawn(msg);
+			break;
+		case ENTITY_PILL_EATEN:
+			msgEntityPillEaten(msg);
+			break;
+		case ENTITY_PILL_BLOODY_EATEN:
+			msgEntityPillBloodyEaten(msg);
+			break;
+
+		case GAME_OVER:
+			msgGameOver(msg);
+			break;
+		case GAME_WON:
+			msgGameWon(msg);
+			break;
+
 		case LIGHT:
 			msgLight(msg);
 			break;

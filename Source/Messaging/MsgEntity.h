@@ -63,4 +63,44 @@ public:
 	}
 };
 
+class MsgEntityGhostSpawn : public Msg
+{
+public:
+	MsgEntityGhostSpawn() : Msg(ENTITY_GHOST_SPAWN)
+	{
+	}
+};
+
+class MsgEntityPillEaten : public Msg
+{
+public:
+	MsgEntityPillEaten() : Msg(ENTITY_PILL_EATEN)
+	{
+	}
+};
+
+class MsgEntityPillBloodyEaten : public Msg
+{
+public:
+	MsgEntityPillBloodyEaten() : Msg(ENTITY_PILL_BLOODY_EATEN)
+	{
+	}
+};
+
+class MsgGameOver : public Msg
+{
+public:
+	MsgGameOver() : Msg(GAME_OVER)
+	{
+	}
+};
+
+class MsgGameWon : public Msg
+{
+public:
+	MsgGameWon() : Msg(GAME_WON)
+	{
+	}
+};
+
 #endif
