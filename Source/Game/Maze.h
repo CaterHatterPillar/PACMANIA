@@ -114,6 +114,7 @@ public:
 		// Subscribe to game state
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PLAYER_POS));
 	};
+
 	
 	virtual ~Maze()
 	{
@@ -135,7 +136,13 @@ public:
 		loadFromTextfile();
 	};
 
+	void restart()
+	{
+		pills.clear();
+		createMaze();
+	};
 	
+
 	VecI2 getRandomFreePosition()
 	{
 		VecI2 pos;

@@ -45,6 +45,12 @@ public:
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_POS));
 	};
 
+	void reset()
+	{
+		pos = VecI2(-3,16);
+		move(1,0);
+	};
+
 	void runAI()
 	{
 		//// If ghost has stopped, choose new direction

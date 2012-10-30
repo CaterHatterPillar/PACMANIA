@@ -29,7 +29,7 @@ void Game::run()
 
 		// Update game entities
 		update(delta);
-		for(int i=0; i<(int)entities.size(); i++)
+		for(int i=0; i<(int)num_entities; i++)
 			entities[i]->update(delta);
 		maze->update(delta);
 		

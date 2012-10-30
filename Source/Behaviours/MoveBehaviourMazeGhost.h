@@ -17,6 +17,12 @@ public:
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PACMAN_POS));
 	};
+	
+	void reset()
+	{
+		pos = VecI2(28,16);
+		move(1,0);
+	};
 
 	bool isValidDir(VecI2 newDir)
 	{

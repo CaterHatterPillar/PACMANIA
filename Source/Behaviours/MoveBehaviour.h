@@ -16,6 +16,7 @@ protected:
 public:
 	MoveBehaviour(){}
 	~MoveBehaviour(){}
+	virtual void reset() = 0;
 	MatF4 getRotation() { return rotation; }
 	VecF3 getPosition() { return position; }
 };
