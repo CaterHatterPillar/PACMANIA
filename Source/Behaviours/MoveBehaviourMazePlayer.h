@@ -25,7 +25,7 @@ private:
 			move(1,0);
 			break;
 		case KEY_D:
-			stop();
+			//stop();
 			break;
 		case KEY_A:
 			respawn();
@@ -36,6 +36,8 @@ protected:
 public:
 	MoveBehaviourMazePlayer(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
+		pos = VecI2(-3,16);
+		move(1,0);
 	};
 	virtual void init()
 	{

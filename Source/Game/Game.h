@@ -94,6 +94,7 @@ public:
 	void init()
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
 	}
 
 	void msgKeyboard(Msg* msg)

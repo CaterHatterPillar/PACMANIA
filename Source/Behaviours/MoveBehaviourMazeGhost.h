@@ -10,6 +10,8 @@ private:
 public:
 	MoveBehaviourMazeGhost(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
+		pos = VecI2(28,16);
+		move(1,0);
 	};
 	virtual void init()
 	{
@@ -22,11 +24,10 @@ public:
 		if(newDir.x==0 && newDir.y==0)
 			return false;
 
-		// Do not collide with wall
 		VecI2 newPos = VecI2(pos.x+newDir.x,  pos.y+newDir.y);
 
-		// True: Do not move in opposite direction
-		return !(newDir == -dir) && !isWallPos(newPos);
+		// TRUE: Do not move in opposite direction/move outside/collide with wall
+		return !(newDir == -dir) && !isWallPos(newPos) && !isOutsidePos(newPos);
 	}
 
 	void runAI()
@@ -74,7 +75,7 @@ public:
 			// TRUE: No valid direction found, we are in a dead end, pick opposite direction
 			if(!isValidDir(newDir))
 			{
-				newDir == -dir;
+				newDir = -dir;
 			}
 		}
 

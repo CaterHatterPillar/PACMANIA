@@ -382,5 +382,14 @@ public:
 		// get maze tile
 		return grid[pos.x][pos.y];
 	};
+
+	bool isOutsidePos(VecI2 pos)
+	{
+		if(pos.x<0 || pos.y<0)
+			return true;
+		if(pos.x>=sizeX || pos.y>=sizeY)
+			return true;
+		return false;
+	}
 };
 #endif
