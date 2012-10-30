@@ -83,7 +83,7 @@ public:
 	};
 	virtual ~MoveBehaviourMaze()
 	{
-		//	delete maze;
+		// delete maze;
 	};
 
 	// Returns true if both position is in line of sight of eachother i.e. empty of maze segments
@@ -209,7 +209,8 @@ public:
 					}
 				}
 				// Else: queued direction is valid for use
-				else {
+				else 
+				{
 					dir = dir_queue;
 				}
 
@@ -240,9 +241,6 @@ public:
 		// Interpolate rotation on cube
 		interpolateRotation(dt);
 		position = getPosition();
-
-		// Check collision with pills
-		checkCollisionWithPills();
 	}
 
 	virtual void updateSpecific(double delta) = 0;

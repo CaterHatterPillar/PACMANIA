@@ -90,7 +90,6 @@ public:
 
 	void updateSpecific(double delta)
 	{
-		
 	};
 
 	virtual void handleMessages()

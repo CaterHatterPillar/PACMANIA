@@ -97,6 +97,71 @@ private:
 		delete msgCast;
 	}
 
+	void msgEntityGhostSpawn(Msg* msg)
+	{
+		for(unsigned int i = 0; i < observers->size(); i++)
+		{
+			Observer* observer = observers->at(i);
+			if(observer->isSubscriber(msg->Type()))
+			{
+				observer->getComponent()->push(new MsgEntityGhostSpawn());
+			}
+		}
+		delete msg;
+	}
+
+	void msgEntityPillEaten(Msg* msg)
+	{
+		for(unsigned int i = 0; i < observers->size(); i++)
+		{
+			Observer* observer = observers->at(i);
+			if(observer->isSubscriber(msg->Type()))
+			{
+				observer->getComponent()->push(new MsgEntityPillEaten());
+			}
+		}
+		delete msg;
+	}
+
+	void msgEntityPillBloodyEaten(Msg* msg)
+	{
+		for(unsigned int i = 0; i < observers->size(); i++)
+		{
+			Observer* observer = observers->at(i);
+			if(observer->isSubscriber(msg->Type()))
+			{
+				observer->getComponent()->push(new MsgEntityPillBloodyEaten());
+			}
+		}
+		delete msg;
+	}
+
+	void msgGameOver(Msg* msg)
+	{
+		for(unsigned int i = 0; i < observers->size(); i++)
+		{
+			Observer* observer = observers->at(i);
+			if(observer->isSubscriber(msg->Type()))
+			{
+				observer->getComponent()->push(new MsgGameOver());
+			}
+		}
+		delete msg;
+	}
+
+	void msgGameWon(Msg* msg)
+	{
+		for(unsigned int i = 0; i < observers->size(); i++)
+		{
+			Observer* observer = observers->at(i);
+			if(observer->isSubscriber(msg->Type()))
+			{
+				observer->getComponent()->push(new MsgGameWon());
+			}
+		}
+		delete msg;
+	}
+
 	/*win*/
 	void msgDXWindowHandle(Msg* msg);
 

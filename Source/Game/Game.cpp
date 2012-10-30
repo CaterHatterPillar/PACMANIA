@@ -6,7 +6,6 @@ void Game::run()
 {
 	maze = entityFac->createMaze();
 	spawnPacman();
-	spawnGhost();
 
 //	GameEntity* pill = entityFac->createPill(VecF3(4.0f, 0.0f, 0.0f));
 //	GameEntity* bloodyPill = entityFac->createBloodyPill(VecF3(-3.0f, -2.0f, 3.0f)); 
