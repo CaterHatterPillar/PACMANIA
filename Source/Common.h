@@ -19,7 +19,7 @@
 #define Z_NEAR	1
 #define Z_FAR	1000
 #define ZOOMED_IN -10.0f
-#define ZOOMED_OUT -100.0f
+#define ZOOMED_OUT -1000.0f
 
 #define DELETE_NULL(param) { if(param) { delete param; } param = NULL; }
 

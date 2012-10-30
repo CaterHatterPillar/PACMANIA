@@ -121,7 +121,7 @@ public:
 		if(dist < 0.4f)
 		{
 			// Send gameover message
-			Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
+			Singleton<ObserverDirector>::get().push(new MsgGameOver());
 		}
 	};
 
