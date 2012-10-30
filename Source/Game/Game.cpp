@@ -17,6 +17,15 @@ void Game::run()
 	do
 	{
 		double delta = gameTimer->tick();
+		
+		if(conditionTimer->Ticking())		//TEMP
+		{
+			conditionTimer->tick();
+			if(conditionTimer->Condition())
+			{
+				endGame();
+			}
+		}									//TEMP
 
 		// Update game entities
 		update(delta);

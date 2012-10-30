@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "GameEntityFactory.h"
+#include "../ConditionTimer.h"
 
 #include "../Camera.h"
 #include "../Window.h"
@@ -15,8 +16,10 @@ class Game  : public Component
 {
 private:
 	/*Members*/
-	bool running;
 	GameTimer* gameTimer;
+	bool running;
+
+	ConditionTimer* conditionTimer;
 
 	/*Ext*/
 	Camera*				camera;
@@ -37,6 +40,9 @@ public:
 	{
 		running		= true;
 		gameTimer	= new GameTimer();
+		conditionTimer = new ConditionTimer(5.0);
+		conditionTimer->reset();
+		conditionTimer->start();
 
 		this->camera	= camera;
 		this->window	= window;
