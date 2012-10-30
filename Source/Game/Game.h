@@ -67,6 +67,8 @@ public:
 			
 		if(gameTimer)
 			delete gameTimer;
+		if(conditionTimer)
+			delete conditionTimer;
 		if(camera)
 			delete camera;
 		if(window)

@@ -57,4 +57,6 @@ ConditionTimer::ConditionTimer(double conditionSec)
 }
 ConditionTimer::~ConditionTimer()
 {
+	if(timer)
+		delete timer;
 }
