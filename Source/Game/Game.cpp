@@ -4,6 +4,11 @@
 
 void Game::run()
 {
+	SoundEngine* soundEngine = new SoundEngine();
+
+	soundEngine->init();
+	soundEngine->playSound();
+
 	maze = entityFac->createMaze();
 	spawnPacman();
 

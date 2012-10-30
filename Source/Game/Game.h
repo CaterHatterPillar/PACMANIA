@@ -3,6 +3,8 @@
 
 #include "GameEntityFactory.h"
 
+#include "../SoundEngine.h"
+
 #include "../Camera.h"
 #include "../Window.h"
 #include "../Renderer.h"
