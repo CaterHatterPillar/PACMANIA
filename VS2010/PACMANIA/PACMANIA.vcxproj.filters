@@ -48,9 +48,6 @@
     <ClCompile Include="..\..\Source\WindowsContainer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Game\Game.cpp">
-      <Filter>Source\Game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Game\GameEntity.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
@@ -120,6 +117,9 @@
     <ClCompile Include="..\..\Source\Game\Maze.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Game\Game.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Camera.h">
@@ -151,12 +151,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h">
       <Filter>Source\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourPlayer.h">
-      <Filter>Source\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Game\Game.h">
-      <Filter>Source\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Game\GameEntity.h">
       <Filter>Source\Game</Filter>
@@ -210,9 +204,6 @@
       <Filter>Source\Messaging</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgEntityState.h">
       <Filter>Source\Messaging</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Messaging\MsgGlut.h">
@@ -299,6 +290,27 @@
     <ClInclude Include="..\..\Source\Light.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Messaging\MsgLight.h">
+      <Filter>Source\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMaze.h">
+      <Filter>Source\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazePlayer.h">
+      <Filter>Source\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h">
+      <Filter>Source\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Messaging\MsgEntity.h">
+      <Filter>Source\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Messaging\MsgZoom.h">
+      <Filter>Source\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Game\Game.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl">
@@ -307,6 +319,8 @@
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl">
       <Filter>Source\GL\Shaders</Filter>
     </None>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="..\..\Levels\maze1.txt">
+      <Filter>Source\Game</Filter>
+    </None>
   </ItemGroup>
 </Project>

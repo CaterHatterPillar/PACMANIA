@@ -59,7 +59,13 @@ public:
 		this->stride		= stride;
 		this->offset		= offset;
 	}
-	virtual ~GraphicsContainer() {}
+	virtual ~GraphicsContainer()
+	{
+		if(vertices)
+			delete vertices;
+		if(indices)
+			delete indices;
+	}
 	
 	ShaderId getVertexShaderId()	{ return vertexShaderId;	}
 	ShaderId getPixelShaderId()		{ return pixelShaderId;		}

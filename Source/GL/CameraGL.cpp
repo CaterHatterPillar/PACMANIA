@@ -4,7 +4,7 @@ void CameraGL::updateProj()
 {
 	MatF4 perspective;
 
-	float tanRadFov = tan(RADIAN(FOV() / 2.0f));
+	float tanRadFov = (float)tan(RADIAN(FOV() / 2.0f));
 	perspective.m[0][0] = 1.0f / (Aspect()*tanRadFov);
 	perspective.m[1][1] = 1.0f / (tanRadFov);
 	perspective.m[2][2] = (-ZNear() - ZFar()) / (ZNear() - ZFar());
@@ -113,16 +113,11 @@ void CameraGL::mouse(const float dX, const float dY)
 	pitch(-dY);
 }
 
-CameraGL::CameraGL(float fov, float aspect, float zNear, float zFar)
+CameraGL::CameraGL(float fov, float aspect, float zNear, float zFar, float zoomedIn, float zoomedOut) : Camera(zoomedIn, zoomedOut)
 {
 	Aspect(aspect);
 	FOV(fov);
 	ZFar(zFar);
 	ZNear(zNear);
-
-	position	= VecF3(0.0f, 0.0f, -10.0f);
-	right		= VecF3(1.0f, 0.0f, 0.0f);
-	up			= VecF3(0.0f, 1.0f, 0.0f);
-	look		= VecF3(0.0f, 0.0f, 1.0f);
 }
 CameraGL::~CameraGL() {}

@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h" />
-    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourPlayer.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMaze.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazePlayer.h" />
     <ClInclude Include="..\..\Source\Camera.h" />
     <ClInclude Include="..\..\Source\Common.h" />
     <ClInclude Include="..\..\Source\Component.h" />
@@ -83,14 +85,16 @@
     <ClInclude Include="..\..\Source\Messaging\Msg.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgCamera.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h" />
-    <ClInclude Include="..\..\Source\Messaging\MsgEntityState.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgEntity.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgGlut.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgGlutCallback.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgKeyboard.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgLight.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgMouseClick.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgMouseMove.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgRender.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgType.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgZoom.h" />
     <ClInclude Include="..\..\Source\Messaging\Observer.h" />
     <ClInclude Include="..\..\Source\Messaging\ObserverDirector.h" />
     <ClInclude Include="..\..\Source\Messaging\SubscriptionMsg.h" />
@@ -104,6 +108,7 @@
     <ClInclude Include="..\..\Source\WindowsContainer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Levels\maze1.txt" />
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
     <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
     <None Include="ClassDiagram1.cd" />

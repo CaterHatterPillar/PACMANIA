@@ -11,6 +11,9 @@ RendererDX::RendererDX()
 	SubscriptionMsg* msg3 = new SubscriptionMsg(this, RENDER);
 	Singleton<ObserverDirector>::get().push(msg3);
 
+	SubscriptionMsg* msg4 = new SubscriptionMsg(this, LIGHT);
+	Singleton<ObserverDirector>::get().push(msg4);
+
 	renderList = new vector<MsgRender*>;
 }
 
@@ -160,7 +163,7 @@ void RendererDX::createRasterizerState()
 {
 	D3D11_RASTERIZER_DESC rsd;
 
-	rsd.CullMode				= D3D11_CULL_BACK;
+	rsd.CullMode				= D3D11_CULL_NONE;
 	rsd.FillMode				= D3D11_FILL_SOLID;
 	rsd.FrontCounterClockwise	= false;
 	rsd.DepthBias				= false;
@@ -202,12 +205,6 @@ void RendererDX::createTextureManager()
 	textureManager->init(device);
 }
 
-void RendererDX::createCube()
-{
-	cube = new Cube(device);
-	cube->initialize();
-}
-
 void RendererDX::init()
 {
 	createDeviceAndSwapChain();
@@ -219,8 +216,6 @@ void RendererDX::init()
 
 	createShaderManager();
 	createTextureManager();
-
-	createCube();
 }
 
 void RendererDX::update(double delta)
@@ -244,6 +239,9 @@ void RendererDX::update(double delta)
 			case RENDER:
 				handleMsgRender(msg);
 				break;
+			case LIGHT:
+				handleMsgLight(msg);
+				break;
 			}
 		}
 	}
@@ -257,6 +255,8 @@ void RendererDX::renderFrame()
 	devcon->ClearDepthStencilView(zBuffer, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 	devcon->OMSetDepthStencilState(0, 0);
+
+	updateLighting();
 
 	MsgRender* renderMsg;
 	for(UINT i = 0; i < renderList->size(); i++)
@@ -272,19 +272,19 @@ void RendererDX::renderFrame()
 		renderList->at(i) = NULL;
 		
 	}
+	renderList->clear();
 
 	swapChain->Present(0, 0);
 }
+
+void RendererDX::updateLighting()
+{
+	shaderManager->updateCBufferLights(lights);
+	lights.clear();
+}
+
 void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling)
 {
-	/*LIGHTING TEST*/
-	Light lights[1];
-	lights[0].ambient = VecF4(0.5f, 0.5f, 0.5f, 1.0f);
-	unsigned int numLights = 1;
-
-
-	/*END OF LIGHTING TEST*/
-
 	if(!container->getVertexBuffer())
 		container->createVertexBuffer(device);
 	if(!container->getIndexBuffer())
@@ -299,7 +299,7 @@ void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translati
 
 	//OpneGL and DirectX use different Matrices therefor the world matrix must be transposed
 	MatF4 final = worldMatrix * viewProj;
-	shaderManager->updateCBufferPerFrame(final, worldMatrix);
+	shaderManager->updateCBufferPerFrame(final, worldMatrix, cameraPosition);
 
 	devcon->VSSetShader(shaderManager->getVertexShader(), 0, 0);
 	devcon->PSSetShader(shaderManager->getPixelShader(), 0, 0);
@@ -326,22 +326,33 @@ void RendererDX::renderContainer(GraphicsContainerDX* container, MatF4 translati
 
 void RendererDX::cleanUp()
 {
-	device->Release();
-	devcon->Release();
-	zBuffer->Release();
-	backBuffer->Release();
+	if(swapChain)
+		swapChain->Release();
+	if(device)
+		device->Release();
+	if(devcon)
+		devcon->Release();
+	if(backBuffer)
+		backBuffer->Release();
+	if(zBuffer)
+		zBuffer->Release();
+	if(rasterizerState)
+		rasterizerState->Release();
+	if(samplerStateDefault)
+		samplerStateDefault->Release();
 
-	if(renderList)
-	{
-		for(unsigned int i = 0; i < renderList->size(); i++)
-		{
-			if(renderList->at(i))
-				delete renderList->at(i);
-		}
-		delete renderList;
-	}
+	//if(renderList)
+	//{
+	//	for(unsigned int i = 0; i < renderList->size(); i++)
+	//	{
+	//		if(renderList->at(i))
+	//			delete renderList->at(i);
+	//	}
+	//	delete renderList;
+	//}
 
-	delete shaderManager;
+	if(shaderManager)
+		delete shaderManager;
 	if(textureManager)
 		delete textureManager;
 }
@@ -360,6 +371,7 @@ void RendererDX::handleMsgCamera(Msg* msg)
 	MsgCamera* msgCamera = (MsgCamera*)msg;
 	viewMatrix = msgCamera->View();
 	projectionMatrix = msgCamera->Proj();
+	cameraPosition = msgCamera->CameraPosition();
 
 	delete msgCamera;
 }
@@ -368,6 +380,15 @@ void RendererDX::handleMsgRender(Msg* msg)
 {
 	MsgRender* renderMsg = (MsgRender*)msg;
 	renderList->push_back(renderMsg);
+}
+
+void RendererDX::handleMsgLight(Msg* msg)
+{
+	MsgLight* msgLight = (MsgLight*)msg;
+	Light* light = msgLight->getLight();
+	lights.push_back((*light));
+
+	delete msgLight;
 }
 
 void RendererDX::input(InputContainer inputContainer)

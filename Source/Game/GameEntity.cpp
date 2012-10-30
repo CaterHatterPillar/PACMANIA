@@ -7,6 +7,7 @@ GameEntity::GameEntity()
 	scale				= VecF3(1.0f, 1.0f, 1.0f);
 	graphicsContainer	= NULL;
 	moveBehaviour		= NULL;
+	light				= NULL;
 
 	initMatrices();
 }
@@ -19,6 +20,7 @@ GameEntity::GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale)
 
 	graphicsContainer	= NULL;
 	moveBehaviour		= NULL;
+	light				= NULL;
 
 	initMatrices();
 }
@@ -29,6 +31,8 @@ GameEntity::~GameEntity()
 		delete graphicsContainer;
 	if(moveBehaviour)
 		delete moveBehaviour;
+	if(light)
+		delete light;
 }
 
 void GameEntity::rebuildTranslationMatrix()
@@ -141,6 +145,11 @@ void GameEntity::setMoveBehaviour(MoveBehaviour* moveBehaviour)
 	this->moveBehaviour = moveBehaviour;
 }
 
+void GameEntity::setLight(Light* light)
+{
+	this->light = light;
+}
+
 void GameEntity::update(double delta)
 {
 	if(moveBehaviour)
@@ -161,5 +170,13 @@ void GameEntity::update(double delta)
 			rotationMatrix, 
 			scalingMatrix);
 		Singleton<ObserverDirector>::get().push(renderMsg);
+	}
+	if(light)
+	{
+		light->pos.x = position.x;
+		light->pos.y = position.y;
+
+		MsgLight* msgLight = new MsgLight(light);
+		Singleton<ObserverDirector>::get().push(msgLight);
 	}
 }

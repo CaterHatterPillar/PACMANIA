@@ -1,21 +1,15 @@
-#ifndef MOVEBEHAVIOURPLAYER_H
-#define MOVEBEHAVIOURPLAYER_H
+#ifndef MOVEBEHAVIOURMAZE_H
+#define MOVEBEHAVIOURMAZE_H
 
 #include "MoveBehaviour.h"
 #include "../Messaging/MsgKeyboard.h"
 #include "../Game/Maze.h"
 
-class MoveBehaviourPlayer : public MoveBehaviour
+class MoveBehaviourMaze : public MoveBehaviour
 {
 private:
-	VecI2 pos;
 	float pos_offset;
-	VecI2 dir_queue;
-	VecI2 dir;
-	bool isMoving;
-
 	Quaternion qua_rot_tween;
-	float speed;
 	float turningSpeed; // turning speed (smaller is faster)
 	
 	Maze *maze;
@@ -41,6 +35,14 @@ private:
 			break;
 		}
 	};
+	
+protected:
+	VecI2 pos;
+	VecI2 dir;
+	VecI2 dir_queue;
+	bool isMoving;
+	float speed;
+
 	void move(int x, int y)
 	{
 		isMoving = true;
@@ -49,17 +51,22 @@ private:
 		if(x!=0 && y!=0)
 			x = 0; 
 
+		// Prevent zero vectors
+		if(x==0 && y==0)
+		{
+			throw "Negative vector, this shouldn't occur, please find out why.";
+		}
+
 		// Update movement queue
 		dir_queue.x=x;
-		dir_queue.y=y;
+		dir_queue.y=y;	
 	};
 	void stop()
 	{
 		isMoving = false;
 	};
-protected:
 public:
-	MoveBehaviourPlayer(Maze* maze)
+	MoveBehaviourMaze(Maze* maze, VecI2 position)
 	{
 		this->maze = maze;
 
@@ -68,23 +75,79 @@ public:
 		turningSpeed = 10.0f;
 		
 		// Starting values
-		pos = VecI2(1,1);
+		pos = position;
 		pos_offset = 0.0f;
 		dir.x=1;
 		dir.y=0;
 		isMoving = false;
-
 	};
-	virtual ~MoveBehaviourPlayer()
+	virtual ~MoveBehaviourMaze()
 	{
-		delete maze;
+		// delete maze;
 	};
+
+	// Returns true if both position is in line of sight of eachother i.e. empty of maze segments
+	bool isInLineOfSight(VecI2 p1, VecI2 p2)
+	{
+		int x0 = p1.x;
+		int y0 = p1.y;
+		int x1 = p2.x;
+		int y1 = p2.y;
+
+		int dx = abs(x1 - x0);
+		int dy = abs(y1 - y0);
+		int sx = x0 < x1 ? 1 : -1;
+		int sy = y0 < y1 ? 1 : -1;
+		int err = dx - dy;
+
+		// Obstacle
+		while(true)
+		{
+			// TRUE: Sight is obscured by wall, there is no point in continuing
+			if(isWallPos(VecI2(x0, y0)))
+			{
+				return false;
+			}
+
+			// Break if end is reached
+			if(x0 == x1 && y0 == y1) 
+			{
+				break;
+			}
+
+			// Walk to next cell
+			int e2 = 2 * err;
+			if(e2 > -dy)
+			{
+				err = err - dy;
+				x0 = x0 + sx;
+			}
+			if(e2 < dx)
+			{
+				err = err + dx;
+				y0 = y0 + sy;
+			}
+		}
+
+		return true;
+	}
 
 	virtual void init()
 	{
-		SubscriptionMsg* subscription = new SubscriptionMsg(this, INPUT_KEYBOARD_MSG);
-		Singleton<ObserverDirector>::get().push(subscription);
 	};
+
+	// Returns true if position is a wall
+	bool isWallPos(VecI2 pos)
+	{
+		return maze->isWallPos(pos);
+	};
+
+	void respawn()
+	{
+		pos_offset = 0.0f;
+		pos = maze->getRandomFreePosition();
+	};
+
 	virtual void handleMessages()
 	{
 		Msg* msg = peek();
@@ -94,23 +157,22 @@ public:
 			if(msg)
 			{
 				MsgType type = msg->Type();
-				switch(type)
-				{
-				case INPUT_KEYBOARD_MSG:
-					msgKeyboard(msg);
-					break;
-				default:
-					throw 0; //temp
-					break;
-				}
+				//switch(type)
+				//{
+				//default:
+				//	throw 0; //temp
+				//	break;
+				//}
 			}
 		}
 	}
+	virtual void atIntersection() = 0;
 	void update(double delta)	
 	{
 		float dt = (float)delta;
 
 		handleMessages();
+		updateSpecific(delta);
 
 		// True: entity is in move state
 		if(isMoving)
@@ -132,47 +194,56 @@ public:
 			// False: player is at intersection 
 			else
 			{
+				atIntersection();
 				VecI2 newPos = VecI2(pos.x+dir_queue.x,  pos.y+dir_queue.y);
 				// True: queued direction would cause wall collision 
-				if(maze->getTile(newPos.x,newPos.y) == 1)
+				if(maze->isWallPos(newPos))
 				{
 					newPos.x = pos.x+dir.x;
 					newPos.y = pos.y+dir.y;
 					// True: old direction would cause collision 
-					if(maze->getTile(newPos.x,newPos.y) == 1)
+					if(maze->isWallPos(newPos))
 					{
 						// stop pacman and abort further testing
 						isMoving = false;
-						return; // abort, we're done
 					}
 				}
 				// Else: queued direction is valid for use
-				else {
+				else 
+				{
 					dir = dir_queue;
 				}
 
-				//
-				// Perform movement
-				//
+				if(isMoving)
+				{
+					//
+					// Perform movement
+					//
 
-				pos=newPos;
-				pos_offset +=1.0f;
-				// Bugfix: it should only be possible for an entity to move a maximum of one square at every update
-				if(pos_offset<0.0f)
-					pos_offset = 0.0f; // reset movement
+					pos=newPos;
+					pos_offset +=1.0f;
+					// Bugfix: it should only be possible for an entity to move a maximum of one square at every update
+					if(pos_offset<0.0f)
+						pos_offset = 0.0f; // reset movement
+				}
+			}
+		}
+		// False: entity is stopped
+		else
+		{
+			// True: Player at intersection 
+			if(pos_offset<=0.0f)
+			{
+				atIntersection();
 			}
 		}
 
 		// Interpolate rotation on cube
 		interpolateRotation(dt);
 		position = getPosition();
-
-		// Check collision with pills
-		checkCollisionWithPills();
-
-		// Send message of current state to all relevent listeners
-		sendMsgEntityState();
 	}
+
+	virtual void updateSpecific(double delta) = 0;
 
 	void checkCollisionWithPills()
 	{
@@ -182,10 +253,7 @@ public:
 
 	void sendMsgEntityState()
 	{
-		MsgEntityState* msg = new MsgEntityState(position, 0);
-		Singleton<ObserverDirector>::get().push(msg);
 	};	
-
 
 	void interpolateRotation(float dt)
 	{
@@ -214,12 +282,6 @@ public:
 		return VecF3(xTween+pos.x, yTween+pos.y, 0.0f);
 	};
 
-	void msgKeyboard(Msg* msg)
-	{
-		MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
-		keyboard(keyboardMsg->Key());
-		delete keyboardMsg;
-	};
 };
 
 #endif //MOVEBEHAVIORPLAYER_H

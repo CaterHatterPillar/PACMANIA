@@ -6,6 +6,7 @@
 #include "../Messaging/ObserverDirector.h"
 
 #include <fstream>
+#include <time.h>
 using namespace std;
 
 class Pill
@@ -39,11 +40,16 @@ public:
 		VecF3 v1((float)pos.x, (float)pos.y, 0.0f);
 		VecF3 v2(p2.x, p2.y, 0.0f);
 
-		// True: Collision occures
+		// TRUE: Collision occures
 		float dist = v1.distanceTo(v2);
 		if(dist < 0.5f)
 		{
 			isAlive = false;
+
+			// Send messages
+			Singleton<ObserverDirector>::get().push(new MsgEntityPillEaten());
+			if(isBloody)
+				Singleton<ObserverDirector>::get().push(new MsgEntityPillBloodyEaten());
 		}
 	}
 
@@ -86,9 +92,6 @@ private:
 	static const int sizeY=31;
 	int grid[sizeX][sizeY];
 
-	//GameEntity* pacman = new GameEntity();
-
-	//vector<GameEntity> pills;
 	GraphicsContainer* gcWall;
 	GraphicsContainer* gcPill;
 	GraphicsContainer* gcPillBloody;
@@ -105,10 +108,22 @@ public:
 		// Init grid
 		createMaze();
 
-		//Subscribe to game state
-		SubscriptionMsg* subscription = new SubscriptionMsg(this, ENTITY_STATE);
-		Singleton<ObserverDirector>::get().push(subscription);
+		// Init random seed
+		srand((unsigned)time(NULL));
+
+		// Subscribe to game state
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PLAYER_POS));
 	};
+	
+	virtual ~Maze()
+	{
+		if(gcWall)
+			delete gcWall;
+		if(gcPill)
+			delete gcPill;
+		if(gcPillBloody)
+			delete gcPillBloody;
+	}
 
 	void createMaze()
 	{
@@ -120,9 +135,32 @@ public:
 		loadFromTextfile();
 	};
 
+	
+	VecI2 getRandomFreePosition()
+	{
+		VecI2 pos;
+		do
+		{
+			pos.x = rand() % sizeX;
+			pos.y = rand() % sizeY;
+		}
+		while(isWallPos(pos));
+
+		return pos;
+	}
+
+	bool isEmptyPos(VecI2 pos)
+	{
+		return getTile(pos) == 0;
+	}
+
+	bool isWallPos(VecI2 pos)
+	{
+		return getTile(pos) == 1;
+	}
+
 	void loadFromTextfile()
 	{
-		//Load High Score
 		string line;
 		string fileName = "../../Levels/maze1.txt";
 		ifstream f(fileName);
@@ -167,12 +205,6 @@ public:
 
 	MatF4 getPosition(int x, int y)
 	{
-		//D3DXMATRIX translation;
-		//D3DXMatrixIdentity(&translation);
-		//float middleX = (float)sizeX*0.5f-0.5f; // middle of grid
-		//float middleY = (float)sizeY*0.5f-0.5f; // middle of grid
-		//D3DXMatrixTranslation(&translation, (float)x-sizeX-10.0f, 20.0f, (float)y-sizeY);
-
 		return MatF4();
 	};
 
@@ -189,9 +221,9 @@ public:
 	{
 	}
 
-	void msgEntityState(Msg* msg)
+	void msgEntityPlayerPos(Msg* msg)
 	{
-		MsgEntityState* childMsg = (MsgEntityState*)msg;
+		MsgEntityPlayerPos* childMsg = (MsgEntityPlayerPos*)msg;
 		
 		// Get position
 		VecF3 goalPos(childMsg->pos);
@@ -202,7 +234,6 @@ public:
 
 	void update(double delta)
 	{
-
 		// Check messages
 		Msg* msg = peek();
 		while(msg)
@@ -213,20 +244,20 @@ public:
 				MsgType type = msg->Type();
 				switch(type)
 				{
-				case ENTITY_STATE:
-					msgEntityState(msg);
+				case ENTITY_PLAYER_POS:
+					msgEntityPlayerPos(msg);
 					break;
 				}
 			}
 		}
 
-		//Update pills
+		// Update pills
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
 			pills[i].update((float)delta);
 		}
 
-		//draw
+		// Draw
 		draw();
 	};
 
@@ -237,7 +268,7 @@ public:
 		//
 
 		// compute culling
-		int cullingSize = 4;
+		int cullingSize = 8;
 		VecI2 cullStart(cullingPosition.x - cullingSize, cullingPosition.y - cullingSize);
 		VecI2 cullEnd(cullingPosition.x + cullingSize, cullingPosition.y + cullingSize);
 		clamp(&cullStart.x, 0, sizeX);
@@ -249,7 +280,8 @@ public:
 		{
 			for(int x = cullStart.x; x<cullEnd.x; x++)
 			{
-				if(getTile(x,y)==1)
+
+				if(isWallPos(VecI2(x,y)))
 				{
 					MatF4 scale;
 					scale.scaling(0.5f,0.5f,0.5f);
@@ -259,14 +291,12 @@ public:
 			}
 		}
 
-
 		//
-		// Draw pills
-		// 
+		// Spawn new ghosts
+		//
 
 		int pillsEaten = 0;
 		int pillsTotal = 0;
-		pillsTotal = 10;
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
 			if(!pills[i].isAlive)
@@ -276,13 +306,28 @@ public:
 			pillsTotal++;
 		}
 
+		float pillsRatio = (float)pillsEaten/pillsTotal;
+		static int current_num_ghosts = 0;
+		int goal_num_ghosts;
+		goal_num_ghosts = (int)(5*pillsRatio);
+		if(goal_num_ghosts>current_num_ghosts)
+		{
+			Singleton<ObserverDirector>::get().push(new MsgEntityGhostSpawn());
+			current_num_ghosts++;
+		};
+
+
+		//
+		// Draw pills
+		// 
+
 		for(int i = 0; i<(int)pills.size(); i++)
 		{
 			VecI2 pos(pills[i].pos.x,  pills[i].pos.y);
 			VecF3 v1((float)pos.x, (float)pos.y, 0.0f);
 			VecF3 v2((float)cullingPosition.x, (float)cullingPosition.y, 0.0f);
 			// FALSE: Cull all objects % distance from pacman
-			if(v1.distanceTo(v2) < 4.0f)
+			if(v1.distanceTo(v2) < 7.0f)
 			{
 				float size = pills[i].getSize();
 				// FALSE: Cull all objects too small to see
@@ -326,16 +371,16 @@ public:
 		return sizeY;
 	};
 
-	int getTile(int x, int y)
+	int getTile(VecI2 pos)
 	{
 		// treat coordinates outside of maze as empty tiles
-		if(x<0 || y<0)
+		if(pos.x<0 || pos.y<0)
 			return 0;
-		if(x>=sizeX || y>=sizeY)
+		if(pos.x>=sizeX || pos.y>=sizeY)
 			return 0;
 
 		// get maze tile
-		return grid[x][y];
+		return grid[pos.x][pos.y];
 	};
 };
 #endif

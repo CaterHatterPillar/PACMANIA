@@ -4,12 +4,13 @@
 
 void Game::run()
 {
-	Maze* maze = entityFac->createMaze();
-	GameEntity* pacman = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);	//tmep
+	maze = entityFac->createMaze();
+	spawnPacman();
 
-	GameEntity* ghost = entityFac->createGhost(VecF3(3.0f, 1.0f, 0.0f));
 //	GameEntity* pill = entityFac->createPill(VecF3(4.0f, 0.0f, 0.0f));
 //	GameEntity* bloodyPill = entityFac->createBloodyPill(VecF3(-3.0f, -2.0f, 3.0f)); 
+
+	startGame();
 
 	gameTimer->reset();
 	gameTimer->start();
@@ -17,11 +18,10 @@ void Game::run()
 	{
 		double delta = gameTimer->tick();
 
-		pacman->update(delta);
-
-		ghost->update(delta);
-//		pill->update(delta);
-//		bloodyPill->update(delta);
+		// Update game entities
+		update(delta);
+		for(int i=0; i<(int)entities.size(); i++)
+			entities[i]->update(delta);
 		maze->update(delta);
 		
 		/*Update stuff here*/
@@ -32,7 +32,15 @@ void Game::run()
 		
 		renderer->renderFrame();
 	} while(window->isActive());
+}
 
-	if(pacman)	//tmep
-		delete pacman;
+void Game::startGame()
+{
+	//Zoom in
+	VecF3 pacPos = entities[0]->getPosition();
+	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_IN);
+	Singleton<ObserverDirector>::get().push(zoomMsg);
+}
+void Game::endGame()
+{
 }

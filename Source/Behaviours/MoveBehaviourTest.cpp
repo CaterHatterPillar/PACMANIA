@@ -2,7 +2,7 @@
 #define MOVEBEHAVIOURTEST
 
 #include <gmock/gmock.h>
-#include "../../Source/Behaviours/MoveBehaviourPlayer.h"
+#include "../../Source/Behaviours/MoveBehaviourMazePlayer.h"
 #include "../../Source/Math/PacMath.h"
 
 //class MoveBehaviourPlayerTest : public ::testing::Test

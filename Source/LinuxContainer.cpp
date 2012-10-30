@@ -10,7 +10,9 @@ void LinuxContainer::mainContainer(int argc, char** argv)
 		(float)F_O_V,
 		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 
 		(float)Z_NEAR, 
-		(float)Z_FAR);
+		(float)Z_FAR,
+		ZOOMED_IN,
+		ZOOMED_OUT);
 
 	initLinux(
 		glWindow, 

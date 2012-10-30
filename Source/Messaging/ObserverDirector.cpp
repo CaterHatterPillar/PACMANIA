@@ -39,8 +39,44 @@ void ObserverDirector::update(double delta)
 		case DX_WINDOW_HANDLE:
 			msgDXWindowHandle(msg);
 			break;
-		case ENTITY_STATE:
-			msgEntityState(msg);
+
+		// Entity messages
+		case ENTITY_PLAYER_POS:
+			msgEntityPlayerPos(msg);
+			break;
+		case ENTITY_PACMAN_POS:
+			msgEntityPacmanPos(msg);
+			break;
+		case ENTITY_GHOST_POS:
+			msgEntityGhostPos(msg);
+			break;
+		case ENTITY_PILL_POS:
+			msgEntityPillPos(msg);
+			break;
+
+		case ENTITY_GHOST_SPAWN:
+			msgEntityGhostSpawn(msg);
+			break;
+		case ENTITY_PILL_EATEN:
+			msgEntityPillEaten(msg);
+			break;
+		case ENTITY_PILL_BLOODY_EATEN:
+			msgEntityPillBloodyEaten(msg);
+			break;
+
+		case GAME_OVER:
+			msgGameOver(msg);
+			break;
+		case GAME_WON:
+			msgGameWon(msg);
+			break;
+
+		case LIGHT:
+			msgLight(msg);
+			break;
+
+		case ZOOM:
+			msgZoom(msg);
 			break;
 		default:
 			throw 0; //temp, make fix
@@ -112,7 +148,6 @@ void ObserverDirector::msgRender(Msg* msg)
 		Observer* observer = observers->at(i);
 		if(observer->isSubscriber(type))
 		{
-
 			MsgRender* newInstance = new MsgRender(renderMsg);
 			observer->getComponent()->push(newInstance);
 		}
@@ -178,6 +213,37 @@ void ObserverDirector::msgCamera(Msg* msg)
 		}
 	}
 	delete msgCam;
+}
+void ObserverDirector::msgZoom(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgZoom* msgZoom = (MsgZoom*)msg;
+	for(unsigned int i = 0; i < observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgZoom* newInstance = new MsgZoom(msgZoom);
+			observer->getComponent()->push(newInstance);
+		}
+	}
+	delete msgZoom;
+}
+
+void ObserverDirector::msgLight(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgLight* msgLight = (MsgLight*)msg;
+	for(unsigned int i = 0; i<observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgLight* newInstance = new MsgLight(msgLight);
+			observer->getComponent()->push(newInstance);
+		}
+	}
+	delete msgLight;
 }
 
 ObserverDirector::ObserverDirector() : Component()

@@ -1,16 +1,11 @@
 #include "CameraDX.h"
 
-CameraDX::CameraDX(float aspect, float fov, float zf, float zn)
+CameraDX::CameraDX(float aspect, float fov, float zf, float zn, float zoomedIn, float zoomedOut) : Camera(zoomedIn, zoomedOut)
 {
 	Aspect(aspect);
 	FOV(fov);
 	ZFar(zf);
 	ZNear(zn);
-
-	position	= VecF3(0.0f, 0.0f, -10.0f);
-	right		= VecF3(1.0f, 0.0f, 0.0f);
-	up			= VecF3(0.0f, 1.0f, 0.0f);
-	look		= VecF3(0.0f, 0.0f, 1.0f);
 }
 
 CameraDX::~CameraDX()

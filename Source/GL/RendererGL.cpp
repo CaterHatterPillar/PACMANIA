@@ -7,6 +7,7 @@ MatF4	RendererGL::view;
 MatF4	RendererGL::proj;
 MatF4	RendererGL::worldViewProj;
 GLuint	RendererGL::worldViewProjFX;
+GLuint	RendererGL::worldFX;
 
 GLuint	RendererGL::sampler;
 
@@ -26,16 +27,6 @@ RendererGL::~RendererGL()
 	DELETE_NULL(texManagement);
 
 	prevGC = NULL;
-
-	if(renderList)
-	{
-		for(int i = 0; i < renderList->size(); i++)
-		{
-			if(renderList->at(i))
-				delete renderList->at(i);
-		}
-		delete renderList;
-	}
 }
 void RendererGL::cleanUp()
 {
@@ -55,6 +46,9 @@ void RendererGL::init()
 	subscription = new SubscriptionMsg(this, CAMERA);
 	Singleton<ObserverDirector>::get().push(subscription);
 
+	subscription = new SubscriptionMsg(this, LIGHT);
+	Singleton<ObserverDirector>::get().push(subscription);
+
 	/*Send initial callback-specs to GLUT*/
 	MsgGlutCallback* callbackMsg = new MsgGlutCallback((void*)renderSpec, DISPLAY_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
@@ -64,8 +58,8 @@ void RendererGL::init()
 	glDepthMask(GL_TRUE);
 
 	/*Set backface cullint*/
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
@@ -86,6 +80,8 @@ void RendererGL::initFX()
 	//Connect uniforms
 	worldViewProjFX = glGetUniformLocation(programFX, "wvp");
 	assert(worldViewProjFX != 0xFFFFFFFF);
+	worldFX = glGetUniformLocation(programFX, "world");
+	assert(worldFX != 0xFFFFFFFF);
 	sampler = glGetUniformLocation(programFX, "sampler");
 	assert(sampler != 0xFFFFFFFF);
 
@@ -94,7 +90,30 @@ void RendererGL::initFX()
 
 void RendererGL::update(double delta)
 {
+	for(unsigned int i = 0; i < renderList->size(); i++)
+	{
+		delete renderList->at(i);
+		renderList->at(i) = NULL;
+	}
+	renderList->clear();
 	renderList->resize(0);
+
+	curLight = 0;
+	lights.resize(0);
+	for(unsigned int i = 0; i < 10; i++)
+	{
+		Light l;
+		l.pos		= VecF3(-1000.0f, -1000.0f, -1000.0f);
+		l.spotPow	= 128.0f;
+		l.dir		= VecF3(0.0f, 0.0f, -1.0f);
+		l.range		= 1000.0f;
+		l.ambient	= VecF4(0.3f, 0.3f, 0.3f, 1.0f);
+		l.diffuse	= VecF4(0.7f, 0.7f, 0.7f, 1.0f);
+		l.specular	= VecF4(0.5f, 0.5f, 0.5f, 1.0f);
+		l.att		= VecF3(0.25f, 0.0f, 0.0f);
+
+		lights.push_back(l);
+	}
 
 	Msg* msg = peek();
 	while(msg)
@@ -111,11 +130,16 @@ void RendererGL::update(double delta)
 			case CAMERA:
 				msgCamera(msg);
 				break;
+			case LIGHT:
+				msgLight(msg);
+				break;
 			default:
 				throw 0; //temp
 			}
 		}
 	}
+
+	fxManagement->updatePerFrame(lights, camPos);
 }
 
 void RendererGL::renderFrame()
@@ -137,8 +161,6 @@ void RendererGL::renderSpec()
 			renderMsg->getRotationMatrix(),
 			renderMsg->getScalingMatrix());
 		deBindGraphicsGL();
-
-		delete renderMsg;
 	}
 	
 	
@@ -196,6 +218,7 @@ void RendererGL::setUniform(MatF4 translation, MatF4 rotation, MatF4 scaling)
 	
 	worldViewProj = proj * view * world;
 	glUniformMatrix4fv(worldViewProjFX, 1, GL_TRUE, &worldViewProj.m[0][0]);
+	glUniformMatrix4fv(worldFX, 1, GL_TRUE, &world.m[0][0]);
 }
 void RendererGL::setBuffers(GraphicsContainerGL* containerGL)
 {
@@ -261,8 +284,20 @@ void RendererGL::msgCamera(Msg* msg)
 {
 	MsgCamera* cameraMsg = (MsgCamera*)msg;
 
-	this->proj = cameraMsg->Proj();
-	this->view = cameraMsg->View();
+	this->proj		= cameraMsg->Proj();
+	this->view		= cameraMsg->View();
+	this->camPos	= cameraMsg->CameraPosition();
 
 	delete cameraMsg;
+}
+void RendererGL::msgLight(Msg* msg)
+{
+	MsgLight* lightMsg = (MsgLight*)msg;
+
+	Light* light = lightMsg->getLight();
+	lights[curLight] = (*light);
+
+	curLight++;
+
+	delete lightMsg;
 }

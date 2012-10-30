@@ -24,8 +24,10 @@ void WindowsContainer::main(
 	CameraDX*	dxCamera	= new CameraDX(
 		(float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 
 		(float)PI/4, 
-		100.0f, 
-		1.0f);
+		Z_FAR, 
+		Z_NEAR,
+		ZOOMED_IN,
+		ZOOMED_OUT);
 	initWindows(
 		dxWindow, 
 		dxRenderer, 

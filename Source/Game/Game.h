@@ -8,7 +8,10 @@
 #include "../Renderer.h"
 #include "../GameTimer.h"
 
-class Game
+#include "../Messaging/MsgZoom.h"
+#include "../Messaging/MsgEntity.h"
+
+class Game  : public Component
 {
 private:
 	/*Members*/
@@ -20,6 +23,8 @@ private:
 	Window*				window;
 	Renderer*			renderer;
 	GameEntityFactory*	entityFac;
+	vector<GameEntity*> entities;
+	Maze* maze;
 protected:
 public:
 	void run();
@@ -37,12 +42,21 @@ public:
 		this->window	= window;
 		this->renderer	= renderer;
 		this->entityFac = entityFac;
+
+		init();
 	}
 	~Game()
 	{
+		for(int i=0; i<(int)entities.size(); i++)
+		{
+			if(entities[i])
+				delete entities[i];
+		}
+		if(maze)
+			delete maze;
+			
 		if(gameTimer)
 			delete gameTimer;
-
 		if(camera)
 			delete camera;
 		if(window)
@@ -52,6 +66,68 @@ public:
 		if(entityFac)
 			delete entityFac;
 	}
+
+	void update(double delta)
+	{
+		Msg* msg = peek();
+		while(msg)
+		{
+			msg = pop();
+			if(msg)
+			{
+				MsgType type = msg->Type();
+				switch(type)
+				{
+				case ENTITY_GHOST_SPAWN:
+					spawnGhost();
+					break;
+				case INPUT_KEYBOARD_MSG:
+					msgKeyboard(msg);
+					break;
+				default:
+					throw 0; //temp
+					break;
+				}
+			}
+		}
+	}
+	void init()
+	{
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
+	}
+
+	void msgKeyboard(Msg* msg)
+	{
+		MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
+		keyboard(keyboardMsg->Key());
+		delete keyboardMsg;
+	}
+
+	void keyboard(KEY key)
+	{
+		switch(key)
+		{
+		case KEY_D:
+			spawnGhost();
+			break;
+		default:
+			break;
+		}
+	}
+
+	void spawnGhost()
+	{
+		GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
+		entities.push_back(entity);
+	}
+	void spawnPacman()
+	{
+		GameEntity* entity = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);
+		entities.push_back(entity);
+	}
+
+	void startGame();
+	void endGame();
 };
 
-#endif //GAME_H
+#endif

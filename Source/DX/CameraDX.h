@@ -13,7 +13,7 @@ protected:
 		position = goalPosition[0];
 	}
 public:
-	CameraDX(float aspect, float fov, float zf, float zn);
+	CameraDX(float aspect, float fov, float zf, float zn, float zoomedIn, float zoomedOut);
 	virtual ~CameraDX();
 
 	virtual void mouse(const float dX, const float dY);

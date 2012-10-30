@@ -4,3 +4,4 @@ VS2010/ipch/
 *.vcxproj.user
 *.suo
 *.opensdf
+*.xml

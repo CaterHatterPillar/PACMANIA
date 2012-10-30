@@ -57,96 +57,7 @@ GLuint FXManagementGL::createProgramFX(
 
 	glLinkProgram(programFX);
 
-	/*Uniform Buffer*/
-	//GLuint blockIndex = glGetUniformBlockIndex(programFX, "ColorBuffer"); //Get index of uniform block
-	//if(blockIndex == GL_INVALID_INDEX)
-	//{
-	//	throw 0;
-	//}
-	//
-	//GLenum error = glGetError();
-	//if (error != GL_NO_ERROR)
-	//{
-	//	const GLubyte* derp = gluErrorString(error);
-	//	throw 0;
-	//}
-	//
-	////Allocate space for buffer
-	//GLint blockSize;
-	//glGetActiveUniformBlockiv(
-	//	programFX,					//Handle to program containing uniform block
-	//	blockIndex,					//Index of block within programFX
-	//	GL_UNIFORM_BLOCK_DATA_SIZE,	//What to query
-	//	&blockSize);				//Result
-	//GLubyte* blockBuffer = (GLubyte*)malloc(blockSize); //Temporary buffer to hold data
-	//
-	//error = glGetError();
-	//if (error != GL_NO_ERROR)
-	//{
-	//	const GLubyte* derp = gluErrorString(error);
-	//	throw 0;
-	//}
-	//
-	////Get indices of attributes in buffer
-	//const GLchar* names[] = 
-	//{
-	//	"redColor",
-	//	"greenColor",
-	//	"blueColor"
-	//};
-	//GLuint indices[3];
-	//glGetUniformIndices(
-	//	programFX,	//Handle to program containing uniform block whose indices to query
-	//	3,			//Nr. of uniforms whose indices to query
-	//	names,		//Names of indices to query
-	//	indices);	//Result
-	//
-	//error = glGetError();
-	//if (error != GL_NO_ERROR)
-	//{
-	//	const GLubyte* derp = gluErrorString(error);
-	//	throw 0;
-	//}
-	//
-	////Get offets of each attribute in buffer
-	//GLint offset[3];
-	//glGetActiveUniformsiv(
-	//	programFX,			//Handle to program containing uniform block
-	//	3,					//Number of elements in indices
-	//	indices,			//Indices to uniforms in block
-	//	GL_UNIFORM_OFFSET,	//Property of each uniform in infices that should be written into corresponding element of offset
-	//	offset);			//Result
-	//
-	//error = glGetError();
-	//if (error != GL_NO_ERROR)
-	//{
-	//	const GLubyte* derp = gluErrorString(error);
-	//	throw 0;
-	//}
-	//
-	////Place data into buffer
-	//GLfloat redColor[]		= {1.0f, 0.0f, 0.0f, 1.0f};
-	//GLfloat greenColor[]	= {0.0f, 1.0f, 0.0f, 1.0f};
-	//GLfloat blueColor[]		= {0.0f, 0.0f, 1.0f, 1.0f};
-	//
-	//memcpy(blockBuffer + offset[0], redColor,	4 * sizeof(GLfloat));
-	//memcpy(blockBuffer + offset[1], greenColor,	4 * sizeof(GLfloat));
-	//memcpy(blockBuffer + offset[2], blueColor,	4 * sizeof(GLfloat));
-	//
-	////Create OpenGL buffer-object and copy the data into it
-	//GLuint uboHandle;
-	//glGenBuffers(1, &uboHandle);
-	//glBindBuffer(GL_UNIFORM_BUFFER, uboHandle);
-	//glBufferData(
-	//	GL_UNIFORM_BUFFER,	//Specifies target type
-	//	blockSize,			//Size in bytes
-	//	blockBuffer,		//Pointer to initialization data
-	//	GL_DYNAMIC_DRAW);	//Usage type
-	//
-	////Finally, bind buffer to uniform block
-	//glBindBufferBase(GL_UNIFORM_BUFFER, blockIndex, uboHandle);
-
-	/*Uniform Buffer*/
+	initPerFrame(programFX);
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
@@ -171,6 +82,99 @@ GLuint FXManagementGL::createProgramFX(
 
 	return programFX;
 }
+void FXManagementGL::initPerFrame(GLuint programFX)
+{
+	GLuint blockIndex = glGetUniformBlockIndex(programFX, "PerFrame"); //Get index of uniform block
+	if(blockIndex == GL_INVALID_INDEX)
+	{
+		throw 0;
+	}
+	
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		const GLubyte* readError = gluErrorString(error);
+		throw 0;
+	}
+	
+	//Allocate space for buffer
+	glGetActiveUniformBlockiv(
+		programFX,					//Handle to program containing uniform block
+		blockIndex,					//Index of block within programFX
+		GL_UNIFORM_BLOCK_DATA_SIZE,	//What to query
+		&perFrameSize);				//Result
+	perFrameBuffer = (GLubyte*)malloc(perFrameSize); //Temporary buffer to hold data
+	
+	error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		const GLubyte* readError = gluErrorString(error);
+		throw 0;
+	}
+	
+	//Create OpenGL buffer-object and copy the data into it
+	glGenBuffers(1, &perFrameHandle);
+	glBindBuffer(GL_UNIFORM_BUFFER, perFrameHandle);
+	glBufferData(
+		GL_UNIFORM_BUFFER,	//Specifies target type
+		perFrameSize,		//Size in bytes
+		NULL,				//Pointer to initialization data
+		GL_DYNAMIC_DRAW);	//Usage type
+	
+	//Finally, bind buffer to uniform block
+	glBindBufferBase(GL_UNIFORM_BUFFER, blockIndex, perFrameHandle);
+}
+
+void FXManagementGL::updatePerFrame(std::vector<Light> lights, VecF3 camPos)
+{
+	FXGL* fx = getFX(VERTEX_SHADER_DEFAULT, PIXEL_SHADER_DEFAULT);
+	GLuint programHandle = fx->ProgramFX();
+	
+	// Query for the offsets of each block variable
+	const GLchar *names[] =
+	{
+		"camPos",
+		"light0.pos",
+		"light1.pos",
+		"light2.pos",
+		"light3.pos",
+		"light4.pos",
+		"light5.pos",
+		"light6.pos",
+		"light7.pos",
+		"light8.pos",
+		"light9.pos"
+	};
+	
+	//Fetch indices
+	GLuint indices[11];
+	glGetUniformIndices(
+		programHandle, 
+		11, 
+		names, 
+		indices);
+	
+	GLint offset[11];
+	glGetActiveUniformsiv(
+		programHandle, 
+		11, 
+		indices,
+		GL_UNIFORM_OFFSET,
+		offset);
+	
+	memcpy(perFrameBuffer + offset[0], &camPos, sizeof(VecF3));
+	for(unsigned int i = 1; i < 11; i++)
+	{
+		memcpy(perFrameBuffer + offset[i], &lights[i - 1], sizeof(Light));
+	}
+	
+	glBufferData(
+		GL_UNIFORM_BUFFER,	//Specifies target type
+		perFrameSize,		//Size in bytes
+		perFrameBuffer,		//Pointer to initialization data
+		GL_DYNAMIC_DRAW);	//Usage type
+}
+
 void FXManagementGL::fetchShaderPaths(
 	ShaderId		vs,
 	std::string&	vss,
@@ -299,6 +303,8 @@ FXManagementGL::FXManagementGL()
 }
 FXManagementGL::~FXManagementGL()
 {
+	free(perFrameBuffer);
+
 	if(fxs)
 	{
 		for(unsigned int i = 0; i < fxs->size(); i++)

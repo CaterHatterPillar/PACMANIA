@@ -10,7 +10,11 @@ ShaderManagerDX::ShaderManagerDX(ID3D11Device* device, ID3D11DeviceContext* devc
 
 ShaderManagerDX::~ShaderManagerDX()
 {
-	device->Release();
+	/*
+	A device reference seems to be removed somewhere that it shouldn't be.
+	Not removing it here solves dx memory leaks.
+	*/
+	//device->Release(); 
 	devcon->Release();
 
 	cBufferPerFrame->Release();
@@ -38,8 +42,8 @@ void ShaderManagerDX::createVertexShader()
 #endif
 
 	LPCSTR shaderModel = vertexShaderModel();
-	D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "VShader", shaderModel, shaderCompileFlags, 0, 0, &vs, &error, 0);
-	if(error != NULL)
+	HRESULT hr = D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "VShader", shaderModel, shaderCompileFlags, 0, 0, &vs, &error, 0);
+	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Vertex shader failed to compile", "Vertex shader error!", MB_OK | MB_ICONEXCLAMATION);
 		error->Release();
@@ -57,8 +61,8 @@ void ShaderManagerDX::createPixelShader()
 #endif
 
 	LPCSTR shaderModel = pixelShaderModel();
-	D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "PShader", shaderModel, shaderCompileFlags, 0, 0, &ps, &error, 0);
-	if(error != NULL)
+	HRESULT hr = D3DX11CompileFromFile("../../Shaders/DX/Shader.hlsl", 0, 0, "PShader", shaderModel, shaderCompileFlags, 0, 0, &ps, &error, 0);
+	if(FAILED(hr))
 	{
 		MessageBox(NULL, "Pixel shader failed to compile", "Pixel shader error!", MB_OK | MB_ICONEXCLAMATION);
 		error->Release();
@@ -173,22 +177,29 @@ void ShaderManagerDX::initialize()
 	createConstantBuffers();
 }
 
-void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world)
+void ShaderManagerDX::updateCBufferPerFrame(MatF4 final, MatF4 world, VecF3 cameraPosition)
 {
 	CBufferPerFrame cBuffer;
-	cBuffer.final = final;
-	cBuffer.world = world;
+	cBuffer.final			= final;
+	cBuffer.world			= world;
+	cBuffer.cameraPosition	= cameraPosition;
 	devcon->UpdateSubresource(cBufferPerFrame, 0, 0, &cBuffer, 0, 0);
 }
 
-void ShaderManagerDX::updateCBufferLights(Light* lights, unsigned int numLights)
+void ShaderManagerDX::updateCBufferLights(std::vector<Light> lights)
 {
 	CBufferLights cBuffer;
-	for(int i=0; i<numLights; i++)
+	if(lights.size() < MAX_NUM_LIGHTS)
+		cBuffer.numLights = lights.size();
+	else
+		cBuffer.numLights = MAX_NUM_LIGHTS;
+
+	for(unsigned int i=0; i<cBuffer.numLights; i++)
 	{
 		cBuffer.lights[i] = lights[i];
 	}
-	cBuffer.numLights = numLights;
+	
+	devcon->UpdateSubresource(cBufferLights, 0, 0, &cBuffer, 0, 0);
 }
 
 ID3D11VertexShader* ShaderManagerDX::getVertexShader()

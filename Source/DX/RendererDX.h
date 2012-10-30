@@ -11,6 +11,7 @@
 #include "TextureManagerDX.h"
 
 #include "../GraphicsContainer.h"
+#include "../Messaging/MsgLight.h"
 #include "../Messaging/MsgDXWindowHandle.h"
 #include "../Messaging/MsgCamera.h"
 #include "../Messaging/SubscriptionMsg.h"
@@ -30,6 +31,7 @@ class RendererDX : public Renderer
 {
 private:
 	std::vector<GraphicsContainer*> renderQueue;
+	std::vector<Light> lights;
 
 	HWND hWnd;
 
@@ -43,11 +45,11 @@ private:
 
 	ShaderManagerDX* shaderManager;
 	TextureManagerDX* textureManager;
-	Cube* cube;
 
 	MatF4 viewMatrix;
 	MatF4 projectionMatrix;
 	MatF4 viewProj;
+	VecF3 cameraPosition;
 
 	D3D_FEATURE_LEVEL featureLevel;
 	char* featureLevelToString(D3D_FEATURE_LEVEL fl);
@@ -61,17 +63,17 @@ private:
 	void createShaderManager();
 	void createTextureManager();
 
-	void createCube();
-
 	void handleMsgDXWindowHandle(Msg* msg);
 	void handleMsgCamera(Msg* msg);
 	void handleMsgRender(Msg* msg);
+	void handleMsgLight(Msg* msg);
 
+	void updateLighting();
 	void renderContainer(GraphicsContainerDX* container, MatF4 translation, MatF4 rotation, MatF4 scaling);
 protected:
 public:
 	RendererDX();
-	~RendererDX();
+	virtual ~RendererDX();
 
 	virtual void init()	;
 	virtual void update(double delta);

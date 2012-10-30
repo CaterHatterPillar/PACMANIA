@@ -6,6 +6,8 @@
 
 #include <D3Dcompiler.h>
 
+#include <vector>
+
 #include "ConstantBuffers.h"
 #include "../Math/PacMath.h"
 
@@ -47,8 +49,8 @@ public:
 
 	void initialize();
 
-	void updateCBufferPerFrame(MatF4 final, MatF4 world);
-	void updateCBufferLights(Light* lights, unsigned int numLights);
+	void updateCBufferPerFrame(MatF4 final, MatF4 world, VecF3 cameraPosition);
+	void updateCBufferLights(std::vector<Light> lights);
 
 	ID3D11VertexShader* getVertexShader();
 	ID3D11PixelShader* getPixelShader();
