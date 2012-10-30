@@ -118,7 +118,7 @@ public:
 		float dist = v1.distanceTo(v2);
 		if(dist < 0.4f)
 		{
-			//respawn();
+			respawn();
 		}
 	};
 
