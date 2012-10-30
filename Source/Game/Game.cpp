@@ -10,6 +10,8 @@ void Game::run()
 //	GameEntity* pill = entityFac->createPill(VecF3(4.0f, 0.0f, 0.0f));
 //	GameEntity* bloodyPill = entityFac->createBloodyPill(VecF3(-3.0f, -2.0f, 3.0f)); 
 
+	startGame();
+
 	gameTimer->reset();
 	gameTimer->start();
 	do
@@ -30,4 +32,15 @@ void Game::run()
 		
 		renderer->renderFrame();
 	} while(window->isActive());
+}
+
+void Game::startGame()
+{
+	//Zoom in
+	VecF3 pacPos = entities[0]->getPosition();
+	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_IN);
+	Singleton<ObserverDirector>::get().push(zoomMsg);
+}
+void Game::endGame()
+{
 }

@@ -16,6 +16,7 @@ enum MsgType {
 	
 	MSG_GLUT,
 	MSG_GLUT_CALLBACK,
+	ZOOM,
 
 	// Pacman
 	ENTITY_PLAYER_POS,

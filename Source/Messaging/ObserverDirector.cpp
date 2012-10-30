@@ -74,6 +74,10 @@ void ObserverDirector::update(double delta)
 		case LIGHT:
 			msgLight(msg);
 			break;
+
+		case ZOOM:
+			msgZoom(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
@@ -209,6 +213,21 @@ void ObserverDirector::msgCamera(Msg* msg)
 		}
 	}
 	delete msgCam;
+}
+void ObserverDirector::msgZoom(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgZoom* msgZoom = (MsgZoom*)msg;
+	for(unsigned int i = 0; i < observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgZoom* newInstance = new MsgZoom(msgZoom);
+			observer->getComponent()->push(newInstance);
+		}
+	}
+	delete msgZoom;
 }
 
 void ObserverDirector::msgLight(Msg* msg)

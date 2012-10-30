@@ -8,6 +8,8 @@
 #include "../Renderer.h"
 #include "../GameTimer.h"
 
+#include "../Messaging/MsgZoom.h"
+
 class Game  : public Component
 {
 private:
@@ -122,6 +124,9 @@ public:
 		GameEntity* entity = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);
 		entities.push_back(entity);
 	}
+
+	void startGame();
+	void endGame();
 };
 
 #endif

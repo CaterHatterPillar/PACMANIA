@@ -113,16 +113,11 @@ void CameraGL::mouse(const float dX, const float dY)
 	pitch(-dY);
 }
 
-CameraGL::CameraGL(float fov, float aspect, float zNear, float zFar)
+CameraGL::CameraGL(float fov, float aspect, float zNear, float zFar, float zoomedIn, float zoomedOut) : Camera(zoomedIn, zoomedOut)
 {
 	Aspect(aspect);
 	FOV(fov);
 	ZFar(zFar);
 	ZNear(zNear);
-
-	position	= VecF3(0.0f, 0.0f, -10.0f);
-	right		= VecF3(1.0f, 0.0f, 0.0f);
-	up			= VecF3(0.0f, 1.0f, 0.0f);
-	look		= VecF3(0.0f, 0.0f, 1.0f);
 }
 CameraGL::~CameraGL() {}
