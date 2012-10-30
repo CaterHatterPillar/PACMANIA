@@ -1,5 +1,5 @@
-#ifndef MOVEBEHAVIOURTEST_H
-#define MOVEBEHAVIOURTEST_H
+#ifndef MOVEBEHAVIOURTEST
+#define MOVEBEHAVIOURTEST
 
 #include <gmock/gmock.h>
 #include "../../Source/Behaviours/MoveBehaviourMazePlayer.h"
@@ -38,4 +38,4 @@
 //	EXPECT_FLOAT_EQ(0.0f, pos.z);
 //}
 
-#endif //MOVEBEHAVIOURTEST_H
+#endif //MOVEBEHAVIOURTEST
