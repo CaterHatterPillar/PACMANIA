@@ -18,14 +18,7 @@ void Game::run()
 	{
 		double delta = gameTimer->tick();
 		
-		//if(conditionTimer->Ticking())		//TEMP
-		//{
-		//	conditionTimer->tick();
-		//	if(conditionTimer->Condition())
-		//	{
-		//		endGame();
-		//	}
-		//}									//TEMP
+		handleGameConditions();
 
 		// Update game entities
 		update(delta);
@@ -43,6 +36,30 @@ void Game::run()
 	} while(window->isActive());
 }
 
+void Game::handleGameConditions()
+{
+	if(conditionTimer->Ticking())
+	{
+		conditionTimer->tick();
+		if(conditionTimer->Condition())
+		{
+			switch(curCondition)
+			{
+			case RESTART:
+				restartGame();
+				break;
+			case NO_CONDITION:
+				throw 0; //someone made a mistake
+				break;
+			}
+
+			/*Reset everything*/
+			curCondition = NO_CONDITION;
+			conditionTimer->stop();
+			conditionTimer->reset();
+		}
+	}
+}
 void Game::startGame()
 {
 	//Zoom in
@@ -52,8 +69,18 @@ void Game::startGame()
 }
 void Game::endGame()
 {
+	//Start game over-timer
+	curCondition = RESTART;
+	conditionTimer->Condition(5.0);	//five sec condition
+	conditionTimer->reset();
+	conditionTimer->start();
+
 	//Zoom out
 	VecF3 pacPos = entities[0]->getPosition();
 	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
 	Singleton<ObserverDirector>::get().push(zoomMsg);
+}
+void Game::restartGame()
+{
+	//restart game here
 }

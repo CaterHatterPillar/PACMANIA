@@ -21,7 +21,6 @@ void ConditionTimer::reset()
 	timer->reset();
 	timer->start();
 
-	ticking		= true;
 	condition	= false;
 }
 void ConditionTimer::start()
@@ -58,4 +57,6 @@ ConditionTimer::ConditionTimer(double conditionSec)
 }
 ConditionTimer::~ConditionTimer()
 {
+	if(timer)
+		delete timer;
 }
