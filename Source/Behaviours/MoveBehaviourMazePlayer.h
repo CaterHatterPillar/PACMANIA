@@ -36,7 +36,7 @@ protected:
 public:
 	MoveBehaviourMazePlayer(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
-		pos = VecI2(-3,16);
+		pos = VecI2(-9,16);
 		move(1,0);
 	};
 	virtual void init()

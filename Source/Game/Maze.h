@@ -97,6 +97,7 @@ private:
 	GraphicsContainer* gcPillBloody;
 
 	vector<Pill> pills;
+	int current_num_ghosts;
 
 public:
 	Maze(GraphicsContainer* gcWall, GraphicsContainer* gcPill, GraphicsContainer* gcPillBloody)
@@ -107,6 +108,7 @@ public:
 
 		// Init grid
 		createMaze();
+		current_num_ghosts = 0;
 
 		// Init random seed
 		srand((unsigned)time(NULL));
@@ -138,6 +140,7 @@ public:
 
 	void restart()
 	{
+		current_num_ghosts = 0;
 		pills.clear();
 		createMaze();
 	};
@@ -314,9 +317,8 @@ public:
 		}
 
 		float pillsRatio = (float)pillsEaten/pillsTotal;
-		static int current_num_ghosts = 0;
 		int goal_num_ghosts;
-		goal_num_ghosts = (int)(5*pillsRatio);
+		goal_num_ghosts = (int)(6*pillsRatio);
 		if(goal_num_ghosts>current_num_ghosts)
 		{
 			Singleton<ObserverDirector>::get().push(new MsgEntityGhostSpawn());

@@ -141,17 +141,10 @@ public:
 		switch(key)
 		{
 		case KEY_D:
-			maze->restart();
-			for(int i=0; i<(int)entities.size(); i++)
-			{
-				if(entities[i])
-					entities[i]->reset();
-			}
-			num_entities = 0;
-			spawnPacman();
+			spawnGhost();
 			break;
 		case KEY_W:
-			spawnGhost();
+			endGame();
 			break;
 		default:
 			break;
@@ -160,12 +153,15 @@ public:
 
 	void spawnGhost()
 	{
-		if(entities[num_entities] == 0)
+		if(num_entities<(int)entities.size())
 		{
-			GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
-			entities[num_entities]=entity;
+			if(entities[num_entities] == 0)
+			{
+				GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
+				entities[num_entities]=entity;
+			}
+			num_entities++;
 		}
-		num_entities++;
 	}
 	void spawnPacman()
 	{

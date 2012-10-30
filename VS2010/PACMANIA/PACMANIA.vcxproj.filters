@@ -28,12 +28,14 @@
     <Filter Include="Source\GL\Shaders">
       <UniqueIdentifier>{2976be2a-e209-441c-a800-a4c2c0d2ebdc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\DX\Shaders">
-      <UniqueIdentifier>{bb2504fe-b6e0-487b-a63a-c5c5cc53c877}</UniqueIdentifier>
-
     <Filter Include="Source\Timers">
       <UniqueIdentifier>{38ab2e46-569e-4f63-9efd-d98858c9d4bb}</UniqueIdentifier>
-
+    </Filter>
+    <Filter Include="Source\Sound">
+      <UniqueIdentifier>{8d201ce4-e64e-4bd1-ba25-f94fd8f2a8c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DX\Shader">
+      <UniqueIdentifier>{3923d4fc-cfa3-4e92-9aed-aaa92e98444d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,10 +123,6 @@
     <ClCompile Include="..\..\Source\Game\Game.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="..\..\Source\SoundEngine.cpp">
-      <Filter>Source</Filter>
-=======
     <ClCompile Include="..\..\Source\Timer.cpp">
       <Filter>Source\Timers</Filter>
     </ClCompile>
@@ -133,7 +131,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\GameTimer.cpp">
       <Filter>Source\Timers</Filter>
->>>>>>> 3ecb868939d8fbe4558b161ff0869fcfb8f607f1
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SoundEngine.cpp">
+      <Filter>Source\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -320,13 +320,6 @@
     <ClInclude Include="..\..\Source\Game\Game.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="..\..\Source\SoundEngine.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgSound.h">
-      <Filter>Source\Messaging</Filter>
-=======
     <ClInclude Include="..\..\Source\Timer.h">
       <Filter>Source\Timers</Filter>
     </ClInclude>
@@ -335,7 +328,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\GameTimer.h">
       <Filter>Source\Timers</Filter>
->>>>>>> 3ecb868939d8fbe4558b161ff0869fcfb8f607f1
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Messaging\MsgSound.h">
+      <Filter>Source\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SoundEngine.h">
+      <Filter>Source\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -349,10 +347,10 @@
       <Filter>Source\Game</Filter>
     </None>
     <None Include="..\..\Shaders\DX\Light.hlsl">
-      <Filter>Source\DX\Shaders</Filter>
+      <Filter>Source\DX\Shader</Filter>
     </None>
     <None Include="..\..\Shaders\DX\Shader.hlsl">
-      <Filter>Source\DX\Shaders</Filter>
+      <Filter>Source\DX\Shader</Filter>
     </None>
   </ItemGroup>
 </Project>
