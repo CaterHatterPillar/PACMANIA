@@ -11,6 +11,7 @@ enum MsgType {
 	INPUT_KEYBOARD_MSG,
 	CAMERA,
 	LIGHT,
+	SOUND,
 	
 	DX_WINDOW_HANDLE,
 	
