@@ -34,7 +34,6 @@ protected:
 	vector<PosNormTex>* createVerticesObj(string filename);
 	vector<unsigned int>* createIndicesObj(vector<PosNormTex>* vertices);
 
-
 	virtual GraphicsContainer* createGraphicsContainer(
 		ShaderId vertexShaderId,
 		ShaderId pixelShaderId,
@@ -56,6 +55,7 @@ public:
 	GameEntity* createPill(VecF3 position);
 	GameEntity* createBloodyPill(VecF3 position);
 	GameEntity* createWall(VecF3 position);
+	GameEntity* createConsume(VecF3 position);
 	Maze* createMaze();
 };
 
