@@ -2,20 +2,15 @@
 
 void Game::run()
 {
-<<<<<<< HEAD
-	/*Start original game session*/
-=======
-	SoundEngine* soundEngine = new SoundEngine();
-
-	soundEngine->init();
+	//SoundEngine* soundEngine = new SoundEngine();
+	//
+	//soundEngine->init();
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_GHOST));
 	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_CONSUME));
 	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.0f));
-	
 
->>>>>>> ea66f521e896173fcd5291466f0b390b4381e0f0
 	maze = entityFac->createMaze();
 	spawnPacman();
 	startGame();
@@ -33,7 +28,7 @@ void Game::run()
 
 		// Update game entities
 		for(int i=0; i<(int)num_entities; i++)
-			entities[i]->update(delta)
+			entities[i]->update(delta);
 			
 		maze->update(delta);
 
@@ -97,7 +92,7 @@ void Game::handleGameConditions()
 			switch(curCondition)
 			{
 			case CONDITION_RESTART:
-				//restartGame();
+				restartGame();
 				break;
 			case CONDITION_GAME_OVER:
 				gameOver();
@@ -127,8 +122,8 @@ void Game::endGame()
 {
 	if(gameRunning)
 	{
-		MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
-		Singleton<ObserverDirector>::get().push(consumeMsg);
+		//MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
+		//Singleton<ObserverDirector>::get().push(consumeMsg);
 		
 		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
 		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.5f));
@@ -158,7 +153,6 @@ void Game::wonGame()
 
 void Game::gameOver()
 {
-	std::string derp = "hherå";
 }
 void Game::restartGame()
 {
