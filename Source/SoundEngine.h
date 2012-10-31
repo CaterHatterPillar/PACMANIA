@@ -31,6 +31,7 @@ private:
 
 	FMOD::Sound*		soundAmbient;
 	FMOD::Sound*		soundGhost;
+	FMOD::Sound*		soundGhostDeath;
 	FMOD::Sound*		soundDeath;
 	FMOD::Sound*		soundEatPill;
 	FMOD::Sound*		soundConsume;
@@ -38,6 +39,7 @@ private:
 	FMOD::Channel*		channelAmbient;
 	FMOD::Channel*		channelGhost;
 	FMOD::Channel*		channelDeath;
+	FMOD::Channel*		channelGhostDeath;
 	FMOD::Channel*		channelEatPill;
 	FMOD::Channel*		channelConsume;
 	

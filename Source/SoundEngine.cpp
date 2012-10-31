@@ -72,6 +72,9 @@ void SoundEngine::loadSounds()
 	result = system->createSound("../../Sounds/DEATH.mp3", flags, 0, &soundDeath);
 	ERRCHECK(result);
 
+	result = system->createSound("../../Sounds/GHOST_DEATH.mp3", flags, 0, &soundGhostDeath);
+	ERRCHECK(result);
+
 	result = system->createSound("../../Sounds/EAT_PILL.mp3", flags, 0, &soundEatPill);
 	ERRCHECK(result);
 }
@@ -99,6 +102,9 @@ void SoundEngine::msgSound(Msg* msg)
 		break;
 	case SOUND_CONSUME:
 		system->playSound(FMOD_CHANNEL_FREE, soundConsume, false, &channelConsume);
+		break;
+	case SOUND_GHOST_DEATH:
+		system->playSound(FMOD_CHANNEL_FREE, soundGhostDeath, false, &channelGhostDeath);
 		break;
 	default:
 		break;
@@ -134,6 +140,10 @@ void SoundEngine::msgSoundVolume(Msg* msg)
 	case SOUND_CONSUME:
 		if(channelConsume)
 			channelConsume->setVolume(volume);
+		break;
+	case SOUND_GHOST_DEATH:
+		if(channelGhostDeath)
+			channelGhostDeath->setVolume(volume);
 		break;
 	default:
 		break;
