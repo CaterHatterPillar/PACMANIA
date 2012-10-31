@@ -1,356 +1,146 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source">
-      <UniqueIdentifier>{a7b42c43-3513-4911-9d8e-9bd9021a92c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Behaviours">
-      <UniqueIdentifier>{2bb962e0-a9bf-41d7-9728-c4d75c74db7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Game">
-      <UniqueIdentifier>{18ebcd5e-2493-4e0d-9536-d6784ab9acb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GL">
-      <UniqueIdentifier>{e464f586-5cd9-4801-abd8-769eff4e21f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Math">
-      <UniqueIdentifier>{550c4d13-0abd-44f2-89e1-93d7f0dc0254}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Messaging">
-      <UniqueIdentifier>{4b7d24ab-2e98-48a9-add5-8c45ca5e9c61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Vertices">
-      <UniqueIdentifier>{982f2be3-228a-4e77-9965-058c8a0697c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\DX">
-      <UniqueIdentifier>{7b8fd6ac-1f1b-4943-8d87-48240ef04e48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GL\Shaders">
-      <UniqueIdentifier>{2976be2a-e209-441c-a800-a4c2c0d2ebdc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Timers">
-      <UniqueIdentifier>{38ab2e46-569e-4f63-9efd-d98858c9d4bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Sound">
-      <UniqueIdentifier>{8d201ce4-e64e-4bd1-ba25-f94fd8f2a8c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\DX\Shader">
-      <UniqueIdentifier>{3923d4fc-cfa3-4e92-9aed-aaa92e98444d}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Source\Camera.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Component.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\LinuxContainer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Renderer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Window.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\WindowsContainer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Game\GameEntity.cpp">
-      <Filter>Source\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\CameraGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\FXGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\FXManagementGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\GraphicsContainerGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\InputGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\RendererGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\Texture.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\WindowGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\PacMath.cpp">
-      <Filter>Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Messaging\ObserverDirector.cpp">
-      <Filter>Source\Messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Game\GameEntityFactory.cpp">
-      <Filter>Source\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GL\TexManagementGL.cpp">
-      <Filter>Source\GL</Filter>
-    </ClCompile>
+    <ClCompile Include="..\..\Source\Camera.cpp" />
+    <ClCompile Include="..\..\Source\Component.cpp" />
+    <ClCompile Include="..\..\Source\ConditionTimer.cpp" />
+    <ClCompile Include="..\..\Source\DX\Cube.cpp" />
+    <ClCompile Include="..\..\Source\GameTimer.cpp" />
+    <ClCompile Include="..\..\Source\Game\Game.cpp" />
+    <ClCompile Include="..\..\Source\Game\GameEntity.cpp" />
+    <ClCompile Include="..\..\Source\Game\GameEntityFactory.cpp" />
+    <ClCompile Include="..\..\Source\Game\Maze.cpp" />
+    <ClCompile Include="..\..\Source\GL\CameraGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\FXGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\FXManagementGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\GraphicsContainerGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\InputGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\RendererGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\TexManagementGL.cpp" />
+    <ClCompile Include="..\..\Source\GL\Texture.cpp" />
+    <ClCompile Include="..\..\Source\GL\WindowGL.cpp" />
+    <ClCompile Include="..\..\Source\LinuxContainer.cpp" />
+    <ClCompile Include="..\..\Source\Math\PacMath.cpp" />
+    <ClCompile Include="..\..\Source\Messaging\ObserverDirector.cpp" />
+    <ClCompile Include="..\..\Source\Renderer.cpp" />
+    <ClCompile Include="..\..\Source\SoundEngine.cpp" />
+    <ClCompile Include="..\..\Source\Timer.cpp" />
+    <ClCompile Include="..\..\Source\Window.cpp" />
+    <ClCompile Include="..\..\Source\WindowsContainer.cpp" />
     <ClCompile Include="..\..\Source\DX\CameraDX.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\DX\Cube.cpp">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DX\GraphicsContainerDX.cpp">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DX\RendererDX.cpp">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DX\ShaderManagerDX.cpp">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DX\TextureManagerDX.cpp">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\DX\WindowDX.cpp">
-      <Filter>Source\DX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Game\Maze.cpp">
-      <Filter>Source\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Game\Game.cpp">
-      <Filter>Source\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timer.cpp">
-      <Filter>Source\Timers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ConditionTimer.cpp">
-      <Filter>Source\Timers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GameTimer.cpp">
-      <Filter>Source\Timers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\SoundEngine.cpp">
-      <Filter>Source\Sound</Filter>
+      <Filter>DX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\Camera.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Component.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GraphicsContainer.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LinuxContainer.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Renderer.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Singleton.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Window.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\WindowsContainer.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h">
-      <Filter>Source\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Game\GameEntity.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Game\Maze.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\CameraGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\CommonGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\FXGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\FXManagementGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\GameEntityFactoryGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\GraphicsContainerGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\InputGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\RendererGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\Texture.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\UniformGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\WindowGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\CommonMath.h">
-      <Filter>Source\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\PacMath.h">
-      <Filter>Source\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\Msg.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgCamera.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgGlut.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgGlutCallback.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgKeyboard.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgMouseClick.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgMouseMove.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgRender.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgType.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\Observer.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\ObserverDirector.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\SubscriptionMsg.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Vertices\Pos.h">
-      <Filter>Source\Vertices</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Vertices\PosNorm.h">
-      <Filter>Source\Vertices</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Vertices\PosNormTex.h">
-      <Filter>Source\Vertices</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GL\TexManagementGL.h">
-      <Filter>Source\GL</Filter>
-    </ClInclude>
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMaze.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h" />
+    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazePlayer.h" />
+    <ClInclude Include="..\..\Source\Camera.h" />
+    <ClInclude Include="..\..\Source\Common.h" />
+    <ClInclude Include="..\..\Source\Component.h" />
+    <ClInclude Include="..\..\Source\ConditionTimer.h" />
+    <ClInclude Include="..\..\Source\DX\ConstantBuffers.h" />
+    <ClInclude Include="..\..\Source\DX\Cube.h" />
+    <ClInclude Include="..\..\Source\DX\InputContainer.h" />
+    <ClInclude Include="..\..\Source\GameTimer.h" />
+    <ClInclude Include="..\..\Source\Game\Game.h" />
+    <ClInclude Include="..\..\Source\Game\GameEntity.h" />
+    <ClInclude Include="..\..\Source\Game\GameEntityFactory.h" />
+    <ClInclude Include="..\..\Source\Game\Maze.h" />
+    <ClInclude Include="..\..\Source\GL\CameraGL.h" />
+    <ClInclude Include="..\..\Source\GL\CommonGL.h" />
+    <ClInclude Include="..\..\Source\GL\FXGL.h" />
+    <ClInclude Include="..\..\Source\GL\FXManagementGL.h" />
+    <ClInclude Include="..\..\Source\GL\GameEntityFactoryGL.h" />
+    <ClInclude Include="..\..\Source\GL\GraphicsContainerGL.h" />
+    <ClInclude Include="..\..\Source\GL\InputGL.h" />
+    <ClInclude Include="..\..\Source\GL\RendererGL.h" />
+    <ClInclude Include="..\..\Source\GL\TexManagementGL.h" />
+    <ClInclude Include="..\..\Source\GL\Texture.h" />
+    <ClInclude Include="..\..\Source\GL\UniformGL.h" />
+    <ClInclude Include="..\..\Source\GL\WindowGL.h" />
+    <ClInclude Include="..\..\Source\GraphicsContainer.h" />
+    <ClInclude Include="..\..\Source\Light.h" />
+    <ClInclude Include="..\..\Source\LinuxContainer.h" />
+    <ClInclude Include="..\..\Source\Math\CommonMath.h" />
+    <ClInclude Include="..\..\Source\Math\PacMath.h" />
+    <ClInclude Include="..\..\Source\Messaging\Msg.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgCamera.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgEntity.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgGlut.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgGlutCallback.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgKeyboard.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgLight.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgMouseClick.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgMouseMove.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgRender.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgSound.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgType.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgZoom.h" />
+    <ClInclude Include="..\..\Source\Messaging\Observer.h" />
+    <ClInclude Include="..\..\Source\Messaging\ObserverDirector.h" />
+    <ClInclude Include="..\..\Source\Messaging\SubscriptionMsg.h" />
+    <ClInclude Include="..\..\Source\Renderer.h" />
+    <ClInclude Include="..\..\Source\Singleton.h" />
+    <ClInclude Include="..\..\Source\SoundEngine.h" />
+    <ClInclude Include="..\..\Source\Timer.h" />
+    <ClInclude Include="..\..\Source\Vertices\Pos.h" />
+    <ClInclude Include="..\..\Source\Vertices\PosNorm.h" />
+    <ClInclude Include="..\..\Source\Vertices\PosNormTex.h" />
+    <ClInclude Include="..\..\Source\Window.h" />
+    <ClInclude Include="..\..\Source\WindowsContainer.h" />
     <ClInclude Include="..\..\Source\DX\CameraDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\ConstantBuffers.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\Cube.h">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DX\GameEntityFactoryDX.h">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DX\GraphicsContainerDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\DX\InputContainer.h">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DX\RendererDX.h">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DX\ShaderManagerDX.h">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DX\TextureManagerDX.h">
-      <Filter>Source\DX</Filter>
+      <Filter>DX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\DX\WindowDX.h">
-      <Filter>Source\DX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Game\GameEntityFactory.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Light.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgLight.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMaze.h">
-      <Filter>Source\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazePlayer.h">
-      <Filter>Source\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h">
-      <Filter>Source\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgEntity.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgZoom.h">
-      <Filter>Source\Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Game\Game.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timer.h">
-      <Filter>Source\Timers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ConditionTimer.h">
-      <Filter>Source\Timers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GameTimer.h">
-      <Filter>Source\Timers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Messaging\MsgSound.h">
-      <Filter>Source\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\SoundEngine.h">
-      <Filter>Source\Sound</Filter>
+      <Filter>DX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl">
-      <Filter>Source\GL\Shaders</Filter>
-    </None>
-    <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl">
-      <Filter>Source\GL\Shaders</Filter>
-    </None>
-    <None Include="..\..\Levels\maze1.txt">
-      <Filter>Source\Game</Filter>
-    </None>
-    <None Include="..\..\Shaders\DX\Light.hlsl">
-      <Filter>Source\DX\Shader</Filter>
-    </None>
-    <None Include="..\..\Shaders\DX\Shader.hlsl">
-      <Filter>Source\DX\Shader</Filter>
-    </None>
+    <None Include="..\..\Levels\maze1.txt" />
+    <None Include="..\..\Shaders\DX\Light.hlsl" />
+    <None Include="..\..\Shaders\DX\Shader.hlsl" />
+    <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl" />
+    <None Include="..\..\Shaders\GL\DefaultVertexShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DX">
+      <UniqueIdentifier>{8cf85d0b-d79a-455b-98a2-93f616689383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL">
+      <UniqueIdentifier>{f5f85cb2-be32-468e-834e-6706a975d010}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
