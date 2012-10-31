@@ -3,7 +3,7 @@
 	#include "vld.h"
 #endif
 
-#ifndef _WIN32
+#ifdef _WIN32
 
 #include "WindowsContainer.h"
 int WINAPI WinMain(
