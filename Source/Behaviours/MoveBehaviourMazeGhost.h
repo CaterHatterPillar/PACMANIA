@@ -7,15 +7,20 @@ class MoveBehaviourMazeGhost : public MoveBehaviourMaze
 {
 private:
 	VecI2 target;
+	float fleeTimer;
 public:
 	MoveBehaviourMazeGhost(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
 		pos = VecI2(28,16);
+		pos = VecI2(0,16);
 		move(1,0);
+		fleeTimer = 0.0f;
+		lightPower = 0.0f;
 	};
 	virtual void init()
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PACMAN_POS));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PILL_BLOODY_EATEN));
 	};
 	
 	void reset()
@@ -33,7 +38,7 @@ public:
 		VecI2 newPos = VecI2(pos.x+newDir.x,  pos.y+newDir.y);
 
 		// TRUE: Do not move in opposite direction/move outside/collide with wall
-		return !(newDir == -dir) && !isWallPos(newPos) && !isOutsidePos(newPos);
+		return !isWallPos(newPos) && !isOutsidePos(newPos);
 	}
 
 	void runAI()
@@ -49,13 +54,17 @@ public:
 			newDir.normalize();
 
 			speed = 3.3f;
+
+			if(fleeTimer>0)
+			{
+				speed = 2.0f;
+				newDir=-newDir;
+			}
 		}
 		else
 		{
 			speed = 2.6f;
 		}
-
-		
 		
 		// TRUE: Invalid direction, pick random direction
 		if(!isValidDir(newDir))
@@ -72,14 +81,14 @@ public:
 				newDir = VecI2(round(tmpDir.x), round(tmpDir.y));
 
 				// TRUE: Found direction, no further testing needed
-				if(isValidDir(newDir))
+				if(isValidDir(newDir) && !(newDir == -dir))
 				{
 					break; // Abort further testing
 				}
 			}
 
 			// TRUE: No valid direction found, we are in a dead end, pick opposite direction
-			if(!isValidDir(newDir))
+			if(!(isValidDir(newDir) && !(newDir == -dir)))
 			{
 				newDir = -dir;
 			}
@@ -97,6 +106,13 @@ public:
 
 	void updateSpecific(double delta)
 	{
+		float dt = (float)delta;
+
+		// Light logic & invincible logic
+		if(fleeTimer>0)
+			fleeTimer-=dt;
+		if(fleeTimer<0)
+			fleeTimer=0;
 	};
 
 	virtual void handleMessages()
@@ -112,6 +128,9 @@ public:
 				{
 				case ENTITY_PACMAN_POS:
 					msgEntityPacmanPos(msg);
+					break;
+				case ENTITY_PILL_BLOODY_EATEN:
+					msgEntityPillBloodyEaten(msg);
 					break;
 				default:
 					throw 0; //temp
@@ -133,6 +152,12 @@ public:
 		target = msgCast->pos;
 
 		delete msgCast;
+	};
+
+	void msgEntityPillBloodyEaten(Msg* msg)
+	{
+		delete msg;
+		fleeTimer = 5.0f;
 	};
 };
 

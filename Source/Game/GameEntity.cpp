@@ -181,6 +181,14 @@ void GameEntity::update(double delta)
 			
 			float power = moveBehaviour->lightPower;
 			light->att.x = 0.25/power;
+
+			float soundVolume = 1.0f-power;
+			if(soundVolume<0.0f)
+				soundVolume = 0.0f;
+			if(soundVolume>0.01f)
+			{
+			
+			}
 		}
 
 		MsgLight* msgLight = new MsgLight(light);
