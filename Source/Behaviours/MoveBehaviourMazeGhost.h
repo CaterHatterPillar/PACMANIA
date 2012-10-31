@@ -8,14 +8,11 @@ class MoveBehaviourMazeGhost : public MoveBehaviourMaze
 private:
 	VecI2 target;
 	float fleeTimer;
+	float lightPower_tween;
 public:
 	MoveBehaviourMazeGhost(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
-		pos = VecI2(28,16);
-		pos = VecI2(0,16);
-		move(1,0);
-		fleeTimer = 0.0f;
-		lightPower = 1.0f;
+		reset();
 	};
 	virtual void init()
 	{
@@ -28,6 +25,8 @@ public:
 		pos = VecI2(28,16);
 		pos = VecI2(0,16);
 		move(1,0);
+		fleeTimer = 0.0f;
+		lightPower_tween = lightPower;
 	};
 
 	bool isValidDir(VecI2 newDir)
@@ -55,6 +54,7 @@ public:
 			newDir.normalize();
 
 			speed = 3.3f;
+			lightPower_tween = 0.8f;
 
 			if(fleeTimer>0)
 			{
@@ -64,6 +64,7 @@ public:
 		}
 		else
 		{
+			lightPower_tween = 0.2f;
 			speed = 2.6f;
 		}
 		
@@ -114,6 +115,13 @@ public:
 			fleeTimer-=dt;
 		if(fleeTimer<0)
 			fleeTimer=0;
+
+		// lerp slower when restoring light
+		if(lightPower_tween>lightPower)
+			lightPower = lerp(lightPower, lightPower_tween, 0.8f*dt);
+		// lerp faster when draining light
+		else
+			lightPower = lerp(lightPower, lightPower_tween, 2.0f*dt);
 	};
 
 	virtual void handleMessages()

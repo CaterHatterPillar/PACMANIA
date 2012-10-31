@@ -32,10 +32,13 @@ void Game::run()
 		
 		handleGameConditions();
 
-		// Update game entities
-		update(delta);
-		for(int i=0; i<(int)num_entities; i++)
-			entities[i]->update(delta);
+		if(gameRunning)
+		{
+			// Update game entities
+			update(delta);
+			for(int i=0; i<(int)num_entities; i++)
+				entities[i]->update(delta);
+		}
 		maze->update(delta);
 
 		//
@@ -46,15 +49,18 @@ void Game::run()
 		if(entities[0])
 		{
 			float noise =  1.0f - entities[0]->getLightPower();
+			noise *=2.0f;
 			if(noise<0.0f)
 				noise = 0.0f;
+			if(noise>0.7f)
+				noise = 0.7f;
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, noise));
 		}
 
 		// under bloody pills effect sound
 		if(entities[0])
 		{
-			float noise =  (entities[0]->getLightPower() - 1.0f) / 10.0f;
+			float noise =  0.5f*(entities[0]->getLightPower() - 1.0f) / 10.0f;
 			if(noise<0.0f)
 				noise = 0.0f;
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
@@ -111,6 +117,9 @@ void Game::endGame()
 {
 	if(gameRunning)
 	{
+		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
+		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.5f));
+
 		//Start game over-timer
 		curCondition = CONDITION_RESTART;
 		conditionTimer->Condition(5.0);	//five sec condition
