@@ -15,8 +15,10 @@ void Game::run()
 		
 		handleGameConditions();
 
-		// Update game entities
+		/*Update itself*/
 		update(delta);
+
+		// Update game entities
 		for(int i=0; i<(int)num_entities; i++)
 			entities[i]->update(delta);
 		maze->update(delta);
@@ -27,6 +29,7 @@ void Game::run()
 		renderer->update(delta);
 		Singleton<ObserverDirector>::get().update(delta);
 		soundEngine->update(delta);
+		consumeBehaviour->update(delta);
 
 		renderer->renderFrame();
 	} while(window->isActive());
@@ -125,6 +128,8 @@ void Game::init()
 	soundEngine->init();
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
 	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, 1.0f));
+
+	consumeBehaviour->init();
 }
 void Game::update(double delta)
 {
@@ -173,7 +178,10 @@ Game::Game(
 	gameTimer		= new GameTimer();
 	conditionTimer	= new ConditionTimer(-1.0);
 	curCondition	= CONDITION_NO_CONDITION;
-	consumeBehaviour = new ConsumeBehaviour();
+
+	/*Create consumer*/
+	GameEntity* consumer = entityFac->createConsume(VecF3(0.0f, 0.0f, 0.0f));
+	consumeBehaviour = new ConsumeBehaviour(consumer);
 
 	entities.resize(20);
 	num_entities = 0;

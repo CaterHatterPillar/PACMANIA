@@ -1,11 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <iostream>
+
 #include "GameEntityFactory.h"
+
 #include "../ConditionTimer.h"
-
 #include "../SoundEngine.h"
-
 #include "../Camera.h"
 #include "../Window.h"
 #include "../Renderer.h"
@@ -13,6 +14,7 @@
 
 #include "../Messaging/MsgZoom.h"
 #include "../Messaging/MsgEntity.h"
+#include "../Messaging/MsgSound.h"
 
 #include "../Behaviours/ConsumeBehaviour.h"
 
@@ -46,103 +48,14 @@ protected:
 public:
 	void run();
 
-	Game(
-		Camera*				camera,
+	Game(Camera*			camera,
 		Window*				window,
 		Renderer*			renderer,
-		GameEntityFactory*	entityFac)
-	{
-		this->camera	= camera;
-		this->window	= window;
-		this->renderer	= renderer;
-		this->entityFac = entityFac;
+		GameEntityFactory*	entityFac);
+	~Game();
 
-		soundEngine = new SoundEngine();
-
-		gameTimer		= new GameTimer();
-		conditionTimer	= new ConditionTimer(-1.0);
-		curCondition	= CONDITION_NO_CONDITION;
-		consumeBehaviour = new ConsumeBehaviour();
-
-		entities.resize(20);
-		num_entities = 0;
-		for(int i=0; i<(int)entities.size(); i++)
-			entities[i]=0;
-		init();
-	}
-	~Game()
-	{
-		for(int i=0; i<(int)entities.size(); i++)
-		{
-			if(entities[i])
-				delete entities[i];
-		}
-		if(maze)
-			delete maze;
-
-		if(soundEngine)
-			delete soundEngine;
-			
-		if(gameTimer)
-			delete gameTimer;
-		if(conditionTimer)
-			delete conditionTimer;
-
-		if(consumeBehaviour)
-			delete consumeBehaviour;
-
-		if(camera)
-			delete camera;
-		if(window)
-			delete window;
-		if(renderer)
-			delete renderer;
-		if(entityFac)
-			delete entityFac;
-	}
-
-	void update(double delta)
-	{
-		Msg* msg = peek();
-		while(msg)
-		{
-			msg = pop();
-			if(msg)
-			{
-				MsgType type = msg->Type();
-				switch(type)
-				{
-				case ENTITY_GHOST_SPAWN:
-					msgSpawnGhost(msg);
-					break;
-				case INPUT_KEYBOARD_MSG:
-					msgKeyboard(msg);
-					break;
-				case GAME_OVER:
-					msgGameOver(msg);
-					break;
-				case GAME_WON:
-					msgGameWon(msg);
-					break;
-				default:
-					throw 0; //temp
-					break;
-				}
-			}
-		}
-	}
-	void init()
-	{
-		/*Subscribe to relevant msgs*/
-		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
-		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
-		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
-
-		/*Initialize sound engine*/
-		soundEngine->init();
-		Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
-		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, 1.0f));
-	}
+	void update(double delta);
+	void init();
 
 	void msgSpawnGhost(Msg* msg)
 	{
