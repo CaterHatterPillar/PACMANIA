@@ -1,8 +1,9 @@
+
 #if defined( DEBUG ) || defined( _DEBUG)
 	#include "vld.h"
 #endif
 
-#ifdef _WIN32
+#ifndef _WIN32
 
 #include "WindowsContainer.h"
 int WINAPI WinMain(

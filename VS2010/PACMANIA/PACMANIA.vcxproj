@@ -107,6 +107,7 @@
     <ClInclude Include="..\..\Source\Singleton.h" />
     <ClInclude Include="..\..\Source\SoundEffect.h" />
     <ClInclude Include="..\..\Source\SoundEngine.h" />
+    <ClInclude Include="..\..\Source\TextureId.h" />
     <ClInclude Include="..\..\Source\Timer.h" />
     <ClInclude Include="..\..\Source\Vertices\Pos.h" />
     <ClInclude Include="..\..\Source\Vertices\PosNorm.h" />

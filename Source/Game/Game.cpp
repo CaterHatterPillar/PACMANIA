@@ -55,16 +55,19 @@ void Game::handleGameConditions()
 		{
 			switch(curCondition)
 			{
-			case RESTART:
+			case CONDITION_RESTART:
 				restartGame();
 				break;
-			case NO_CONDITION:
+			case CONDITION_GAME_OVER:
+				gameOver();
+				break;
+			case CONDITION_NO_CONDITION:
 				throw 0; //someone made a mistake
 				break;
 			}
 
 			/*Reset everything*/
-			curCondition = NO_CONDITION;
+			curCondition = CONDITION_NO_CONDITION;
 			conditionTimer->stop();
 			conditionTimer->reset();
 		}
@@ -84,11 +87,11 @@ void Game::endGame()
 	if(gameRunning)
 	{
 		//Start game over-timer
-		curCondition = RESTART;
+		curCondition = CONDITION_RESTART;
 		conditionTimer->Condition(5.0);	//five sec condition
 		conditionTimer->reset();
 		conditionTimer->start();
-
+		
 		//Zoom out
 		VecF3 pacPos = entities[0]->getPosition();
 		MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
@@ -96,6 +99,19 @@ void Game::endGame()
 
 		gameRunning = false;
 	}
+}
+void Game::wonGame()
+{
+	//Start game over-timer
+	curCondition = CONDITION_GAME_OVER;
+	conditionTimer->Condition(5.0);	//five sec condition
+	conditionTimer->reset();
+	conditionTimer->start();
+}
+
+void Game::gameOver()
+{
+	std::string derp = "hherå";
 }
 void Game::restartGame()
 {

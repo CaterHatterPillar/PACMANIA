@@ -14,7 +14,7 @@
 #include "../Messaging/MsgZoom.h"
 #include "../Messaging/MsgEntity.h"
 
-enum Condition { RESTART, NO_CONDITION };
+enum Condition { CONDITION_RESTART, CONDITION_GAME_OVER, CONDITION_NO_CONDITION };
 
 class Game  : public Component
 {
@@ -44,13 +44,14 @@ public:
 		Renderer*			renderer,
 		GameEntityFactory*	entityFac)
 	{
-		gameTimer	= new GameTimer();
-		conditionTimer = new ConditionTimer(-1.0);
-
 		this->camera	= camera;
 		this->window	= window;
 		this->renderer	= renderer;
 		this->entityFac = entityFac;
+
+		gameTimer		= new GameTimer();
+		conditionTimer	= new ConditionTimer(-1.0);
+		curCondition	= CONDITION_NO_CONDITION;
 
 		entities.resize(20);
 		num_entities = 0;
@@ -103,6 +104,9 @@ public:
 				case GAME_OVER:
 					msgGameOver(msg);
 					break;
+				case GAME_WON:
+					msgGameWon(msg);
+					break;
 				default:
 					throw 0; //temp
 					break;
@@ -122,7 +126,6 @@ public:
 		spawnGhost();
 		delete msg;
 	}
-
 	void msgKeyboard(Msg* msg)
 	{
 		MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
@@ -134,6 +137,13 @@ public:
 		MsgGameOver* gameOverMsg = (MsgGameOver*)msg;
 		endGame();
 		delete gameOverMsg;
+	}
+	void msgGameWon(Msg* msg)
+	{
+		MsgGameWon* gameWonMsg = (MsgGameWon*)msg;
+		wonGame();
+		delete gameWonMsg;
+
 	}
 
 	void keyboard(KEY key)
@@ -176,6 +186,9 @@ public:
 	void handleGameConditions();
 	void startGame();
 	void endGame();
+	void wonGame();
+
+	void gameOver();
 	void restartGame(); 
 };
 

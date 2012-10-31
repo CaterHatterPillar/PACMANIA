@@ -11,6 +11,7 @@ static const std::string texWall		= "Wall.tga";
 static const std::string texPill		= "Pill.tga";
 static const std::string texPillBloody	= "BloodyPill.tga";
 static const std::string texPlaceHolder	= "PlaceHolder.tga";
+static const std::string texConsume		= "Consume.tga";
 
 class TexManagementGL
 {
