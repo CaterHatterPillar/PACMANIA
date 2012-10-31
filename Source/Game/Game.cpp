@@ -9,7 +9,9 @@ void Game::run()
 	SoundEngine* soundEngine = new SoundEngine();
 
 	soundEngine->init();
-	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT, false));
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
+
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, 1.0f));
 
 	maze = entityFac->createMaze();
 	spawnPacman();
