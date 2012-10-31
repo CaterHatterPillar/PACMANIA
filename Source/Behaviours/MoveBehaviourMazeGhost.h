@@ -15,7 +15,7 @@ public:
 		pos = VecI2(0,16);
 		move(1,0);
 		fleeTimer = 0.0f;
-		lightPower = 0.0f;
+		lightPower = 1.0f;
 	};
 	virtual void init()
 	{
@@ -26,6 +26,7 @@ public:
 	void reset()
 	{
 		pos = VecI2(28,16);
+		pos = VecI2(0,16);
 		move(1,0);
 	};
 

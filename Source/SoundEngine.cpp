@@ -63,6 +63,10 @@ void SoundEngine::loadSounds()
 	result = system->createSound("../../Sounds/GHOST.mp3", flags, 0, &soundGhost);
 	ERRCHECK(result);
 
+	result = system->createSound("../../Sounds/CONSUME.mp3", flags, 0, &soundConsume);
+	ERRCHECK(result);
+
+
 	flags = FMOD_LOOP_OFF | FMOD_2D | FMOD_HARDWARE;
 
 	result = system->createSound("../../Sounds/DEATH.mp3", flags, 0, &soundDeath);
@@ -70,11 +74,6 @@ void SoundEngine::loadSounds()
 
 	result = system->createSound("../../Sounds/EAT_PILL.mp3", flags, 0, &soundEatPill);
 	ERRCHECK(result);
-
-	result = system->createSound("../../Sounds/CONSUME.mp3", flags, 0, &soundConsume);
-	ERRCHECK(result);
-
-
 }
 
 void SoundEngine::msgSound(Msg* msg)
