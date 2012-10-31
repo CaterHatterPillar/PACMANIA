@@ -23,13 +23,16 @@ class MsgEntityPacmanPos : public Msg
 {
 public:
 	VecI2 pos;
-	MsgEntityPacmanPos(VecI2 pos) : Msg(ENTITY_PACMAN_POS)
+	VecF3 position;
+	MsgEntityPacmanPos(VecI2 pos, VecF3 position) : Msg(ENTITY_PACMAN_POS)
 	{
 		this->pos = pos;
+		this->position = position;
 	}
 	MsgEntityPacmanPos(MsgEntityPacmanPos* msg) : Msg(ENTITY_PACMAN_POS)
 	{
 		pos = msg->pos;
+		position = msg->position;
 	}
 	virtual ~MsgEntityPacmanPos() {}
 };

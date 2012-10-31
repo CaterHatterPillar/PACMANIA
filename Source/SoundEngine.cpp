@@ -95,7 +95,7 @@ void SoundEngine::msgSound(Msg* msg)
 		break;
 	case SOUND_EAT_PILL:
 		result = system->playSound(FMOD_CHANNEL_FREE, soundEatPill, false, &channelEatPill);
-		channelEatPill->setVolume(0.1f);
+		channelEatPill->setVolume(0.02f);
 		break;
 	case SOUND_CONSUME:
 		system->playSound(FMOD_CHANNEL_FREE, soundConsume, false, &channelConsume);
