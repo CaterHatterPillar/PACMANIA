@@ -4,7 +4,16 @@ SoundEngine::SoundEngine()
 {
 	system			= NULL;
 	soundAmbient	= NULL;
+	soundGhost		= NULL;
+	soundDeath		= NULL;
+	soundEatPill	= NULL;
+	soundConsume	= NULL;
+	
 	channelAmbient	= NULL;
+	channelGhost	= NULL;
+	channelDeath	= NULL;
+	channelEatPill	= NULL;
+	channelConsume	= NULL;
 }
 
 SoundEngine::~SoundEngine()
@@ -61,6 +70,11 @@ void SoundEngine::loadSounds()
 
 	result = system->createSound("../../Sounds/EAT_PILL.mp3", flags, 0, &soundEatPill);
 	ERRCHECK(result);
+
+	result = system->createSound("../../Sounds/CONSUME.mp3", flags, 0, &soundConsume);
+	ERRCHECK(result);
+
+
 }
 
 void SoundEngine::msgSound(Msg* msg)
@@ -82,6 +96,8 @@ void SoundEngine::msgSound(Msg* msg)
 		break;
 	case SOUND_EAT_PILL:
 		system->playSound(FMOD_CHANNEL_FREE, soundEatPill, false, &channelEatPill);
+	case SOUND_CONSUME:
+		system->playSound(FMOD_CHANNEL_FREE, soundConsume, false, &channelConsume);
 		break;
 	default:
 		break;
@@ -113,6 +129,10 @@ void SoundEngine::msgSoundVolume(Msg* msg)
 	case SOUND_EAT_PILL:
 		if(channelEatPill)
 			channelEatPill->setVolume(volume);
+		break;
+	case SOUND_CONSUME:
+		if(channelConsume)
+			channelConsume->setVolume(volume);
 		break;
 	default:
 		break;
