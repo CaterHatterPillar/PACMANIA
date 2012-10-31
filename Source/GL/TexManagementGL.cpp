@@ -17,6 +17,9 @@ std::string TexManagementGL::fetchTexPath(TextureId texId)
 	case TEXTURE_PILL_BLOODY:
 		pathComplete += texPillBloody;
 		break;
+	case TEXTURE_PILL_CONSUME:
+		pathComplete += texConsume;
+		break;
 	default:
 		pathComplete += texPlaceHolder;
 		break;
@@ -33,7 +36,8 @@ void TexManagementGL::init()
 	loadTex->push_back(TEXTURE_GHOST);
 	loadTex->push_back(TEXTURE_WALL);
 	loadTex->push_back(TEXTURE_PLACEHOLDER);
-	
+	loadTex->push_back(TEXTURE_CONSUME);
+
 	std::string completePath;
 	for(unsigned int i = 0; i < loadTex->size(); i++)
 	{

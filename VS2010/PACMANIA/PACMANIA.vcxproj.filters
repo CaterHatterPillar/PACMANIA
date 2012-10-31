@@ -335,6 +335,9 @@
     <ClInclude Include="..\..\Source\SoundEngine.h">
       <Filter>Source\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\TextureId.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl">
