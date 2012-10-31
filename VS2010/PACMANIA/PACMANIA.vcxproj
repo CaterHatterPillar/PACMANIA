@@ -97,6 +97,7 @@
     <ClInclude Include="..\..\Source\Messaging\MsgMouseMove.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgRender.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgSound.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgSoundVolume.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgType.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgZoom.h" />
     <ClInclude Include="..\..\Source\Messaging\Observer.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="..\..\Source\Messaging\SubscriptionMsg.h" />
     <ClInclude Include="..\..\Source\Renderer.h" />
     <ClInclude Include="..\..\Source\Singleton.h" />
+    <ClInclude Include="..\..\Source\SoundEffect.h" />
     <ClInclude Include="..\..\Source\SoundEngine.h" />
     <ClInclude Include="..\..\Source\TextureId.h" />
     <ClInclude Include="..\..\Source\Timer.h" />

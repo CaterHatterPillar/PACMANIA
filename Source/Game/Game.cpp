@@ -9,7 +9,12 @@ void Game::run()
 	SoundEngine* soundEngine = new SoundEngine();
 
 	soundEngine->init();
-	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT, false));
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_GHOST));
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_CONSUME));
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.0f));
+	
 
 	maze = entityFac->createMaze();
 	spawnPacman();
@@ -32,8 +37,30 @@ void Game::run()
 		for(int i=0; i<(int)num_entities; i++)
 			entities[i]->update(delta);
 		maze->update(delta);
+
+		//
+		// Calc sound
+		//
+
+		// ghost sound
+		if(entities[0])
+		{
+			float noise =  1.0f - entities[0]->getLightPower();
+			if(noise<0.0f)
+				noise = 0.0f;
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, noise));
+		}
+
+		// under bloody pills effect sound
+		if(entities[0])
+		{
+			float noise =  (entities[0]->getLightPower() - 1.0f) / 10.0f;
+			if(noise<0.0f)
+				noise = 0.0f;
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
+		}
 		
-		/*Update stuff here*/
+		// Update stuff here
 		camera->update(delta);
 		window->update(delta);
 		renderer->update(delta);

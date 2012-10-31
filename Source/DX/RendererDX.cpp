@@ -188,7 +188,7 @@ void RendererDX::createSamplerState()
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	samplerDesc.MinLOD = 0;
-	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MaxLOD = 0; //D3D11_FLOAT32_MAX;
 
 	device->CreateSamplerState(&samplerDesc, &samplerStateDefault);
 }

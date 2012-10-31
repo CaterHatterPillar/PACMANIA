@@ -112,7 +112,18 @@ public:
 			if(lightPower_tween>1.0f)
 				lightPower_tween = 1.0f;
 		}
-		lightPower = lerp(lightPower, lightPower_tween, 0.8f*dt);
+		// lerp slower when restoring light
+		if(lightPower_tween>lightPower)
+			lightPower = lerp(lightPower, lightPower_tween, 0.8f*dt);
+		// lerp faster when draining light
+		else
+			lightPower = lerp(lightPower, lightPower_tween, 2.0f*dt);
+
+		// make light fade quicker when eating bloody pills
+		if(lightPower>lightPower_tween && lightPower>1.0f)
+			lightPower = lerp(lightPower, lightPower_tween, 2.0f*dt);
+		
+		lightPower_tween = 1.0f;
 	};
 
 
@@ -133,10 +144,9 @@ public:
 		{
 			
 			// TRUE: Drain some light if seeing ghost
-			lightPower_tween = 1.0f;
 			if(isInLineOfSight(pos, ghostPos))
 			{
-				lightPower_tween = 0.9f;
+				lightPower_tween = 0.8f;
 			}
 			// FALSE: Player is hidden from ghost and cannot collide
 			else
@@ -146,8 +156,8 @@ public:
 
 			float dist = v1.distanceTo(v2);
 			// TRUE: Light draining occurs
-			float spotDistance = 10.0f;
-			float minDistance = 5.0f;
+			float spotDistance = 5.0f;
+			float minDistance = 2.0f;
 			if(dist < spotDistance - minDistance)
 				lightPower_tween = lightPower_tween*dist/(spotDistance-minDistance);
 			if(lightPower_tween<0.0f)

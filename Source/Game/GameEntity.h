@@ -68,6 +68,10 @@ public:
 	void setGraphicsContainer(GraphicsContainer* graphicsContainer);
 	void setMoveBehaviour(MoveBehaviour* moveBehaviour);
 	void setLight(Light* light);
+	float getLightPower()
+	{
+		return moveBehaviour->lightPower;
+	}
 
 	void update(double delta);
 };

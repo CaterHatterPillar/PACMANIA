@@ -18,6 +18,7 @@
 #include "MsgLight.h"
 #include "MsgZoom.h"
 #include "MsgSound.h"
+#include "MsgSoundVolume.h"
 
 #include "MsgDXWindowHandle.h"
 
@@ -38,6 +39,7 @@ private:
 	void msgLight(Msg* msg);
 	void msgZoom(Msg* msg);
 	void msgSound(Msg* msg);
+	void msgSoundVolume(Msg* msg);
 
 	// Entity messages
 	void msgEntityPlayerPos(Msg* msg)

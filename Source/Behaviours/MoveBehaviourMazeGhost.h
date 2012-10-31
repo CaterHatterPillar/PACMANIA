@@ -157,7 +157,7 @@ public:
 	void msgEntityPillBloodyEaten(Msg* msg)
 	{
 		delete msg;
-		fleeTimer = 5.0f;
+		fleeTimer = 6.0f;
 	};
 };
 
