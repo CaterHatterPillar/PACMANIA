@@ -1,6 +1,6 @@
 
 #if defined(DEBUG) || defined(_DEBUG)
-	#include "vld.h"
+	//#include "vld.h"
 #endif
 
 #ifdef _WIN32
