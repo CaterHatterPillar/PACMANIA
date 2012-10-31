@@ -252,7 +252,6 @@ void ObserverDirector::msgSound(Msg* msg)
 	}
 	delete soundMsg;
 }
-
 void ObserverDirector::msgSoundVolume(Msg* msg)
 {
 	MsgType type = msg->Type();
