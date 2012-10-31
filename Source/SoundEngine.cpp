@@ -50,24 +50,75 @@ void SoundEngine::loadSounds()
 
 	result = system->createSound("../../Sounds/AMBIENT.mp3", flags, 0, &soundAmbient);
 	ERRCHECK(result);
+
+	result = system->createSound("../../Sounds/GHOST.mp3", flags, 0, &soundGhost);
+	ERRCHECK(result);
+
+	flags = FMOD_LOOP_OFF | FMOD_2D | FMOD_HARDWARE;
+
+	result = system->createSound("../../Sounds/DEATH.mp3", flags, 0, &soundDeath);
+	ERRCHECK(result);
+
+	result = system->createSound("../../Sounds/EAT_PILL.mp3", flags, 0, &soundEatPill);
+	ERRCHECK(result);
 }
 
 void SoundEngine::msgSound(Msg* msg)
 {
 	MsgSound* msgSound = (MsgSound*)msg;
 	SoundEffect effect = msgSound->getSoundEffect();
-	bool loop = msgSound->getLoop();
+	
 
 	switch(effect)
 	{
 	case SOUND_AMBIENT:
 		system->playSound(FMOD_CHANNEL_FREE, soundAmbient, false, &channelAmbient);
 		break;
+	case SOUND_GHOST:
+		system->playSound(FMOD_CHANNEL_FREE, soundGhost, false, &channelGhost);
+		break;
 	case SOUND_DEATH:
+		system->playSound(FMOD_CHANNEL_FREE, soundDeath, false, &channelDeath);
+		break;
+	case SOUND_EAT_PILL:
+		system->playSound(FMOD_CHANNEL_FREE, soundEatPill, false, &channelEatPill);
 		break;
 	default:
 		break;
 	}
+
+	delete msgSound;
+}
+
+void SoundEngine::msgSoundVolume(Msg* msg)
+{
+	MsgSoundVolume* msgSoundVolume = (MsgSoundVolume*)msg;
+	SoundEffect effect = msgSoundVolume->getSoundEffect();
+	float volume = msgSoundVolume->getVolume();
+
+	switch(effect)
+	{
+	case SOUND_AMBIENT:
+		if(channelAmbient)
+			channelAmbient->setVolume(volume);
+		break;
+	case SOUND_GHOST:
+		if(channelGhost)
+			channelGhost->setVolume(volume);
+		break;
+	case SOUND_DEATH:
+		if(channelDeath)
+			channelDeath->setVolume(volume);
+		break;
+	case SOUND_EAT_PILL:
+		if(channelEatPill)
+			channelEatPill->setVolume(volume);
+		break;
+	default:
+		break;
+	}
+
+	delete msgSoundVolume;
 }
 
 void SoundEngine::playSound()
@@ -79,6 +130,11 @@ void SoundEngine::init()
 {
 	SubscriptionMsg* msg = new SubscriptionMsg(this, SOUND);
 	Singleton<ObserverDirector>::get().push(msg);
+
+	msg = new SubscriptionMsg(this, SOUND_VOLUME);
+	Singleton<ObserverDirector>::get().push(msg);
+
+
 
 	windowsInit();
 	loadSounds();
@@ -98,6 +154,8 @@ void SoundEngine::update(double delta)
 			case SOUND:
 				msgSound(msg);
 				break;
+			case SOUND_VOLUME:
+				msgSoundVolume(msg);
 			default:
 				break;
 			}

@@ -16,6 +16,7 @@
 #include "Singleton.h"
 #include "Messaging/ObserverDirector.h"
 #include "Messaging/MsgSound.h"
+#include "Messaging/MsgSoundVolume.h"
 
 class SoundEngine : public Component
 {
@@ -29,15 +30,25 @@ private:
 	char				name[256];
 
 	FMOD::Sound*		soundAmbient;
+	FMOD::Sound*		soundGhost;
+	FMOD::Sound*		soundDeath;
+	FMOD::Sound*		soundEatPill;
+	
 	FMOD::Channel*		channelAmbient;
+	FMOD::Channel*		channelGhost;
+	FMOD::Channel*		channelDeath;
+	FMOD::Channel*		channelEatPill;
+	
 
 
 
 	void ERRCHECK(FMOD_RESULT result);
 	void windowsInit();
+	
 	void loadSounds();
 
 	void msgSound(Msg* msg);
+	void msgSoundVolume(Msg* msg);
 protected:
 public:
 	SoundEngine();
