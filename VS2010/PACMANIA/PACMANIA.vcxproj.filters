@@ -262,6 +262,9 @@
     <ClInclude Include="..\..\Source\Behaviours\ConsumeBehaviour.h">
       <Filter>Behaviours</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Messaging\MsgConsume.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Shaders\GL\DefaultFragmentShader.glsl">

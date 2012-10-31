@@ -71,6 +71,10 @@ void ObserverDirector::update(double delta)
 			msgGameWon(msg);
 			break;
 
+		case CONSUME:
+			msgConsume(msg);
+			break;
+
 		case LIGHT:
 			msgLight(msg);
 			break;
@@ -297,7 +301,6 @@ void ObserverDirector::msgEntityPillPos(Msg* msg)
 	}
 	delete msgCast;
 }
-
 void ObserverDirector::msgEntityGhostSpawn(Msg* msg)
 {
 	for(unsigned int i = 0; i < observers->size(); i++)
@@ -310,7 +313,6 @@ void ObserverDirector::msgEntityGhostSpawn(Msg* msg)
 	}
 	delete msg;
 }
-
 void ObserverDirector::msgEntityPillEaten(Msg* msg)
 {
 	for(unsigned int i = 0; i < observers->size(); i++)
@@ -323,7 +325,6 @@ void ObserverDirector::msgEntityPillEaten(Msg* msg)
 	}
 	delete msg;
 }
-
 void ObserverDirector::msgEntityPillBloodyEaten(Msg* msg)
 {
 	for(unsigned int i = 0; i < observers->size(); i++)
@@ -349,7 +350,6 @@ void ObserverDirector::msgGameOver(Msg* msg)
 	}
 	delete msg;
 }
-
 void ObserverDirector::msgGameWon(Msg* msg)
 {
 	for(unsigned int i = 0; i < observers->size(); i++)
@@ -361,6 +361,21 @@ void ObserverDirector::msgGameWon(Msg* msg)
 		}
 	}
 	delete msg;
+}
+void ObserverDirector::msgConsume(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgConsume* consumeMsg = (MsgConsume*)msg;
+	for(unsigned int i = 0; i < observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgConsume* newInstance = new MsgConsume(consumeMsg);
+			observer->getComponent()->push(newInstance);
+		}
+	}
+	delete consumeMsg;
 }
 
 void ObserverDirector::msgSound(Msg* msg)
@@ -378,7 +393,6 @@ void ObserverDirector::msgSound(Msg* msg)
 	}
 	delete soundMsg;
 }
-
 void ObserverDirector::msgSoundVolume(Msg* msg)
 {
 	MsgType type = msg->Type();

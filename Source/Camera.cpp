@@ -121,7 +121,7 @@ void Camera::msgEntityPlayerPos(Msg* msg)
 	goalPos.z = position.z;
 
 	lerpCameraTransition(&goalPos);
-	delete msg;
+	delete childMsg;
 }
 void Camera::msgZoom(Msg* msg)
 {

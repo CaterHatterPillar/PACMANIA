@@ -45,7 +45,7 @@ void Game::handleGameConditions()
 			switch(curCondition)
 			{
 			case CONDITION_RESTART:
-				restartGame();
+				//restartGame();
 				break;
 			case CONDITION_GAME_OVER:
 				gameOver();
@@ -75,6 +75,9 @@ void Game::endGame()
 {
 	if(gameRunning)
 	{
+		MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
+		Singleton<ObserverDirector>::get().push(consumeMsg);
+
 		//Start game over-timer
 		curCondition = CONDITION_RESTART;
 		conditionTimer->Condition(5.0);	//five sec condition

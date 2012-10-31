@@ -19,6 +19,7 @@
 #include "MsgZoom.h"
 #include "MsgSound.h"
 #include "MsgSoundVolume.h"
+#include "MsgConsume.h"
 
 #include "MsgDXWindowHandle.h"
 
@@ -41,7 +42,6 @@ private:
 	void msgSound(Msg* msg);
 	void msgSoundVolume(Msg* msg);
 
-	// Entity messages
 	void msgEntityPlayerPos(Msg* msg);
 	void msgEntityPacmanPos(Msg* msg);
 	void msgEntityGhostPos(Msg* msg);
@@ -52,6 +52,8 @@ private:
 
 	void msgGameOver(Msg* msg);
 	void msgGameWon(Msg* msg);
+
+	void msgConsume(Msg* msg);
 
 	/*win*/
 	void msgDXWindowHandle(Msg* msg);

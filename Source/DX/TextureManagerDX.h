@@ -19,6 +19,7 @@ private:
 	ID3D11ShaderResourceView* pillTexture;
 	ID3D11ShaderResourceView* bloodyPillTexture;
 	ID3D11ShaderResourceView* wallTexture;
+	ID3D11ShaderResourceView* consumeTexture;
 
 	LPCTSTR placeholderTextureFilename;
 	LPCTSTR pacmanTextureFilename;
@@ -26,6 +27,7 @@ private:
 	LPCTSTR pillTextureFilename;
 	LPCTSTR bloodyPillTextureFilename;
 	LPCTSTR wallTextureFilename;
+	LPCTSTR	consumeTextureFilename;
 
 public:
 	TextureManagerDX();

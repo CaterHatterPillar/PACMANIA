@@ -89,6 +89,7 @@
     <ClInclude Include="..\..\Source\Math\PacMath.h" />
     <ClInclude Include="..\..\Source\Messaging\Msg.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgCamera.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgConsume.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgEntity.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgGlut.h" />

@@ -17,6 +17,8 @@ using namespace std;
 class GameEntity
 {
 private:
+	bool render;
+
 	VecF3 position;
 	VecF3 scale;
 	VecF3 rotation;
@@ -48,6 +50,8 @@ public:
 			moveBehaviour->reset();
 		}
 	}
+
+	void setRender(bool render) { this->render = render; }
 
 	void setPosition(VecF3 position);
 	void setRotation(VecF3 rotaiton);
