@@ -32,14 +32,26 @@ void Game::run()
 		
 		handleGameConditions();
 
-		if(gameRunning)
-		{
+		update(delta);
+
 			// Update game entities
-			update(delta);
 			for(int i=0; i<(int)num_entities; i++)
 				entities[i]->update(delta);
-		}
+		
 		maze->update(delta);
+
+		//
+		// Fix memleaks
+		//
+
+		for(int i=0; i<(int)entities.size(); i++)
+		{
+			if(i>num_entities)
+			{
+				if(entities[i] != 0)
+					entities[i]->throwMessages();
+			}
+		}
 
 		//
 		// Calc sound

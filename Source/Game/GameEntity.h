@@ -74,6 +74,13 @@ public:
 	}
 
 	void update(double delta);
+	void throwMessages()
+	{
+		if(moveBehaviour)
+		{
+			moveBehaviour->throwMessages();
+		}
+	}
 };
 
 #endif //GAMEENTITY_H
