@@ -176,6 +176,8 @@ public:
 	void handleGameConditions();
 	void startGame();
 	void endGame();
+
+	void gameOver();
 	void restartGame(); 
 };
 
