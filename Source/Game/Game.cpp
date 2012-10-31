@@ -53,16 +53,19 @@ void Game::handleGameConditions()
 		{
 			switch(curCondition)
 			{
-			case RESTART:
+			case CONDITION_RESTART:
 				restartGame();
 				break;
-			case NO_CONDITION:
+			case CONDITION_GAME_OVER:
+				throw 0; //temp
+				break;
+			case CONDITION_NO_CONDITION:
 				throw 0; //someone made a mistake
 				break;
 			}
 
 			/*Reset everything*/
-			curCondition = NO_CONDITION;
+			curCondition = CONDITION_NO_CONDITION;
 			conditionTimer->stop();
 			conditionTimer->reset();
 		}
@@ -82,7 +85,7 @@ void Game::endGame()
 	if(gameRunning)
 	{
 		//Start game over-timer
-		curCondition = RESTART;
+		curCondition = CONDITION_RESTART;
 		conditionTimer->Condition(5.0);	//five sec condition
 		conditionTimer->reset();
 		conditionTimer->start();
