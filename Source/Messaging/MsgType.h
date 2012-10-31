@@ -12,6 +12,7 @@ enum MsgType {
 	CAMERA,
 	LIGHT,
 	SOUND,
+	SOUND_VOLUME,
 	
 	DX_WINDOW_HANDLE,
 	
