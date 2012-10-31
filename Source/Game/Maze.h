@@ -4,6 +4,7 @@
 #include "../Math/PacMath.h"
 #include "../DX/GraphicsContainerDX.h"
 #include "../Messaging/ObserverDirector.h"
+#include "../Messaging/MsgSound.h"
 
 #include <fstream>
 #include <time.h>
@@ -48,6 +49,7 @@ public:
 
 			// Send messages
 			Singleton<ObserverDirector>::get().push(new MsgEntityPillEaten());
+			Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_EAT_PILL));
 			if(isBloody)
 				Singleton<ObserverDirector>::get().push(new MsgEntityPillBloodyEaten());
 		}
