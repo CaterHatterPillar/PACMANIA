@@ -9,6 +9,7 @@ class MoveBehaviourMazePlayer : public MoveBehaviourMaze
 {
 private:
 	float invinsibleTimer;
+	float lightPower_tween;
 	void keyboard(KEY key)
 	{
 		switch(key)
@@ -40,11 +41,13 @@ public:
 		pos = VecI2(-9,16);
 		move(1,0);
 		invinsibleTimer = 0.0f;
+		lightPower_tween = lightPower;
 	};
 	virtual void init()
 	{
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_POS));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_PILL_BLOODY_EATEN));
 	};
 
 	void reset()
@@ -73,6 +76,9 @@ public:
 				case ENTITY_GHOST_POS:
 					msgEntityGhostPos(msg);
 					break;
+				case ENTITY_PILL_BLOODY_EATEN:
+					msgEntityPillBloodyEaten(msg);
+					break;
 				default:
 					throw 0; //temp
 					break;
@@ -90,28 +96,23 @@ public:
 		// Check collision with pills
 		checkCollisionWithPills();
 
-		//// Light logic & invincible logic
-		//if(invinsibleTimer>0)
-		//	invinsibleTimer-=dt;
-		//if(invinsibleTimer<0)
-		//	invinsibleTimer=0;
-		//
-		//// make pacman brighter when invincible
-		//if(invinsibleTimer>0)
-		//{
-		//	if(lightPower<2.0f)
-		//		lightPower+=dt;
-		//	if(lightPower>2.0f)
-		//		lightPower = 2.0f;
-		//}
-		//else
-		//{
-		//	if(lightPower<1.0f)
-		//		lightPower+=dt;
-		//	if(lightPower>1.0f)
-		//		lightPower = lerp(lightPower, 1.0f, 0.01f*dt);
-		//}
+		// Light logic & invincible logic
+		if(invinsibleTimer>0)
+			invinsibleTimer-=dt;
+		if(invinsibleTimer<0)
+			invinsibleTimer=0;
 		
+		// make pacman brighter when invincible
+		if(invinsibleTimer>0)
+		{
+			lightPower_tween = 10.0f;
+		}
+		else
+		{
+			if(lightPower_tween>1.0f)
+				lightPower_tween = 1.0f;
+		}
+		lightPower = lerp(lightPower, lightPower_tween, 0.8f*dt);
 	};
 
 
@@ -130,11 +131,12 @@ public:
 		// TRUE: Not invincible
 		if(!(invinsibleTimer>0.0f))
 		{
-			lightPower = 0.9f;
+			
 			// TRUE: Drain some light if seeing ghost
+			lightPower_tween = 1.0f;
 			if(isInLineOfSight(pos, ghostPos))
 			{
-				/*lightPower = 0.8f;*/
+				lightPower_tween = 0.9f;
 			}
 			// FALSE: Player is hidden from ghost and cannot collide
 			else
@@ -144,14 +146,18 @@ public:
 
 			float dist = v1.distanceTo(v2);
 			// TRUE: Light draining occurs
-			if(dist < 5.0f)
-				lightPower = dist/5.0f;
+			float spotDistance = 10.0f;
+			float minDistance = 5.0f;
+			if(dist < spotDistance - minDistance)
+				lightPower_tween = lightPower_tween*dist/(spotDistance-minDistance);
+			if(lightPower_tween<0.0f)
+				lightPower_tween = 0.0f;
 
 			// TRUE: Collision occurs
 			if(dist < 0.4f)
 			{
 				// Send gameover message
-				//Singleton<ObserverDirector>::get().push(new MsgGameOver());
+				Singleton<ObserverDirector>::get().push(new MsgGameOver());
 			}
 		}
 	};
@@ -161,6 +167,12 @@ public:
 		MsgEntityGhostPos* msgCast = (MsgEntityGhostPos*)msg;
 		checkCollisionWithGhost(msgCast->pos, msgCast->position);
 		delete msgCast;
+	};
+
+	void msgEntityPillBloodyEaten(Msg* msg)
+	{
+		delete msg;
+		invinsibleTimer = 5.0f;
 	};
 };
 

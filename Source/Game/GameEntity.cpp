@@ -180,12 +180,7 @@ void GameEntity::update(double delta)
 		{
 			
 			float power = moveBehaviour->lightPower;
-			if(power < 0.91f)
-			{
-				light->ambient	= VecF4(power*0.3f, power*0.3f, power*0.3f, power*1.0f);
-				light->diffuse	= VecF4(power*0.7f, power*0.7f, power*0.7f, power*1.0f);
-			}
-			
+			light->att.x = 0.25/power;
 		}
 
 		MsgLight* msgLight = new MsgLight(light);
