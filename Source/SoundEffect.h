@@ -1,0 +1,12 @@
+#ifndef SOUNDEFFECT_H
+#define SOUNDEFFECT_H
+
+enum SoundEffect
+{
+	SOUND_AMBIENT,
+	SOUND_DEATH,
+	SOUND_EAT_PILL,
+	SOUND_GHOST
+};
+
+#endif //SOUNDEFFECT_H
