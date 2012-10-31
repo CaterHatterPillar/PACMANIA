@@ -101,9 +101,9 @@ void Camera::zoomOut()
 void Camera::msgMouseMove(Msg* msg)
 {
 	MsgMouseMove* mouseMoveMsg = (MsgMouseMove*)msg;
-	mouse(
-		(float)mouseMoveMsg->DX(),
-		(float)mouseMoveMsg->DY());
+	//mouse(
+	//	(float)mouseMoveMsg->DX(),
+	//	(float)mouseMoveMsg->DY());
 	delete mouseMoveMsg;
 }
 void Camera::msgKeyboard(Msg* msg)

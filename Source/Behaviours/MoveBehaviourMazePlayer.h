@@ -8,6 +8,7 @@
 class MoveBehaviourMazePlayer : public MoveBehaviourMaze
 {
 private:
+	float invinsibleTimer;
 	void keyboard(KEY key)
 	{
 		switch(key)
@@ -38,6 +39,7 @@ public:
 	{
 		pos = VecI2(-9,16);
 		move(1,0);
+		invinsibleTimer = 0.0f;
 	};
 	virtual void init()
 	{
@@ -51,31 +53,8 @@ public:
 		move(1,0);
 	};
 
-	void runAI()
-	{
-		//// If ghost has stopped, choose new direction
-
-		//// Rotate 90*random degrees
-		//VecF3 tmpDir(1.0f,0.0f,0.0f);
-		//int random = rand() % 4;
-		//tmpDir.rotate(90.0f*random, VecF3(0.0f,0.0f,1.0f));
-
-		//// Convert vector to integer vector
-		//VecI2 newDir(round(tmpDir.x), round(tmpDir.y));
-
-		//// Do not move in opposite direction
-		//if(newDir == -dir)
-		//{
-		//}
-		//else
-		//{
-		//	// Try to move in new direction
-		//	move(newDir.x,newDir.y);
-		//}
-	};
 	void atIntersection()
 	{
-		runAI();
 	};
 	virtual void handleMessages()
 	{
@@ -107,8 +86,32 @@ public:
 
 	void updateSpecific(double delta)
 	{
+		float dt = (float)delta;
 		// Check collision with pills
 		checkCollisionWithPills();
+
+		//// Light logic & invincible logic
+		//if(invinsibleTimer>0)
+		//	invinsibleTimer-=dt;
+		//if(invinsibleTimer<0)
+		//	invinsibleTimer=0;
+		//
+		//// make pacman brighter when invincible
+		//if(invinsibleTimer>0)
+		//{
+		//	if(lightPower<2.0f)
+		//		lightPower+=dt;
+		//	if(lightPower>2.0f)
+		//		lightPower = 2.0f;
+		//}
+		//else
+		//{
+		//	if(lightPower<1.0f)
+		//		lightPower+=dt;
+		//	if(lightPower>1.0f)
+		//		lightPower = lerp(lightPower, 1.0f, 0.01f*dt);
+		//}
+		
 	};
 
 
@@ -124,12 +127,32 @@ public:
 		VecF3 v1 = position;
 		VecF3 v2 = ghostPosition;
 
-		// TRUE: Collision occurs
-		float dist = v1.distanceTo(v2);
-		if(dist < 0.4f)
+		// TRUE: Not invincible
+		if(!(invinsibleTimer>0.0f))
 		{
-			// Send gameover message
-			Singleton<ObserverDirector>::get().push(new MsgGameOver());
+			lightPower = 0.9f;
+			// TRUE: Drain some light if seeing ghost
+			if(isInLineOfSight(pos, ghostPos))
+			{
+				/*lightPower = 0.8f;*/
+			}
+			// FALSE: Player is hidden from ghost and cannot collide
+			else
+			{
+				return;
+			}
+
+			float dist = v1.distanceTo(v2);
+			// TRUE: Light draining occurs
+			if(dist < 5.0f)
+				lightPower = dist/5.0f;
+
+			// TRUE: Collision occurs
+			if(dist < 0.4f)
+			{
+				// Send gameover message
+				//Singleton<ObserverDirector>::get().push(new MsgGameOver());
+			}
 		}
 	};
 

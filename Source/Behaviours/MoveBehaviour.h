@@ -13,8 +13,13 @@ private:
 protected:
 	MatF4 rotation;
 	VecF3 position;
+	
 public:
-	MoveBehaviour(){}
+	float lightPower;
+	MoveBehaviour()
+	{
+		lightPower = 1.0f;
+	}
 	~MoveBehaviour(){}
 	virtual void reset() = 0;
 	MatF4 getRotation() { return rotation; }
