@@ -17,7 +17,7 @@ std::string TexManagementGL::fetchTexPath(TextureId texId)
 	case TEXTURE_PILL_BLOODY:
 		pathComplete += texPillBloody;
 		break;
-	case TEXTURE_PILL_CONSUME:
+	case TEXTURE_CONSUME:
 		pathComplete += texConsume;
 		break;
 	default:
