@@ -380,7 +380,7 @@ GameEntity* GameEntityFactory::createBloodyPill( VecF3 position )
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-	TextureId textureId		= TEXTURE_PILL_BLOODY;
+	TextureId textureId		= TEXTURE_WALL;
 
 	unsigned int numVertices	= vertices->size();
 	unsigned int numIndices		= indices->size();
@@ -415,7 +415,7 @@ GameEntity* GameEntityFactory::createWall( VecF3 position )
 
 	ShaderId vertexShaderId = VERTEX_SHADER_DEFAULT;
 	ShaderId pixelShaderId	= PIXEL_SHADER_DEFAULT;
-	TextureId textureId		= TEXTURE_WALL;
+	TextureId textureId		= TEXTURE_CONSUME;
 
 	unsigned int numVertices	= vertices->size();
 	unsigned int numIndices		= indices->size();
