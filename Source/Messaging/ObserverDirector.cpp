@@ -82,6 +82,9 @@ void ObserverDirector::update(double delta)
 		case SOUND:
 			msgSound(msg);
 			break;
+		case SOUND_VOLUME:
+			msgSoundVolume(msg);
+			break;
 		default:
 			throw 0; //temp, make fix
 			break;
@@ -248,6 +251,22 @@ void ObserverDirector::msgSound(Msg* msg)
 		}
 	}
 	delete soundMsg;
+}
+
+void ObserverDirector::msgSoundVolume(Msg* msg)
+{
+	MsgType type = msg->Type();
+	MsgSoundVolume* msgSoundVolume = (MsgSoundVolume*)msg;
+	for(unsigned int i=0; i<observers->size(); i++)
+	{
+		Observer* observer = observers->at(i);
+		if(observer->isSubscriber(type))
+		{
+			MsgSoundVolume* newInstance = new MsgSoundVolume(msgSoundVolume);
+			observer->getComponent()->push(newInstance);
+		}
+	}
+	delete msgSoundVolume;
 }
 
 void ObserverDirector::msgLight(Msg* msg)
