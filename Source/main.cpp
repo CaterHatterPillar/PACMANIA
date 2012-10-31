@@ -1,4 +1,3 @@
-
 #if defined(DEBUG) || defined(_DEBUG)
 	//#include "vld.h"
 #endif

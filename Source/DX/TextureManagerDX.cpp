@@ -8,6 +8,7 @@ TextureManagerDX::TextureManagerDX()
 	pillTexture			= NULL;
 	bloodyPillTexture	= NULL;
 	wallTexture			= NULL;
+	consumeTexture		= NULL;
 
 	placeholderTextureFilename	= "../../Textures/PlaceHolder.png";
 	pacmanTextureFilename		= "../../Textures/PacmanTex.png";
@@ -15,7 +16,7 @@ TextureManagerDX::TextureManagerDX()
 	pillTextureFilename			= "../../Textures/Pill.png";
 	bloodyPillTextureFilename	= "../../Textures/BloodyPill.png";
 	wallTextureFilename			= "../../Textures/Wall.png";
-	
+	consumeTextureFilename		= "../../Textures/Consume.png";
 
 }
 
@@ -33,6 +34,8 @@ TextureManagerDX::~TextureManagerDX()
 		bloodyPillTexture->Release();
 	if(wallTexture)
 		wallTexture->Release();
+	if(consumeTexture)
+		consumeTexture->Release();
 }
 
 void TextureManagerDX::init(ID3D11Device* device)
@@ -61,6 +64,10 @@ void TextureManagerDX::init(ID3D11Device* device)
 	D3DX11CreateShaderResourceViewFromFile(device, wallTextureFilename, NULL, NULL, &wallTexture, &hr);
 	if(FAILED(hr))
 		MessageBox(NULL, "Failed to create wallTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
+
+	D3DX11CreateShaderResourceViewFromFile(device, consumeTextureFilename, NULL, NULL, &consumeTexture, &hr);
+	if(FAILED(hr))
+		MessageBox(NULL, "Failed to create consumeTexture", "TextureManagerDX error!", MB_OK | MB_ICONEXCLAMATION);
 }
 
 ID3D11ShaderResourceView* TextureManagerDX::getTexture(TextureId id)
@@ -86,6 +93,9 @@ ID3D11ShaderResourceView* TextureManagerDX::getTexture(TextureId id)
 		break;
 	case TEXTURE_WALL:
 		texture = wallTexture;
+		break;
+	case TEXTURE_CONSUME:
+		texture = consumeTexture;
 		break;
 	default:
 		texture = wallTexture;

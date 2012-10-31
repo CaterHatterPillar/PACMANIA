@@ -180,8 +180,9 @@ public:
 
 	void msgEntityPillBloodyEaten(Msg* msg)
 	{
-		delete msg;
+		MsgEntityPillBloodyEaten* msgCast = (MsgEntityPillBloodyEaten*)msg;
 		invinsibleTimer = 5.0f;
+		delete msgCast;
 	};
 };
 

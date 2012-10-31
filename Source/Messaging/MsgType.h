@@ -31,7 +31,9 @@ enum MsgType {
 	ENTITY_PILL_BLOODY_EATEN,
 
 	GAME_OVER,
-	GAME_WON
+	GAME_WON,
+
+	CONSUME
 };
 
 //todoist: dela upp i win/linux

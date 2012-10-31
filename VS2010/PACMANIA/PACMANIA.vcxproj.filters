@@ -77,6 +77,9 @@
     <ClCompile Include="..\..\Source\GL\Texture.cpp">
       <Filter>GL</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Behaviours\ConsumeBehaviour.cpp">
+      <Filter>Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Camera.h" />
@@ -237,16 +240,16 @@
       <Filter>GL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h">
-      <Filter>MoveBehaviour</Filter>
+      <Filter>Behaviours\MoveBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazePlayer.h">
-      <Filter>MoveBehaviour</Filter>
+      <Filter>Behaviours\MoveBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMaze.h">
-      <Filter>MoveBehaviour</Filter>
+      <Filter>Behaviours\MoveBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h">
-      <Filter>MoveBehaviour</Filter>
+      <Filter>Behaviours\MoveBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SoundEffect.h" />
     <ClInclude Include="..\..\Source\Messaging\SubscriptionMsg.h">
@@ -255,8 +258,12 @@
     <ClInclude Include="..\..\Source\Messaging\MsgSoundVolume.h">
       <Filter>Messaging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\TextureId.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="..\..\Source\TextureId.h" />
+    <ClInclude Include="..\..\Source\Behaviours\ConsumeBehaviour.h">
+      <Filter>Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Messaging\MsgConsume.h">
+      <Filter>Messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -301,7 +308,10 @@
     <Filter Include="Math">
       <UniqueIdentifier>{42d379e6-d517-4d6a-b594-907a1e789e23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MoveBehaviour">
+    <Filter Include="Behaviours">
+      <UniqueIdentifier>{4d5a432b-5c26-4f6a-9bfe-a5bb5c9e1eec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Behaviours\MoveBehaviour">
       <UniqueIdentifier>{f4757ec7-3ccb-432c-a3b9-6ac65a072f78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

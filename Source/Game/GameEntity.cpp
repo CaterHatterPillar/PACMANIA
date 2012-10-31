@@ -3,6 +3,8 @@
 
 GameEntity::GameEntity()
 {
+	render = true;
+
 	position			= VecF3(0.0f, 0.0f, 0.0f);
 	rotation			= VecF3(0.0f, 0.0f, 0.0f);
 	scale				= VecF3(1.0f, 1.0f, 1.0f);
@@ -15,6 +17,8 @@ GameEntity::GameEntity()
 
 GameEntity::GameEntity(	VecF3 position, VecF3 rotation, VecF3 scale)
 {
+	render = true;
+
 	this->position	= position;
 	this->rotation	= rotation;
 	this->scale		= scale;
@@ -165,12 +169,15 @@ void GameEntity::update(double delta)
 	}
 	if(graphicsContainer)
 	{
-		MsgRender* renderMsg = new MsgRender(
-			graphicsContainer, 
-			translationMatrix, 
-			rotationMatrix, 
-			scalingMatrix);
-		Singleton<ObserverDirector>::get().push(renderMsg);
+		if(render)
+		{
+			MsgRender* renderMsg = new MsgRender(
+				graphicsContainer, 
+				translationMatrix, 
+				rotationMatrix, 
+				scalingMatrix);
+			Singleton<ObserverDirector>::get().push(renderMsg);
+		}
 	}
 	if(light)
 	{

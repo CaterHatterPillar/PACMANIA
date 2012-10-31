@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Behaviours\ConsumeBehaviour.cpp" />
     <ClCompile Include="..\..\Source\Camera.cpp" />
     <ClCompile Include="..\..\Source\Component.cpp" />
     <ClCompile Include="..\..\Source\ConditionTimer.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="..\..\Source\WindowsContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Behaviours\ConsumeBehaviour.h" />
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviour.h" />
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMaze.h" />
     <ClInclude Include="..\..\Source\Behaviours\MoveBehaviourMazeGhost.h" />
@@ -87,6 +89,7 @@
     <ClInclude Include="..\..\Source\Math\PacMath.h" />
     <ClInclude Include="..\..\Source\Messaging\Msg.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgCamera.h" />
+    <ClInclude Include="..\..\Source\Messaging\MsgConsume.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgDXWindowHandle.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgEntity.h" />
     <ClInclude Include="..\..\Source\Messaging\MsgGlut.h" />

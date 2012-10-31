@@ -63,7 +63,7 @@ float4 PShader(VOut pIn) : SV_TARGET
 	
 	litColor += ambient;
 	
-	//clip(color.a-0.1);
+	clip(color.a-0.1);
 	//color = color * lights[0].ambient;
 	
 	return color * float4(litColor, 1.0f);
