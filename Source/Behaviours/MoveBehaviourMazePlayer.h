@@ -49,7 +49,7 @@ public:
 
 	void reset()
 	{
-		pos = VecI2(-9,16);
+		pos = VecI2(-3,16);
 		move(1,0);
 		invinsibleTimer = 0.0f;
 		lightPower_tween = lightPower;
