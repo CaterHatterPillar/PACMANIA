@@ -57,11 +57,15 @@ void SoundEngine::loadSounds()
 {
 	int flags = FMOD_LOOP_NORMAL | FMOD_2D | FMOD_HARDWARE;
 
-	result = system->createSound("../../Sounds/AMBIENT.mp3", flags, 0, &soundAmbient);
+	result = system->createStream("../../Sounds/AMBIENT.mp3", flags, 0, &soundAmbient);
 	ERRCHECK(result);
 
-	result = system->createSound("../../Sounds/GHOST.mp3", flags, 0, &soundGhost);
+	result = system->createStream("../../Sounds/GHOST.mp3", flags, 0, &soundGhost);
 	ERRCHECK(result);
+
+	result = system->createStream("../../Sounds/CONSUME.mp3", flags, 0, &soundConsume);
+	ERRCHECK(result);
+
 
 	flags = FMOD_LOOP_OFF | FMOD_2D | FMOD_HARDWARE;
 
@@ -70,11 +74,6 @@ void SoundEngine::loadSounds()
 
 	result = system->createSound("../../Sounds/EAT_PILL.mp3", flags, 0, &soundEatPill);
 	ERRCHECK(result);
-
-	result = system->createSound("../../Sounds/CONSUME.mp3", flags, 0, &soundConsume);
-	ERRCHECK(result);
-
-
 }
 
 void SoundEngine::msgSound(Msg* msg)
@@ -95,7 +94,9 @@ void SoundEngine::msgSound(Msg* msg)
 		system->playSound(FMOD_CHANNEL_FREE, soundDeath, false, &channelDeath);
 		break;
 	case SOUND_EAT_PILL:
-		system->playSound(FMOD_CHANNEL_FREE, soundEatPill, false, &channelEatPill);
+		result = system->playSound(FMOD_CHANNEL_FREE, soundEatPill, false, &channelEatPill);
+		channelEatPill->setVolume(0.02f);
+		break;
 	case SOUND_CONSUME:
 		system->playSound(FMOD_CHANNEL_FREE, soundConsume, false, &channelConsume);
 		break;
@@ -160,6 +161,8 @@ void SoundEngine::init()
 
 void SoundEngine::update(double delta)
 {
+	system->update();
+
 	Msg* msg = peek();
 	while(msg)
 	{

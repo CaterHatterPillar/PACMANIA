@@ -38,10 +38,7 @@ protected:
 public:
 	MoveBehaviourMazePlayer(Maze* maze, VecI2 position) : MoveBehaviourMaze(maze, position)
 	{
-		pos = VecI2(-9,16);
-		move(1,0);
-		invinsibleTimer = 0.0f;
-		lightPower_tween = lightPower;
+		reset();
 	};
 	virtual void init()
 	{
@@ -54,6 +51,8 @@ public:
 	{
 		pos = VecI2(-3,16);
 		move(1,0);
+		invinsibleTimer = 0.0f;
+		lightPower_tween = lightPower;
 	};
 
 	void atIntersection()
@@ -87,7 +86,7 @@ public:
 		}
 
 		Singleton<ObserverDirector>::get().push(new MsgEntityPlayerPos(position));
-		Singleton<ObserverDirector>::get().push(new MsgEntityPacmanPos(pos));
+		Singleton<ObserverDirector>::get().push(new MsgEntityPacmanPos(pos, position));
 	}
 
 	void updateSpecific(double delta)
@@ -112,7 +111,18 @@ public:
 			if(lightPower_tween>1.0f)
 				lightPower_tween = 1.0f;
 		}
-		lightPower = lerp(lightPower, lightPower_tween, 0.8f*dt);
+		// lerp slower when restoring light
+		if(lightPower_tween>lightPower)
+			lightPower = lerp(lightPower, lightPower_tween, 0.8f*dt);
+		// lerp faster when draining light
+		else
+			lightPower = lerp(lightPower, lightPower_tween, 2.0f*dt);
+
+		// make light fade quicker when eating bloody pills
+		if(lightPower>lightPower_tween && lightPower>1.0f)
+			lightPower = lerp(lightPower, lightPower_tween, 2.0f*dt);
+		
+		lightPower_tween = 1.0f;
 	};
 
 
@@ -133,10 +143,9 @@ public:
 		{
 			
 			// TRUE: Drain some light if seeing ghost
-			lightPower_tween = 1.0f;
 			if(isInLineOfSight(pos, ghostPos))
 			{
-				lightPower_tween = 0.9f;
+				lightPower_tween = 0.7f;
 			}
 			// FALSE: Player is hidden from ghost and cannot collide
 			else
@@ -146,8 +155,8 @@ public:
 
 			float dist = v1.distanceTo(v2);
 			// TRUE: Light draining occurs
-			float spotDistance = 10.0f;
-			float minDistance = 5.0f;
+			float spotDistance = 3.0f;
+			float minDistance = 0.0f;
 			if(dist < spotDistance - minDistance)
 				lightPower_tween = lightPower_tween*dist/(spotDistance-minDistance);
 			if(lightPower_tween<0.0f)

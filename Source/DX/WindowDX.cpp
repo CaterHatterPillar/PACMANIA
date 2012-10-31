@@ -64,8 +64,8 @@ LRESULT CALLBACK WindowDX::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LP
 			return 0;
 		break;
 	case WM_MOUSEMOVE:
-			mouseDeltaMove(lParam);
-			sendMouseMove();
+			//mouseDeltaMove(lParam);
+			//sendMouseMove();
 			return 0;
 		break;
 	case WM_LBUTTONDOWN:

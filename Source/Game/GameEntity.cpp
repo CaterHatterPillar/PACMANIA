@@ -1,4 +1,5 @@
 #include "GameEntity.h"
+#include "../Messaging/MsgSoundVolume.h"
 
 GameEntity::GameEntity()
 {

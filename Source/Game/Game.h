@@ -92,6 +92,9 @@ public:
 		case KEY_W:
 			endGame();
 			break;
+		case KEY_S:
+			Singleton<ObserverDirector>::get().push(new MsgEntityPillBloodyEaten());
+			break;
 		default:
 			break;
 		}

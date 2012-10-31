@@ -2,7 +2,20 @@
 
 void Game::run()
 {
+<<<<<<< HEAD
 	/*Start original game session*/
+=======
+	SoundEngine* soundEngine = new SoundEngine();
+
+	soundEngine->init();
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_GHOST));
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_CONSUME));
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.0f));
+	
+
+>>>>>>> ea66f521e896173fcd5291466f0b390b4381e0f0
 	maze = entityFac->createMaze();
 	spawnPacman();
 	startGame();
@@ -20,10 +33,49 @@ void Game::run()
 
 		// Update game entities
 		for(int i=0; i<(int)num_entities; i++)
-			entities[i]->update(delta);
+			entities[i]->update(delta)
+			
 		maze->update(delta);
+
+		//
+		// Fix memleaks
+		//
+
+		for(int i=0; i<(int)entities.size(); i++)
+		{
+			if(i>num_entities)
+			{
+				if(entities[i] != 0)
+					entities[i]->throwMessages();
+			}
+		}
+
+		//
+		// Calc sound
+		//
+
+		// ghost sound
+		if(entities[0])
+		{
+			float noise =  1.0f - entities[0]->getLightPower();
+			noise *=2.0f;
+			if(noise<0.0f)
+				noise = 0.0f;
+			if(noise>0.7f)
+				noise = 0.7f;
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, noise));
+		}
+
+		// under bloody pills effect sound
+		if(entities[0])
+		{
+			float noise =  0.5f*(entities[0]->getLightPower() - 1.0f) / 10.0f;
+			if(noise<0.0f)
+				noise = 0.0f;
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
+		}
 		
-		/*Update stuff here*/
+		// Update stuff here
 		camera->update(delta);
 		window->update(delta);
 		renderer->update(delta);
@@ -77,6 +129,9 @@ void Game::endGame()
 	{
 		MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
 		Singleton<ObserverDirector>::get().push(consumeMsg);
+		
+		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
+		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.5f));
 
 		//Start game over-timer
 		curCondition = CONDITION_RESTART;

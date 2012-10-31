@@ -22,6 +22,18 @@ public:
 	}
 	~MoveBehaviour(){}
 	virtual void reset() = 0;
+	void throwMessages()
+	{
+		Msg* msg = peek();
+		while(msg)
+		{
+			msg = pop();
+			if(msg)
+			{
+				delete msg;
+			}
+		}
+	}
 	MatF4 getRotation() { return rotation; }
 	VecF3 getPosition() { return position; }
 };
