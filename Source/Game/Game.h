@@ -14,16 +14,22 @@
 #include "../Messaging/MsgZoom.h"
 #include "../Messaging/MsgEntity.h"
 
+#include "../Behaviours/ConsumeBehaviour.h"
+
 enum Condition { CONDITION_RESTART, CONDITION_GAME_OVER, CONDITION_NO_CONDITION };
 
 class Game  : public Component
 {
 private:
-	/*Members*/
-	GameTimer* gameTimer;
 	bool gameRunning;
 
-	Condition curCondition;
+	SoundEngine* soundEngine;
+
+	/*Gametimer*/
+	GameTimer* gameTimer;
+	
+	/*Conditional timer managing transitional events*/
+	Condition		curCondition;
 	ConditionTimer* conditionTimer;
 
 	/*Ext*/
@@ -32,8 +38,10 @@ private:
 	Renderer*			renderer;
 	GameEntityFactory*	entityFac;
 	vector<GameEntity*> entities;
-	int num_entities;
-	Maze* maze;
+	ConsumeBehaviour*	consumeBehaviour;
+
+	int		num_entities;
+	Maze*	maze;
 protected:
 public:
 	void run();
@@ -49,9 +57,12 @@ public:
 		this->renderer	= renderer;
 		this->entityFac = entityFac;
 
+		soundEngine = new SoundEngine();
+
 		gameTimer		= new GameTimer();
 		conditionTimer	= new ConditionTimer(-1.0);
 		curCondition	= CONDITION_NO_CONDITION;
+		consumeBehaviour = new ConsumeBehaviour();
 
 		entities.resize(20);
 		num_entities = 0;
@@ -68,11 +79,17 @@ public:
 		}
 		if(maze)
 			delete maze;
+
+		if(soundEngine)
+			delete soundEngine;
 			
 		if(gameTimer)
 			delete gameTimer;
 		if(conditionTimer)
 			delete conditionTimer;
+
+		if(consumeBehaviour)
+			delete consumeBehaviour;
 
 		if(camera)
 			delete camera;
@@ -116,9 +133,15 @@ public:
 	}
 	void init()
 	{
+		/*Subscribe to relevant msgs*/
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
+
+		/*Initialize sound engine*/
+		soundEngine->init();
+		Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
+		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, 1.0f));
 	}
 
 	void msgSpawnGhost(Msg* msg)

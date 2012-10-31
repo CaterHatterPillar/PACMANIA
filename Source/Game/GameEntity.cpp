@@ -180,7 +180,7 @@ void GameEntity::update(double delta)
 		{
 			
 			float power = moveBehaviour->lightPower;
-			light->att.x = 0.25/power;
+			light->att.x = 0.25f/power;
 		}
 
 		MsgLight* msgLight = new MsgLight(light);

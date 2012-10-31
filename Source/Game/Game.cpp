@@ -1,24 +1,10 @@
 #include "Game.h"
 
-#include <iostream>
-
-#include "../Messaging/MsgSound.h"
-
 void Game::run()
 {
-	SoundEngine* soundEngine = new SoundEngine();
-
-	soundEngine->init();
-	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
-
-	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, 1.0f));
-
+	/*Start original game session*/
 	maze = entityFac->createMaze();
 	spawnPacman();
-
-//	GameEntity* pill = entityFac->createPill(VecF3(4.0f, 0.0f, 0.0f));
-//	GameEntity* bloodyPill = entityFac->createBloodyPill(VecF3(-3.0f, -2.0f, 3.0f)); 
-
 	startGame();
 
 	gameTimer->reset();
@@ -126,4 +112,102 @@ void Game::restartGame()
 	spawnPacman();
 
 	startGame();
+}
+
+void Game::init()
+{
+	/*Subscribe to relevant msgs*/
+	Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
+	Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
+	Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
+
+	/*Initialize sound engine*/
+	soundEngine->init();
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, 1.0f));
+}
+void Game::update(double delta)
+{
+	Msg* msg = peek();
+	while(msg)
+	{
+		msg = pop();
+		if(msg)
+		{
+			MsgType type = msg->Type();
+			switch(type)
+			{
+			case ENTITY_GHOST_SPAWN:
+				msgSpawnGhost(msg);
+				break;
+			case INPUT_KEYBOARD_MSG:
+				msgKeyboard(msg);
+				break;
+			case GAME_OVER:
+				msgGameOver(msg);
+				break;
+			case GAME_WON:
+				msgGameWon(msg);
+				break;
+			default:
+				throw 0; //temp
+				break;
+			}
+		}
+	}
+}
+
+Game::Game(
+	Camera*				camera,
+	Window*				window,
+	Renderer*			renderer,
+	GameEntityFactory*	entityFac)
+{
+	this->camera	= camera;
+	this->window	= window;
+	this->renderer	= renderer;
+	this->entityFac = entityFac;
+
+	soundEngine = new SoundEngine();
+
+	gameTimer		= new GameTimer();
+	conditionTimer	= new ConditionTimer(-1.0);
+	curCondition	= CONDITION_NO_CONDITION;
+	consumeBehaviour = new ConsumeBehaviour();
+
+	entities.resize(20);
+	num_entities = 0;
+	for(int i=0; i<(int)entities.size(); i++)
+		entities[i]=0;
+	init();
+}
+Game::~Game()
+{
+	for(int i=0; i<(int)entities.size(); i++)
+	{
+		if(entities[i])
+			delete entities[i];
+	}
+	if(maze)
+		delete maze;
+
+	//if(soundEngine)
+	//	delete soundEngine;
+		
+	if(gameTimer)
+		delete gameTimer;
+	if(conditionTimer)
+		delete conditionTimer;
+
+	if(consumeBehaviour)
+		delete consumeBehaviour;
+
+	if(camera)
+		delete camera;
+	if(window)
+		delete window;
+	if(renderer)
+		delete renderer;
+	if(entityFac)
+		delete entityFac;
 }

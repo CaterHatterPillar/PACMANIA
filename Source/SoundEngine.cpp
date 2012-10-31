@@ -154,8 +154,6 @@ void SoundEngine::init()
 	msg = new SubscriptionMsg(this, SOUND_VOLUME);
 	Singleton<ObserverDirector>::get().push(msg);
 
-
-
 	windowsInit();
 	loadSounds();
 }
