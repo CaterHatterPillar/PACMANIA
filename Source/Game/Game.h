@@ -104,6 +104,9 @@ public:
 				case GAME_OVER:
 					msgGameOver(msg);
 					break;
+				case GAME_WON:
+					msgGameWon(msg);
+					break;
 				default:
 					throw 0; //temp
 					break;
@@ -134,6 +137,13 @@ public:
 		MsgGameOver* gameOverMsg = (MsgGameOver*)msg;
 		endGame();
 		delete gameOverMsg;
+	}
+	void msgGameWon(Msg* msg)
+	{
+		MsgGameWon* gameWonMsg = (MsgGameWon*)msg;
+		wonGame();
+		delete gameWonMsg;
+
 	}
 
 	void keyboard(KEY key)
@@ -176,6 +186,7 @@ public:
 	void handleGameConditions();
 	void startGame();
 	void endGame();
+	void wonGame();
 
 	void gameOver();
 	void restartGame(); 

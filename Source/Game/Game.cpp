@@ -58,7 +58,6 @@ void Game::handleGameConditions()
 				break;
 			case CONDITION_GAME_OVER:
 				gameOver();
-				throw 0; //temp
 				break;
 			case CONDITION_NO_CONDITION:
 				throw 0; //someone made a mistake
@@ -85,30 +84,27 @@ void Game::endGame()
 {
 	if(gameRunning)
 	{
-		if(false)	//If player has lost, and the game is to restart
-		{
-			//Start game over-timer
-			curCondition = CONDITION_RESTART;
-			conditionTimer->Condition(5.0);	//five sec condition
-			conditionTimer->reset();
-			conditionTimer->start();
-			
-			//Zoom out
-			VecF3 pacPos = entities[0]->getPosition();
-			MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
-			Singleton<ObserverDirector>::get().push(zoomMsg);
-		}
-		else		//If the player has won and the game is to shut down
-		{
-			//Start game over-timer
-			curCondition = CONDITION_GAME_OVER;
-			conditionTimer->Condition(5.0);	//five sec condition
-			conditionTimer->reset();
-			conditionTimer->start();
-		}
+		//Start game over-timer
+		curCondition = CONDITION_RESTART;
+		conditionTimer->Condition(5.0);	//five sec condition
+		conditionTimer->reset();
+		conditionTimer->start();
+		
+		//Zoom out
+		VecF3 pacPos = entities[0]->getPosition();
+		MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
+		Singleton<ObserverDirector>::get().push(zoomMsg);
 
 		gameRunning = false;
 	}
+}
+void Game::wonGame()
+{
+	//Start game over-timer
+	curCondition = CONDITION_GAME_OVER;
+	conditionTimer->Condition(5.0);	//five sec condition
+	conditionTimer->reset();
+	conditionTimer->start();
 }
 
 void Game::gameOver()
