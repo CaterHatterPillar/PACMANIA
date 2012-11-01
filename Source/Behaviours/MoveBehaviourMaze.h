@@ -42,6 +42,7 @@ protected:
 	VecI2 dir_queue;
 	bool isMoving;
 	float speed;
+	
 
 	void move(int x, int y)
 	{
@@ -136,6 +137,8 @@ public:
 	{
 	};
 
+	
+
 	// Returns true if position is a wall
 	bool isWallPos(VecI2 pos)
 	{
@@ -154,30 +157,18 @@ public:
 		pos = maze->getRandomFreePosition();
 	};
 
-	virtual void handleMessages()
-	{
-		Msg* msg = peek();
-		while(msg)
-		{
-			msg = pop();
-			if(msg)
-			{
-				MsgType type = msg->Type();
-				//switch(type)
-				//{
-				//default:
-				//	throw 0; //temp
-				//	break;
-				//}
-			}
-		}
-	}
+	virtual void handleMessages() = 0;
 	virtual void atIntersection() = 0;
 	void update(double delta)	
 	{
-		float dt = (float)delta;
-
 		handleMessages();
+
+		// HACK
+		// TRUE: Object is inactive and shouldn't update, but should still throw messages to prevent memleak
+		if(!isActive)
+			return;
+
+		float dt = (float)delta;
 		updateSpecific(delta);
 
 		// True: entity is in move state

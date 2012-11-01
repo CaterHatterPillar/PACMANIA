@@ -53,6 +53,7 @@ public:
 		move(1,0);
 		invinsibleTimer = 0.0f;
 		lightPower_tween = lightPower;
+		isActive = true;
 	};
 
 	void atIntersection()
@@ -84,6 +85,11 @@ public:
 				}
 			}
 		}
+
+		// HACK
+		// Shouldn't send messages if not active
+		if(!isActive)
+			return;
 
 		Singleton<ObserverDirector>::get().push(new MsgEntityPlayerPos(position));
 		Singleton<ObserverDirector>::get().push(new MsgEntityPacmanPos(pos, position));
