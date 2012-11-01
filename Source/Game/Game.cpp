@@ -64,9 +64,11 @@ void Game::run()
 		// under bloody pills effect sound
 		if(entities[0])
 		{
-			float noise =  0.5f*(entities[0]->getLightPower() - 1.0f) / 10.0f;
+			float noise =  (entities[0]->getLightPower() - 1.0f);
 			if(noise<0.0f)
 				noise = 0.0f;
+			if(noise>0.5f)
+				noise = 0.5f;
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
 		}
 		

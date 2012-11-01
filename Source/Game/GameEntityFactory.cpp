@@ -289,16 +289,16 @@ GameEntity* GameEntityFactory::createGhost(VecI2 position, Maze* maze)
 	unsigned int stride			= sizeof(PosNormTex);
 	unsigned int offset			= 0;
 
-	GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
-		pixelShaderId,
-		textureId,
-		vertices,
-		indices,
-		numVertices,
-		numIndices,
-		numFaces,
-		stride,
-		offset);
+	//GraphicsContainer* graphicsContainer = createGraphicsContainer(	vertexShaderId,
+	//	pixelShaderId,
+	//	textureId,
+	//	vertices,
+	//	indices,
+	//	numVertices,
+	//	numIndices,
+	//	numFaces,
+	//	stride,
+	//	offset);
 
 	Light* light = new Light;
 	light->pos = VecF3(1.0f, 1.0f, -20.0f);
@@ -316,7 +316,7 @@ GameEntity* GameEntityFactory::createGhost(VecI2 position, Maze* maze)
 	MoveBehaviour* moveBehaviour = new MoveBehaviourMazeGhost(maze, maze->getRandomFreePosition());
 	moveBehaviour->init();
 	GameEntity* entity = new GameEntity();
-	entity->setGraphicsContainer(graphicsContainer);
+	//entity->setGraphicsContainer(graphicsContainer);
 	entity->setMoveBehaviour(moveBehaviour);
 	entity->setLight(light);
 
