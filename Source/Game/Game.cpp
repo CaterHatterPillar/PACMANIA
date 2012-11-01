@@ -72,6 +72,10 @@ void Game::run()
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, volume));
 
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
+
+			for(int i=1; i<(int)entities.size(); i++)
+				entities[i]->update(1.0);
+			maze->update(1.0);
 		}
 		
 		// Update stuff here
@@ -84,6 +88,7 @@ void Game::run()
 
 		renderer->renderFrame();
 	} while(window->isActive());
+	
 }
 
 void Game::handleGameConditions()
