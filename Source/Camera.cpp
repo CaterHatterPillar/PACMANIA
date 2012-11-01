@@ -83,6 +83,9 @@ void Camera::update(double delta)
 		MsgCamera* cameraMsg = new MsgCamera(view, projection, position);
 		Singleton<ObserverDirector>::get().push(cameraMsg);
 	}
+
+	// Update camera lerp
+	lerpCameraTransition(delta);
 }
 
 void Camera::zoomIn()
@@ -119,8 +122,7 @@ void Camera::msgEntityPlayerPos(Msg* msg)
 	// Use LERP-to smooth out camera movement
 	VecF3 goalPos(childMsg->pos);
 	goalPos.z = position.z;
-
-	lerpCameraTransition(&goalPos);
+	lerpTarget = goalPos;
 	delete childMsg;
 }
 void Camera::msgZoom(Msg* msg)
