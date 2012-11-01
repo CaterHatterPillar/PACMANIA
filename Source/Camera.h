@@ -13,7 +13,7 @@
 #include "Messaging/MsgCamera.h"
 #include "Messaging/MsgZoom.h"
 
-static const float lerpFac = 0.01f;
+static const float lerpFac = 1.0f;
 
 class Camera : public Component
 {
@@ -31,8 +31,8 @@ private:
 	bool zoomingOut;
 	float zoomedOut;
 
-	void zoomIn();
-	void zoomOut();
+	void zoomIn(double delta);
+	void zoomOut(double delta);
 	void msgZoom(Msg* msg);
 protected:
 	// Makes a smooth camera transition between this position and a goal position

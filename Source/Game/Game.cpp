@@ -132,7 +132,7 @@ void Game::endGame()
 void Game::wonGame()
 {
 	/*Play sound*/
-	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.5f));
+	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_CONSUME));
 
 	/*Consume*/
 	MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
