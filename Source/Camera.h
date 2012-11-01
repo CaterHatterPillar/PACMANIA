@@ -30,6 +30,7 @@ private:
 	float zoomedIn;
 	bool zoomingOut;
 	float zoomedOut;
+	VecF3 lerpTarget;
 
 	void zoomIn(double delta);
 	void zoomOut(double delta);
@@ -37,9 +38,10 @@ private:
 protected:
 	// Makes a smooth camera transition between this position and a goal position
 	// anyone with better name suggestions?
-	virtual void lerpCameraTransition(VecF3 *goalPosition)
+	virtual void lerpCameraTransition(double delta)
 	{
-		position.lerp(goalPosition, 0.02f);	
+		position.lerp(&lerpTarget, 2.5f*delta);
+		//position.lerp(&lerpTarget, 0.02f);
 	}
 
 	float STEP_SCALE;
