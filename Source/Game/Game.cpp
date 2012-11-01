@@ -64,6 +64,15 @@ void Game::run()
 				Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
 			}
 		}
+	
+		if(curCondition == CONDITION_GAME_OVER)
+		{
+			float volume = 1 - (conditionTimer->getTimeSec() / conditionTimer->getConditionSec());
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, volume));
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, volume));
+
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
+		}
 		
 		// Update stuff here
 		camera->update(delta);
@@ -137,7 +146,7 @@ void Game::endGame()
 void Game::wonGame()
 {
 	/*Play sound*/
-	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_CONSUME));
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.7f));
 
 	/*Consume*/
 	MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
