@@ -48,7 +48,7 @@ void Game::run()
 		}
 
 		// under bloody pills effect sound
-		if(entities[0])
+		if(entities[0] && gameRunning)
 		{
 			float noise =  (entities[0]->getLightPower() - 1.0f);
 			if(noise<-1.0f)
@@ -58,6 +58,13 @@ void Game::run()
 			if(noise>0.5f)
 				noise = 0.5f;
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
+		}
+	
+		if(curCondition == CONDITION_GAME_OVER)
+		{
+			float volume = 1 - (conditionTimer->getTimeSec() / conditionTimer->getConditionSec());
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, volume));
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, volume));
 		}
 		
 		// Update stuff here
@@ -132,7 +139,7 @@ void Game::endGame()
 void Game::wonGame()
 {
 	/*Play sound*/
-	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_CONSUME));
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.7f));
 
 	/*Consume*/
 	MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
