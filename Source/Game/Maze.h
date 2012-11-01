@@ -320,11 +320,21 @@ public:
 
 		float pillsRatio = (float)pillsEaten/pillsTotal;
 		int goal_num_ghosts;
-		goal_num_ghosts = (int)(6*pillsRatio);
+		// increasing maximum numbers of ghosts makes the game harder
+		int max_num_ghosts = 6;
+		goal_num_ghosts = (int)(max_num_ghosts*pillsRatio);
 		if(goal_num_ghosts>current_num_ghosts)
 		{
 			Singleton<ObserverDirector>::get().push(new MsgEntityGhostSpawn());
 			current_num_ghosts++;
+
+			// End game
+			// If the last ghost spawns, it means we have eaten all pills and we have won the game
+			if(max_num_ghosts == current_num_ghosts)
+			{
+				// send game won message
+				Singleton<ObserverDirector>::get().push(new MsgGameWon());
+			}
 		};
 
 
