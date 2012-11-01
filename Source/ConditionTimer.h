@@ -27,6 +27,9 @@ public:
 	bool Condition()	{ return condition;	}
 	bool Ticking()		{ return ticking;	}	
 	void Condition(double conditionSec) { this->conditionSec = conditionSec; }
+
+	double getTimeSec();
+	double getConditionSec();
 };
 
 #endif //CONDITIONTIMER_H

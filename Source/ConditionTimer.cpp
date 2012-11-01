@@ -60,3 +60,13 @@ ConditionTimer::~ConditionTimer()
 	if(timer)
 		delete timer;
 }
+
+double ConditionTimer::getTimeSec()
+{
+	return timeSec;
+}
+
+double ConditionTimer::getConditionSec()
+{
+	return conditionSec;
+}
