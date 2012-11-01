@@ -92,9 +92,9 @@ void Camera::zoomIn(double delta)
 {
 	float deltaLerpFac = lerpFac * delta;
 	position.z = lerp(position.z, zoomedIn, deltaLerpFac);
-	if(position.z >= zoomedIn - lerpFac)
+	if(position.z >= zoomedIn)
 	{
-		position.z = zoomedIn - lerpFac;
+		position.z = zoomedIn;
 		zoomingIn = false;
 	}
 }
