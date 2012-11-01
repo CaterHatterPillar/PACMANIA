@@ -31,4 +31,10 @@ inline std::string TO_STRING(const T& t)
 	return ss.str();
 }
 
+class PlatformCheck
+{
+public:
+	bool openGL;
+};
+
 #endif //COMMON_H

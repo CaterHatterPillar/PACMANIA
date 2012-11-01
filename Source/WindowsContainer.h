@@ -8,6 +8,8 @@
 #include "DX/RendererDX.h"
 #include "DX/CameraDX.h"
 
+#include "Common.h"
+
 class WindowsContainer
 {
 private:

@@ -2,6 +2,8 @@
 
 void LinuxContainer::mainContainer(int argc, char** argv)
 {
+	Singleton<PlatformCheck>::get().openGL = true;
+
 	Singleton<ObserverDirector>::get().init();
 	WindowGL*	glWindow	= new WindowGL(argc, argv);
 	RendererGL*	glRenderer	= new RendererGL();

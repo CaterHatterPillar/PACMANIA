@@ -17,6 +17,7 @@ void WindowsContainer::main(
 	int			nCmdShow)
 {
 	Singleton<ObserverDirector>::get().init();
+	Singleton<PlatformCheck>::get().openGL = false;
 
 
 	WindowDX*	dxWindow	= new WindowDX(hInstance, nCmdShow);
