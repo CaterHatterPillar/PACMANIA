@@ -13,7 +13,7 @@
 #include "Messaging/MsgCamera.h"
 #include "Messaging/MsgZoom.h"
 
-static const float lerpFac = 1.0f;
+static const float lerpFac = 3.0f;
 
 class Camera : public Component
 {

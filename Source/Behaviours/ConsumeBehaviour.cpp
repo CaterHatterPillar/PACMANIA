@@ -67,8 +67,11 @@ void ConsumeBehaviour::update(double delta)
 		float lerpFac = interPolFac * delta;
 		pos.z = lerp(pos.z, ZOOMED_OUT, lerpFac);
 		entity->setPosition(pos);
-		if(pos.z <= ZOOMED_OUT + 3)
+		if(pos.z <= ZOOMED_OUT + 5)
+		{
+			pos.z = ZOOMED_OUT + 5;
 			interpolPos = false;
+		}
 	}
 
 	entity->update(delta);

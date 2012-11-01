@@ -93,14 +93,20 @@ void Camera::zoomIn(double delta)
 	float deltaLerpFac = lerpFac * delta;
 	position.z = lerp(position.z, zoomedIn, deltaLerpFac);
 	if(position.z >= zoomedIn - lerpFac)
+	{
+		position.z = zoomedIn - lerpFac;
 		zoomingIn = false;
+	}
 }
 void Camera::zoomOut(double delta)
 {
 	float deltaLerpFac = lerpFac * delta;
 	position.z = lerp(position.z, zoomedOut, deltaLerpFac);
 	if(position.z <= zoomedOut + lerpFac)
+	{
+		//position.z = zoomedOut + lerpFac;
 		zoomingOut = false;
+	}
 }
 
 void Camera::msgMouseMove(Msg* msg)

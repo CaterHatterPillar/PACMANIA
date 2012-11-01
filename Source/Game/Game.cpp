@@ -26,38 +26,43 @@ void Game::run()
 		/*Update itself*/
 		update(delta);
 
-		// Update game entities
-		for(int i=0; i<(int)entities.size(); i++)
-			entities[i]->update(delta);
-		maze->update(delta);
 
-
-		//
-		// Calc sound
-		//
-
-		// ghost sound
-		if(entities[0])
+		entities[0]->update(delta);
+		if(gameRunning)
 		{
-			float noise =  1.0f - entities[0]->getLightPower();
-			if(noise<0.0f)
-				noise = 0.0f;
-			if(noise>0.7f)
-				noise = 0.7f;
-			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, noise));
-		}
+			// Update game entities
+			for(int i=1; i<(int)entities.size(); i++)
+				entities[i]->update(delta);
+			maze->update(delta);
 
-		// under bloody pills effect sound
-		if(entities[0] && gameRunning)
-		{
-			float noise =  (entities[0]->getLightPower() - 1.0f);
-			if(noise<-1.0f)
-				noise = noise;
-			if(noise<0.0f)
-				noise = 0.0f;
-			if(noise>0.5f)
-				noise = 0.5f;
-			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
+
+			//
+			// Calc sound
+			//
+
+			// ghost sound
+			if(entities[0])
+			{
+				float noise =  1.0f - entities[0]->getLightPower();
+				if(noise<0.0f)
+					noise = 0.0f;
+				if(noise>0.7f)
+					noise = 0.7f;
+				Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, noise));
+			}
+
+			// under bloody pills effect sound
+			if(entities[0])
+			{
+				float noise =  (entities[0]->getLightPower() - 1.0f);
+				if(noise<-1.0f)
+					noise = noise;
+				if(noise<0.0f)
+					noise = 0.0f;
+				if(noise>0.5f)
+					noise = 0.5f;
+				Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
+			}
 		}
 	
 		if(curCondition == CONDITION_GAME_OVER)
