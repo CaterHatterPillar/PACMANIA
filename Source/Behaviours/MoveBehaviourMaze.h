@@ -226,6 +226,9 @@ public:
 					// Perform movement
 					//
 
+					// Make world wrap from the other side if position is to far from maze
+					newPos = wrapPositionToOtherSide(newPos);
+
 					pos=newPos;
 					pos_offset +=1.0f;
 					// Bugfix: it should only be possible for an entity to move a maximum of one square at every update
@@ -244,9 +247,23 @@ public:
 			}
 		}
 
-		// Interpolate rotation on cube
+		// Interpolate rotation
 		interpolateRotation(dt);
 		position = getPosition();
+	}
+
+	// Make position start from opposite side if venturing to far
+	VecI2 wrapPositionToOtherSide(VecI2 newPos)
+	{
+		int limit = 7;
+		int size_x = maze->getSizeX();
+		int size_y = maze->getSizeY();
+
+		VecI2 wrappedPos;
+		wrappedPos.x = mod((newPos.x + limit), (size_x + limit+limit)) - limit;
+		wrappedPos.y = mod((newPos.y + limit), (size_x + limit+limit)) - limit;
+
+		return wrappedPos;
 	}
 
 	virtual void updateSpecific(double delta) = 0;

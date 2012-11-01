@@ -10,12 +10,6 @@ class CameraGL : public Camera
 private:
 	void updateProj();
 	void updateView();
-protected:
-	void lerpCameraTransition(VecF3 *goalPosition)
-	{
-		position.lerp(goalPosition, 0.02f);
-		//position = goalPosition[0];
-	}
 public:
 	CameraGL(
 		float fov, 

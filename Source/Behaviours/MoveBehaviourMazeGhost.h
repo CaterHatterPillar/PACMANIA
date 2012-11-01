@@ -2,6 +2,7 @@
 #define MOVEBEHAVIOURMAZEGHOST_H
 
 #include "MoveBehaviourMaze.h"
+#include "../Messaging/MsgSound.h"
 
 class MoveBehaviourMazeGhost : public MoveBehaviourMaze
 {
@@ -106,6 +107,24 @@ public:
 		runAI();
 	};
 
+	void checkCollisionWithGhost(VecI2 ghostPos, VecF3 ghostPosition)
+	{
+		VecF3 v1 = position;
+		VecF3 v2 = ghostPosition;
+
+		// TRUE: Pacman is invinsible
+		if(fleeTimer>0.0f)
+		{
+			float dist = v1.distanceTo(v2);
+			// TRUE: Collision occurs
+			if(dist<0.5f)
+			{
+				Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_GHOST_DEATH));
+				reset();
+			}
+		}
+	};
+
 	void updateSpecific(double delta)
 	{
 		float dt = (float)delta;
@@ -159,6 +178,7 @@ public:
 
 		// Assign pacman position as target
 		target = msgCast->pos;
+		checkCollisionWithGhost(msgCast->pos, msgCast->position);
 
 		delete msgCast;
 	};

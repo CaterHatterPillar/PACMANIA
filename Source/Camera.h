@@ -39,9 +39,7 @@ protected:
 	// anyone with better name suggestions?
 	virtual void lerpCameraTransition(VecF3 *goalPosition)
 	{
-		//position.lerp(goalPosition, 0.02f);
-		position.x = goalPosition[0].x;
-		position.y = goalPosition[0].y;
+		position.lerp(goalPosition, 0.02f);	
 	}
 
 	float STEP_SCALE;

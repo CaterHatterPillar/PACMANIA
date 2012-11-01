@@ -53,7 +53,6 @@ void Game::run()
 		if(entities[0])
 		{
 			float noise =  1.0f - entities[0]->getLightPower();
-			noise *=2.0f;
 			if(noise<0.0f)
 				noise = 0.0f;
 			if(noise>0.7f)
@@ -64,9 +63,13 @@ void Game::run()
 		// under bloody pills effect sound
 		if(entities[0])
 		{
-			float noise =  0.5f*(entities[0]->getLightPower() - 1.0f) / 10.0f;
+			float noise =  (entities[0]->getLightPower() - 1.0f);
+			if(noise<-1.0f)
+				noise = noise;
 			if(noise<0.0f)
 				noise = 0.0f;
+			if(noise>0.5f)
+				noise = 0.5f;
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, noise));
 		}
 		
@@ -175,6 +178,7 @@ void Game::init()
 	Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, ENTITY_GHOST_SPAWN));
 	Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, INPUT_KEYBOARD_MSG));
 	Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_OVER));
+		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_WON));
 
 	/*Initialize sound engine*/
 	soundEngine->init();
@@ -270,4 +274,75 @@ Game::~Game()
 		delete renderer;
 	if(entityFac)
 		delete entityFac;
+}
+
+void Game::msgSpawnGhost( Msg* msg )
+{
+	spawnGhost();
+	delete msg;
+}
+
+void Game::msgKeyboard( Msg* msg )
+{
+	MsgKeyboard* keyboardMsg = (MsgKeyboard*)msg;
+	keyboard(keyboardMsg->Key());
+	delete keyboardMsg;
+}
+
+void Game::msgGameOver( Msg* msg )
+{
+	MsgGameOver* gameOverMsg = (MsgGameOver*)msg;
+	endGame();
+	delete gameOverMsg;
+}
+
+void Game::msgGameWon( Msg* msg )
+{
+	MsgGameWon* gameWonMsg = (MsgGameWon*)msg;
+	wonGame();
+	delete gameWonMsg;
+}
+
+void Game::keyboard( KEY key )
+{
+	switch(key)
+	{
+	case KEY_D:
+		spawnGhost();
+		break;
+	case KEY_W:
+		Singleton<ObserverDirector>::get().push(new MsgGameWon());
+		break;
+	case KEY_S:
+		Singleton<ObserverDirector>::get().push(new MsgEntityPillBloodyEaten());
+		break;
+	case KEY_A:
+		endGame();
+		break;
+	default:
+		break;
+	}
+}
+
+void Game::spawnGhost()
+{
+	if(num_entities<(int)entities.size())
+	{
+		if(entities[num_entities] == 0)
+		{
+			GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
+			entities[num_entities]=entity;
+		}
+		num_entities++;
+	}
+}
+
+void Game::spawnPacman()
+{
+	if(entities[num_entities] == 0)
+	{
+		GameEntity* entity = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);
+		entities[num_entities]=entity;
+	}
+	num_entities++;
 }
