@@ -280,7 +280,8 @@ public:
 		//
 
 		// compute culling
-		int cullingSize = 2;
+		int cullingSize = 9;
+		
 		VecI2 cullStart(cullingPosition.x - cullingSize, cullingPosition.y - cullingSize);
 		VecI2 cullEnd(cullingPosition.x + cullingSize, cullingPosition.y + cullingSize);
 		clamp(&cullStart.x, 0, sizeX);
@@ -348,7 +349,7 @@ public:
 			VecF3 v1((float)pos.x, (float)pos.y, 0.0f);
 			VecF3 v2((float)cullingPosition.x, (float)cullingPosition.y, 0.0f);
 			// FALSE: Cull all objects % distance from pacman
-			if(v1.distanceTo(v2) < 7.0f)
+			if(v1.distanceTo(v2) < 9.0f)
 			{
 				float size = pills[i].getSize();
 				// FALSE: Cull all objects too small to see

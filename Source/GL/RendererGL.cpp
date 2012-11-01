@@ -100,7 +100,7 @@ void RendererGL::update(double delta)
 
 	curLight = 0;
 	lights.resize(0);
-	for(unsigned int i = 0; i < 10; i++)
+	for(unsigned int i = 0; i < 7; i++)
 	{
 		Light l;
 		l.pos		= VecF3(-1000.0f, -1000.0f, -1000.0f);
@@ -298,6 +298,8 @@ void RendererGL::msgLight(Msg* msg)
 	lights[curLight] = (*light);
 
 	curLight++;
+	if(curLight >= 7)
+		curLight = 6;
 
 	delete lightMsg;
 }

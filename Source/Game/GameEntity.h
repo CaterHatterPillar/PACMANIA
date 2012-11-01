@@ -51,6 +51,14 @@ public:
 		}
 	}
 
+	void deactivate()
+	{
+		if(moveBehaviour)
+		{
+			moveBehaviour->deactivate();
+		}
+	}
+
 	void setRender(bool render) { this->render = render; }
 
 	void setPosition(VecF3 position);
