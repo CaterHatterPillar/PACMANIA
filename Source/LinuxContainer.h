@@ -5,6 +5,7 @@
 #include "Game/GameEntity.h"
 
 #include "Camera.h"
+#include "Common.h"
 
 #include "GL/WindowGL.h"
 #include "GL/RendererGL.h"

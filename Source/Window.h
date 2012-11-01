@@ -16,6 +16,7 @@ public:
 	~Window();
 
 	bool isActive() { return active; }
+	void setActive(bool active) { this->active = active; }
 };
 
 #endif //WINDOW_H
