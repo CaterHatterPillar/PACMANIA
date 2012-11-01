@@ -112,15 +112,12 @@ void Game::endGame()
 {
 	if(gameRunning)
 	{
-		//MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
-		//Singleton<ObserverDirector>::get().push(consumeMsg);
-		
 		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
 		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.5f));
 
 		//Start game over-timer
 		curCondition = CONDITION_RESTART;
-		conditionTimer->Condition(5.0);	//five sec condition
+		conditionTimer->Condition(3.0);	//five sec condition
 		conditionTimer->reset();
 		conditionTimer->start();
 		
@@ -134,15 +131,30 @@ void Game::endGame()
 }
 void Game::wonGame()
 {
-	//Start game over-timer
+	/*Play sound*/
+	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.5f));
+
+	/*Consume*/
+	MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
+	Singleton<ObserverDirector>::get().push(consumeMsg);
+
+	/*Zoom*/
+	VecF3 pacPos = entities[0]->getPosition();
+	MsgZoom* zoomMsg = new MsgZoom(pacPos.x, pacPos.y, STATE_ZOOM_OUT);
+	Singleton<ObserverDirector>::get().push(zoomMsg);
+
+	/*Start game over-event*/
 	curCondition = CONDITION_GAME_OVER;
-	conditionTimer->Condition(5.0);	//five sec condition
+	conditionTimer->Condition(10.0);	//five sec condition
 	conditionTimer->reset();
 	conditionTimer->start();
+
+	gameRunning = false;
 }
 
 void Game::gameOver()
 {
+	window->setActive(false);
 }
 void Game::restartGame()
 {

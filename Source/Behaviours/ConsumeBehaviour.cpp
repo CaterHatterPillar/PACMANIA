@@ -8,8 +8,11 @@ void ConsumeBehaviour::init()
 	sub = new SubscriptionMsg(this, CAMERA);
 	Singleton<ObserverDirector>::get().push(sub);
 
-	entity->setPosition(VecF3(0.0f, 0.0f, ZOOMED_OUT + 100));
+	entity->setPosition(VecF3(0.0f, 0.0f, ZOOMED_OUT + 250));
 	entity->setScale(VecF3(1.0f, 1.0f, 1.0f));	//change this
+	
+	if(Singleton<PlatformCheck>::get().openGL)
+		entity->setRotation(VecF3(180.0f, 0.0f, 0.0f));
 }
 void ConsumeBehaviour::update(double delta)
 {
@@ -63,7 +66,7 @@ void ConsumeBehaviour::update(double delta)
 		VecF3 pos = entity->getPosition();
 		pos.z = lerp(pos.z, ZOOMED_OUT, interPolFac);
 		entity->setPosition(pos);
-		if(pos.z <= ZOOMED_OUT + interPolFac)
+		if(pos.z <= ZOOMED_OUT + 3)
 			interpolPos = false;
 	}
 
