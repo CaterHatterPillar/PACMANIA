@@ -14,8 +14,9 @@ void InputGL::init()
 	callbackMsg = new MsgGlutCallback((void*)keyboardSpec, KEYBOARD_FUNC);
 	Singleton<ObserverDirector>::get().push(callbackMsg);
 
-	callbackMsg = new MsgGlutCallback((void*)mouseSpec, PASSIVE_MOTION_FUNC);
-	Singleton<ObserverDirector>::get().push(callbackMsg);
+	/*Enable if mouse*/
+	//callbackMsg = new MsgGlutCallback((void*)mouseSpec, PASSIVE_MOTION_FUNC);
+	//Singleton<ObserverDirector>::get().push(callbackMsg);
 }
 void InputGL::update(double delta)
 {
