@@ -63,7 +63,7 @@ void SoundEngine::loadSounds()
 	result = system->createStream("../../Sounds/GHOST.mp3", flags, 0, &soundGhost);
 	ERRCHECK(result);
 
-	result = system->createStream("../../Sounds/CONSUME.mp3", flags, 0, &soundConsume);
+	result = system->createStream("../../Sounds/CONSUME.ogg", flags, 0, &soundConsume);
 	ERRCHECK(result);
 
 
