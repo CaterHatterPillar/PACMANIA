@@ -122,9 +122,6 @@ void Game::endGame()
 {
 	if(gameRunning)
 	{
-		//MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
-		//Singleton<ObserverDirector>::get().push(consumeMsg);
-		
 		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
 		Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, 0.5f));
 
@@ -144,6 +141,9 @@ void Game::endGame()
 }
 void Game::wonGame()
 {
+	MsgConsume* consumeMsg = new MsgConsume(CONSUME_STATE_DISPLAY);
+	Singleton<ObserverDirector>::get().push(consumeMsg);
+
 	//Start game over-timer
 	curCondition = CONDITION_GAME_OVER;
 	conditionTimer->Condition(5.0);	//five sec condition

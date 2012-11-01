@@ -10,6 +10,7 @@ void ConsumeBehaviour::init()
 
 	entity->setPosition(VecF3(0.0f, 0.0f, ZOOMED_OUT + 100));
 	entity->setScale(VecF3(1.0f, 1.0f, 1.0f));	//change this
+	//entity->set
 }
 void ConsumeBehaviour::update(double delta)
 {
