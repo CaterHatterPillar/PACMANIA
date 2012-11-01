@@ -41,7 +41,6 @@ private:
 
 	/*Lighting*/
 	unsigned int curLight;
-	//static Light lights[10];
 	std::vector<Light> lights;
 protected:
 public:
