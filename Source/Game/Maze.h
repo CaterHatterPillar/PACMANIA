@@ -281,6 +281,7 @@ public:
 
 		// compute culling
 		int cullingSize = 9;
+		
 		VecI2 cullStart(cullingPosition.x - cullingSize, cullingPosition.y - cullingSize);
 		VecI2 cullEnd(cullingPosition.x + cullingSize, cullingPosition.y + cullingSize);
 		clamp(&cullStart.x, 0, sizeX);
