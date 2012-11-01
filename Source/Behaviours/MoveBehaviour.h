@@ -16,10 +16,21 @@ protected:
 	
 public:
 	float lightPower;
+	bool isActive;
+
 	MoveBehaviour()
 	{
 		lightPower = 1.0f;
+		isActive = true;
 	}
+	void activate()
+	{
+		isActive = true;
+	};
+	void deactivate()
+	{
+		isActive = false;
+	};
 	~MoveBehaviour(){}
 	virtual void reset() = 0;
 	void throwMessages()

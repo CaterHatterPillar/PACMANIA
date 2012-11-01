@@ -4,7 +4,7 @@ void Game::run()
 {
 	//SoundEngine* soundEngine = new SoundEngine();
 	//
-	//soundEngine->init();
+	soundEngine->init();
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_GHOST));
 	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
@@ -27,23 +27,10 @@ void Game::run()
 		update(delta);
 
 		// Update game entities
-		for(int i=0; i<(int)num_entities; i++)
+		for(int i=0; i<(int)entities.size(); i++)
 			entities[i]->update(delta);
-			
 		maze->update(delta);
 
-		//
-		// Fix memleaks
-		//
-
-		for(int i=0; i<(int)entities.size(); i++)
-		{
-			if(i>num_entities)
-			{
-				if(entities[i] != 0)
-					entities[i]->throwMessages();
-			}
-		}
 
 		//
 		// Calc sound
@@ -163,12 +150,13 @@ void Game::restartGame()
 	maze->restart();
 	for(int i=0; i<(int)entities.size(); i++)
 	{
-		if(entities[i])
-			entities[i]->reset();
+		entities[i]->deactivate();
 	}
+	//HACK: Activate pacman (not safe)
+	entities[0]->reset();
+
 	num_entities = 0;
 	spawnPacman();
-
 	startGame();
 }
 
@@ -181,7 +169,7 @@ void Game::init()
 		Singleton<ObserverDirector>::get().push(new SubscriptionMsg(this, GAME_WON));
 
 	/*Initialize sound engine*/
-	soundEngine->init();
+	//soundEngine->init();
 	Singleton<ObserverDirector>::get().push(new MsgSound(SOUND_AMBIENT));
 	Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, 1.0f));
 
@@ -239,10 +227,7 @@ Game::Game(
 	GameEntity* consumer = entityFac->createConsume(VecF3(0.0f, 0.0f, 0.0f));
 	consumeBehaviour = new ConsumeBehaviour(consumer);
 
-	entities.resize(20);
 	num_entities = 0;
-	for(int i=0; i<(int)entities.size(); i++)
-		entities[i]=0;
 	init();
 }
 Game::~Game()
@@ -328,21 +313,26 @@ void Game::spawnGhost()
 {
 	if(num_entities<(int)entities.size())
 	{
-		if(entities[num_entities] == 0)
-		{
-			GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
-			entities[num_entities]=entity;
-		}
-		num_entities++;
+		entities[num_entities]->reset();
 	}
+	else
+	{
+		GameEntity* entity = entityFac->createGhost(VecI2(3, 1), maze);
+		entities.push_back(entity);
+	}
+	num_entities++;
 }
 
 void Game::spawnPacman()
 {
-	if(entities[num_entities] == 0)
+	if(num_entities<(int)entities.size())
+	{
+		entities[num_entities]->reset();
+	}
+	else
 	{
 		GameEntity* entity = entityFac->createPacman(VecF3(0.0f, 0.0f, 0.0f), maze);
-		entities[num_entities]=entity;
+		entities.push_back(entity);
 	}
 	num_entities++;
 }

@@ -24,10 +24,11 @@ public:
 	void reset()
 	{
 		pos = VecI2(28,16);
-		pos = VecI2(0,16);
+		//pos = VecI2(0,16);
 		move(1,0);
 		fleeTimer = 0.0f;
 		lightPower_tween = lightPower;
+		isActive = true;
 	};
 
 	bool isValidDir(VecI2 newDir)
@@ -166,6 +167,11 @@ public:
 				}
 			}
 		}
+
+		// HACK
+		// Shouldn't send messages if not active
+		if(!isActive)
+			return;
 
 		// Send messages
 		Singleton<ObserverDirector>::get().push(new MsgEntityGhostPos(pos, position));
