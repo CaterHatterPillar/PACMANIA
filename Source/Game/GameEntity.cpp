@@ -46,6 +46,7 @@ void GameEntity::rebuildTranslationMatrix()
 	rebuildWorldMatrix();
 }
 
+
 void GameEntity::rebuildRotationMatrix()
 {
 	rotationMatrix.rotation(rotation.x, rotation.y, rotation.z);
@@ -181,17 +182,19 @@ void GameEntity::update(double delta)
 	}
 	if(light)
 	{
-		light->pos.x = position.x;
-		light->pos.y = position.y;
-
-		if(moveBehaviour)
+		if(moveBehaviour && moveBehaviour->isActive)
 		{
 			
+
+			light->pos.x = position.x;
+			light->pos.y = position.y;
+
 			float power = moveBehaviour->lightPower;
 			light->att.x = 0.25f/power;
-		}
 
-		MsgLight* msgLight = new MsgLight(light);
-		Singleton<ObserverDirector>::get().push(msgLight);
+
+			MsgLight* msgLight = new MsgLight(light);
+			Singleton<ObserverDirector>::get().push(msgLight);
+		}
 	}
 }
