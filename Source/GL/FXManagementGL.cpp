@@ -140,30 +140,27 @@ void FXManagementGL::updatePerFrame(std::vector<Light> lights, VecF3 camPos)
 		"light3.pos",
 		"light4.pos",
 		"light5.pos",
-		"light6.pos",
-		"light7.pos",
-		"light8.pos",
-		"light9.pos"
+		"light6.pos"
 	};
 	
 	//Fetch indices
-	GLuint indices[11];
+	GLuint indices[8];
 	glGetUniformIndices(
 		programHandle, 
-		11, 
+		8, 
 		names, 
 		indices);
 	
-	GLint offset[11];
+	GLint offset[8];
 	glGetActiveUniformsiv(
 		programHandle, 
-		11, 
+		8, 
 		indices,
 		GL_UNIFORM_OFFSET,
 		offset);
 	
 	memcpy(perFrameBuffer + offset[0], &camPos, sizeof(VecF3));
-	for(unsigned int i = 1; i < 11; i++)
+	for(unsigned int i = 1; i < 8; i++)
 	{
 		memcpy(perFrameBuffer + offset[i], &lights[i - 1], sizeof(Light));
 	}

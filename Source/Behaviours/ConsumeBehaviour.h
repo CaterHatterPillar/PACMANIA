@@ -13,8 +13,8 @@
 
 #include "../Math/PacMath.h"
 
-static const double	eventCondition	= 2.0;
-static const float	interPolFac		= 0.005f;
+static const double	eventCondition	= 3.0;
+static const float	interPolFac		= 1.0f;
 
 class ConsumeBehaviour : public Component
 {

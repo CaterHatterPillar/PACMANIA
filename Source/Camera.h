@@ -13,7 +13,7 @@
 #include "Messaging/MsgCamera.h"
 #include "Messaging/MsgZoom.h"
 
-static const float lerpFac = 0.01f;
+static const float lerpFac = 1.0f;
 
 class Camera : public Component
 {
@@ -30,16 +30,18 @@ private:
 	float zoomedIn;
 	bool zoomingOut;
 	float zoomedOut;
+	VecF3 lerpTarget;
 
-	void zoomIn();
-	void zoomOut();
+	void zoomIn(double delta);
+	void zoomOut(double delta);
 	void msgZoom(Msg* msg);
 protected:
 	// Makes a smooth camera transition between this position and a goal position
 	// anyone with better name suggestions?
-	virtual void lerpCameraTransition(VecF3 *goalPosition)
+	virtual void lerpCameraTransition(double delta)
 	{
-		position.lerp(goalPosition, 0.02f);	
+		position.lerp(&lerpTarget, 2.5f*delta);
+		//position.lerp(&lerpTarget, 0.02f);
 	}
 
 	float STEP_SCALE;

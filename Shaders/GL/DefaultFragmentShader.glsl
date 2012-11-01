@@ -60,8 +60,6 @@ vec3 spotLight(SurfaceInfo surface, Light light, vec3 eyePos)
 /*CB*/
 layout(std140) uniform PerFrame
 {
-	//Light	lights[10];
-	
 	vec3 camPos;
 
 	Light light0;
@@ -71,9 +69,6 @@ layout(std140) uniform PerFrame
 	Light light4;
 	Light light5;
 	Light light6;
-	Light light7;
-	Light light8;
-	Light light9;
 };
 
 /*IN*/
@@ -113,9 +108,6 @@ void main()
 	litColor += spotLight(surface, light4, camPos);
 	litColor += spotLight(surface, light5, camPos);
 	litColor += spotLight(surface, light6, camPos);
-	litColor += spotLight(surface, light7, camPos);
-	litColor += spotLight(surface, light8, camPos);
-	litColor += spotLight(surface, light9, camPos);
 
 	litColor += ambient.xyz;
 
