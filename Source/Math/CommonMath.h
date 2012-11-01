@@ -14,4 +14,9 @@ static float lerp(float x, float y, float f)
 	return result;
 }
 
+static int mod(int x, int m) {
+	int r = x%m;
+	return r<0 ? r+m : r;
+}
+
 #endif //COMMONMATH_H
