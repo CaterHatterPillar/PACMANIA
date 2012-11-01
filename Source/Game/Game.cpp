@@ -65,6 +65,8 @@ void Game::run()
 			float volume = 1 - (conditionTimer->getTimeSec() / conditionTimer->getConditionSec());
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_CONSUME, volume));
 			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_AMBIENT, volume));
+
+			Singleton<ObserverDirector>::get().push(new MsgSoundVolume(SOUND_GHOST, 0.0f));
 		}
 		
 		// Update stuff here
